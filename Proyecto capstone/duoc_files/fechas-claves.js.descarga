@@ -1,0 +1,117 @@
+jQuery(document).ready(function ($) {
+    $('.timeline-info').hover(function () {
+        var tooltipText = $(this).data('tooltip');
+        var $tooltip = $('<div class="timeline-tooltip"></div>').text(tooltipText).appendTo('body').hide();
+        $tooltip.fadeIn(200);
+        var offset = $(this).offset();
+        $tooltip.css({
+            position: 'absolute',
+            top: offset.top - $tooltip.outerHeight() - 10,
+            left: offset.left + $(this).outerWidth() / 2 - $tooltip.outerWidth() / 2
+        });
+
+    }, function () {
+        $('.timeline-tooltip').remove();
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const items = document.querySelectorAll("#timeline-horizontal .timeline-item");
+    const bar = document.querySelector("#timeline-horizontal .timeline-bar");
+    const now = new Date();
+
+    function updateTimeline() {
+        let lastReachedIndex = -1;
+        const isMobile = window.innerWidth <= 1024;
+
+        items.forEach((item, index) => {
+            const date = new Date(item.dataset.date);
+            if (now >= date) {
+                lastReachedIndex = index;
+            }
+        });
+
+        if (items.length > 0) {
+            const timeline = document.querySelector("#timeline-horizontal");
+            const timelineRect = timeline.getBoundingClientRect();
+            const firstIconRect = items[0].querySelector(".timeline-icon").getBoundingClientRect();
+            const lastIconRect = items[items.length - 1].querySelector(".timeline-icon").getBoundingClientRect();
+
+            bar.innerHTML = "";
+
+            if (isMobile) {
+                const topOffset = firstIconRect.top - timelineRect.top + firstIconRect.height / 2;
+                const totalHeight = (lastIconRect.top - timelineRect.top + lastIconRect.height / 2) - topOffset;
+
+                bar.style.top = topOffset + "px";
+                bar.style.left = "108px";
+                bar.style.height = totalHeight + "px";
+                bar.style.width = "10px";
+                bar.style.transform = "translateX(-50%)";
+
+                if (lastReachedIndex >= 0) {
+                    const lastReachedRect = items[lastReachedIndex].querySelector(".timeline-icon").getBoundingClientRect();
+                    let progressHeight = (lastReachedRect.top - timelineRect.top + lastReachedRect.height / 2) - topOffset;
+
+                    if (lastReachedIndex < items.length - 1) {
+                        const nextRect = items[lastReachedIndex + 1].querySelector(".timeline-icon").getBoundingClientRect();
+                        const nextCenter = nextRect.top - timelineRect.top + nextRect.height / 2;
+                        const currentCenter = lastReachedRect.top - timelineRect.top + lastReachedRect.height / 2;
+                        const halfSegment = (nextCenter - currentCenter) / 2;
+                        progressHeight += halfSegment;
+                    }
+
+                    progressHeight = Math.min(progressHeight, totalHeight);
+
+                    const progressDiv = document.createElement("div");
+                    progressDiv.style.position = "absolute";
+                    progressDiv.style.width = "100%";
+                    progressDiv.style.height = progressHeight + "px";
+                    progressDiv.style.backgroundColor = "#ffb800";
+                    progressDiv.style.top = "0";
+                    bar.appendChild(progressDiv);
+                }
+            } else {
+                const leftOffset = firstIconRect.left - timelineRect.left + firstIconRect.width / 2;
+                const totalWidth = (lastIconRect.left - timelineRect.left + lastIconRect.width / 2) - leftOffset;
+
+                bar.style.left = leftOffset + "px";
+                bar.style.top = "";
+                bar.style.width = totalWidth + "px";
+                bar.style.height = "19px";
+                bar.style.transform = "none";
+
+                if (lastReachedIndex >= 0) {
+                    const lastReachedRect = items[lastReachedIndex].querySelector(".timeline-icon").getBoundingClientRect();
+                    let progressWidth = (lastReachedRect.left - timelineRect.left + lastReachedRect.width / 2) - leftOffset;
+
+                    if (lastReachedIndex < items.length - 1) {
+                        const nextRect = items[lastReachedIndex + 1].querySelector(".timeline-icon").getBoundingClientRect();
+                        const nextCenter = nextRect.left - timelineRect.left + nextRect.width / 2;
+                        const currentCenter = lastReachedRect.left - timelineRect.left + lastReachedRect.width / 2;
+                        const halfSegment = (nextCenter - currentCenter) / 2;
+                        progressWidth += halfSegment;
+                    }
+
+                    progressWidth = Math.min(progressWidth, totalWidth);
+
+                    const progressDiv = document.createElement("div");
+                    progressDiv.style.position = "absolute";
+                    progressDiv.style.height = "100%";
+                    progressDiv.style.width = progressWidth + "px";
+                    progressDiv.style.backgroundColor = "#ffb800";
+                    progressDiv.style.left = "0";
+                    bar.appendChild(progressDiv);
+                }
+            }
+
+            items.forEach((item, index) => {
+                const icon = item.querySelector(".timeline-icon");
+                icon.style.borderColor = index <= lastReachedIndex ? '#ffb800' : '#EEEEEE';
+            });
+        }
+    }
+
+    updateTimeline();
+    window.addEventListener("resize", updateTimeline);
+});

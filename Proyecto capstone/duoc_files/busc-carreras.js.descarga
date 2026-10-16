@@ -1,0 +1,206 @@
+function slugify(texto) {
+    return texto
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+}
+
+jQuery(document).ready(function ($) {
+    let todasCarreras = [];
+
+    function normalizar(texto) {
+        return texto ? texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase() : "";
+    }
+
+    function obtenerModalidadesUnicas(sedes_modalidades) {
+        if (!sedes_modalidades) return [];
+        let result = [];
+        sedes_modalidades.forEach(sm => {
+            if (sm.modalidades && Array.isArray(sm.modalidades)) {
+                result.push(...sm.modalidades.map(m => m.trim()).filter(Boolean));
+            }
+        });
+        return [...new Set(result)];
+    }
+
+    $.ajax({
+        url: carreras_ajax.ajax_url,
+        type: "POST",
+        data: { action: "buscador_carreras", nonce: carreras_ajax.nonce },
+        success: function (response) {
+            if (response && response.length > 0) {
+                todasCarreras = response;
+                llenarFiltros();
+            } else {
+                $("#resultados-carreras").html("<p>No se pudo cargar el listado de carreras. Intenta recargar la página.</p>");
+            }
+        },
+        error: function () {
+            $("#resultados-carreras").html("<p>No se pudo cargar el listado de carreras. Intenta recargar la página.</p>");
+        }
+    });
+
+    function llenarFiltros() {
+        const sedesUnicas = [...new Set(todasCarreras.flatMap(c => {
+            if (Array.isArray(c.sedes)) return c.sedes;
+            else if (c.sedes && typeof c.sedes === 'object') return Object.values(c.sedes);
+            return [];
+        }))];
+
+        const escuelasUnicas = [...new Set(todasCarreras.flatMap(c => c.escuela || []))]
+            .sort((a, b) => a.localeCompare(b, "es", { sensitivity: "base" }));
+
+        const modalidadesUnicas = [...new Set(todasCarreras.flatMap(c => obtenerModalidadesUnicas(c.sedes_modalidades)))];
+
+        $("#filtro-sede .options").append(`<li data-value="">Todas las sedes</li>`);
+        $("#filtro-escuela .options").append(`<li data-value="">Todas las escuelas</li>`);
+        $("#filtro-modalidad .options").append(`<li data-value="">Todas las modalidades</li>`);
+
+        sedesUnicas.forEach(sede => $("#filtro-sede .options").append(`<li data-value="${sede}">${sede}</li>`));
+        escuelasUnicas.forEach(escuela => $("#filtro-escuela .options").append(`<li data-value="${escuela}">${escuela}</li>`));
+        modalidadesUnicas.forEach(mod => $("#filtro-modalidad .options").append(`<li data-value="${mod}">${mod}</li>`));
+    }
+
+    $(".filtros .selected").on("click", function (e) {
+        e.stopPropagation();
+        const $options = $(this).siblings(".options");
+        $(".filtros .options").not($options).hide();
+        $options.toggle();
+    });
+
+    $(document).on("click", function () { $(".filtros .options").hide(); });
+
+    $(".filtros .options").on("click", "li", function () {
+        const valor = $(this).text();
+        const dataValue = $(this).data("value");
+        const pluginUrl = carreras_ajax.plugin_url;
+        $(this).parent().siblings(".selected").data("value", dataValue);
+        $(this).parent().siblings(".selected").html(`${valor} <img src="${pluginUrl}/iconoir_nav-arrow-down.svg" alt="">`);
+        $(this).parent().hide();
+        realizarBusqueda();
+    });
+
+    function realizarBusqueda() {
+        $(".ver-todo-wrapper").remove();
+
+        function limpiarTexto(texto) { return texto ? texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim() : ""; }
+
+        const search = limpiarTexto($("#carrera-search").val());
+        const filtroSede = normalizar($("#filtro-sede .selected").data("value") || "");
+        const filtroEscuela = normalizar($("#filtro-escuela .selected").data("value") || "");
+        const filtroModalidad = normalizar($("#filtro-modalidad .selected").data("value") || "");
+
+        const resultadosFiltrados = todasCarreras.filter(item => {
+            const titulo = limpiarTexto(item.title);
+            const escuelas = (item.escuela || []).map(normalizar);
+
+            const sedes = item.sedes && Array.isArray(item.sedes)
+                ? item.sedes.map(normalizar)
+                : item.sedes && typeof item.sedes === 'object'
+                    ? Object.values(item.sedes).map(normalizar)
+                    : [];
+
+            let modalidades = [];
+            if (filtroSede) {
+                const sedeObj = item.sedes_modalidades?.find(s => normalizar(s.sede) === filtroSede);
+                if (sedeObj?.modalidades) modalidades = sedeObj.modalidades.map(normalizar);
+            } else {
+                modalidades = obtenerModalidadesUnicas(item.sedes_modalidades).map(normalizar);
+            }
+
+            const matchTexto = search.length >= 2 ? titulo.includes(search) : true;
+            const matchSede = filtroSede === "" || sedes.includes(filtroSede);
+            const matchEscuela = filtroEscuela === "" || escuelas.includes(filtroEscuela);
+            const matchModalidad = filtroModalidad === "" || modalidades.includes(filtroModalidad);
+
+            return matchTexto && matchSede && matchEscuela && matchModalidad;
+        });
+
+        let html = "";
+        if (resultadosFiltrados.length) {
+            resultadosFiltrados.forEach((item, index) => {
+                let modStrings = [];
+                if (filtroSede) {
+                    const sedeObj = item.sedes_modalidades?.find(s => normalizar(s.sede) === filtroSede);
+                    if (sedeObj?.modalidades) modStrings = [...new Set(sedeObj.modalidades.map(m => m.trim()).filter(Boolean))];
+                } else {
+                    modStrings = obtenerModalidadesUnicas(item.sedes_modalidades);
+                }
+
+                if (!modStrings.length) modStrings.push("100% Online");
+
+                const pluginUrl = carreras_ajax.plugin_url;
+                const iconMap = {
+                    "100% online": `${pluginUrl}/iconoir_internet.svg`,
+                    "diurna": `${pluginUrl}/iconoir_sun-light.svg`,
+                    "vespertina": `${pluginUrl}/iconoir_half-moon.svg`,
+                    "alternancia dual": "fas fa-adjust"
+                };
+
+                const modalidadesHtml = modStrings.length
+                    ? `<p class="modalidades">${modStrings.map(m => {
+                        const key = normalizar(m);
+                        const icon = iconMap[key] || `${pluginUrl}/icons/icon-default.svg`;
+                        const destacado = filtroModalidad && normalizar(filtroModalidad) === key ? " destacado" : "";
+                        return icon.endsWith(".svg")
+                            ? `<span class="modalidad-item${destacado}"><img src="${icon}" alt="${m}"> ${m}</span>`
+                            : `<span class="modalidad-item${destacado}"><i class="${icon}"></i> ${m}</span>`;
+                    }).join(" ")}</p>`
+                    : "";
+
+                html += `
+                <div class="carrera-card ${index >= 6 ? "extra hidden" : ""}">
+                    <div class="etiquetas">
+                        <div class="etiqueta-tipo ${item.tipo.map(t => slugify(t)).join(" ")}">
+                            ${item.tipo.length ? `Carrera ${item.tipo.join(", ")}` : ""}
+                        </div>
+                        <div class="etiqueta-escuela ${item.escuela.map(e => slugify(e)).join(" ")}">
+                            ${item.escuela.length ? item.escuela.join(", ") : ""}
+                        </div>
+                    </div>
+                    <h3><a class="search-result-admi2026" href="${item.link}">${item.title}</a></h3>
+                    ${item.duracion ? `<p>Duración: ${item.duracion}</p>` : "<p>Duración: N/A</p>"}
+                    ${modalidadesHtml}
+                </div>`;
+            });
+
+            if (resultadosFiltrados.length > 6) {
+                $("#resultados-carreras").after(`
+                    <div class="ver-todo-wrapper">
+                        <button class="ver-todo-btn">Ver todo <i class="fa fa-chevron-down"></i></button>
+                    </div>
+                `);
+            }
+        } else {
+            html = "<p>No se encontraron carreras</p>";
+        }
+
+        $("#resultados-carreras").html(html);
+    }
+
+    $(document).on("click", ".ver-todo-btn", function () {
+        $(".carrera-card.extra").removeClass("hidden");
+        $(this).parent().remove();
+    });
+
+    $("#carrera-search").on("keypress", function (e) {
+        if (e.which === 13) {
+            e.preventDefault();
+            realizarBusqueda();
+        }
+    });
+
+    $(".btn-buscar").on("click", realizarBusqueda);
+
+    $(".filtros button").on("click", function () {
+        const pluginUrl = carreras_ajax.plugin_url;
+        $("#filtro-sede .selected").html(`Selecciona Sede <img src="${pluginUrl}/iconoir_nav-arrow-down.svg" alt="">`).data("value", "");
+        $("#filtro-escuela .selected").html(`Selecciona Escuela <img src="${pluginUrl}/iconoir_nav-arrow-down.svg" alt="">`).data("value", "");
+        $("#filtro-modalidad .selected").html(`Selecciona Modalidad <img src="${pluginUrl}/iconoir_nav-arrow-down.svg" alt="">`).data("value", "");
+        $("#carrera-search").val("");
+        $("#resultados-carreras").html("");
+        $(".ver-todo-wrapper").remove();
+    });
+});
