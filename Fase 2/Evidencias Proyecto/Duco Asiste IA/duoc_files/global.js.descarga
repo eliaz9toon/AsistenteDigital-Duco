@@ -1,0 +1,210 @@
+function llenar_filtros_post_type() {
+	let filtros_post_type = [];
+	if ($('#check_carrera').is(":checked")) {
+		filtros_post_type.push($('#check_carrera').val());
+	}
+	if ($('#check_c').is(":checked")) {
+		filtros_post_type.push($('#check_c').val());
+	}
+
+	/* // if ($('.check_tipo_contenido').is(":checked")) {
+		$('.check_tipo_contenido:checked').each(function (index, value) {
+			console.log(index, value)
+			filtros_post_type.push($(value).attr('id'));
+		});
+	// } */
+
+	$(".check_tipo_contenido").each(function () {
+		if ($(this).prop('checked') == true) {
+			//do something
+			filtros_post_type = [...filtros_post_type, $(this).val()]
+		}
+	});
+
+	// filtros_post_type = [...filtros_post_type, $('.check_tipo_contenido:checked').val()]
+	// console.log(filtros_post_type)
+	return filtros_post_type;
+}
+
+function llenar_filtros_tax() {
+	let filtros_tax = [];
+
+	// if ($('.check_area').is(":checked")) {
+	$('.check_area:checked').each(function (index, value) {
+		// filtros_tax.push($(value).attr('id'));
+		filtros_tax.push({ id: $(value).attr('id'), taxonomy: $(value).data('taxonomy') });
+	});
+	// }
+
+	// if ($('.check_escuela').is(":checked")) {
+	$('.check_escuela:checked').each(function (index, value) {
+		filtros_tax.push({ id: $(value).attr('id'), taxonomy: $(value).data('taxonomy') });
+	});
+	// }
+	// if ($('.check_sede').is(":checked")) {
+	$('.check_sede:checked').each(function (index, value) {
+		filtros_tax.push({ id: $(value).attr('id'), taxonomy: $(value).data('taxonomy') });
+	});
+	// }
+	// if ($('.check_c_area').is(":checked")) {
+	$('.check_c_area:checked').each(function (index, value) {
+		filtros_tax.push({ id: $(value).attr('id'), taxonomy: $(value).data('taxonomy') });
+	});
+	// }
+	// console.log(filtros_tax)
+	return filtros_tax;
+}
+function llenar_filtros_meta() {
+	let filtros_meta = [];
+
+	// if ($('.check_modalidad').is(":checked")) {
+	$('.check_modalidad:checked').each(function (index, value) {
+		filtros_meta.push($(value).attr('id'));
+	});
+	// }
+	// console.log(filtros_meta);
+
+	return filtros_meta;
+}
+
+function llenar_filtros_post_type_2() {
+	let filtros_post_type = [];
+	if ($('#check_carrera').is(":checked")) {
+		filtros_post_type.push($('#check_carrera').val());
+	}
+	if ($('#check_c').is(":checked")) {
+		filtros_post_type.push($('#check_c').val());
+	}
+
+	// console.log(filtros_post_type)
+	return filtros_post_type;
+}
+
+function llenar_filtros_tax_2() {
+	let filtros_tax = [];
+
+	// if ($('.check_escuela').is(":checked")) {
+	$('.check_escuela:checked').each(function (index, value) {
+		filtros_tax.push({ id: $(value).attr('id'), taxonomy: $(value).data('taxonomy') });
+	});
+	// }
+	// if ($('.check_sede').is(":checked")) {
+	$('.check_sede:checked').each(function (index, value) {
+		filtros_tax.push({ id: $(value).attr('id'), taxonomy: $(value).data('taxonomy') });
+	});
+	// }
+
+	// if ($('.check_c_area').is(":checked")) {
+	$('.check_c_area:checked').each(function (index, value) {
+		filtros_tax.push({ id: $(value).attr('id'), taxonomy: $(value).data('taxonomy') });
+	});
+	// }
+	// console.log(filtros_tax)
+	return filtros_tax;
+}
+function llenar_filtros_meta_2() {
+	let filtros_meta = [];
+
+	// if ($('.check_modalidad').is(":checked")) {
+	$('.check_modalidad:checked').each(function (index, value) {
+		filtros_meta.push($(value).attr('id'));
+	});
+	// }
+
+	// console.log(filtros_meta)
+	return filtros_meta;
+}
+
+/* globals global */
+jQuery(function ($) {
+	var searchRequest;
+	$('.search-autocomplete').autoComplete({
+		minChars: 2,
+		source: function (term, suggest) {
+			try { searchRequest.abort(); } catch (e) { }
+			searchRequest = $.post(global.ajax, { search: term, tipo: 1, filtros_post_type: llenar_filtros_post_type(), filtros_meta: llenar_filtros_meta(), filtros_tax: llenar_filtros_tax(), action: 'search_site' }, function (res) {
+				suggest(res.data);
+				console.log(res)
+			});
+		},
+		renderItem: function (item, search){
+			console.log(item);
+			// console.log(item_filter);
+			// search = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+			// var re = new RegExp("(" + search.split(' ').join('|') + ")", "gi");
+			items = item.split('@');
+			return '<div class="autocomplete-suggestion" data-valor-url="'+items[1]+'" data-valor-texto="'+items[0]+'">'+items[0]+'</div>';
+		},
+		onSelect: function(e,term,item) {
+			console.log(item[0].innerText);
+			// alert('a')
+			// window.location.href = $(".autocomplete-suggestion[data-valor-texto='"+item[0].innerText+"']").attr("data-valor-url")
+			window.location.href = item[0].dataset.valorUrl;
+			// alert('Item "'+item.data('langname')+' ('+item.data('lang')+')" selected by '+(e.type == 'keydown' ? 'pressing enter' : 'mouse click')+'.');
+		}
+		
+	});
+
+
+	$('.search-autocomplete-2').autoComplete({
+		minChars: 2,
+		source: function (term, suggest) {
+			try { searchRequest.abort(); } catch (e) { }
+
+			searchRequest = $.post(global.ajax, { search: term, tipo: 2, action: 'search_site' }, function (res) {
+
+				suggest(res.data);
+
+			});
+		},
+		renderItem: function (item, search){
+			console.log(item);
+			// console.log(item_filter);
+			// search = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+			// var re = new RegExp("(" + search.split(' ').join('|') + ")", "gi");
+			// Pre cambio
+			/* items = item.split('@');
+			return '<div class="autocomplete-suggestion" data-valor-url="'+items[1]+'" data-valor-texto="'+items[0]+'">'+items[0]+'</div>'; */
+
+			// Post cambio
+			items = item.split('@');
+			return '<div class="autocomplete-suggestion" data-valor-url="'+items[1]+'" data-valor-texto="'+items[0]+'">'+items[0]+'</div>';
+		},
+		onSelect: function(e,term,item) {
+			console.log(item[0].innerText);
+			// alert('a')
+			// PRE
+			// window.location.href = $(".autocomplete-suggestion[data-valor-texto='"+item[0].innerText+"']").attr("data-valor-url")
+			window.location.href = item[0].dataset.valorUrl;
+			// alert('Item "'+item.data('langname')+' ('+item.data('lang')+')" selected by '+(e.type == 'keydown' ? 'pressing enter' : 'mouse click')+'.');
+			 }
+	}).click(function (e) {
+		console.log(e)
+		// $('.dropdown-busqueda-qwe').parent().toggleClass('open');
+	});
+});
+
+$("#arancelesSedesLink").click(function(e){
+	e.preventDefault();
+	$("#first").tab('show');
+
+	setTimeout(() => {
+		var element = document.getElementById('sedes-aranceles');
+		if (element) {
+			element.scrollIntoView({ behavior: 'smooth' });
+		}
+	}, 250)
+});
+
+$(document).ready(function() {
+	if (window.location.hash === '#sedes-aranceles') {
+		$("#first").tab('show');
+
+		setTimeout(() => {
+			var element = document.getElementById('sedes-aranceles');
+			if (element) {
+				element.scrollIntoView({ behavior: 'smooth' });
+			}
+		}, 250)
+	}
+});

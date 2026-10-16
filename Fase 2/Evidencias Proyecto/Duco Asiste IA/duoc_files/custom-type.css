@@ -1,0 +1,271 @@
+/*Google Fonts * /
+@import url('https://fonts.googleapis.com/css?family=Merriweather:300,400,700,900&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700,900&display=swap');
+
+
+/*TIPOGRAFÍAS*/
+
+h1,
+h2, 
+h3, 
+h4, 
+h5 {
+    font-family: 'Merriweather', serif;
+    font-weight: 300;
+    margin-bottom: 20px;
+}
+
+.bg-dark h1,
+.bg-dark h2, 
+.bg-dark h3, 
+.bg-dark h4, 
+.bg-dark h5,
+.bg-dark small,
+.bg-dark p,
+h1.dark,
+h2.dark,
+h3.dark,
+h4.dark,
+h5.dark,
+small.dark,
+p.dark {
+    color: white !important;
+    font-weight: 300;
+}
+
+h5.dark b {
+    color: white !important;
+}
+p { font-size: .8125rem; }
+
+h1 {
+    font-size: 1.8rem;
+}
+
+h2 { 
+    font-size: 1.4rem; 
+    line-height: 1.8rem; 
+}
+h3 { 
+    font-size: 1.2rem; 
+
+}
+h4 { 
+    font-size: 1rem; 
+}
+h5 { 
+    font-size: .8125rem;
+    line-height: unset;
+}
+
+small,
+.place p { 
+    font-size: 0.7rem;
+    display: flex;
+    align-items: baseline
+}
+
+
+p a {
+    color: inherit;
+    text-decoration: none;
+    background-color: transparent;
+    font-weight: bold;
+    font-style: italic;
+    text-decoration: underline;
+    padding: 0 .25rem;
+}
+
+small svg,
+.place p svg {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    margin-right: 7px;
+}
+
+b {
+    font-weight: 700;
+}
+
+.heading{
+    border-bottom: solid 1px rgba(255, 184, 0, 1) !important;
+    padding-left: 0;
+    padding-bottom: 0px;
+    margin-bottom: 15px;
+    border-width: 0 0 1px 0;
+    border-radius: 0;
+    width: 100%;
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.heading h3{
+    color: rgba(255, 184, 0, 1) !important;
+    border-bottom: solid 8px rgba(255, 184, 0, 1) !important;
+    padding-bottom: 10px;
+    margin-bottom: 0;
+    display: inline-flex;
+
+}
+.heading svg {
+    /* fill: rgba(255, 184, 0, 1); */
+    stroke: rgba(255, 184, 0, 1);
+} 
+
+.heading[aria-expanded="false"] svg {
+    -moz-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+
+
+.bajada {
+    color: #666666;
+}
+
+.single-proyecto_post_type .font-controls {
+    top: 0 !important;
+}
+
+@media (min-width: 992px) {
+
+    .single-evento_post_type .font-controls{
+        position: absolute;
+        top: -30px;
+        right: 0;
+        display: flex;
+    }
+    
+
+     p { font-size: 1rem;}
+    
+     h1 {
+        font-size: 2.6875rem;
+        /* font-size: 3rem; */
+    }
+    
+    h2 { 
+        font-size: 2.1rem; 
+        /* font-size: 2.4rem; */
+        line-height: 2.86rem;  
+    }
+    h3 { 
+        font-size: 1.5rem; 
+        /* font-size: 1.7rem; */
+    }
+    h4 { 
+        font-size: 1.25rem; 
+        /* font-size: 1.4rem; */
+    }
+    h5 { 
+        font-size: 1rem; 
+    }
+
+    
+    small,
+    .place p { 
+        font-size: 0.8125rem;
+        /* font-size: 0.92rem; */
+        display: flex;
+        align-items: baseline
+    }
+    
+    small svg,
+    .place p svg {
+        flex-shrink: 0;
+        width: 16px;
+        height: 16px;
+        margin-right: 7px;
+    }
+    
+    small svg,
+        .place p svg {
+            flex-shrink: 0;
+            width: 16px;
+            height: 16px;
+            margin-right: 7px;
+        }
+        
+    
+    p {
+        font-size: 1rem;
+    }
+
+    .heading svg {
+        display: none;
+    }
+}
+
+
+
+/*iconos*/
+.icon-inside-circle {
+    padding: 10px;
+    box-sizing: content-box;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+
+/* Aumento y disminución tipografía*/
+
+:root {
+    --font-size: 1;
+}
+.container-narrow .text-block p {
+    font-size: calc(var(--font-size) * 1em)
+}
+
+.font-controls {
+    position: absolute;
+    top: 40px; 
+    right: 0;
+    display: flex;
+  }
+
+  
+  .font-control {
+    margin-left: 10px !important;
+    cursor: pointer;
+    height: 50px;
+    width: 50px !important;
+    justify-content: center !important;
+    align-items: center !important;
+    display: flex !important;
+    line-height: normal !important;
+    padding: 0 !important;
+  }
+
+  .btn-primary.font-control {
+      padding-right: 0 !important;
+  }
+
+  .font-control::after,
+  .font-control:hover::after,
+  .font-control:focus::after,
+  .font-control:active::after {
+      display: none;
+  }
+
+  
+
+  .font-control span {
+      font-size: 20px;
+      line-height: normal;
+  }
+
+  @media (max-width: 991px) {
+    .font-controls {
+        position: relative;
+        top: 0;
+        right: 0;
+        justify-content: flex-end;
+    }
+  }
