@@ -1,0 +1,514 @@
+
+/*COLORES ESCUELAS*/
+
+.icon-circle.E-AyF  { background: linear-gradient(-45deg, rgba(149, 33, 178, 0) 50%, rgba(149, 33, 178, 1) 50%);} /* Administración y Finanzas*/
+
+
+/* Colores de escuela en círculo en categoría */
+
+.icon-circle.E-AyF  { background:  rgba(149, 33, 178, 1);} /* Administración y Finanzas*/
+
+.icon-circle.E-Com { background:  rgba(191, 2, 73, 1);} /* Comunicaciones */
+
+.icon-circle.E-Cons { background: rgba(247, 139, 48, 1);} /* Construcción */
+
+.icon-circle.E-Dis  { background: rgba(189, 198, 1, 1) ;} /* Diseño */
+
+.icon-circle.E-IyT { background:  rgba(147, 147, 147,1);} /* Informática y Telecomunicaciones */
+
+.icon-circle.E-Ing  { background: rgba(19, 44, 170, 1);} /* Ingeniería */
+
+.icon-circle.E-RN { background: rgba(43, 145, 65, 1) ;} /* Recursos Naturales */
+
+.icon-circle.E-Sal { background: rgba(55, 167, 198, 1);} /* Salud */
+
+.icon-circle.E-Tur { background:  rgba(60, 184, 193, 1);} /* Turismo */
+
+/* Gradientes diagonales (Triangulo Fechas Eventos)- Escuela */
+
+.E-AyF .card .date.into-list ,
+.E-AyF .card .date ,
+.escuela.E-AyF:before  { background: linear-gradient(-45deg, rgba(149, 33, 178, 0) 50%, rgba(149, 33, 178, 1) 50%);} /* Administración y Finanzas*/
+
+.E-Com .card .date ,
+.E-Com .card .date.into-list ,
+.escuela.E-Com:before  { background: linear-gradient(-45deg, rgba(191, 2, 73, 0) 50%, rgba(191, 2, 73, 1) 50%);} /* Comunicaciones */
+
+.E-Cons .card .date ,
+.E-Cons .card .date.into-list ,
+.escuela.E-Cons:before { background: linear-gradient(-45deg, rgba(247, 139, 48,0) 50%, rgba(247, 139, 48, 1) 50%);} /* Construcción */
+
+.E-Dis .card .date ,
+.E-Dis .card .date.into-list ,
+.escuela.E-Dis:before  { background: linear-gradient(-45deg, rgba(189, 198, 1,0) 50%, rgba(189, 198, 1, 1) 50%);} /* Diseño */
+
+.E-IyT .card .date ,
+.E-IyT .card .date.into-list ,
+.escuela.E-IyT:before  { background: linear-gradient(-45deg, rgba(147, 147, 147,0) 50%, rgba(147, 147, 147,1) 50%);} /* Informática y Telecomunicaciones */
+
+.E-Ing .card .date ,
+.E-Ing .card .date.into-list ,
+.escuela.E-Ing:before  { background: linear-gradient(-45deg, rgba(19, 44, 170, 0) 50%, rgba(19, 44, 170, 1) 50%);} /* Ingeniería */
+
+.E-RN .card .date ,
+.E-RN .card .date.into-list ,
+.escuela.E-RN:before   { background: linear-gradient(-45deg, rgba(43, 145, 65,0) 50%, rgba(43, 145, 65, 1) 50%);} /* Recursos Naturales */
+
+.E-Sal .card .date ,
+.E-Sal .card .date.into-list , 
+.escuela.E-Sal:before  { background: linear-gradient(-45deg, rgba(55, 167, 198, 0) 50%, rgba(55, 167, 198, 1) 50%);} /* Salud */
+
+.E-Tur .card .date, 
+.E-Tur .card .date.into-list ,
+.escuela.E-Tur:before  { background: linear-gradient(-45deg, rgba(60, 184, 193,0) 50%, rgba(60, 184, 193, 1) 50%);} /* Turismo */
+
+
+
+/*COLORES*/
+
+/* Navbar Secondary - Escuelas - Páginas Interiores*/
+
+.E-AyF .content-container .navbar-secondary .nav-item.active a { background: rgba(149, 33, 178, 1);} /* Administración y Finanzas*/
+.E-Com .content-container .navbar-secondary .nav-item.active a { background: rgba(191, 2, 73, 1);} /* Comunicaciones */
+.E-Cons .content-container .navbar-secondary .nav-item.active a { background: rgba(247, 139, 48, 1);} /* Construcción */
+.E-Dis .content-container .navbar-secondary .nav-item.active a { background: rgba(189, 198, 1, 1);} /* Diseño */
+.E-IyT .content-container .navbar-secondary .nav-item.active a { background: rgba(147, 147, 147,1);} /* Informática y Telecomunicaciones */
+.E-Ing .content-container .navbar-secondary .nav-item.active a { background: rgba(19, 44, 170, 1);} /* Ingeniería */
+.E-RN .content-container .navbar-secondary .nav-item.active a { background: rgba(43, 145, 65, 1);} /* Recursos Naturales */
+.E-Sal .content-container .navbar-secondary .nav-item.active a { background: rgba(55, 167, 198, 1);} /* Salud */
+.E-Tur .content-container .navbar-secondary .nav-item.active a { background: rgba(60, 184, 193, 1);} /* Turismo */
+
+/* Colores Antiguos porpuestos por Axity previo cambio de Duoc */
+
+/*.E-AyF .content-container .navbar-secondary .nav-item.active a { background: rgba(103, 43, 143, 1);} /* Administración y Finanzas
+.E-Com .content-container .navbar-secondary .nav-item.active a { background: rgba(225, 53, 51,1);} /* Comunicaciones 
+.E-Cons .content-container .navbar-secondary .nav-item.active a { background: rgba(240, 117, 57,1);} /* Construcción 
+.E-Dis .content-container .navbar-secondary .nav-item.active a { background: rgba(187, 226, 67,1);} /* Diseño 
+.E-IyT .content-container .navbar-secondary .nav-item.active a { background: rgba(147, 147, 147,1);} /* Informática y Telecomunicaciones 
+.E-Ing .content-container .navbar-secondary .nav-item.active a { background: rgba(51, 72, 206,1);} /* Ingeniería 
+.E-RN .content-container .navbar-secondary .nav-item.active a { background: rgba(90, 141, 36,1);} /* Recursos Naturales 
+.E-Sal .content-container .navbar-secondary .nav-item.active a { background: rgba(110, 188, 241,1);} /* Salud 
+.E-Tur .content-container .navbar-secondary .nav-item.active a { background: rgba(72, 207, 241,1);} /* Turismo */
+
+
+.E-AyF .content-container .navbar-secondary .nav-item.active:before,
+.E-Com .content-container .navbar-secondary .nav-item.active:before,
+.E-Cons .content-container .navbar-secondary .nav-item.active:before,
+.E-Dis .content-container .navbar-secondary .nav-item.active:before,
+.E-IyT .content-container .navbar-secondary .nav-item.active:before,
+.E-Ing .content-container .navbar-secondary .nav-item.active:before,
+.E-RN .content-container .navbar-secondary .nav-item.active:before,
+.E-Sal .content-container .navbar-secondary .nav-item.active:before,
+.E-Tur .content-container .navbar-secondary .nav-item.active:before {
+    width: 100%;
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    content: '';
+}
+
+.E-AyF .content-container .navbar-secondary .nav-item.active:before {border-bottom: solid 10px rgba(149, 33, 178, 1);}
+.E-Com .content-container .navbar-secondary .nav-item.active:before {border-bottom: solid 10px rgba(191, 2, 73, 1);}
+.E-Cons .content-container .navbar-secondary .nav-item.active:before {border-bottom: solid 10px rgba(247, 139, 48, 1);}
+.E-Dis .content-container .navbar-secondary .nav-item.active:before {border-bottom: solid 10px rgba(189, 198, 1, 1);}
+.E-IyT .content-container .navbar-secondary .nav-item.active:before {border-bottom: solid 10px rgba(147, 147, 147,1);}
+.E-Ing .content-container .navbar-secondary .nav-item.active:before {border-bottom: solid 10px rgba(19, 44, 170, 1);}
+.E-RN .content-container .navbar-secondary .nav-item.active:before {border-bottom: solid 10px rgba(43, 145, 65, 1);}
+.E-Sal .content-container .navbar-secondary .nav-item.active:before {border-bottom: solid 10px rgba(55, 167, 198, 1);}
+.E-Tur .content-container .navbar-secondary .nav-item.active:before {border-bottom: solid 10px rgba(60, 184, 193, 1);}
+
+
+
+/* Gradiente Banner Top - Escuelas - Páginas interiores */
+.E-AyF .inner-top-banner .wrapper-on-top-image.dark-layer  { 
+    background: linear-gradient(-45deg, rgba(149, 33, 178, .9) 0%, rgba(149, 33, 178, .5) 100%);
+}
+
+.E-Com .inner-top-banner .wrapper-on-top-image.dark-layer  { 
+    background: linear-gradient(-45deg, rgba(191, 2, 73, .9) 0%, rgba(149, 33, 178, .5) 100%);
+}
+
+.E-Cons .inner-top-banner .wrapper-on-top-image.dark-layer  { 
+    background: linear-gradient(-45deg, rgba(247, 139, 48, .9) 0%, rgba(247, 139, 48, .5) 100%);
+}
+
+.E-Dis .inner-top-banner .wrapper-on-top-image.dark-layer  { 
+    background: linear-gradient(-45deg, rgba(189, 198, 1, .9) 0%, rgba(189, 198, 1, .5) 100%);
+}
+
+.E-IyT .inner-top-banner .wrapper-on-top-image.dark-layer  { 
+    background: linear-gradient(-45deg, rgba(147, 147, 147, .9) 0%, rgba(147, 147, 147, .5) 100%);
+}
+
+.E-Ing .inner-top-banner .wrapper-on-top-image.dark-layer  { 
+    background: linear-gradient(-45deg, rgba(19, 44, 170, .9) 0%, rgba(19, 44, 170, .5) 100%);
+}
+
+.E-RN .inner-top-banner .wrapper-on-top-image.dark-layer  { 
+    background: linear-gradient(-45deg, rgba(43, 145, 65, .9) 0%, rgba(43, 145, 65, .5) 100%);
+}
+
+.E-Sal .inner-top-banner .wrapper-on-top-image.dark-layer  { 
+    background: linear-gradient(-45deg, rgba(55, 167, 198, .9) 0%, rgba(55, 167, 198, .5) 100%);
+}
+
+.E-Tur .inner-top-banner .wrapper-on-top-image.dark-layer  { 
+    background: linear-gradient(-45deg, rgba(60, 184, 193, .9) 0%, rgba(60, 184, 193, .5) 100%);
+}
+
+
+
+/* Bordes izquierdos titulos - Escuelas - Páginas Interiores*/
+
+.E-AyF .border-escuela.sm { border-left: solid 4px rgba(149, 33, 178, 1) !important;}
+.E-Com .border-escuela.sm { border-left: solid 4px rgba(191, 2, 73, 1) !important;}
+.E-Cons .border-escuela.sm { border-left: solid 4px rgba(247, 139, 48, 1) !important;}
+.E-Dis .border-escuela.sm { border-left: solid 4px rgba(189, 198, 1, 1) !important;}
+.E-IyT .border-escuela.sm { border-left: solid 4px rgba(147, 147, 147,1) !important;}
+.E-Ing .border-escuela.sm { border-left: solid 4px rgba(19, 44, 170, 1) !important;}
+.E-RN .border-escuela.sm { border-left: solid 4px rgba(43, 145, 65, 1) !important;}
+.E-Sal .border-escuela.sm { border-left: solid 4px rgba(55, 167, 198, 1) !important;}
+.E-Tur .border-escuela.sm { border-left: solid 4px rgba(60, 184, 193, 1) !important;}
+
+.E-AyF .border-escuela.lg { border-left: solid 40px rgba(149, 33, 178, 1) !important;}
+.E-Com .border-escuela.lg { border-left: solid 40px rgba(191, 2, 73, 1) !important;}
+.E-Cons .border-escuela.lg { border-left: solid 40px rgba(247, 139, 48, 1) !important;}
+.E-Dis .border-escuela.lg { border-left: solid 40px rgba(189, 198, 1, 1) !important;}
+.E-IyT .border-escuela.lg { border-left: solid 40px rgba(147, 147, 147,1) !important;}
+.E-Ing .border-escuela.lg { border-left: solid 40px rgba(19, 44, 170, 1) !important;}
+.E-RN .border-escuela.lg { border-left: solid 40px rgba(43, 145, 65, 1) !important;}
+.E-Sal .border-escuela.lg { border-left: solid 40px rgba(55, 167, 198, 1) !important;}
+.E-Tur .border-escuela.lg { border-left: solid 40px rgba(60, 184, 193, 1) !important;}
+
+
+
+/* Bloque Tour Virtual - Escuelas*/
+
+.E-AyF .tour-icon { background: rgba(149, 33, 178, 1) !important;}
+.E-Com .tour-icon { background: rgba(191, 2, 73, 1) !important;}
+.E-Cons .tour-icon { background: rgba(247, 139, 48, 1) !important;}
+.E-Dis .tour-icon { background: rgba(189, 198, 1, 1) !important;}
+.E-IyT .tour-icon { background: rgba(147, 147, 147,1) !important;}
+.E-Ing .tour-icon { background: rgba(19, 44, 170, 1) !important;}
+.E-RN .tour-icon { background: rgba(43, 145, 65, 1) !important;}
+.E-Sal .tour-icon { background: rgba(55, 167, 198, 1) !important;}
+.E-Tur .tour-icon { background: rgba(60, 184, 193, 1) !important;}
+
+
+
+/* Navbar Tabs - Escuelas - Páginas interiores */
+
+.E-AyF .nav-tabs .nav-item.active:before { border-color: rgba(149, 33, 178, 1); }
+.E-Com .nav-tabs .nav-item.active:before { border-color: rgba(191, 2, 73, 1); }
+.E-Cons .nav-tabs .nav-item.active:before { border-color: rgba(247, 139, 48, 1);}
+.E-Dis .nav-tabs .nav-item.active:before { border-color: rgba(189, 198, 1, 1);}
+.E-IyT .nav-tabs .nav-item.active:before { border-color: rgba(147, 147, 147,1);}
+.E-Ing .nav-tabs .nav-item.active:before { border-color: rgba(19, 44, 170, 1);}
+.E-RN .nav-tabs .nav-item.active:before { border-color: rgba(43, 145, 65, 1);}
+.E-Sal .nav-tabs .nav-item.active:before { border-color: rgba(55, 167, 198, 1);}
+.E-Tur .nav-tabs .nav-item.active:before { border-color: rgba(60, 184, 193, 1);}
+
+
+
+/* Paginador - Escuelas - Páginas interiores*/
+
+.E-AyF .pagination .active .page-link {
+    border-color: rgba(149, 33, 178, 1) ;
+    color: rgba(149, 33, 178, 1);
+}
+
+.E-Com .pagination .active .page-link {
+    border-color: rgba(191, 2, 73, 1) ;
+    color: rgba(191, 2, 73, 1);
+}
+
+.E-Cons .pagination .active .page-link {
+    border-color: rgba(247, 139, 48, 1) ;
+    color: rgba(247, 139, 48, 1);
+}
+
+.E-Dis .pagination .active .page-link {
+    border-color: rgba(189, 198, 1, 1) ;
+    color: rgba(189, 198, 1, 1);
+}
+
+.E-IyT .pagination .active .page-link {
+    border-color: rgba(147, 147, 147,1) ;
+    color: rgba(147, 147, 147,1);
+}
+
+.E-Ing .pagination .active .page-link {
+    border-color: rgba(19, 44, 170, 1) ;
+    color: rgba(19, 44, 170, 1);
+}
+
+.E-RN .pagination .active .page-link {
+    border-color: rgba(43, 145, 65, 1) ;
+    color: rgba(43, 145, 65, 1);
+}
+
+.E-Sal .pagination .active .page-link {
+    border-color: rgba(55, 167, 198, 1) ;
+    color: rgba(55, 167, 198, 1);
+}
+
+.E-Tur .pagination .active .page-link {
+    border-color: rgba(60, 184, 193, 1) ;
+    color: rgba(60, 184, 193, 1);
+}
+
+
+
+
+/* Fechas de Eventos */
+
+.E-AyF .card .date ,
+.E-Com .card .date ,
+.E-Cons .card .date ,
+.E-Dis .card .date ,
+.E-IyT .card .date ,
+.E-Ing .card .date ,
+.E-RN .card .date ,
+.E-Sal .card .date ,
+.E-Tur .card .date,
+.E-AyF .card .date.into-list ,
+.E-Com .card .date.into-list ,
+.E-Cons .card .date.into-list ,
+.E-Dis .card .date.into-list ,
+.E-IyT .card .date.into-list ,
+.E-Ing .card .date.into-list ,
+.E-RN .card .date.into-list ,
+.E-Sal .card .date.into-list { color: #ffffff !important;}
+
+
+
+/*LG*/
+@media (min-width: 992px) {
+
+    .E-AyF .card .date.into-list ,
+    .E-Com .card .date.into-list ,
+    .E-Cons .card .date.into-list ,
+    .E-Dis .card .date.into-list ,
+    .E-IyT .card .date.into-list ,
+    .E-Ing .card .date.into-list ,
+    .E-RN .card .date.into-list ,
+    .E-Sal .card .date.into-list { color: #ffffff !important;}
+
+    .E-AyF .card .date.into-list { background: linear-gradient(-45deg, rgba(149, 33, 178, 0) 50%, rgba(149, 33, 178, 1) 50%);} /* Administración y Finanzas*/
+
+    .E-Com .card .date.into-list { background: linear-gradient(-45deg, rgba(191, 2, 73, 0) 50%, rgba(191, 2, 73, 1) 50%);} /* Comunicaciones */
+
+    .E-Cons .card .date.into-list { background: linear-gradient(-45deg, rgba(247, 139, 48,0) 50%, rgba(247, 139, 48, 1) 50%);} /* Construcción */
+
+    .E-Dis .card .date.into-list { background: linear-gradient(-45deg, rgba(189, 198, 1,0) 50%, rgba(189, 198, 1, 1) 50%);} /* Diseño */
+
+    .E-IyT .card .date.into-list { background: linear-gradient(-45deg, rgba(147, 147, 147,0) 50%, rgba(147, 147, 147,1) 50%);} /* Informática y Telecomunicaciones */
+
+    .E-Ing .card .date.into-list { background: linear-gradient(-45deg, rgba(19, 44, 170, 0) 50%, rgba(19, 44, 170, 1) 50%);} /* Ingeniería */
+
+    .E-RN .card .date.into-list { background: linear-gradient(-45deg, rgba(43, 145, 65,0) 50%, rgba(43, 145, 65, 1) 50%);} /* Recursos Naturales */
+
+    .E-Sal .card .date.into-list { background: linear-gradient(-45deg, rgba(55, 167, 198, 0) 50%, rgba(55, 167, 198, 1) 50%);} /* Salud */
+
+    .E-Tur .card .date.into-list{ background: linear-gradient(-45deg, rgba(60, 184, 193,0) 50%, rgba(60, 184, 193, 1) 50%);} /* Turismo */
+
+
+}
+
+/* Badges escuelas*/
+
+/*badges escuelas - iconos grilla escuelas */
+
+.badge.escuela {
+    background-size: 24px !important;
+    background-position: center 15px !important;
+}
+
+.grow-badge .badge {
+    background-size: 16px !important;
+    background-position: 10px !important;
+}
+
+.badge.escuela,
+.grow-badge .badge {
+    background-repeat: no-repeat !important;
+
+}
+
+.grow-badge .badge svg,
+.badge.escuela svg {
+    opacity: 0;
+}
+
+.badge.escuela.E-AyF,
+.grow-badge .badge.E-AyF,
+.grow-badge .badge.E-AyF:hover,
+.E-AyF .badge.escuela { 
+     background: rgba(149, 33, 178, 1) url('https://api.iconify.design/feather:bar-chart.svg?color=rgba(255%2C255%2C255%2C1)')  ;
+    }
+
+.badge.escuela.E-Com, 
+.grow-badge .badge.E-Com,
+.grow-badge .badge.E-Com:hover,
+.E-Com .badge.escuela { 
+    background: rgba(191, 2, 73, 1) url('https://api.iconify.design/feather:message-square.svg?color=rgba(255%2C255%2C255%2C1)') ;
+    }
+
+.badge.escuela.E-Cons, 
+.grow-badge .badge.E-Cons,
+.grow-badge .badge.E-Cons:hover,
+.E-Cons .badge.escuela   { 
+    background:  rgba(247, 139, 48, 1) url('https://api.iconify.design/feather:box.svg?color=rgba(255%2C255%2C255%2C1)') ;
+}
+
+.badge.escuela.E-Dis, 
+.grow-badge .badge.E-Dis,
+.grow-badge .badge.E-Dis:hover,
+.E-Dis .badge.escuela { 
+    background: rgba(189, 198, 1, 1) url('https://api.iconify.design/feather:zap.svg?color=rgba(255%2C255%2C255%2C1)') ;
+}
+
+.badge.escuela.E-IyT,
+.grow-badge .badge.E-IyT,
+.grow-badge .badge.E-IyT:hover, 
+.E-IyT .badge.escuela { 
+    background:rgba(147, 147, 147, 1) url('https://api.iconify.design/feather:code.svg?color=rgba(255%2C255%2C255%2C1)') ;
+}
+
+.badge.escuela.E-Ing, 
+.grow-badge .badge.E-Ing,
+.grow-badge .badge.E-Ing:hover, 
+.E-Ing .badge.escuela  { 
+    background: rgba(19, 44, 170, 1) url('https://api.iconify.design/feather:target.svg?color=rgba(255%2C255%2C255%2C1)');
+}
+
+.badge.escuela.E-RN, 
+.grow-badge .badge.E-RN,
+.grow-badge .badge.E-RN:hover, 
+.E-RN .badge.escuela  { 
+    background: rgba(43, 145, 65, 1) url('https://api.iconify.design/feather:feather.svg?color=rgba(255%2C255%2C255%2C1)');
+}
+
+.badge.escuela.E-Sal, 
+.grow-badge .badge.E-Sal,
+.grow-badge .badge.E-Sal:hover,
+.E-Sal .badge.escuela { 
+    background: rgba(55, 167, 198, 1) url('https://api.iconify.design/feather:activity.svg?color=rgba(255%2C255%2C255%2C1)');
+}
+
+.badge.escuela.E-Tur, 
+.grow-badge .badge.E-Tur,
+.grow-badge .badge.E-Tur:hover,
+.E-Tur .badge.escuela { 
+    background: rgba(60, 184, 193, 1) url('https://api.iconify.design/feather:map.svg?color=rgba(255%2C255%2C255%2C1)'); 
+}
+
+/* Color de fondo para escuelas */
+.E-AyN-New-Fondo {
+    background-color: #AC4FC6 !important;
+}
+
+.E-Com-New-Fondo {
+    background-color: #D50032 !important;
+}
+
+.E-Cons-New-Fondo {
+    background-color: #E87722 !important;
+}
+
+.E-Dis-New-Fondo {
+    background-color: #C4D600 !important;
+}
+.E-Gas-Fondo {
+    background-color: #FF585D !important;
+}
+.E-IyT-New-Fondo {
+    background-color: #307FE2 !important;
+}
+
+.E-Ing-New-Fondo {
+    background-color: #43B02A !important;
+}
+
+/* .E-RN-New-Fondo {
+    background-color: #2B9141 !important;
+} */
+
+.E-Sal-New-Fondo {
+    background-color: #5BC2E7 !important;
+}
+
+.E-Tur-New-Fondo {
+    background-color: #00A499 !important;
+}
+/* Color de fondo para escuelas */
+/* Color e icono para bloque escuelas cpn carreras*/
+.badge.escuela.E-AyN-New-icon,
+.grow-badge .badge.E-AyN-New-icon,
+.grow-badge .badge.E-AyN-New-icon:hover,
+.E-AyN-New-icon .badge.escuela {
+     background: rgba(172, 79, 198, 1) url('https://api.iconify.design/feather:bar-chart.svg?color=rgba(255%2C255%2C255%2C1)');
+    }
+    
+.badge.escuela.E-Com-New-icon,
+.grow-badge .badge.E-Com-New-icon,
+.grow-badge .badge.E-Com-New-icon:hover,
+.E-Com-New-icon .badge.escuela {
+     background: rgba(213, 0, 50, 1) url('https://api.iconify.design/feather:message-square.svg?color=rgba(255%2C255%2C255%2C1)');
+    }
+
+.badge.escuela.E-Cons-New-icon,
+.grow-badge .badge.E-Cons-New-icon,
+.grow-badge .badge.E-Cons-New-icon:hover,
+.E-Cons-New-icon .badge.escuela {
+     background: rgba(232, 119, 34, 1) url('https://api.iconify.design/feather:box.svg?color=rgba(255%2C255%2C255%2C1)');
+    }
+.badge.escuela.E-Dis-New-icon,
+.grow-badge .badge.E-Dis-New-icon,
+.grow-badge .badge.E-Dis-New-icon:hover,
+.E-Dis-New-icon .badge.escuela {
+     background: rgba(196, 214, 0, 1) url('https://api.iconify.design/feather:zap.svg?color=rgba(255%2C255%2C255%2C1)');
+    }
+
+.badge.escuela.E-Gas-icon,
+.grow-badge .badge.E-Gas-icon,
+.grow-badge .badge.E-Gas-icon:hover,
+.E-Gas-icon .badge.escuela {
+     background: rgba(255, 88, 93, 1) url('https://api.iconify.design/feather:award.svg?color=rgba(255%2C255%2C255%2C1)');
+    }
+.badge.escuela.E-IyT-New-icon,
+.grow-badge .badge.E-IyT-New-icon,
+.grow-badge .badge.E-IyT-New-icon:hover,
+.E-IyT-New-icon .badge.escuela {
+     background: rgba(48, 127, 226, 1) url('https://api.iconify.design/feather:code.svg?color=rgba(255%2C255%2C255%2C1)');
+    }
+
+/* .badge.escuela.E-RN-New-icon,
+.grow-badge .badge.E-RN-New-icon,
+.grow-badge .badge.E-RN-New-icon:hover,
+.E-RN-New-icon .badge.escuela {
+     background: rgba(43, 145, 65, 1) url('	https://api.iconify.design/feather:sun.svg?color=rgba(255%2C255%2C255%2C1)');
+    } */
+.badge.escuela.E-Ing-New-icon,
+.grow-badge .badge.E-Ing-New-icon,
+.grow-badge .badge.E-Ing-New-icon:hover,
+.E-Ing-New-icon .badge.escuela {
+     background:  rgba(67, 176, 42, 1) url('https://api.iconify.design/feather:sun.svg?color=rgba(255%2C255%2C255%2C1)');
+    }
+
+.badge.escuela.E-Sal-New-icon,
+.grow-badge .badge.E-Sal-New-icon,
+.grow-badge .badge.E-Sal-New-icon:hover,
+.E-Sal-New-icon .badge.escuela {
+     background: rgba(91, 194, 231, 1) url('https://api.iconify.design/feather:activity.svg?color=rgba(255%2C255%2C255%2C1)');
+                                                
+    }
+
+.badge.escuela.E-Tur-New-icon,
+.grow-badge .badge.E-Tur-New-icon,
+.grow-badge .badge.E-Tur-New-icon:hover,
+.E-Tur-New-icon .badge.escuela {
+     background: rgba(0, 164, 153, 1) url('https://api.iconify.design/feather:map.svg?color=rgba(255%2C255%2C255%2C1)');
+    }
+/* Color e icono para bloque escuelas cpn carreras*/
+
