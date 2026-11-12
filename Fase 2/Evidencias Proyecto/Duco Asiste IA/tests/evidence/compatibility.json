@@ -1,0 +1,158 @@
+{
+  "date": "2026-11-05T00:41:15.037Z",
+  "physicalDevicesTested": false,
+  "browsers": [
+    {
+      "name": "Chromium",
+      "checks": [
+        "Keyboard open, focused input, Enter submission and differentiated messages",
+        "Real browser fetch/CORS connection to local Ollama",
+        "Session Storage and rendered messages survive navigation and reload",
+        "Desktop dropdown, close, carousel activation, scroll to top and text marker",
+        "320/375/600px simulated viewports: panel within screen and touch-sized send control",
+        "Escape closes panel and restores keyboard focus",
+        "Simulated touch: launcher, send, close and reopen at 375px",
+        "Duco Admin UI: create, list, edit and delete temporary real Oracle record"
+      ],
+      "version": "151.0.7922.34",
+      "mobile": [
+        {
+          "width": 320,
+          "panelLeft": 8,
+          "panelRight": 312,
+          "panelTop": 104,
+          "panelBottom": 804,
+          "sendWidth": 48,
+          "sendHeight": 48,
+          "overflow": false
+        },
+        {
+          "width": 375,
+          "panelLeft": 8,
+          "panelRight": 367,
+          "panelTop": 104,
+          "panelBottom": 804,
+          "sendWidth": 48,
+          "sendHeight": 48,
+          "overflow": false
+        },
+        {
+          "width": 600,
+          "panelLeft": 8,
+          "panelRight": 592,
+          "panelTop": 104,
+          "panelBottom": 804,
+          "sendWidth": 48,
+          "sendHeight": 48,
+          "overflow": false
+        }
+      ],
+      "passed": true,
+      "cleanup": true
+    },
+    {
+      "name": "Microsoft Edge",
+      "checks": [
+        "Keyboard open, focused input, Enter submission and differentiated messages",
+        "Real browser fetch/CORS connection to local Ollama",
+        "Session Storage and rendered messages survive navigation and reload",
+        "Desktop dropdown, close, carousel activation, scroll to top and text marker",
+        "320/375/600px simulated viewports: panel within screen and touch-sized send control",
+        "Escape closes panel and restores keyboard focus",
+        "Simulated touch: launcher, send, close and reopen at 375px",
+        "Duco Admin UI: create, list, edit and delete temporary real Oracle record"
+      ],
+      "version": "156.0.4314.58",
+      "mobile": [
+        {
+          "width": 320,
+          "panelLeft": 8,
+          "panelRight": 312,
+          "panelTop": 104,
+          "panelBottom": 804,
+          "sendWidth": 48,
+          "sendHeight": 48,
+          "overflow": false
+        },
+        {
+          "width": 375,
+          "panelLeft": 8,
+          "panelRight": 367,
+          "panelTop": 104,
+          "panelBottom": 804,
+          "sendWidth": 48,
+          "sendHeight": 48,
+          "overflow": false
+        },
+        {
+          "width": 600,
+          "panelLeft": 8,
+          "panelRight": 592,
+          "panelTop": 104,
+          "panelBottom": 804,
+          "sendWidth": 48,
+          "sendHeight": 48,
+          "overflow": false
+        }
+      ],
+      "passed": true,
+      "cleanup": true
+    },
+    {
+      "name": "Firefox",
+      "checks": [],
+      "passed": false,
+      "status": "unavailable",
+      "error": "browserType.launch: spawn UNKNOWN\nCall log:\n\u001b[2m  - <launching> C:\\Users\\elias\\AppData\\Local\\ms-playwright\\firefox-1538\\firefox\\firefox.exe -no-remote -headless -profile C:\\Users\\elias\\AppData\\Local\\Temp\\playwright_firefoxdev_profile-pHkNNk -juggler-pipe -silent\u001b[22m\n\n    at C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\tests\\compatibility.cjs:17:30"
+    },
+    {
+      "name": "WebKit (not Safari)",
+      "checks": [
+        "Keyboard open, focused input, Enter submission and differentiated messages",
+        "Real browser fetch/CORS connection to local Ollama",
+        "Session Storage and rendered messages survive navigation and reload",
+        "Desktop dropdown, close, carousel activation, scroll to top and text marker",
+        "320/375/600px simulated viewports: panel within screen and touch-sized send control",
+        "Escape closes panel and restores keyboard focus",
+        "Simulated touch: launcher, send, close and reopen at 375px",
+        "Duco Admin UI: create, list, edit and delete temporary real Oracle record"
+      ],
+      "version": "26.5",
+      "mobile": [
+        {
+          "width": 320,
+          "panelLeft": 8,
+          "panelRight": 312,
+          "panelTop": 104,
+          "panelBottom": 804,
+          "sendWidth": 48,
+          "sendHeight": 48,
+          "overflow": false
+        },
+        {
+          "width": 375,
+          "panelLeft": 8,
+          "panelRight": 367,
+          "panelTop": 104,
+          "panelBottom": 804,
+          "sendWidth": 48,
+          "sendHeight": 48,
+          "overflow": false
+        },
+        {
+          "width": 600,
+          "panelLeft": 8,
+          "panelRight": 592,
+          "panelTop": 104,
+          "panelBottom": 804,
+          "sendWidth": 48,
+          "sendHeight": 48,
+          "overflow": false
+        }
+      ],
+      "passed": true,
+      "cleanup": true
+    }
+  ],
+  "passed": false
+}

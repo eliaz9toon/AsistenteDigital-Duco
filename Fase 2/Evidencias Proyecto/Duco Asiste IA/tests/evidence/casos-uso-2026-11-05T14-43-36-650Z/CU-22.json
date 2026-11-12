@@ -1,0 +1,34 @@
+{
+  "id": "CU-22",
+  "title": "Aprobar una propuesta de conocimiento",
+  "mode": "UI real; commit y publicacion verificados por conexion Oracle independiente",
+  "startedAt": "2026-11-05T14:47:04.379Z",
+  "images": [
+    {
+      "file": "CU-22-01-pendiente-aprobacion.png",
+      "label": "pendiente-aprobacion",
+      "url": "http://127.0.0.1:8765/",
+      "timestamp": "2026-11-05T14:47:05.190Z"
+    },
+    {
+      "file": "CU-22-02-aprobacion-confirmada.png",
+      "label": "aprobacion-confirmada",
+      "url": "http://127.0.0.1:8765/",
+      "timestamp": "2026-11-05T14:47:05.854Z"
+    },
+    {
+      "file": "CU-22-03-faq-publicada.png",
+      "label": "faq-publicada",
+      "url": "http://127.0.0.1:8765/",
+      "timestamp": "2026-11-05T14:47:06.989Z"
+    }
+  ],
+  "inputs": [],
+  "replies": [],
+  "actions": [],
+  "outcomes": [],
+  "modelResponses": [],
+  "errors": [],
+  "status": "VERIFICADO",
+  "finishedAt": "2026-11-05T14:47:06.989Z"
+}

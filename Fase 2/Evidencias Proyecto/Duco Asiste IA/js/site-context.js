@@ -140,7 +140,9 @@ class UniversalContextExtractor {
 
     for (const h of hElements) {
       if (this.isHidden(h)) continue;
-      const text = this.normalize(h.textContent);
+      const headingCopy = h.cloneNode(true);
+      headingCopy.querySelectorAll('a, button, input, select, [role="button"], [role="link"], [role="menuitem"]').forEach(control => control.remove());
+      const text = this.normalize(headingCopy.textContent);
       if (text && text.length > 3 && text.length < 200) {
         headings.push({
           level: parseInt(h.tagName.charAt(1)),

@@ -1,0 +1,42 @@
+{
+  "id": "CU-30",
+  "title": "Solicitar una carrera alternativa",
+  "mode": "Solicitud por UI con contexto de ficha real",
+  "startedAt": "2026-11-05T14:47:30.494Z",
+  "images": [
+    {
+      "file": "CU-30-01-carrera-inicial.png",
+      "label": "carrera-inicial",
+      "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+      "timestamp": "2026-11-05T14:47:33.744Z"
+    },
+    {
+      "file": "CU-30-02-estado-del-fallo.png",
+      "label": "estado-del-fallo",
+      "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+      "timestamp": "2026-11-05T14:49:34.488Z"
+    }
+  ],
+  "inputs": [
+    "me muestras otra carrera cualquiera?"
+  ],
+  "replies": [],
+  "actions": [],
+  "outcomes": [],
+  "modelResponses": [
+    {
+      "status": 200,
+      "model": "qwen3.5:9b",
+      "content": "{\"route\": \"conversation\"}"
+    },
+    {
+      "status": 200,
+      "model": "qwen3.5:9b",
+      "content": "{\n  \"reply\": \"Claro que sí. Dado que ya mencionaste que trabajas durante el día y prefieres horarios vespertinos, te muestro una opción con esa modalidad:\\n\\n**Carrera de Enfermería (Sede Santiago)**\\n*   **Modalidad:** Vespertino.\\n*   **Descripción breve:** Es una carrera profesional enfocada en la atención integral a pacientes, combinando conocimientos científicos con habilidades humanas para el cuidado y la promoción de la salud.\\n\\n¿Te interesa esta opción o prefieres ver otra carrera diferente?\"\n}"
+    }
+  ],
+  "errors": [],
+  "status": "FALLO",
+  "error": "page.waitForURL: Timeout 120000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation to \"**/carreras.html\" until \"load\"\n============================================================\n    at C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\tests\\use-case-evidence.cjs:292:18\n    at async check (C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\tests\\use-case-evidence.cjs:76:5)\n    at async C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\tests\\use-case-evidence.cjs:289:5",
+  "finishedAt": "2026-11-05T14:49:34.488Z"
+}

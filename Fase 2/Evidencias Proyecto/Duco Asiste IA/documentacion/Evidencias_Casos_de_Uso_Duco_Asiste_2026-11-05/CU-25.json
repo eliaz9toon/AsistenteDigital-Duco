@@ -1,0 +1,23 @@
+{
+  "id": "CU-25",
+  "title": "Consultar tablas y registros administrables",
+  "mode": "Selector y listado de tabla Oracle por UI real",
+  "startedAt": "2026-11-05T14:47:10.997Z",
+  "images": [
+    {
+      "file": "CU-25-01-listado-configuraciones.png",
+      "label": "listado-configuraciones",
+      "url": "http://127.0.0.1:8765/",
+      "timestamp": "2026-11-05T14:47:11.773Z"
+    }
+  ],
+  "inputs": [],
+  "replies": [],
+  "actions": [],
+  "outcomes": [],
+  "modelResponses": [],
+  "errors": [],
+  "detail": "ACCIONES_NAVEGACION, AUDITORIA_CAMBIOS, CATEGORIAS_FAQ, CONFIGURACIONES, DETECCIONES_INTENCION, EJECUCIONES_NAVEGACION, ENLACES_SECCION, ETIQUETAS, EVENTOS_SISTEMA, EXPERIENCIAS_ACCION, FAQ_FUENTES, FUENTES_INFORMACION, FUENTES_RESPUESTA, GENERACIONES_IA, INTENCIONES, MENSAJES, METRICAS_RENDIMIENTO, MODELOS_IA, PAGINAS_WEB, PREGUNTAS_FRECUENTES, PROPUESTAS_CONOCIMIENTO, REGISTROS_ERROR, ROLES, SECCIONES_WEB, SECCION_ETIQUETA, SESIONES_ADMIN, SESIONES_CHAT, SINONIMOS_CONSULTA, TIPOS_ERROR, USUARIOS_ADMIN, VALORACIONES_RESPUESTA, VERSIONES_PROMPT",
+  "status": "VERIFICADO",
+  "finishedAt": "2026-11-05T14:47:11.776Z"
+}

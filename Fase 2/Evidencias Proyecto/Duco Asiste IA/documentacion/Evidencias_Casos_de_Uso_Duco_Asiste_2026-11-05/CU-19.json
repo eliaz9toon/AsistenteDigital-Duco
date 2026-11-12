@@ -1,0 +1,32 @@
+{
+  "id": "CU-19",
+  "title": "Valorar una respuesta o una guia",
+  "mode": "Boton negativo real, persistencia Oracle independiente",
+  "startedAt": "2026-11-05T14:46:54.359Z",
+  "images": [
+    {
+      "file": "CU-19-01-controles-de-valoracion.png",
+      "label": "controles-de-valoracion",
+      "url": "http://127.0.0.1:8765/duco",
+      "timestamp": "2026-11-05T14:46:57.939Z"
+    },
+    {
+      "file": "CU-19-02-valoracion-guardada.png",
+      "label": "valoracion-guardada",
+      "url": "http://127.0.0.1:8765/duco",
+      "timestamp": "2026-11-05T14:46:59.407Z"
+    }
+  ],
+  "inputs": [
+    "hola duco"
+  ],
+  "replies": [
+    "¡Hola! ¿En qué puedo ayudarte?"
+  ],
+  "actions": [],
+  "outcomes": [],
+  "modelResponses": [],
+  "errors": [],
+  "status": "VERIFICADO",
+  "finishedAt": "2026-11-05T14:46:59.408Z"
+}

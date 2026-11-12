@@ -1,0 +1,43 @@
+{
+  "id": "CU-02",
+  "title": "Consultar informacion institucional",
+  "mode": "Consulta por UI y servicio de IA real",
+  "startedAt": "2026-11-05T14:43:45.496Z",
+  "images": [
+    {
+      "file": "CU-02-01-antes.png",
+      "label": "antes",
+      "url": "http://127.0.0.1:8765/duco",
+      "timestamp": "2026-11-05T14:43:48.172Z"
+    },
+    {
+      "file": "CU-02-02-respuesta.png",
+      "label": "respuesta",
+      "url": "http://127.0.0.1:8765/duco",
+      "timestamp": "2026-11-05T14:44:07.464Z"
+    }
+  ],
+  "inputs": [
+    "Que es Duoc UC? Solo explicamelo, no navegues."
+  ],
+  "replies": [
+    "Duoc UC es una institución educativa chilena que forma especialistas capaces de adaptarse al mundo laboral actual. Ofrece carreras técnicas y profesionales diseñadas para responder a las necesidades del mercado, con un enfoque práctico y flexible."
+  ],
+  "actions": [],
+  "outcomes": [],
+  "modelResponses": [
+    {
+      "status": 200,
+      "model": "qwen3.5:9b",
+      "content": "{\"route\": \"conversation\"}"
+    },
+    {
+      "status": 200,
+      "model": "qwen3.5:9b",
+      "content": "{\n  \"reply\": \"Duoc UC es una institución educativa chilena que forma especialistas capaces de adaptarse al mundo laboral actual. Ofrece carreras técnicas y profesionales diseñadas para responder a las necesidades del mercado, con un enfoque práctico y flexible.\"\n}"
+    }
+  ],
+  "errors": [],
+  "status": "VERIFICADO",
+  "finishedAt": "2026-11-05T14:44:07.465Z"
+}

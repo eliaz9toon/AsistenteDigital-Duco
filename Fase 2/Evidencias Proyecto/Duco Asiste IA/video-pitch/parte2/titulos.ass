@@ -1,0 +1,43 @@
+﻿[Script Info]
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1080
+ScaledBorderAndShadow: yes
+WrapStyle: 2
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Text,Bahnschrift,62,&H00FFFFFF,&H00FFFFFF,&H80000000,&H00000000,0,0,0,0,100,100,0,0,1,0,0,7,0,0,0,1
+Style: Title,Bahnschrift,92,&H00FFFFFF,&H00FFFFFF,&H80000000,&H00000000,-1,0,0,0,100,100,0,0,1,0,0,7,0,0,0,1
+Style: Label,Bahnschrift,27,&H00FFFFFF,&H00FFFFFF,&H80000000,&H00000000,-1,0,0,0,100,100,3,0,1,0,0,7,0,0,0,1
+Style: Tag,Bahnschrift,25,&H00FFFFFF,&H00FFFFFF,&H00311E07,&H00311E07,-1,0,0,0,100,100,2,0,3,12,0,7,0,0,0,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 20,0:00:00.00,0:00:54.02,Tag,,0,0,0,,{\an7\move(114,58,96,58,0,420)\fad(200,0)\fs25\1c&HFFFFFF&}DUCO ASISTE   /   02
+Dialogue: 20,0:00:05.30,0:00:45.80,Tag,,0,0,0,,{\an7\move(1533,58,1515,58,0,420)\fad(200,160)\fs19\1c&HFFFFFF&}DEMOSTRACIÓN EDITADA
+Dialogue: 10,0:00:00.20,0:00:05.28,Label,,0,0,0,,{\an7\move(118,233,100,233,0,420)\fad(200,160)\fs28\1c&HD8C5AF&}LA SOLUCIÓN
+Dialogue: 10,0:00:01.10,0:00:05.28,Title,,0,0,0,,{\an7\move(114,405,96,405,0,420)\fad(200,160)\fs96\1c&HFFFFFF&}No solo responde.
+Dialogue: 10,0:00:02.90,0:00:05.28,Text,,0,0,0,,{\an7\move(118,585,100,585,0,420)\fad(200,160)\fs48\1c&HD8C5AF&}Te ayuda a encontrar el camino.
+Dialogue: 10,0:00:06.10,0:00:10.85,Title,,0,0,0,,{\an7\move(114,888,96,888,0,420)\fad(200,160)\fs68\1c&H21C3FF&}Actúa sobre la página.
+Dialogue: 10,0:00:11.20,0:00:16.50,Label,,0,0,0,,{\an7\move(118,809,100,809,0,420)\fad(200,160)\fs25\1c&HD8C5AF&}UNA PETICIÓN, UN DESTINO
+Dialogue: 10,0:00:13.75,0:00:16.50,Title,,0,0,0,,{\an7\move(114,893,96,893,0,420)\fad(200,160)\fs55\1c&HFFFFFF&}«Llévame a Ingeniería en Informática»
+Dialogue: 10,0:00:17.00,0:00:21.70,Title,,0,0,0,,{\an7\move(114,806,96,806,0,420)\fad(200,160)\fs65\1c&HFFFFFF&}La ficha correcta,
+Dialogue: 10,0:00:18.70,0:00:21.70,Title,,0,0,0,,{\an7\move(114,891,96,891,0,420)\fad(200,160)\fs65\1c&H21C3FF&}sin buscar a ciegas.
+Dialogue: 10,0:00:22.05,0:00:25.85,Label,,0,0,0,,{\an7\move(118,809,100,809,0,420)\fad(200,160)\fs25\1c&HD8C5AF&}EXPLICAR Y MOSTRAR
+Dialogue: 10,0:00:23.10,0:00:25.85,Title,,0,0,0,,{\an7\move(114,889,96,889,0,420)\fad(200,160)\fs62\1c&HFFFFFF&}Una explicación con respaldo.
+Dialogue: 10,0:00:26.00,0:00:29.70,Title,,0,0,0,,{\an7\move(114,889,96,889,0,420)\fad(200,160)\fs65\1c&H21C3FF&}Párrafos fuente, a la vista.
+Dialogue: 10,0:00:29.95,0:00:32.25,Title,,0,0,0,,{\an7\move(114,889,96,889,0,420)\fad(200,160)\fs65\1c&H21C3FF&}Abrir menús.
+Dialogue: 10,0:00:32.35,0:00:33.75,Title,,0,0,0,,{\an7\move(114,889,96,889,0,420)\fad(200,160)\fs61\1c&HFFFFFF&}Seleccionar pestañas.
+Dialogue: 10,0:00:33.95,0:00:36.85,Title,,0,0,0,,{\an7\move(114,889,96,889,0,420)\fad(200,160)\fs61\1c&H21C3FF&}Llegar a la sección indicada.
+Dialogue: 10,0:00:37.00,0:00:40.85,Label,,0,0,0,,{\an7\move(118,809,100,809,0,420)\fad(200,160)\fs25\1c&HD8C5AF&}LA CONVERSACIÓN CONTINÚA
+Dialogue: 10,0:00:38.00,0:00:40.85,Title,,0,0,0,,{\an7\move(114,889,96,889,0,420)\fad(200,160)\fs63\1c&HFFFFFF&}El contexto viaja contigo.
+Dialogue: 10,0:00:41.10,0:00:45.80,Title,,0,0,0,,{\an7\move(114,809,96,809,0,420)\fad(200,160)\fs63\1c&HFFFFFF&}Otra página.
+Dialogue: 10,0:00:42.70,0:00:45.80,Title,,0,0,0,,{\an7\move(114,894,96,894,0,420)\fad(200,160)\fs63\1c&H21C3FF&}La misma conversación.
+Dialogue: 10,0:00:46.10,0:00:49.40,Title,,0,0,0,,{\an7\move(114,420,96,420,0,420)\fad(200,160)\fs80\1c&HFFFFFF&}Más que instrucciones.
+Dialogue: 10,0:00:49.45,0:00:54.02,Title,,0,0,0,,{\an7\move(114,342,96,342,0,420)\fad(200,0)\fs100\1c&HFFFFFF&}Orienta.
+Dialogue: 10,0:00:50.80,0:00:54.02,Title,,0,0,0,,{\an7\move(114,479,96,479,0,420)\fad(200,0)\fs100\1c&H21C3FF&}Muestra.
+Dialogue: 10,0:00:51.65,0:00:54.02,Title,,0,0,0,,{\an7\move(114,616,96,616,0,420)\fad(200,0)\fs100\1c&HFFFFFF&}Acompaña.
+Dialogue: 10,0:00:52.40,0:00:54.02,Label,,0,0,0,,{\an7\move(118,831,100,831,0,420)\fad(200,0)\fs24\1c&HD8C5AF&}DENTRO DEL SITIO, PASO A PASO
+Dialogue: 21,0:00:00.00,0:00:54.02,Text,,0,0,0,,{\an7\pos(96,1020)\p1\1c&HFFFFFF&\1a&HCE&}m 0 0 l 1728 0 1728 3 0 3
+Dialogue: 22,0:00:00.00,0:00:54.02,Text,,0,0,0,,{\an7\pos(96,1020)\p1\1c&H21C3FF&\clip(96,1020,96,1024)\t(0,54016,\clip(96,1020,1824,1024))}m 0 0 l 1728 0 1728 3 0 3

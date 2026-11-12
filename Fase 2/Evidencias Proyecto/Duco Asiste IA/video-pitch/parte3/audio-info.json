@@ -1,0 +1,9 @@
+{
+  "source": "C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\video-pitch\\parte3\\Parte3_Audio_Editado.wav",
+  "seconds": 75.555,
+  "sampleRate": 48000,
+  "channels": 1,
+  "originalSource": "C:\\Users\\elias\\Downloads\\Parte3.ogg",
+  "mastered": true,
+  "ffmpeg": "C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\video-pitch\\.venv\\Lib\\site-packages\\imageio_ffmpeg\\binaries\\ffmpeg-win-x86_64-v9.0.2.exe"
+}

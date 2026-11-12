@@ -1,0 +1,104 @@
+{
+  "date": "2026-11-05T15:00:19.088Z",
+  "results": [
+    {
+      "script": "smoke-test.js",
+      "passed": true,
+      "exitCode": 0,
+      "seconds": 0.055,
+      "log": "smoke-test.js.log"
+    },
+    {
+      "script": "highlight-target-regression.js",
+      "passed": true,
+      "exitCode": 0,
+      "seconds": 0.062,
+      "log": "highlight-target-regression.js.log"
+    },
+    {
+      "script": "chat-bold.cjs",
+      "passed": true,
+      "exitCode": 0,
+      "seconds": 1.541,
+      "log": "chat-bold.cjs.log"
+    },
+    {
+      "script": "sprint1-browser.cjs",
+      "passed": true,
+      "exitCode": 0,
+      "seconds": 1.77,
+      "log": "sprint1-browser.cjs.log"
+    },
+    {
+      "script": "sprint1-revalidation.cjs",
+      "passed": true,
+      "exitCode": 0,
+      "seconds": 19.089,
+      "log": "sprint1-revalidation.cjs.log"
+    },
+    {
+      "script": "sprint2-browser.cjs",
+      "passed": true,
+      "exitCode": 0,
+      "seconds": 33.271,
+      "log": "sprint2-browser.cjs.log"
+    },
+    {
+      "script": "sprint3-browser.cjs",
+      "passed": true,
+      "exitCode": 0,
+      "seconds": 19.706,
+      "log": "sprint3-browser.cjs.log"
+    },
+    {
+      "script": "sprint3-model.cjs",
+      "passed": true,
+      "exitCode": 0,
+      "seconds": 16.473,
+      "log": "sprint3-model.cjs.log"
+    },
+    {
+      "script": "repeat-same-carousel.cjs",
+      "passed": true,
+      "exitCode": 0,
+      "seconds": 4.006,
+      "log": "repeat-same-carousel.cjs.log"
+    },
+    {
+      "script": "manual-return-context.cjs",
+      "passed": true,
+      "exitCode": 0,
+      "seconds": 6.202,
+      "log": "manual-return-context.cjs.log"
+    },
+    {
+      "script": "career-navigation-regression.cjs",
+      "passed": true,
+      "exitCode": 0,
+      "seconds": 13.962,
+      "log": "career-navigation-regression.cjs.log"
+    },
+    {
+      "script": "guided-explanation.cjs",
+      "passed": true,
+      "exitCode": 0,
+      "seconds": 36.502,
+      "log": "guided-explanation.cjs.log"
+    },
+    {
+      "script": "three-incidents-regression.cjs",
+      "passed": true,
+      "exitCode": 0,
+      "seconds": 76.283,
+      "log": "three-incidents-regression.cjs.log"
+    },
+    {
+      "script": "sprint4-browser.cjs",
+      "passed": true,
+      "exitCode": 0,
+      "seconds": 48.785,
+      "log": "sprint4-browser.cjs.log"
+    }
+  ],
+  "passed": true
+}

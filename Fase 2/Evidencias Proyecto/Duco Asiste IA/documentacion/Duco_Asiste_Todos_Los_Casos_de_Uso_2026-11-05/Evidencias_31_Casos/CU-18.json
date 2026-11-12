@@ -1,0 +1,32 @@
+{
+  "id": "CU-18",
+  "title": "Iniciar una nueva conversacion",
+  "mode": "Boton real y almacenamiento de sesion",
+  "startedAt": "2026-11-05T14:46:49.901Z",
+  "images": [
+    {
+      "file": "CU-18-01-conversacion-previa.png",
+      "label": "conversacion-previa",
+      "url": "http://127.0.0.1:8765/duco",
+      "timestamp": "2026-11-05T14:46:53.574Z"
+    },
+    {
+      "file": "CU-18-02-nueva-conversacion.png",
+      "label": "nueva-conversacion",
+      "url": "http://127.0.0.1:8765/duco",
+      "timestamp": "2026-11-05T14:46:54.355Z"
+    }
+  ],
+  "inputs": [
+    "hola duco"
+  ],
+  "replies": [
+    "¡Hola! ¿En qué puedo ayudarte?"
+  ],
+  "actions": [],
+  "outcomes": [],
+  "modelResponses": [],
+  "errors": [],
+  "status": "VERIFICADO",
+  "finishedAt": "2026-11-05T14:46:54.355Z"
+}

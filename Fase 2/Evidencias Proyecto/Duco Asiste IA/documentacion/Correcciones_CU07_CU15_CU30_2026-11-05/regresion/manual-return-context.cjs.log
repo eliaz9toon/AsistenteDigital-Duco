@@ -1,0 +1,52 @@
+{
+  "response": {
+    "reply": "Estás en la página de inicio. Antes me pediste: «Puedes abrirme las carreras?».",
+    "actions": [],
+    "intent": {
+      "kind": "answer",
+      "reference": "resolved_action",
+      "action": "none"
+    }
+  },
+  "cases": [
+    {
+      "expected": "catálogo general",
+      "response": {
+        "reply": "Estás en el catálogo general de carreras.",
+        "actions": [],
+        "intent": {
+          "kind": "answer",
+          "reference": "resolved_action",
+          "action": "none"
+        }
+      }
+    },
+    {
+      "expected": "inicio",
+      "response": {
+        "reply": "Estás en la página de inicio.",
+        "actions": [],
+        "intent": {
+          "kind": "answer",
+          "reference": "resolved_action",
+          "action": "none"
+        }
+      }
+    },
+    {
+      "expected": "Puedes abrirme las carreras?",
+      "response": {
+        "reply": "Antes me pediste: «Puedes abrirme las carreras?».",
+        "actions": [],
+        "intent": {
+          "kind": "answer",
+          "reference": "resolved_action",
+          "action": "none"
+        }
+      }
+    }
+  ],
+  "mixed": null,
+  "path": "/duco"
+}
+OK: navegacion real del navegador, regreso manual, recarga, historial y ubicacion actual.

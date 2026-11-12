@@ -1,0 +1,82 @@
+[
+  {
+    "file": "CU-07-01-antes-abajo.png",
+    "sha256": "c624003f6fed93b0ace6c28dff969f5be11d442401b1ed6c5b9da60776edbcb9"
+  },
+  {
+    "file": "CU-07-02-navbar-visible.png",
+    "sha256": "84deeaed2fd16c6563929f6036e4ccaade1b4699e0d6978321fc64495f359a6e"
+  },
+  {
+    "file": "CU-07-03-seccion-del-contenido.png",
+    "sha256": "9c78577d79362ef7d848e0abcdeed101ede14e2b8137b9b1d5283a907b09728b"
+  },
+  {
+    "file": "CU-07-antes-del-arreglo.png",
+    "sha256": "c624003f6fed93b0ace6c28dff969f5be11d442401b1ed6c5b9da60776edbcb9"
+  },
+  {
+    "file": "CU-07-antes.json",
+    "sha256": "e4b21f9f260047c0158c10ed0c7937bf8762f2807058dfd4690a2826cb49f56a"
+  },
+  {
+    "file": "CU-15-01-explicacion-generada.png",
+    "sha256": "6a54ff4bfaa61363b37b1dc7fac10a466e08b29853c551399248721fdf26fd2e"
+  },
+  {
+    "file": "CU-15-02-titulo-antes-de-corregir.png",
+    "sha256": "1fea36827011898dc48d0d1987a0fe16d6d9790c31425712aab6f4624e7737e6"
+  },
+  {
+    "file": "CU-15-03-parrafos-corregidos.png",
+    "sha256": "2b403babab3cba1028b9aaffc19d77c2459bda713237817f7e04d9d03212ec84"
+  },
+  {
+    "file": "CU-15-04-fuentes-sin-panel.png",
+    "sha256": "306bb4606cd30535193f636b08e3b4bae3f88891fbfd63e3282778c76e446cfc"
+  },
+  {
+    "file": "CU-15-antes-del-arreglo.png",
+    "sha256": "5e314353e5ef9da511e5cf0b35b75143ca63d6a474dcdb2a81071044d0ba87b4"
+  },
+  {
+    "file": "CU-15-antes.json",
+    "sha256": "9f19fe62c9d755c776d4b43eb7a87091d20f24f9192bb5507782ac2fef730e87"
+  },
+  {
+    "file": "CU-30-01-carrera-inicial.png",
+    "sha256": "4f0e6aa2b54a6fa60f08bf471ae49be2b09722e104c6a0c8da29c54f2b46e78d"
+  },
+  {
+    "file": "CU-30-02-alternativa-real.png",
+    "sha256": "fcf13eda16fc0c522c2d62f46accb36df477948ad9b95b673617577cf8160172"
+  },
+  {
+    "file": "CU-30-03-segunda-alternativa.png",
+    "sha256": "23430cc4e933b5e241559cd233d12b7807968b0ae5c95d501c41a46e99291a54"
+  },
+  {
+    "file": "CU-30-antes-del-arreglo.png",
+    "sha256": "25594025b85115bd83779693402fda7261de1f300a8125252c4b33fd871f1022"
+  },
+  {
+    "file": "CU-30-antes.json",
+    "sha256": "89f606e24e99e72f21ad8e0629e86470ef02427805cb90fe798d38c76824e200"
+  },
+  {
+    "file": "fixtures.json",
+    "sha256": "5b397c15df9f80ac449d5f6ca916713406ffe31cd08eb54e0f8a05efc05713b5"
+  },
+  {
+    "file": "index.html",
+    "sha256": "7174bba5fba205e3d3f35911da154c4f4055e98c8d9a859736a20c4d0936a6e6"
+  },
+  {
+    "file": "resultados.json",
+    "sha256": "3548cd68a7b3f554278dfebb7799000b9d873c3a1b4b23a22216cacff438eaa5"
+  },
+  {
+    "file": "three-incidents-regression.cjs",
+    "sha256": "21cb81bce20321a60e7208517d796422b6b19e310d300b4e791f823a1a9c986a"
+  }
+]

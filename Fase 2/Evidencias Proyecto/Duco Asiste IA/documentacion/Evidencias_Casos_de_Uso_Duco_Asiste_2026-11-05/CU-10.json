@@ -1,0 +1,40 @@
+{
+  "id": "CU-10",
+  "title": "Abrir un menu del sitio",
+  "mode": "Integracion motor de menus con DOM real",
+  "startedAt": "2026-11-05T14:45:28.633Z",
+  "images": [
+    {
+      "file": "CU-10-01-menu-cerrado.png",
+      "label": "menu-cerrado",
+      "url": "http://127.0.0.1:8765/duco",
+      "timestamp": "2026-11-05T14:45:31.287Z"
+    },
+    {
+      "file": "CU-10-02-menu-abierto.png",
+      "label": "menu-abierto",
+      "url": "http://127.0.0.1:8765/duco",
+      "timestamp": "2026-11-05T14:45:32.529Z"
+    }
+  ],
+  "inputs": [],
+  "replies": [],
+  "actions": [
+    {
+      "type": "dropdown",
+      "terms": [
+        "Oferta Academica"
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "success": true,
+      "detail": "El menú se abrió"
+    }
+  ],
+  "modelResponses": [],
+  "errors": [],
+  "status": "VERIFICADO",
+  "finishedAt": "2026-11-05T14:45:32.529Z"
+}

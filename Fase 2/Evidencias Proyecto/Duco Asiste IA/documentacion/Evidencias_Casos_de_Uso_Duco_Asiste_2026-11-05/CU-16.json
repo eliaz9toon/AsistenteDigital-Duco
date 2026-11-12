@@ -1,0 +1,38 @@
+{
+  "id": "CU-16",
+  "title": "Continuar una conversacion durante la navegacion",
+  "mode": "UI real, Session Storage, navegacion y recarga; sin llamada generativa necesaria",
+  "startedAt": "2026-11-05T14:46:37.435Z",
+  "images": [
+    {
+      "file": "CU-16-01-antes-de-navegar.png",
+      "label": "antes-de-navegar",
+      "url": "http://127.0.0.1:8765/duco",
+      "timestamp": "2026-11-05T14:46:41.030Z"
+    },
+    {
+      "file": "CU-16-02-historial-en-catalogo.png",
+      "label": "historial-en-catalogo",
+      "url": "http://127.0.0.1:8765/carreras.html",
+      "timestamp": "2026-11-05T14:46:43.301Z"
+    },
+    {
+      "file": "CU-16-03-historial-tras-recarga.png",
+      "label": "historial-tras-recarga",
+      "url": "http://127.0.0.1:8765/carreras.html",
+      "timestamp": "2026-11-05T14:46:45.022Z"
+    }
+  ],
+  "inputs": [
+    "hola duco"
+  ],
+  "replies": [
+    "¡Hola! ¿En qué puedo ayudarte?"
+  ],
+  "actions": [],
+  "outcomes": [],
+  "modelResponses": [],
+  "errors": [],
+  "status": "VERIFICADO",
+  "finishedAt": "2026-11-05T14:46:45.022Z"
+}

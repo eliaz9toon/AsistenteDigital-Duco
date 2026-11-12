@@ -1,0 +1,56 @@
+{
+  "duration": 41.066667,
+  "size": [
+    1920,
+    1080
+  ],
+  "fps": 30,
+  "codec": "H.264 / AAC",
+  "scenes": [
+    [
+      "inicio",
+      0,
+      4.5,
+      1.04,
+      "center"
+    ],
+    [
+      "busqueda",
+      4.5,
+      13.1,
+      1.0,
+      "center"
+    ],
+    [
+      "menus",
+      13.1,
+      20.0,
+      1.13,
+      "top"
+    ],
+    [
+      "ficha",
+      20.0,
+      25.2,
+      1.04,
+      "center"
+    ],
+    [
+      "pregunta",
+      25.2,
+      33.65,
+      1.03,
+      "center"
+    ],
+    [
+      "duco",
+      33.65,
+      41.066667,
+      1.0,
+      "center"
+    ]
+  ],
+  "audio": "Narracion original con ajuste de sonoridad; sin musica ni voz sintetica.",
+  "transitions": 0.35,
+  "frames": "Capturas en movimiento del sitio real; titulos y cursor son recursos editoriales."
+}

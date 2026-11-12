@@ -1,0 +1,424 @@
+<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Correcciones Duco Asiste</title><style>body{font:17px/1.6 Georgia,serif;color:#17324d;background:#eef3f8;margin:0}main{max-width:1280px;margin:auto;padding:30px}article{background:white;padding:24px;margin:24px 0;border-radius:12px}img{max-width:100%}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px}a{color:#035bb3}</style><main><h1>Correcciones de CU-07, CU-15 y CU-30</h1><p>2026-11-05T14:58:38.155Z. Resultado: VERIFICADO. Chromium, UI real y pruebas de enrutamiento. Ollama real solo para la explicacion inicial. No telefono fisico.</p><p><a href="resultados.json">Resultados y aserciones</a>. Limpieza Oracle: confirmada.</p><p>Los escenarios nuevos no eliminan las evidencias anteriores. No certifican todas las variantes posibles de los 31 casos.</p><article><h2>CU-07: Desplazamiento a Vida Estudiantil</h2><p>VERIFICADO</p><h3>Antes del arreglo (ejecucion anterior)</h3><a href="CU-07-antes-del-arreglo.png"><img src="CU-07-antes-del-arreglo.png"></a><h3>Despues del arreglo</h3><figure><a href="CU-07-01-antes-abajo.png"><img src="CU-07-01-antes-abajo.png"></a><figcaption>antes-abajo - 2026-11-05T14:58:41.686Z</figcaption></figure><figure><a href="CU-07-02-navbar-visible.png"><img src="CU-07-02-navbar-visible.png"></a><figcaption>navbar-visible - 2026-11-05T14:58:43.429Z</figcaption></figure><figure><a href="CU-07-03-seccion-del-contenido.png"><img src="CU-07-03-seccion-del-contenido.png"></a><figcaption>seccion-del-contenido - 2026-11-05T14:58:44.880Z</figcaption></figure><details><summary>Solicitudes y resultados tecnicos</summary><pre>{
+  &quot;id&quot;: &quot;CU-07&quot;,
+  &quot;title&quot;: &quot;Desplazamiento a Vida Estudiantil&quot;,
+  &quot;images&quot;: [
+    {
+      &quot;file&quot;: &quot;CU-07-01-antes-abajo.png&quot;,
+      &quot;label&quot;: &quot;antes-abajo&quot;,
+      &quot;time&quot;: &quot;2026-11-05T14:58:41.686Z&quot;
+    },
+    {
+      &quot;file&quot;: &quot;CU-07-02-navbar-visible.png&quot;,
+      &quot;label&quot;: &quot;navbar-visible&quot;,
+      &quot;time&quot;: &quot;2026-11-05T14:58:43.429Z&quot;
+    },
+    {
+      &quot;file&quot;: &quot;CU-07-03-seccion-del-contenido.png&quot;,
+      &quot;label&quot;: &quot;seccion-del-contenido&quot;,
+      &quot;time&quot;: &quot;2026-11-05T14:58:44.880Z&quot;
+    }
+  ],
+  &quot;inputs&quot;: [],
+  &quot;replies&quot;: [],
+  &quot;modelResponses&quot;: [],
+  &quot;detail&quot;: {
+    &quot;result&quot;: {
+      &quot;before&quot;: 1600,
+      &quot;after&quot;: 0,
+      &quot;samples&quot;: [
+        1598,
+        1576,
+        1518,
+        1466,
+        1273,
+        1118,
+        800,
+        584,
+        439,
+        334,
+        254,
+        222,
+        167,
+        123,
+        89,
+        62,
+        41,
+        32,
+        19,
+        9,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      &quot;outcome&quot;: {
+        &quot;success&quot;: true,
+        &quot;detail&quot;: &quot;Se desplazó la página al elemento&quot;
+      },
+      &quot;target&quot;: &quot;VIDA ESTUDIANTIL&quot;,
+      &quot;visible&quot;: true,
+      &quot;uncovered&quot;: true
+    },
+    &quot;missing&quot;: {
+      &quot;success&quot;: false,
+      &quot;detail&quot;: &quot;No se encontró el destino del desplazamiento&quot;
+    },
+    &quot;body&quot;: {
+      &quot;outcome&quot;: {
+        &quot;success&quot;: true,
+        &quot;detail&quot;: &quot;Se desplazó la página al elemento&quot;
+      },
+      &quot;y&quot;: 947
+    }
+  },
+  &quot;passed&quot;: true,
+  &quot;before&quot;: &quot;CU-07-antes-del-arreglo.png&quot;
+}</pre></details></article><article><h2>CU-15: Corregir del titulo al parrafo explicativo</h2><p>VERIFICADO</p><h3>Antes del arreglo (ejecucion anterior)</h3><a href="CU-15-antes-del-arreglo.png"><img src="CU-15-antes-del-arreglo.png"></a><h3>Despues del arreglo</h3><figure><a href="CU-15-01-explicacion-generada.png"><img src="CU-15-01-explicacion-generada.png"></a><figcaption>explicacion-generada - 2026-11-05T14:59:48.334Z</figcaption></figure><figure><a href="CU-15-02-titulo-antes-de-corregir.png"><img src="CU-15-02-titulo-antes-de-corregir.png"></a><figcaption>titulo-antes-de-corregir - 2026-11-05T14:59:50.971Z</figcaption></figure><figure><a href="CU-15-03-parrafos-corregidos.png"><img src="CU-15-03-parrafos-corregidos.png"></a><figcaption>parrafos-corregidos - 2026-11-05T14:59:53.793Z</figcaption></figure><figure><a href="CU-15-04-fuentes-sin-panel.png"><img src="CU-15-04-fuentes-sin-panel.png"></a><figcaption>fuentes-sin-panel - 2026-11-05T14:59:54.222Z</figcaption></figure><details><summary>Solicitudes y resultados tecnicos</summary><pre>{
+  &quot;id&quot;: &quot;CU-15&quot;,
+  &quot;title&quot;: &quot;Corregir del titulo al parrafo explicativo&quot;,
+  &quot;images&quot;: [
+    {
+      &quot;file&quot;: &quot;CU-15-01-explicacion-generada.png&quot;,
+      &quot;label&quot;: &quot;explicacion-generada&quot;,
+      &quot;time&quot;: &quot;2026-11-05T14:59:48.334Z&quot;
+    },
+    {
+      &quot;file&quot;: &quot;CU-15-02-titulo-antes-de-corregir.png&quot;,
+      &quot;label&quot;: &quot;titulo-antes-de-corregir&quot;,
+      &quot;time&quot;: &quot;2026-11-05T14:59:50.971Z&quot;
+    },
+    {
+      &quot;file&quot;: &quot;CU-15-03-parrafos-corregidos.png&quot;,
+      &quot;label&quot;: &quot;parrafos-corregidos&quot;,
+      &quot;time&quot;: &quot;2026-11-05T14:59:53.793Z&quot;
+    },
+    {
+      &quot;file&quot;: &quot;CU-15-04-fuentes-sin-panel.png&quot;,
+      &quot;label&quot;: &quot;fuentes-sin-panel&quot;,
+      &quot;time&quot;: &quot;2026-11-05T14:59:54.222Z&quot;
+    }
+  ],
+  &quot;inputs&quot;: [
+    &quot;No, te pedi el parrafo explicativo, no el titulo. Resalta el texto que usaste para explicar la carrera.&quot;
+  ],
+  &quot;replies&quot;: [
+    &quot;Te muestro el texto que respalda la explicación, no el título.&quot;
+  ],
+  &quot;modelResponses&quot;: [
+    {
+      &quot;model&quot;: &quot;qwen3.5:9b&quot;,
+      &quot;status&quot;: 200,
+      &quot;content&quot;: &quot;{\n  \&quot;steps\&quot;: [\n    {\n      \&quot;explanation\&quot;: \&quot;La carrera inicia con un plan común de dos años donde se desarrollan las competencias fundamentales para el futuro ingeniero, permitiendo inmersión en la creación y análisis de tecnologías de información.\&quot;,\n      \&quot;sourceIndex\&quot;: 4\n    },\n    {\n      \&quot;explanation\&quot;: \&quot;Durante el segundo año, el estudiante debe elegir formalmente una especialización como desarrollo de software o inteligencia artificial, cuyas asignaturas comienzan a cursarse desde el quinto semestre.\&quot;,\n      \&quot;sourceIndex\&quot;: 5\n    },\n    {\n      \&quot;explanation\&quot;: \&quot;Al graduarse, se obtiene el título de Ingeniero en Informática junto con un certificado adicional de la especialización elegida, consolidando una base sólida para insertarse en la industria.\&quot;,\n      \&quot;sourceIndex\&quot;: 12\n    },\n    {\n      \&quot;explanation\&quot;: \&quot;El perfil egresado está preparado para diseñar soluciones innovadoras aplicando el ciclo de vida del software, gestionar proyectos y resolver requerimientos de información con bases de datos relacionales.\&quot;,\n      \&quot;sourceIndex\&quot;: 16\n    }\n  ]\n}&quot;
+    }
+  ],
+  &quot;detail&quot;: {
+    &quot;saved&quot;: {
+      &quot;path&quot;: &quot;/carreras-detalle/ingenieria-en-informatica.html&quot;,
+      &quot;answer&quot;: &quot;**Parte 1 de 4**\nLa carrera inicia con un plan común de dos años donde se desarrollan las competencias fundamentales para el futuro ingeniero, permitiendo inmersión en la creación y análisis de tecnologías de información.\n\n**Parte 2 de 4**\nDurante el segundo año, el estudiante debe elegir formalmente una especialización como desarrollo de software o inteligencia artificial, cuyas asignaturas comienzan a cursarse desde el quinto semestre.\n\n**Parte 3 de 4**\nAl graduarse, se obtiene el título de Ingeniero en Informática junto con un certificado adicional de la especialización elegida, consolidando una base sólida para insertarse en la industria.\n\n**Parte 4 de 4**\nEl perfil egresado está preparado para diseñar soluciones innovadoras aplicando el ciclo de vida del software, gestionar proyectos y resolver requerimientos de información con bases de datos relacionales.&quot;,
+      &quot;blocks&quot;: [
+        &quot;La carrera de Ingeniería en Informática de Duoc UC cuenta con un plan común de dos años, en el que se desarrollan las competencias y capacidades fundamentales para el desempeño del futuro Ingeniero en Informática.&quot;,
+        &quot;Durante el segundo año de la carrera, el estudiante deberá escoger formalmente una de las especializaciones, cuyas asignaturas se cursan a partir del 5.º semestre:&quot;,
+        &quot;La persona titulada de la carrera recibirá el título de Ingeniero o Ingeniera en Informática y, de manera adicional, un certificado de la especialización que cursó.&quot;,
+        &quot;Diseñar y generar soluciones de software innovadoras y de calidad, aplicando el ciclo de vida de éste, según las características del proyecto, las mejores prácticas de la industria y sus estándares de calidad.&quot;
+      ]
+    },
+    &quot;corrected&quot;: {
+      &quot;sources&quot;: [
+        &quot;La carrera de Ingeniería en Informática de Duoc UC cuenta con un plan común de dos años, en el que se desarrollan las competencias y capacidades fundamentales para el desempeño del futuro Ingeniero en Informática.&quot;,
+        &quot;Durante el segundo año de la carrera, el estudiante deberá escoger formalmente una de las especializaciones, cuyas asignaturas se cursan a partir del 5.º semestre:&quot;,
+        &quot;La persona titulada de la carrera recibirá el título de Ingeniero o Ingeniera en Informática y, de manera adicional, un certificado de la especialización que cursó.&quot;,
+        &quot;Diseñar y generar soluciones de software innovadoras y de calidad, aplicando el ciclo de vida de éste, según las características del proyecto, las mejores prácticas de la industria y sus estándares de calidad.&quot;
+      ],
+      &quot;titleMarks&quot;: 0,
+      &quot;outcomes&quot;: [
+        {
+          &quot;type&quot;: &quot;showEvidence&quot;,
+          &quot;request&quot;: &quot;Explicación guiada&quot;,
+          &quot;scope&quot;: &quot;page&quot;,
+          &quot;menuTerms&quot;: [],
+          &quot;evidenceTexts&quot;: [
+            &quot;La carrera de Ingeniería en Informática de Duoc UC cuenta con un plan común de dos años, en el que se desarrollan las competencias y capacidades fundamentales para el desempeño del futuro Ingeniero en Informática.&quot;
+          ],
+          &quot;pagePath&quot;: &quot;/carreras-detalle/ingenieria-en-informatica.html&quot;,
+          &quot;target&quot;: [
+            &quot;texto de la ficha&quot;
+          ],
+          &quot;success&quot;: true,
+          &quot;detail&quot;: &quot;Se destacaron los textos de la ficha&quot;,
+          &quot;documentId&quot;: &quot;b98ad583-5a43-4c34-b4f8-41d93baee937&quot;,
+          &quot;timestamp&quot;: 1793890764198,
+          &quot;historical&quot;: false
+        },
+        {
+          &quot;type&quot;: &quot;showEvidence&quot;,
+          &quot;request&quot;: &quot;Explicación guiada&quot;,
+          &quot;scope&quot;: &quot;page&quot;,
+          &quot;menuTerms&quot;: [],
+          &quot;evidenceTexts&quot;: [
+            &quot;Durante el segundo año de la carrera, el estudiante deberá escoger formalmente una de las especializaciones, cuyas asignaturas se cursan a partir del 5.º semestre:&quot;
+          ],
+          &quot;pagePath&quot;: &quot;/carreras-detalle/ingenieria-en-informatica.html&quot;,
+          &quot;target&quot;: [
+            &quot;texto de la ficha&quot;
+          ],
+          &quot;success&quot;: true,
+          &quot;detail&quot;: &quot;Se destacaron los textos de la ficha&quot;,
+          &quot;documentId&quot;: &quot;b98ad583-5a43-4c34-b4f8-41d93baee937&quot;,
+          &quot;timestamp&quot;: 1793890770107,
+          &quot;historical&quot;: false
+        },
+        {
+          &quot;type&quot;: &quot;showEvidence&quot;,
+          &quot;request&quot;: &quot;Explicación guiada&quot;,
+          &quot;scope&quot;: &quot;page&quot;,
+          &quot;menuTerms&quot;: [],
+          &quot;evidenceTexts&quot;: [
+            &quot;La persona titulada de la carrera recibirá el título de Ingeniero o Ingeniera en Informática y, de manera adicional, un certificado de la especialización que cursó.&quot;
+          ],
+          &quot;pagePath&quot;: &quot;/carreras-detalle/ingenieria-en-informatica.html&quot;,
+          &quot;target&quot;: [
+            &quot;texto de la ficha&quot;
+          ],
+          &quot;success&quot;: true,
+          &quot;detail&quot;: &quot;Se destacaron los textos de la ficha&quot;,
+          &quot;documentId&quot;: &quot;b98ad583-5a43-4c34-b4f8-41d93baee937&quot;,
+          &quot;timestamp&quot;: 1793890776239,
+          &quot;historical&quot;: false
+        },
+        {
+          &quot;type&quot;: &quot;showEvidence&quot;,
+          &quot;request&quot;: &quot;Explicación guiada&quot;,
+          &quot;scope&quot;: &quot;page&quot;,
+          &quot;menuTerms&quot;: [],
+          &quot;evidenceTexts&quot;: [
+            &quot;Diseñar y generar soluciones de software innovadoras y de calidad, aplicando el ciclo de vida de éste, según las características del proyecto, las mejores prácticas de la industria y sus estándares de calidad.&quot;
+          ],
+          &quot;pagePath&quot;: &quot;/carreras-detalle/ingenieria-en-informatica.html&quot;,
+          &quot;target&quot;: [
+            &quot;texto de la ficha&quot;
+          ],
+          &quot;success&quot;: true,
+          &quot;detail&quot;: &quot;Se destacaron los textos de la ficha&quot;,
+          &quot;documentId&quot;: &quot;b98ad583-5a43-4c34-b4f8-41d93baee937&quot;,
+          &quot;timestamp&quot;: 1793890782829,
+          &quot;historical&quot;: false
+        },
+        {
+          &quot;type&quot;: &quot;showEvidence&quot;,
+          &quot;request&quot;: &quot;No, te pedi el parrafo explicativo, no el titulo. Resalta el texto que usaste para explicar la carrera.&quot;,
+          &quot;scope&quot;: &quot;page&quot;,
+          &quot;menuTerms&quot;: [],
+          &quot;evidenceTexts&quot;: [
+            &quot;La carrera de Ingeniería en Informática de Duoc UC cuenta con un plan común de dos años, en el que se desarrollan las competencias y capacidades fundamentales para el desempeño del futuro Ingeniero en Informática.&quot;,
+            &quot;Durante el segundo año de la carrera, el estudiante deberá escoger formalmente una de las especializaciones, cuyas asignaturas se cursan a partir del 5.º semestre:&quot;,
+            &quot;La persona titulada de la carrera recibirá el título de Ingeniero o Ingeniera en Informática y, de manera adicional, un certificado de la especialización que cursó.&quot;,
+            &quot;Diseñar y generar soluciones de software innovadoras y de calidad, aplicando el ciclo de vida de éste, según las características del proyecto, las mejores prácticas de la industria y sus estándares de calidad.&quot;
+          ],
+          &quot;pagePath&quot;: &quot;/carreras-detalle/ingenieria-en-informatica.html&quot;,
+          &quot;target&quot;: [
+            &quot;texto de la ficha&quot;
+          ],
+          &quot;success&quot;: true,
+          &quot;detail&quot;: &quot;Se destacaron los textos de la ficha&quot;,
+          &quot;documentId&quot;: &quot;b98ad583-5a43-4c34-b4f8-41d93baee937&quot;,
+          &quot;timestamp&quot;: 1793890793373,
+          &quot;historical&quot;: false
+        }
+      ]
+    }
+  },
+  &quot;passed&quot;: true,
+  &quot;before&quot;: &quot;CU-15-antes-del-arreglo.png&quot;
+}</pre></details></article><article><h2>CU-30: Mostrar otra carrera del catalogo</h2><p>VERIFICADO</p><h3>Antes del arreglo (ejecucion anterior)</h3><a href="CU-30-antes-del-arreglo.png"><img src="CU-30-antes-del-arreglo.png"></a><h3>Despues del arreglo</h3><figure><a href="CU-30-01-carrera-inicial.png"><img src="CU-30-01-carrera-inicial.png"></a><figcaption>carrera-inicial - 2026-11-05T14:59:57.607Z</figcaption></figure><figure><a href="CU-30-02-alternativa-real.png"><img src="CU-30-02-alternativa-real.png"></a><figcaption>alternativa-real - 2026-11-05T15:00:02.176Z</figcaption></figure><figure><a href="CU-30-03-segunda-alternativa.png"><img src="CU-30-03-segunda-alternativa.png"></a><figcaption>segunda-alternativa - 2026-11-05T15:00:04.316Z</figcaption></figure><details><summary>Solicitudes y resultados tecnicos</summary><pre>{
+  &quot;id&quot;: &quot;CU-30&quot;,
+  &quot;title&quot;: &quot;Mostrar otra carrera del catalogo&quot;,
+  &quot;images&quot;: [
+    {
+      &quot;file&quot;: &quot;CU-30-01-carrera-inicial.png&quot;,
+      &quot;label&quot;: &quot;carrera-inicial&quot;,
+      &quot;time&quot;: &quot;2026-11-05T14:59:57.607Z&quot;
+    },
+    {
+      &quot;file&quot;: &quot;CU-30-02-alternativa-real.png&quot;,
+      &quot;label&quot;: &quot;alternativa-real&quot;,
+      &quot;time&quot;: &quot;2026-11-05T15:00:02.176Z&quot;
+    },
+    {
+      &quot;file&quot;: &quot;CU-30-03-segunda-alternativa.png&quot;,
+      &quot;label&quot;: &quot;segunda-alternativa&quot;,
+      &quot;time&quot;: &quot;2026-11-05T15:00:04.316Z&quot;
+    }
+  ],
+  &quot;inputs&quot;: [
+    &quot;me muestras otra carrera cualquiera?&quot;,
+    &quot;muestrame otra carrera cualquiera&quot;
+  ],
+  &quot;replies&quot;: [
+    &quot;Te muestro Ingeniería en Control de Gestión, una alternativa del catálogo.&quot;
+  ],
+  &quot;modelResponses&quot;: [],
+  &quot;detail&quot;: {
+    &quot;original&quot;: &quot;Ingeniería en Informática&quot;,
+    &quot;selected&quot;: {
+      &quot;career&quot;: {
+        &quot;title&quot;: &quot;Ingeniería en Recursos Naturales y Sostenibilidad&quot;,
+        &quot;source&quot;: &quot;https://www.duoc.cl/carreras/ingenieria-recursos-naturales-sostenibilidad/&quot;,
+        &quot;localLink&quot;: &quot;carreras-detalle/ingenieria-recursos-naturales-sostenibilidad.html&quot;
+      },
+      &quot;title&quot;: &quot;Ingeniería en Recursos Naturales y Sostenibilidad&quot;,
+      &quot;outcomes&quot;: [
+        {
+          &quot;type&quot;: &quot;highlightTerms&quot;,
+          &quot;request&quot;: &quot;me muestras otra carrera cualquiera?&quot;,
+          &quot;scope&quot;: &quot;page&quot;,
+          &quot;menuTerms&quot;: [],
+          &quot;evidenceTexts&quot;: [],
+          &quot;pagePath&quot;: &quot;/carreras.html&quot;,
+          &quot;target&quot;: [
+            &quot;Ingeniería en Recursos Naturales y Sostenibilidad&quot;
+          ],
+          &quot;success&quot;: true,
+          &quot;detail&quot;: &quot;Ficha de carrera encontrada y destacada&quot;,
+          &quot;documentId&quot;: &quot;01c2ecac-bf0d-4df5-883f-9d8518fc5391&quot;,
+          &quot;timestamp&quot;: 1793890801771,
+          &quot;historical&quot;: false
+        }
+      ]
+    },
+    &quot;next&quot;: {
+      &quot;career&quot;: {
+        &quot;title&quot;: &quot;Ingeniería en Control de Gestión&quot;,
+        &quot;source&quot;: &quot;https://www.duoc.cl/carreras/ingenieria-control-gestion/&quot;,
+        &quot;localLink&quot;: &quot;carreras-detalle/ingenieria-control-gestion.html&quot;
+      },
+      &quot;title&quot;: &quot;Ingeniería en Control de Gestión&quot;
+    }
+  },
+  &quot;passed&quot;: true,
+  &quot;before&quot;: &quot;CU-30-antes-del-arreglo.png&quot;
+}</pre></details></article><article><h2>RUTAS: Limites de los atajos de enrutamiento</h2><p>VERIFICADO</p><h3>Despues del arreglo</h3><details><summary>Solicitudes y resultados tecnicos</summary><pre>{
+  &quot;id&quot;: &quot;RUTAS&quot;,
+  &quot;title&quot;: &quot;Limites de los atajos de enrutamiento&quot;,
+  &quot;images&quot;: [],
+  &quot;inputs&quot;: [],
+  &quot;replies&quot;: [],
+  &quot;modelResponses&quot;: [],
+  &quot;detail&quot;: {
+    &quot;guided&quot;: {
+      &quot;reply&quot;: &quot;Voy a explicarte Ingeniería en Informática por partes y resaltar el texto de respaldo de cada parte.&quot;,
+      &quot;selectedCareer&quot;: {
+        &quot;title&quot;: &quot;Ingeniería en Informática&quot;,
+        &quot;localLink&quot;: &quot;carreras-detalle/ingenieria-en-informatica.html&quot;,
+        &quot;source&quot;: &quot;https://www.duoc.cl/carreras/ingenieria-en-informatica/&quot;
+      },
+      &quot;actions&quot;: [
+        {
+          &quot;type&quot;: &quot;explainCareer&quot;,
+          &quot;terms&quot;: [
+            &quot;Ingeniería en Informática&quot;
+          ],
+          &quot;guided&quot;: true
+        }
+      ],
+      &quot;intent&quot;: {
+        &quot;kind&quot;: &quot;new_request&quot;,
+        &quot;reference&quot;: &quot;resolved_action&quot;,
+        &quot;action&quot;: &quot;none&quot;
+      },
+      &quot;turnDecision&quot;: {
+        &quot;mode&quot;: &quot;explain&quot;,
+        &quot;topic&quot;: &quot;career&quot;,
+        &quot;operation&quot;: &quot;explainCareer&quot;,
+        &quot;operations&quot;: [
+          &quot;explainCareer&quot;
+        ],
+        &quot;destination&quot;: &quot;none&quot;,
+        &quot;needsClarification&quot;: false
+      }
+    },
+    &quot;evidence&quot;: {
+      &quot;reply&quot;: &quot;Te muestro el texto que respalda la explicación, no el título.&quot;,
+      &quot;actions&quot;: [
+        {
+          &quot;type&quot;: &quot;showEvidence&quot;,
+          &quot;terms&quot;: [
+            &quot;texto de la ficha&quot;
+          ],
+          &quot;evidenceTexts&quot;: [
+            &quot;Parrafo fuente real de ejemplo para probar el enrutador.&quot;
+          ]
+        }
+      ],
+      &quot;intent&quot;: {
+        &quot;kind&quot;: &quot;correction&quot;,
+        &quot;reference&quot;: &quot;resolved_action&quot;,
+        &quot;action&quot;: &quot;none&quot;
+      },
+      &quot;turnDecision&quot;: {
+        &quot;mode&quot;: &quot;correction&quot;,
+        &quot;topic&quot;: &quot;career&quot;,
+        &quot;operation&quot;: &quot;showEvidence&quot;,
+        &quot;operations&quot;: [
+          &quot;showEvidence&quot;
+        ],
+        &quot;destination&quot;: &quot;none&quot;,
+        &quot;needsClarification&quot;: false,
+        &quot;goal&quot;: &quot;Mostrar los párrafos de respaldo de la explicación&quot;
+      }
+    },
+    &quot;negatives&quot;: [
+      {
+        &quot;q&quot;: &quot;No me muestres otra carrera&quot;,
+        &quot;response&quot;: null
+      },
+      {
+        &quot;q&quot;: &quot;Muestrame otra carrera con horario vespertino&quot;,
+        &quot;response&quot;: null
+      },
+      {
+        &quot;q&quot;: &quot;Explicame otra carrera y despues resaltala&quot;,
+        &quot;response&quot;: null
+      },
+      {
+        &quot;q&quot;: &quot;Muestrame otra carrera de salud&quot;,
+        &quot;response&quot;: null
+      },
+      {
+        &quot;q&quot;: &quot;Cual es otra carrera cualquiera?&quot;,
+        &quot;response&quot;: null
+      }
+    ],
+    &quot;notGuided&quot;: null,
+    &quot;negatedEvidence&quot;: null,
+    &quot;missingEvidence&quot;: {
+      &quot;reply&quot;: &quot;No tengo los párrafos de esa explicación en la página actual. ¿Qué explicación quieres revisar?&quot;,
+      &quot;actions&quot;: [],
+      &quot;intent&quot;: {
+        &quot;kind&quot;: &quot;follow_up&quot;,
+        &quot;reference&quot;: &quot;resolved_action&quot;,
+        &quot;action&quot;: &quot;none&quot;
+      },
+      &quot;turnDecision&quot;: {
+        &quot;mode&quot;: &quot;evidence&quot;,
+        &quot;topic&quot;: &quot;career&quot;,
+        &quot;operation&quot;: &quot;showEvidence&quot;,
+        &quot;operations&quot;: [],
+        &quot;destination&quot;: &quot;none&quot;,
+        &quot;needsClarification&quot;: true,
+        &quot;goal&quot;: &quot;Mostrar los párrafos de respaldo de la explicación&quot;
+      }
+    }
+  },
+  &quot;passed&quot;: true
+}</pre></details></article></main></html>

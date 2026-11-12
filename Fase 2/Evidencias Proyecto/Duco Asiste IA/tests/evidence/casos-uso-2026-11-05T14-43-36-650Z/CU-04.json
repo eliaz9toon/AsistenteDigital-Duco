@@ -1,0 +1,32 @@
+{
+  "id": "CU-04",
+  "title": "Consultar la ficha de una carrera",
+  "mode": "Ficha local y consulta estructurada por UI",
+  "startedAt": "2026-11-05T14:44:10.835Z",
+  "images": [
+    {
+      "file": "CU-04-01-ficha.png",
+      "label": "ficha",
+      "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+      "timestamp": "2026-11-05T14:44:14.753Z"
+    },
+    {
+      "file": "CU-04-02-datos-carrera.png",
+      "label": "datos-carrera",
+      "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+      "timestamp": "2026-11-05T14:44:16.730Z"
+    }
+  ],
+  "inputs": [
+    "Cuanto dura Ingenieria en Informatica?"
+  ],
+  "replies": [
+    "Ingeniería en Informática\nDuración: 8 semestres.\nFuente: https://www.duoc.cl/carreras/ingenieria-en-informatica/\nCatálogo de referencia: 2026-10-29. No implica información en tiempo real."
+  ],
+  "actions": [],
+  "outcomes": [],
+  "modelResponses": [],
+  "errors": [],
+  "status": "VERIFICADO",
+  "finishedAt": "2026-11-05T14:44:16.730Z"
+}

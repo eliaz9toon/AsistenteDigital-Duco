@@ -1,0 +1,29 @@
+{
+  "id": "CU-28",
+  "title": "Eliminar un registro administrativo",
+  "mode": "Boton y confirmacion reales; ausencia verificada en Oracle",
+  "startedAt": "2026-11-05T14:47:16.274Z",
+  "images": [
+    {
+      "file": "CU-28-01-antes-eliminar.png",
+      "label": "antes-eliminar",
+      "url": "http://127.0.0.1:8765/",
+      "timestamp": "2026-11-05T14:47:17.038Z"
+    },
+    {
+      "file": "CU-28-02-listado-sin-registro.png",
+      "label": "listado-sin-registro",
+      "url": "http://127.0.0.1:8765/",
+      "timestamp": "2026-11-05T14:47:17.848Z"
+    }
+  ],
+  "inputs": [],
+  "replies": [],
+  "actions": [],
+  "outcomes": [],
+  "modelResponses": [],
+  "errors": [],
+  "detail": "Confirmacion real: ¿Eliminar este registro? Si otras tablas lo referencian, Oracle impedirá borrarlo.",
+  "status": "VERIFICADO",
+  "finishedAt": "2026-11-05T14:47:18.201Z"
+}

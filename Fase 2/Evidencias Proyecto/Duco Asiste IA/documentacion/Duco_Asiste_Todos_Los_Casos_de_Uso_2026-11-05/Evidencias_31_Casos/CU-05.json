@@ -1,0 +1,66 @@
+{
+  "id": "CU-05",
+  "title": "Solicitar una explicacion de una carrera",
+  "mode": "Motor de explicacion guiada con Ollama real; no clasificacion de la solicitud",
+  "startedAt": "2026-11-05T14:44:16.740Z",
+  "images": [
+    {
+      "file": "CU-05-01-parte-1.png",
+      "label": "parte-1",
+      "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+      "timestamp": "2026-11-05T14:44:42.806Z"
+    },
+    {
+      "file": "CU-05-02-parte-2.png",
+      "label": "parte-2",
+      "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+      "timestamp": "2026-11-05T14:44:49.229Z"
+    },
+    {
+      "file": "CU-05-03-parte-3.png",
+      "label": "parte-3",
+      "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+      "timestamp": "2026-11-05T14:44:55.877Z"
+    },
+    {
+      "file": "CU-05-04-parte-4.png",
+      "label": "parte-4",
+      "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+      "timestamp": "2026-11-05T14:45:03.134Z"
+    },
+    {
+      "file": "CU-05-05-explicacion-completa.png",
+      "label": "explicacion-completa",
+      "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+      "timestamp": "2026-11-05T14:45:08.810Z"
+    }
+  ],
+  "inputs": [],
+  "replies": [],
+  "actions": [
+    {
+      "type": "explainCareer",
+      "terms": [
+        "Ingenieria en Informatica"
+      ],
+      "guided": true
+    }
+  ],
+  "outcomes": [
+    {
+      "success": true,
+      "detail": "Se explicaron 4 partes, resaltando su respaldo en secuencia"
+    }
+  ],
+  "modelResponses": [
+    {
+      "status": 200,
+      "model": "qwen3.5:9b",
+      "content": "{\n  \"steps\": [\n    {\n      \"explanation\": \"La carrera inicia con un plan común de dos años donde se desarrollan las competencias fundamentales para el futuro ingeniero, permitiendo inmersión en la creación y análisis de tecnologías de información.\",\n      \"sourceIndex\": 4\n    },\n    {\n      \"explanation\": \"Durante el segundo año, el estudiante debe elegir formalmente una especialización como desarrollo de software o inteligencia artificial, cuyas asignaturas comienzan a cursarse desde el quinto semestre.\",\n      \"sourceIndex\": 5\n    },\n    {\n      \"explanation\": \"Al graduarse, se obtiene el título de Ingeniero en Informática junto con un certificado adicional de la especialización elegida, consolidando una base sólida para insertarse en la industria.\",\n      \"sourceIndex\": 12\n    },\n    {\n      \"explanation\": \"El perfil egresado está preparado para diseñar soluciones innovadoras aplicando el ciclo de vida del software, gestionar proyectos y resolver requerimientos de información con bases de datos relacionales.\",\n      \"sourceIndex\": 16\n    }\n  ]\n}"
+    }
+  ],
+  "errors": [],
+  "detail": "Partes capturadas: 1, 2, 3, 4",
+  "status": "VERIFICADO",
+  "finishedAt": "2026-11-05T14:45:08.810Z"
+}

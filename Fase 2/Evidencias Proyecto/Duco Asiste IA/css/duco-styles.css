@@ -27,6 +27,9 @@
 
 /* ============== AVATAR Y BOTÓN ============== */
 .duco-avatar-button {
+  border: 0;
+  padding: 0;
+  background: transparent;
   position: relative;
   display: flex;
   width: fit-content;
@@ -116,6 +119,7 @@
   position: fixed;
   bottom: 100px;
   right: 20px;
+  --duco-chat-shift-x: 0px;
   width: 380px;
   height: 600px;
   background: white;
@@ -125,15 +129,15 @@
   flex-direction: column;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(20px) scale(0.9);
-  transition: all 0.3s ease;
+  transform: translateX(var(--duco-chat-shift-x)) translateY(20px) scale(0.9);
+  transition: opacity 0.3s ease, transform 0.35s ease;
   z-index: 10000;
 }
 
 .duco-chat-panel.open {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0) scale(1);
+  transform: translateX(var(--duco-chat-shift-x)) translateY(0) scale(1);
 }
 
 /* Header del Panel */
@@ -149,11 +153,15 @@
 }
 
 .duco-header h3 {
+  flex: 1;
+  min-width: 0;
   margin: 0;
   font-size: 18px;
   font-weight: 600;
   color: var(--duco-text);
 }
+
+.duco-header-actions { display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
 
 .duco-close {
   background: none;
@@ -231,6 +239,33 @@
   border-bottom-left-radius: 4px;
 }
 
+.duco-message-assistant .duco-message-content a {
+  color: #075ca8;
+  text-decoration: underline;
+  overflow-wrap: anywhere;
+}
+
+.duco-feedback-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 9px;
+  color: #53677b;
+  font-size: 12px;
+}
+
+.duco-feedback-buttons { display: inline-flex; gap: 5px; }
+.duco-feedback-btn {
+  border: 1px solid #c8d6e4;
+  border-radius: 6px;
+  padding: 2px 7px;
+  background: #fff;
+  cursor: pointer;
+}
+.duco-feedback-btn:disabled { opacity: .5; cursor: wait; }
+.duco-feedback-status { flex-basis: 100%; }
+
 .duco-keyword {
   background: rgba(255, 184, 0, 0.28);
   color: #2a2a2a;
@@ -260,6 +295,13 @@
   background: var(--duco-bg);
   border-radius: 12px;
   width: fit-content;
+}
+
+#duco-assistant-container .duco-typing-label {
+  color: #365a7f;
+  font-size: 13px;
+  font-weight: 600;
+  margin-right: 4px;
 }
 
 .duco-typing-indicator span {
@@ -361,7 +403,7 @@
   }
 
   .duco-chat-panel {
-    width: calc(100vw - 20px);
+    width: min(380px, 82vw);
     height: 60vh;
     max-height: 500px;
     right: 10px;
@@ -373,9 +415,10 @@
     font-size: 13px;
   }
 
-  .duco-header h3 {
-    font-size: 16px;
-  }
+  .duco-header { gap: 8px; padding: 12px; }
+  .duco-header h3 { font-size: 14px; }
+  .duco-header-actions { gap: 4px; }
+  .duco-reset { padding: 6px 7px; font-size: 11px; }
 }
 
 /* ============== SCROLL PERSONALIZADO ============== */
@@ -449,4 +492,174 @@
   0% { transform: scale(1); }
   50% { transform: scale(0.95); }
   100% { transform: scale(1); }
+}
+
+/* Controles de conversación (mejora funcional R-9) */
+.duco-reset { border: 1px solid #b6d4fe; background: #e8f2ff;
+  color: #064a8c; border-radius: 6px; padding: 6px 9px; font-size: 12px;
+  cursor: pointer; white-space: nowrap; }
+.duco-reset:hover, .duco-reset:focus-visible { background: #d7e9ff; border-color: #8bbcff; }
+.duco-reset:disabled, .duco-send-btn:disabled { opacity: .5; cursor: not-allowed; }
+
+/* Presentación del chat: las reglas se limitan al widget para aislarlo del sitio. */
+#duco-assistant-container {
+  --duco-text: #18314c;
+  --duco-text-light: #718297;
+  --duco-bg: #f3f6fb;
+  --duco-border: #e1e8f1;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+#duco-assistant-container button,
+#duco-assistant-container input,
+#duco-assistant-container h3 { font-family: inherit; letter-spacing: normal; text-transform: none; }
+#duco-assistant-container .duco-chat-panel {
+  width: 410px;
+  height: min(660px, calc(100dvh - 100px));
+  bottom: 76px;
+  max-width: calc(100% - 40px);
+  border: 1px solid rgba(19, 56, 94, .1);
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 24px 70px rgba(15, 43, 76, .22), 0 4px 16px rgba(15, 43, 76, .08);
+}
+#duco-assistant-container .duco-header {
+  flex-shrink: 0;
+  gap: 12px;
+  padding: 18px 16px;
+  border-bottom: 1px solid var(--duco-border);
+  background: #fff;
+}
+#duco-assistant-container .duco-identity { display: flex; align-items: center; gap: 10px; min-width: 0; }
+#duco-assistant-container .duco-header-avatar {
+  width: 46px; height: 46px; object-fit: cover; border-radius: 15px;
+  background: #edf5ff; border: 1px solid #d8e9ff; flex-shrink: 0;
+}
+#duco-assistant-container .duco-identity-text { min-width: 0; }
+#duco-assistant-container .duco-header h3 {
+  margin: 0 0 3px; padding: 0; font-size: 19px; line-height: 1.2;
+  font-weight: 700; color: #123454; border: 0; background: none;
+}
+#duco-assistant-container .duco-identity-text > span {
+  display: block; font-size: 11px; line-height: 1.4; color: #6d8095; white-space: nowrap;
+}
+#duco-assistant-container .duco-header-actions { margin-left: auto; gap: 6px; }
+#duco-assistant-container .duco-reset {
+  padding: 9px 10px; border-radius: 10px; border: 1px solid #dce9fb;
+  background: #eef5ff; color: #0956a2; font-size: 11px; font-weight: 600;
+  line-height: 1.3; min-height: 34px; box-shadow: none;
+}
+#duco-assistant-container .duco-reset:hover:not(:disabled) { background: #dfeeff; }
+#duco-assistant-container .duco-close {
+  width: 30px; height: 34px; flex-shrink: 0; border-radius: 9px;
+  color: #6d8095; font-size: 25px; font-weight: 400; box-shadow: none;
+}
+#duco-assistant-container .duco-close:hover { background: #f0f4f9; transform: none; color: #173a60; }
+#duco-assistant-container .duco-messages {
+  min-height: 0; padding: 22px 18px; gap: 16px; background: #f3f6fb;
+  overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #c8d3e1 transparent;
+}
+#duco-assistant-container .duco-message { flex-shrink: 0; margin: 0; }
+#duco-assistant-container .duco-message-content {
+  max-width: 88%; padding: 12px 15px; font-size: 14px; line-height: 1.65;
+  border-radius: 16px; overflow-wrap: anywhere; white-space: pre-wrap;
+}
+#duco-assistant-container .duco-message-assistant .duco-message-content {
+  background: #fff; border: 1px solid #e3eaf3; border-bottom-left-radius: 5px;
+  color: #29415c; box-shadow: 0 2px 3px rgba(25, 55, 90, .025);
+}
+#duco-assistant-container .duco-message-user .duco-message-content {
+  background: #075fba; color: #fff; border: 0; border-bottom-right-radius: 5px;
+  box-shadow: 0 3px 8px rgba(3, 91, 179, .12);
+}
+#duco-assistant-container .duco-message-action .duco-message-content {
+  padding: 9px 12px; background: #eaf1fa; border: 0; border-radius: 10px;
+  font-size: 12px; color: #476684; box-shadow: none;
+}
+#duco-assistant-container .duco-feedback-controls {
+  padding-top: 9px; margin-top: 10px; border-top: 1px solid #eef2f7;
+  gap: 7px; font-size: 11px; line-height: 1.4; color: #7b8b9e; white-space: normal;
+}
+#duco-assistant-container .duco-feedback-btn {
+  min-width: 28px; min-height: 28px; padding: 3px 6px; border-radius: 8px;
+  border: 1px solid #e6ecf4; background: #f8fafd; font-size: 12px; box-shadow: none;
+}
+#duco-assistant-container .duco-feedback-btn:hover:not(:disabled) { background: #eaf3ff; border-color: #c6ddf7; }
+#duco-assistant-container .duco-feedback-btn:disabled { cursor: default; opacity: .65; }
+#duco-assistant-container .duco-feedback-status:empty { display: none; }
+#duco-assistant-container .duco-feedback-status { font-size: 10px; color: #7a8ca0; }
+#duco-assistant-container .duco-action-btn {
+  margin-top: 7px; padding: 7px 12px; font-size: 12px; font-weight: 600;
+  border-radius: 9px; border-color: #d6e4f5; background: #fff; box-shadow: none;
+}
+#duco-assistant-container .duco-typing-indicator {
+  flex-shrink: 0; margin: 0 18px 12px; padding: 11px 14px; gap: 5px;
+  background: #edf3fa; border-radius: 12px; max-height: 30px;
+}
+#duco-assistant-container .duco-typing-indicator span { width: 6px; height: 6px; background: #6c97c4; }
+#duco-assistant-container .duco-input-area {
+  flex-direction: column; flex-shrink: 0; padding: 14px 16px 12px; gap: 9px;
+  background: #fff; border-top: 1px solid var(--duco-border); border-radius: 0;
+}
+#duco-assistant-container .duco-composer {
+  display: flex; gap: 8px; align-items: center; padding: 5px 6px 5px 3px;
+  border: 1px solid #d9e3ef; border-radius: 14px; background: #f8fafd;
+  transition: border-color .2s, box-shadow .2s;
+}
+#duco-assistant-container .duco-composer:focus-within {
+  border-color: #69a2dc; box-shadow: 0 0 0 3px rgba(3, 91, 179, .08);
+}
+#duco-assistant-container .duco-input {
+  min-width: 0; width: 100%; height: 42px; margin: 0; padding: 8px 10px;
+  border: 0; outline: none; border-radius: 10px; background: transparent;
+  color: #29415c; font-size: 14px; line-height: 1.4; box-shadow: none;
+}
+#duco-assistant-container .duco-input::placeholder { color: #8b9bad; opacity: 1; }
+#duco-assistant-container .duco-send-btn {
+  width: 38px; height: 38px; flex: 0 0 38px; border-radius: 10px;
+  background: #ffbf26; color: #163a62; box-shadow: none; padding: 10px;
+}
+#duco-assistant-container .duco-send-btn:hover:not(:disabled) { background: #ffb800; transform: translateY(-1px); }
+#duco-assistant-container .duco-send-btn:disabled { opacity: .45; transform: none; }
+#duco-assistant-container .duco-input-note {
+  margin: 0; padding: 0; font-size: 10px; line-height: 1.4; text-align: center; color: #8997a8;
+}
+#duco-assistant-container button:focus-visible { outline: 2px solid #2975c3; outline-offset: 3px; }
+@media (max-width: 600px) {
+  html.duco-chat-open body .uwy .userway_buttons_wrapper {
+    display: none !important;
+  }
+
+  #duco-assistant-container .duco-chat-panel {
+    width: calc(100vw - 16px); max-width: none;
+    height: min(700px, calc(100vh - 24px));
+    height: min(700px, calc(100dvh - 24px));
+    max-height: calc(100dvh - 24px);
+    right: 8px; bottom: max(8px, env(safe-area-inset-bottom)); border-radius: 18px;
+  }
+  #duco-assistant-container .duco-header { padding: 14px 12px; gap: 6px; }
+  #duco-assistant-container .duco-header-avatar { width: 38px; height: 38px; border-radius: 12px; }
+  #duco-assistant-container .duco-identity { gap: 8px; }
+  #duco-assistant-container .duco-header h3 { font-size: 17px; }
+  #duco-assistant-container .duco-identity-text > span { font-size: 10px; }
+  #duco-assistant-container .duco-reset { min-height: 44px; padding: 8px 10px; font-size: 12px; }
+  #duco-assistant-container .duco-close { width: 44px; height: 44px; font-size: 28px; }
+  #duco-assistant-container .duco-messages { padding: 18px 14px; }
+  #duco-assistant-container .duco-message-content { max-width: 94%; font-size: 15px; line-height: 1.5; }
+  #duco-assistant-container .duco-feedback-btn { min-width: 44px; min-height: 44px; font-size: 17px; }
+  #duco-assistant-container .duco-feedback-buttons { gap: 8px; }
+  #duco-assistant-container .duco-action-btn { min-height: 44px; padding: 10px 14px; font-size: 14px; white-space: normal; }
+  #duco-assistant-container .duco-input-area { padding: 12px 12px max(12px, env(safe-area-inset-bottom)); }
+  #duco-assistant-container .duco-input { height: 48px; font-size: 16px; }
+  #duco-assistant-container .duco-send-btn { width: 48px; height: 48px; flex-basis: 48px; }
+  #duco-assistant-container .duco-send-btn svg { width: 22px; height: 22px; }
+}
+@media (max-width: 360px) {
+  #duco-assistant-container .duco-header-avatar { width: 32px; height: 32px; }
+  #duco-assistant-container .duco-identity-text > span { max-width: 90px; white-space: normal; }
+  #duco-assistant-container .duco-reset { max-width: 90px; white-space: normal; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #duco-assistant-container *, #duco-assistant-container *::before, #duco-assistant-container *::after {
+    animation: none !important; transition-duration: .01ms !important;
+  }
 }

@@ -1,0 +1,197 @@
+[
+  {
+    "file": "codigo/duco-assistant.js",
+    "bytes": 125826,
+    "sha256": "f47b0c38f99d896f119103d1cedb45cc15cfbfa1aeeeedc1b0bf8cc3fbccce08"
+  },
+  {
+    "file": "codigo/ollama-client.js",
+    "bytes": 111749,
+    "sha256": "db665f1dbec0a23ee03b94013eb87d89efc02cf2922482bef2eec83ee30c20e3"
+  },
+  {
+    "file": "codigo/use-case-oracle.py",
+    "bytes": 2967,
+    "sha256": "9973708eae2e4d60622e18acc860b851ee76554ef17c163e309521bc253c56bb"
+  },
+  {
+    "file": "CU-07-01-antes-abajo.png",
+    "bytes": 967992,
+    "sha256": "c624003f6fed93b0ace6c28dff969f5be11d442401b1ed6c5b9da60776edbcb9"
+  },
+  {
+    "file": "CU-07-02-navbar-visible.png",
+    "bytes": 1550031,
+    "sha256": "84deeaed2fd16c6563929f6036e4ccaade1b4699e0d6978321fc64495f359a6e"
+  },
+  {
+    "file": "CU-07-03-seccion-del-contenido.png",
+    "bytes": 1027449,
+    "sha256": "9c78577d79362ef7d848e0abcdeed101ede14e2b8137b9b1d5283a907b09728b"
+  },
+  {
+    "file": "CU-07-antes-del-arreglo.png",
+    "bytes": 967992,
+    "sha256": "c624003f6fed93b0ace6c28dff969f5be11d442401b1ed6c5b9da60776edbcb9"
+  },
+  {
+    "file": "CU-07-antes.json",
+    "bytes": 1383,
+    "sha256": "e4b21f9f260047c0158c10ed0c7937bf8762f2807058dfd4690a2826cb49f56a"
+  },
+  {
+    "file": "CU-15-01-explicacion-generada.png",
+    "bytes": 142421,
+    "sha256": "6a54ff4bfaa61363b37b1dc7fac10a466e08b29853c551399248721fdf26fd2e"
+  },
+  {
+    "file": "CU-15-02-titulo-antes-de-corregir.png",
+    "bytes": 1087477,
+    "sha256": "1fea36827011898dc48d0d1987a0fe16d6d9790c31425712aab6f4624e7737e6"
+  },
+  {
+    "file": "CU-15-03-parrafos-corregidos.png",
+    "bytes": 128878,
+    "sha256": "2b403babab3cba1028b9aaffc19d77c2459bda713237817f7e04d9d03212ec84"
+  },
+  {
+    "file": "CU-15-04-fuentes-sin-panel.png",
+    "bytes": 105288,
+    "sha256": "306bb4606cd30535193f636b08e3b4bae3f88891fbfd63e3282778c76e446cfc"
+  },
+  {
+    "file": "CU-15-antes-del-arreglo.png",
+    "bytes": 1079275,
+    "sha256": "5e314353e5ef9da511e5cf0b35b75143ca63d6a474dcdb2a81071044d0ba87b4"
+  },
+  {
+    "file": "CU-15-antes.json",
+    "bytes": 1810,
+    "sha256": "9f19fe62c9d755c776d4b43eb7a87091d20f24f9192bb5507782ac2fef730e87"
+  },
+  {
+    "file": "CU-30-01-carrera-inicial.png",
+    "bytes": 1069414,
+    "sha256": "4f0e6aa2b54a6fa60f08bf471ae49be2b09722e104c6a0c8da29c54f2b46e78d"
+  },
+  {
+    "file": "CU-30-02-alternativa-real.png",
+    "bytes": 198516,
+    "sha256": "fcf13eda16fc0c522c2d62f46accb36df477948ad9b95b673617577cf8160172"
+  },
+  {
+    "file": "CU-30-03-segunda-alternativa.png",
+    "bytes": 195938,
+    "sha256": "23430cc4e933b5e241559cd233d12b7807968b0ae5c95d501c41a46e99291a54"
+  },
+  {
+    "file": "CU-30-antes-del-arreglo.png",
+    "bytes": 1092550,
+    "sha256": "25594025b85115bd83779693402fda7261de1f300a8125252c4b33fd871f1022"
+  },
+  {
+    "file": "CU-30-antes.json",
+    "bytes": 2154,
+    "sha256": "89f606e24e99e72f21ad8e0629e86470ef02427805cb90fe798d38c76824e200"
+  },
+  {
+    "file": "fixtures.json",
+    "bytes": 260,
+    "sha256": "5b397c15df9f80ac449d5f6ca916713406ffe31cd08eb54e0f8a05efc05713b5"
+  },
+  {
+    "file": "index.html",
+    "bytes": 24312,
+    "sha256": "7174bba5fba205e3d3f35911da154c4f4055e98c8d9a859736a20c4d0936a6e6"
+  },
+  {
+    "file": "INFORME.md",
+    "bytes": 3781,
+    "sha256": "5080674a6239b134b6f32921fe379f3af2da7d2d66aa801e54922f27d444b6f3"
+  },
+  {
+    "file": "regresion/acceptance.json",
+    "bytes": 2376,
+    "sha256": "711c515c6c6bbaed233dc1c0624175f44dbe60ed2d0f5f1fa7f4e7a602c743be"
+  },
+  {
+    "file": "regresion/career-navigation-regression.cjs.log",
+    "bytes": 1514,
+    "sha256": "ea38136a16e710690455db4897c24eedb4c94f38e5d3c1eca2c86a263b8584e5"
+  },
+  {
+    "file": "regresion/chat-bold.cjs.log",
+    "bytes": 379,
+    "sha256": "5d3e78d901566aa6d88d17d9b1bea08cd02cf613c31a3aa8f3e127d008be5f57"
+  },
+  {
+    "file": "regresion/guided-explanation.cjs.log",
+    "bytes": 10450,
+    "sha256": "d3c17bc75dc361177aea028319ebb2a5fa9331b4626c90430ef70b35226905c8"
+  },
+  {
+    "file": "regresion/highlight-target-regression.js.log",
+    "bytes": 1093,
+    "sha256": "7aa3bda5a61fc05bc841fb48e29463e64fc45445a29fa8cbe7f39ec167b7dc47"
+  },
+  {
+    "file": "regresion/manual-return-context.cjs.log",
+    "bytes": 1271,
+    "sha256": "7d1fc6b0ac8041cd7b5371c74a994d240f876c89f99620b1cf435d6f05047134"
+  },
+  {
+    "file": "regresion/repeat-same-carousel.cjs.log",
+    "bytes": 108,
+    "sha256": "326d0cdf40998d6b8e7947c51abd3f66042bf0e68bb88ea5bc42f0050da8ed3c"
+  },
+  {
+    "file": "regresion/smoke-test.js.log",
+    "bytes": 73,
+    "sha256": "f78d15123ff5450a842ef78303da379472484a0e6810e8ba3d175732ca0ee62e"
+  },
+  {
+    "file": "regresion/sprint1-browser.cjs.log",
+    "bytes": 419,
+    "sha256": "60d5fb73c1eb263a2f47f10d834f5879195020f0f2fde3eaa3272ddd4a37b2eb"
+  },
+  {
+    "file": "regresion/sprint1-revalidation.cjs.log",
+    "bytes": 2226,
+    "sha256": "54301bbd3ad65c1242876c84b10035bc90e52efff416af2182dd663e40ec3d13"
+  },
+  {
+    "file": "regresion/sprint2-browser.cjs.log",
+    "bytes": 2039,
+    "sha256": "622f5290869afd82cf29a011f74454bf89b1a033bc91cf7045cf49ced173ff8b"
+  },
+  {
+    "file": "regresion/sprint3-browser.cjs.log",
+    "bytes": 2738,
+    "sha256": "ebbe2b5a29283accfa453aa943836cf7a9f47a20ee48184cccfb887eff6b26fc"
+  },
+  {
+    "file": "regresion/sprint3-model.cjs.log",
+    "bytes": 1050,
+    "sha256": "2ed1a7a7c10469c3bb76578957a3f4bf12cf924ed36fa517a616fd134099d61b"
+  },
+  {
+    "file": "regresion/sprint4-browser.cjs.log",
+    "bytes": 4385,
+    "sha256": "89d3053e079bdc69c618ede18a6f4161c2f0c7e434520cd12633c9b797b317ee"
+  },
+  {
+    "file": "regresion/three-incidents-regression.cjs.log",
+    "bytes": 442,
+    "sha256": "e7013eaed21f9855e3b1476696b592bb3a6cf3ebb12d121389bbf166b724830f"
+  },
+  {
+    "file": "resultados.json",
+    "bytes": 18809,
+    "sha256": "3548cd68a7b3f554278dfebb7799000b9d873c3a1b4b23a22216cacff438eaa5"
+  },
+  {
+    "file": "three-incidents-regression.cjs",
+    "bytes": 13647,
+    "sha256": "21cb81bce20321a60e7208517d796422b6b19e310d300b4e791f823a1a9c986a"
+  }
+]

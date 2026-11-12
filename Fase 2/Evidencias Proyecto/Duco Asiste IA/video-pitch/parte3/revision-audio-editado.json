@@ -1,0 +1,803 @@
+{
+  "seconds": 75.555,
+  "peakDbfs": -1.4914182165948773,
+  "clippedSamples": 0,
+  "segments": [
+    {
+      "start": 0.3,
+      "end": 19.6,
+      "text": "Con Duco Asiste buscamos reducir la fracción, detener una pregunta y encontrar información útil. Para visitar esto significa una interacción más directa, para la institución representa una oportunidad de mejorar la orientación digital y conocer que nuestro propietario necesita revisión.",
+      "words": [
+        {
+          "start": 0.3,
+          "end": 0.98,
+          "word": " Con"
+        },
+        {
+          "start": 0.98,
+          "end": 1.36,
+          "word": " Duco"
+        },
+        {
+          "start": 1.36,
+          "end": 2.24,
+          "word": " Asiste"
+        },
+        {
+          "start": 2.24,
+          "end": 3.0,
+          "word": " buscamos"
+        },
+        {
+          "start": 3.0,
+          "end": 3.54,
+          "word": " reducir"
+        },
+        {
+          "start": 3.54,
+          "end": 3.68,
+          "word": " la"
+        },
+        {
+          "start": 3.68,
+          "end": 4.24,
+          "word": " fracción,"
+        },
+        {
+          "start": 4.46,
+          "end": 5.06,
+          "word": " detener"
+        },
+        {
+          "start": 5.06,
+          "end": 5.32,
+          "word": " una"
+        },
+        {
+          "start": 5.32,
+          "end": 5.82,
+          "word": " pregunta"
+        },
+        {
+          "start": 5.82,
+          "end": 5.96,
+          "word": " y"
+        },
+        {
+          "start": 5.96,
+          "end": 6.28,
+          "word": " encontrar"
+        },
+        {
+          "start": 6.28,
+          "end": 7.3,
+          "word": " información"
+        },
+        {
+          "start": 7.3,
+          "end": 7.72,
+          "word": " útil."
+        },
+        {
+          "start": 8.24,
+          "end": 8.58,
+          "word": " Para"
+        },
+        {
+          "start": 8.58,
+          "end": 9.06,
+          "word": " visitar"
+        },
+        {
+          "start": 9.06,
+          "end": 9.22,
+          "word": " esto"
+        },
+        {
+          "start": 9.22,
+          "end": 9.68,
+          "word": " significa"
+        },
+        {
+          "start": 9.68,
+          "end": 10.3,
+          "word": " una"
+        },
+        {
+          "start": 10.3,
+          "end": 11.42,
+          "word": " interacción"
+        },
+        {
+          "start": 11.42,
+          "end": 11.66,
+          "word": " más"
+        },
+        {
+          "start": 11.66,
+          "end": 12.28,
+          "word": " directa,"
+        },
+        {
+          "start": 12.62,
+          "end": 12.72,
+          "word": " para"
+        },
+        {
+          "start": 12.72,
+          "end": 12.78,
+          "word": " la"
+        },
+        {
+          "start": 12.78,
+          "end": 13.22,
+          "word": " institución"
+        },
+        {
+          "start": 13.22,
+          "end": 13.84,
+          "word": " representa"
+        },
+        {
+          "start": 13.84,
+          "end": 14.1,
+          "word": " una"
+        },
+        {
+          "start": 14.1,
+          "end": 14.44,
+          "word": " oportunidad"
+        },
+        {
+          "start": 14.44,
+          "end": 14.66,
+          "word": " de"
+        },
+        {
+          "start": 14.66,
+          "end": 15.0,
+          "word": " mejorar"
+        },
+        {
+          "start": 15.0,
+          "end": 15.24,
+          "word": " la"
+        },
+        {
+          "start": 15.24,
+          "end": 16.0,
+          "word": " orientación"
+        },
+        {
+          "start": 16.0,
+          "end": 16.42,
+          "word": " digital"
+        },
+        {
+          "start": 16.42,
+          "end": 17.18,
+          "word": " y"
+        },
+        {
+          "start": 17.18,
+          "end": 17.6,
+          "word": " conocer"
+        },
+        {
+          "start": 17.6,
+          "end": 17.96,
+          "word": " que"
+        },
+        {
+          "start": 17.96,
+          "end": 18.24,
+          "word": " nuestro"
+        },
+        {
+          "start": 18.24,
+          "end": 18.6,
+          "word": " propietario"
+        },
+        {
+          "start": 18.6,
+          "end": 18.96,
+          "word": " necesita"
+        },
+        {
+          "start": 18.96,
+          "end": 19.6,
+          "word": " revisión."
+        }
+      ]
+    },
+    {
+      "start": 19.6,
+      "end": 29.84,
+      "text": "Nuestro prototipo incorpora la valoración de usuario y un módulo de administrativo para revisar propuestas de información hasta publicarla como conocimiento aprobado.",
+      "words": [
+        {
+          "start": 19.6,
+          "end": 20.88,
+          "word": " Nuestro"
+        },
+        {
+          "start": 20.88,
+          "end": 21.68,
+          "word": " prototipo"
+        },
+        {
+          "start": 21.68,
+          "end": 22.24,
+          "word": " incorpora"
+        },
+        {
+          "start": 22.24,
+          "end": 22.34,
+          "word": " la"
+        },
+        {
+          "start": 22.34,
+          "end": 22.66,
+          "word": " valoración"
+        },
+        {
+          "start": 22.66,
+          "end": 22.78,
+          "word": " de"
+        },
+        {
+          "start": 22.78,
+          "end": 23.14,
+          "word": " usuario"
+        },
+        {
+          "start": 23.14,
+          "end": 23.88,
+          "word": " y"
+        },
+        {
+          "start": 23.88,
+          "end": 24.0,
+          "word": " un"
+        },
+        {
+          "start": 24.0,
+          "end": 24.3,
+          "word": " módulo"
+        },
+        {
+          "start": 24.3,
+          "end": 24.5,
+          "word": " de"
+        },
+        {
+          "start": 24.5,
+          "end": 25.42,
+          "word": " administrativo"
+        },
+        {
+          "start": 25.42,
+          "end": 25.78,
+          "word": " para"
+        },
+        {
+          "start": 25.78,
+          "end": 26.18,
+          "word": " revisar"
+        },
+        {
+          "start": 26.18,
+          "end": 26.68,
+          "word": " propuestas"
+        },
+        {
+          "start": 26.68,
+          "end": 26.82,
+          "word": " de"
+        },
+        {
+          "start": 26.82,
+          "end": 27.28,
+          "word": " información"
+        },
+        {
+          "start": 27.28,
+          "end": 27.92,
+          "word": " hasta"
+        },
+        {
+          "start": 27.92,
+          "end": 28.52,
+          "word": " publicarla"
+        },
+        {
+          "start": 28.52,
+          "end": 28.8,
+          "word": " como"
+        },
+        {
+          "start": 28.8,
+          "end": 29.32,
+          "word": " conocimiento"
+        },
+        {
+          "start": 29.32,
+          "end": 29.84,
+          "word": " aprobado."
+        }
+      ]
+    },
+    {
+      "start": 30.18,
+      "end": 43.24,
+      "text": "También actualmente utilizamos Ollama como servicio de inteligencia artificial para demostrar y aprobar el funcineamiento. Es una herramienta de prototipo, no algo que deba instalar el visitante.",
+      "words": [
+        {
+          "start": 30.18,
+          "end": 30.74,
+          "word": " También"
+        },
+        {
+          "start": 30.74,
+          "end": 32.14,
+          "word": " actualmente"
+        },
+        {
+          "start": 32.14,
+          "end": 32.7,
+          "word": " utilizamos"
+        },
+        {
+          "start": 32.7,
+          "end": 33.16,
+          "word": " Ollama"
+        },
+        {
+          "start": 33.16,
+          "end": 33.36,
+          "word": " como"
+        },
+        {
+          "start": 33.36,
+          "end": 33.82,
+          "word": " servicio"
+        },
+        {
+          "start": 33.82,
+          "end": 33.98,
+          "word": " de"
+        },
+        {
+          "start": 33.98,
+          "end": 34.42,
+          "word": " inteligencia"
+        },
+        {
+          "start": 34.42,
+          "end": 34.84,
+          "word": " artificial"
+        },
+        {
+          "start": 34.84,
+          "end": 35.82,
+          "word": " para"
+        },
+        {
+          "start": 35.82,
+          "end": 36.4,
+          "word": " demostrar"
+        },
+        {
+          "start": 36.4,
+          "end": 36.54,
+          "word": " y"
+        },
+        {
+          "start": 36.54,
+          "end": 36.96,
+          "word": " aprobar"
+        },
+        {
+          "start": 36.96,
+          "end": 37.68,
+          "word": " el"
+        },
+        {
+          "start": 37.68,
+          "end": 38.58,
+          "word": " funcineamiento."
+        },
+        {
+          "start": 38.84,
+          "end": 39.2,
+          "word": " Es"
+        },
+        {
+          "start": 39.2,
+          "end": 39.32,
+          "word": " una"
+        },
+        {
+          "start": 39.32,
+          "end": 39.84,
+          "word": " herramienta"
+        },
+        {
+          "start": 39.84,
+          "end": 39.96,
+          "word": " de"
+        },
+        {
+          "start": 39.96,
+          "end": 40.56,
+          "word": " prototipo,"
+        },
+        {
+          "start": 40.72,
+          "end": 40.8,
+          "word": " no"
+        },
+        {
+          "start": 40.8,
+          "end": 41.06,
+          "word": " algo"
+        },
+        {
+          "start": 41.06,
+          "end": 41.36,
+          "word": " que"
+        },
+        {
+          "start": 41.36,
+          "end": 41.94,
+          "word": " deba"
+        },
+        {
+          "start": 41.94,
+          "end": 42.38,
+          "word": " instalar"
+        },
+        {
+          "start": 42.38,
+          "end": 42.66,
+          "word": " el"
+        },
+        {
+          "start": 42.66,
+          "end": 43.24,
+          "word": " visitante."
+        }
+      ]
+    },
+    {
+      "start": 43.24,
+      "end": 57.4,
+      "text": "La propuesta al final contempla un servicio desplegado e integrado al sitio. Hemos documentado los casos de uso y realizamos pruebas automatizadas sobre funciones centrales.",
+      "words": [
+        {
+          "start": 43.24,
+          "end": 44.2,
+          "word": " La"
+        },
+        {
+          "start": 44.2,
+          "end": 44.82,
+          "word": " propuesta"
+        },
+        {
+          "start": 44.82,
+          "end": 45.28,
+          "word": " al"
+        },
+        {
+          "start": 45.28,
+          "end": 45.58,
+          "word": " final"
+        },
+        {
+          "start": 45.58,
+          "end": 46.38,
+          "word": " contempla"
+        },
+        {
+          "start": 46.38,
+          "end": 46.6,
+          "word": " un"
+        },
+        {
+          "start": 46.6,
+          "end": 47.12,
+          "word": " servicio"
+        },
+        {
+          "start": 47.12,
+          "end": 48.24,
+          "word": " desplegado"
+        },
+        {
+          "start": 48.24,
+          "end": 48.5,
+          "word": " e"
+        },
+        {
+          "start": 48.5,
+          "end": 49.06,
+          "word": " integrado"
+        },
+        {
+          "start": 49.06,
+          "end": 49.26,
+          "word": " al"
+        },
+        {
+          "start": 49.26,
+          "end": 49.68,
+          "word": " sitio."
+        },
+        {
+          "start": 50.14,
+          "end": 50.64,
+          "word": " Hemos"
+        },
+        {
+          "start": 50.64,
+          "end": 51.4,
+          "word": " documentado"
+        },
+        {
+          "start": 51.4,
+          "end": 51.54,
+          "word": " los"
+        },
+        {
+          "start": 51.54,
+          "end": 51.98,
+          "word": " casos"
+        },
+        {
+          "start": 51.98,
+          "end": 52.26,
+          "word": " de"
+        },
+        {
+          "start": 52.26,
+          "end": 52.56,
+          "word": " uso"
+        },
+        {
+          "start": 52.56,
+          "end": 53.1,
+          "word": " y"
+        },
+        {
+          "start": 53.1,
+          "end": 53.62,
+          "word": " realizamos"
+        },
+        {
+          "start": 53.62,
+          "end": 54.14,
+          "word": " pruebas"
+        },
+        {
+          "start": 54.14,
+          "end": 55.9,
+          "word": " automatizadas"
+        },
+        {
+          "start": 55.9,
+          "end": 56.36,
+          "word": " sobre"
+        },
+        {
+          "start": 56.36,
+          "end": 56.8,
+          "word": " funciones"
+        },
+        {
+          "start": 56.8,
+          "end": 57.4,
+          "word": " centrales."
+        }
+      ]
+    },
+    {
+      "start": 57.4,
+      "end": 74.88,
+      "text": "El siguiente paso es aplicar la validación con usuarios reales y dispositivos físicos, porque una buena experiencia digital no consiste en únicamente publicar información, consiste en ayudar a las personas y encontrar y comprenderla. Eso es Duco Asiste.",
+      "words": [
+        {
+          "start": 57.4,
+          "end": 58.1,
+          "word": " El"
+        },
+        {
+          "start": 58.1,
+          "end": 58.32,
+          "word": " siguiente"
+        },
+        {
+          "start": 58.32,
+          "end": 58.64,
+          "word": " paso"
+        },
+        {
+          "start": 58.64,
+          "end": 59.02,
+          "word": " es"
+        },
+        {
+          "start": 59.02,
+          "end": 59.76,
+          "word": " aplicar"
+        },
+        {
+          "start": 59.76,
+          "end": 60.08,
+          "word": " la"
+        },
+        {
+          "start": 60.08,
+          "end": 60.9,
+          "word": " validación"
+        },
+        {
+          "start": 60.9,
+          "end": 61.18,
+          "word": " con"
+        },
+        {
+          "start": 61.18,
+          "end": 61.64,
+          "word": " usuarios"
+        },
+        {
+          "start": 61.64,
+          "end": 62.2,
+          "word": " reales"
+        },
+        {
+          "start": 62.2,
+          "end": 62.4,
+          "word": " y"
+        },
+        {
+          "start": 62.4,
+          "end": 62.9,
+          "word": " dispositivos"
+        },
+        {
+          "start": 62.9,
+          "end": 63.38,
+          "word": " físicos,"
+        },
+        {
+          "start": 63.6,
+          "end": 64.28,
+          "word": " porque"
+        },
+        {
+          "start": 64.28,
+          "end": 64.48,
+          "word": " una"
+        },
+        {
+          "start": 64.48,
+          "end": 64.68,
+          "word": " buena"
+        },
+        {
+          "start": 64.68,
+          "end": 65.1,
+          "word": " experiencia"
+        },
+        {
+          "start": 65.1,
+          "end": 65.42,
+          "word": " digital"
+        },
+        {
+          "start": 65.42,
+          "end": 65.66,
+          "word": " no"
+        },
+        {
+          "start": 65.66,
+          "end": 66.22,
+          "word": " consiste"
+        },
+        {
+          "start": 66.22,
+          "end": 66.8,
+          "word": " en"
+        },
+        {
+          "start": 66.8,
+          "end": 67.32,
+          "word": " únicamente"
+        },
+        {
+          "start": 67.32,
+          "end": 67.78,
+          "word": " publicar"
+        },
+        {
+          "start": 67.78,
+          "end": 68.24,
+          "word": " información,"
+        },
+        {
+          "start": 68.72,
+          "end": 69.26,
+          "word": " consiste"
+        },
+        {
+          "start": 69.26,
+          "end": 69.44,
+          "word": " en"
+        },
+        {
+          "start": 69.44,
+          "end": 69.72,
+          "word": " ayudar"
+        },
+        {
+          "start": 69.72,
+          "end": 70.06,
+          "word": " a"
+        },
+        {
+          "start": 70.06,
+          "end": 70.24,
+          "word": " las"
+        },
+        {
+          "start": 70.24,
+          "end": 70.72,
+          "word": " personas"
+        },
+        {
+          "start": 70.72,
+          "end": 71.02,
+          "word": " y"
+        },
+        {
+          "start": 71.02,
+          "end": 71.52,
+          "word": " encontrar"
+        },
+        {
+          "start": 71.52,
+          "end": 71.92,
+          "word": " y"
+        },
+        {
+          "start": 71.92,
+          "end": 72.94,
+          "word": " comprenderla."
+        },
+        {
+          "start": 73.32,
+          "end": 73.46,
+          "word": " Eso"
+        },
+        {
+          "start": 73.46,
+          "end": 74.08,
+          "word": " es"
+        },
+        {
+          "start": 74.08,
+          "end": 74.48,
+          "word": " Duco"
+        },
+        {
+          "start": 74.48,
+          "end": 74.88,
+          "word": " Asiste."
+        }
+      ]
+    }
+  ],
+  "decodePassed": true
+}

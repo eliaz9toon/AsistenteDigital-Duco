@@ -1,0 +1,46 @@
+{
+  "id": "CU-15",
+  "title": "Corregir una interpretacion o accion de Duco",
+  "mode": "Precondicion controlada con titulo resaltado; correccion por UI con IA real",
+  "startedAt": "2026-11-05T14:46:31.719Z",
+  "images": [
+    {
+      "file": "CU-15-01-titulo-antes-de-corregir.png",
+      "label": "titulo-antes-de-corregir",
+      "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+      "timestamp": "2026-11-05T14:46:35.527Z"
+    },
+    {
+      "file": "CU-15-02-estado-del-fallo.png",
+      "label": "estado-del-fallo",
+      "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+      "timestamp": "2026-11-05T14:46:37.429Z"
+    }
+  ],
+  "inputs": [
+    "No, te pedi el parrafo explicativo, no el titulo. Resalta el texto que usaste para explicar la carrera."
+  ],
+  "replies": [
+    "¿Qué carrera quieres que explique y vaya resaltando? Indícame su nombre completo."
+  ],
+  "actions": [
+    {
+      "type": "highlightTerms",
+      "terms": [
+        "Ingenieria en Informatica"
+      ],
+      "duration": 15000
+    }
+  ],
+  "outcomes": [
+    {
+      "success": true,
+      "detail": "El texto quedó resaltado"
+    }
+  ],
+  "modelResponses": [],
+  "errors": [],
+  "status": "FALLO",
+  "error": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(await page.locator('main p .duco-page-highlight, main li .duco-page-highlight').count())\n\n    at C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\tests\\use-case-evidence.cjs:207:7\n    at async check (C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\tests\\use-case-evidence.cjs:76:5)\n    at async C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\tests\\use-case-evidence.cjs:202:5",
+  "finishedAt": "2026-11-05T14:46:37.429Z"
+}

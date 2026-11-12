@@ -1,0 +1,7 @@
+{
+  "source": "C:\\Users\\elias\\Downloads\\Parte3.ogg",
+  "seconds": 80.34,
+  "sampleRate": 48000,
+  "channels": 1,
+  "ffmpeg": "C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\video-pitch\\.venv\\Lib\\site-packages\\imageio_ffmpeg\\binaries\\ffmpeg-win-x86_64-v9.0.2.exe"
+}

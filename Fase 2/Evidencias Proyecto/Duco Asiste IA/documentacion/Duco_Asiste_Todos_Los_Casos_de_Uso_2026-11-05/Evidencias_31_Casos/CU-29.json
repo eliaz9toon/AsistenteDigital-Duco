@@ -1,0 +1,45 @@
+{
+  "id": "CU-29",
+  "title": "Reintentar una consulta tras un fallo del servicio de IA",
+  "mode": "Fallo de IA simulado, recuperacion posterior con Ollama real por UI",
+  "startedAt": "2026-11-05T14:47:18.204Z",
+  "images": [
+    {
+      "file": "CU-29-01-fallo-controlado.png",
+      "label": "fallo-controlado",
+      "url": "http://127.0.0.1:8765/duco",
+      "timestamp": "2026-11-05T14:47:21.808Z"
+    },
+    {
+      "file": "CU-29-02-reintento-exitoso.png",
+      "label": "reintento-exitoso",
+      "url": "http://127.0.0.1:8765/duco",
+      "timestamp": "2026-11-05T14:47:30.490Z"
+    }
+  ],
+  "inputs": [
+    "Que es Duoc UC? Solo explicamelo, no navegues.",
+    "Que es Duoc UC? Solo explicamelo, no navegues."
+  ],
+  "replies": [
+    "No pude conectarme con Ollama. Verifica que esté iniciado e intenta nuevamente.",
+    "Duoc UC es una institución de educación superior chilena dedicada a formar especialistas capaces de adaptarse al mundo laboral actual. Ofrece programas técnicos y profesionales diseñados para responder a las necesidades del mercado, con un enfoque práctico y flexible que permite estudiar en horarios vespertinos o los fines de semana, ideal para quienes trabajan durante el día."
+  ],
+  "actions": [],
+  "outcomes": [],
+  "modelResponses": [
+    {
+      "status": 200,
+      "model": "qwen3.5:9b",
+      "content": "{\"route\": \"conversation\"}"
+    },
+    {
+      "status": 200,
+      "model": "qwen3.5:9b",
+      "content": "{\n  \"reply\": \"Duoc UC es una institución de educación superior chilena dedicada a formar especialistas capaces de adaptarse al mundo laboral actual. Ofrece programas técnicos y profesionales diseñados para responder a las necesidades del mercado, con un enfoque práctico y flexible que permite estudiar en horarios vespertinos o los fines de semana, ideal para quienes trabajan durante el día.\"\n}"
+    }
+  ],
+  "errors": [],
+  "status": "VERIFICADO",
+  "finishedAt": "2026-11-05T14:47:30.490Z"
+}

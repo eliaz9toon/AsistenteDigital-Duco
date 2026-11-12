@@ -1,0 +1,18 @@
+DUCO ASISTE - PITCH - PARTE 1
+
+Video: Parte1_Duco_Asiste.mp4
+Duracion: 41,07 segundos, correspondiente al audio original Parte1.mp3.
+Formato: horizontal 16:9, 1920 x 1080, 30 fps.
+Video: H.264, pixeles yuv420p.
+Audio: voz original incorporada, AAC, 48 kHz, estereo.
+
+Incluye grabaciones en movimiento del sitio real, transiciones, acercamientos,
+titulos animados y recursos graficos sincronizados con la narracion.
+Los textos en pantalla son sintesis editoriales, no subtitulos literales.
+No se ha reemplazado la voz ni agregado musica de fondo.
+
+El segmento termina presentando a Duco, sin un cierre definitivo del pitch.
+Se puede colocar directamente antes de las futuras partes 2 y 3 en el editor.
+Como ya contiene la narracion, no agregar otra vez Parte1.mp3 encima del video.
+
+Las otras partes mantendran este formato para facilitar la union.

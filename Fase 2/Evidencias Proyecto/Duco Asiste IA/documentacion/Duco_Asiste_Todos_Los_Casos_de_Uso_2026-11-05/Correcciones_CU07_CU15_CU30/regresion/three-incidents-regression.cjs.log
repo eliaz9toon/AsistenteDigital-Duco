@@ -1,0 +1,5 @@
+{"id":"CU-07","passed":true,"images":3}
+{"id":"CU-15","passed":true,"images":4}
+{"id":"CU-30","passed":true,"images":3}
+{"id":"RUTAS","passed":true,"images":0}
+{"output":"C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\tests\\evidence\\correcciones-2026-11-05T15-02-52-011Z","passed":true,"cases":[{"id":"CU-07","passed":true},{"id":"CU-15","passed":true},{"id":"CU-30","passed":true},{"id":"RUTAS","passed":true}],"cleanup":true}

@@ -1,0 +1,8 @@
+[Duco Admin] "GET /api/duco/health HTTP/1.1" 200 -
+[Duco Admin] "POST /api/duco/ollama/ensure HTTP/1.1" 200 -
+[Duco Admin] "POST /api/duco/ollama/ensure HTTP/1.1" 403 -
+...............
+----------------------------------------------------------------------
+Ran 15 tests in 0.536s
+
+OK

@@ -1,0 +1,762 @@
+{
+  "language": "es",
+  "duration": 54.016,
+  "segments": [
+    {
+      "start": 0.85,
+      "end": 9.97,
+      "text": "Duco Asiste no está pensado solamente pero a responder preguntas. Su diferencia es que también puede actuar sobre la página para mostrar lo que está explicando.",
+      "words": [
+        {
+          "start": 0.85,
+          "end": 1.55,
+          "word": " Duco",
+          "probability": 0.553477443754673
+        },
+        {
+          "start": 1.55,
+          "end": 1.97,
+          "word": " Asiste",
+          "probability": 0.737492561340332
+        },
+        {
+          "start": 1.97,
+          "end": 2.27,
+          "word": " no",
+          "probability": 0.9129638671875
+        },
+        {
+          "start": 2.27,
+          "end": 2.53,
+          "word": " está",
+          "probability": 0.9355449676513672
+        },
+        {
+          "start": 2.53,
+          "end": 2.99,
+          "word": " pensado",
+          "probability": 0.9900425672531128
+        },
+        {
+          "start": 2.99,
+          "end": 3.41,
+          "word": " solamente",
+          "probability": 0.9570045471191406
+        },
+        {
+          "start": 3.41,
+          "end": 3.81,
+          "word": " pero",
+          "probability": 0.4385492503643036
+        },
+        {
+          "start": 3.81,
+          "end": 3.91,
+          "word": " a",
+          "probability": 0.6639894247055054
+        },
+        {
+          "start": 3.91,
+          "end": 4.25,
+          "word": " responder",
+          "probability": 0.9869864583015442
+        },
+        {
+          "start": 4.25,
+          "end": 4.69,
+          "word": " preguntas.",
+          "probability": 0.9091341495513916
+        },
+        {
+          "start": 5.35,
+          "end": 5.59,
+          "word": " Su",
+          "probability": 0.9483002424240112
+        },
+        {
+          "start": 5.59,
+          "end": 6.09,
+          "word": " diferencia",
+          "probability": 0.9967466592788696
+        },
+        {
+          "start": 6.09,
+          "end": 6.41,
+          "word": " es",
+          "probability": 0.9899559020996094
+        },
+        {
+          "start": 6.41,
+          "end": 6.55,
+          "word": " que",
+          "probability": 0.9903835654258728
+        },
+        {
+          "start": 6.55,
+          "end": 6.87,
+          "word": " también",
+          "probability": 0.988560140132904
+        },
+        {
+          "start": 6.87,
+          "end": 7.17,
+          "word": " puede",
+          "probability": 0.8472342491149902
+        },
+        {
+          "start": 7.17,
+          "end": 7.51,
+          "word": " actuar",
+          "probability": 0.9882537722587585
+        },
+        {
+          "start": 7.51,
+          "end": 7.77,
+          "word": " sobre",
+          "probability": 0.988881528377533
+        },
+        {
+          "start": 7.77,
+          "end": 7.97,
+          "word": " la",
+          "probability": 0.9947522878646851
+        },
+        {
+          "start": 7.97,
+          "end": 8.25,
+          "word": " página",
+          "probability": 0.9899665117263794
+        },
+        {
+          "start": 8.25,
+          "end": 8.63,
+          "word": " para",
+          "probability": 0.9611501693725586
+        },
+        {
+          "start": 8.63,
+          "end": 8.99,
+          "word": " mostrar",
+          "probability": 0.9972661733627319
+        },
+        {
+          "start": 8.99,
+          "end": 9.17,
+          "word": " lo",
+          "probability": 0.9932049512863159
+        },
+        {
+          "start": 9.17,
+          "end": 9.25,
+          "word": " que",
+          "probability": 0.9969592094421387
+        },
+        {
+          "start": 9.25,
+          "end": 9.45,
+          "word": " está",
+          "probability": 0.9623017907142639
+        },
+        {
+          "start": 9.45,
+          "end": 9.97,
+          "word": " explicando.",
+          "probability": 0.9902215003967285
+        }
+      ]
+    },
+    {
+      "start": 10.85,
+      "end": 20.79,
+      "text": "Por ejemplo, el visitante puede pedir, llévame a ingeniería informática. Duco puede abrir la página correspondiente y ayudarle a encontrar la información.",
+      "words": [
+        {
+          "start": 10.85,
+          "end": 11.23,
+          "word": " Por",
+          "probability": 0.9540005326271057
+        },
+        {
+          "start": 11.23,
+          "end": 11.63,
+          "word": " ejemplo,",
+          "probability": 0.9983339905738831
+        },
+        {
+          "start": 12.19,
+          "end": 12.23,
+          "word": " el",
+          "probability": 0.9352431297302246
+        },
+        {
+          "start": 12.23,
+          "end": 12.75,
+          "word": " visitante",
+          "probability": 0.9924533665180206
+        },
+        {
+          "start": 12.75,
+          "end": 13.03,
+          "word": " puede",
+          "probability": 0.9924178123474121
+        },
+        {
+          "start": 13.03,
+          "end": 13.43,
+          "word": " pedir,",
+          "probability": 0.9958445429801941
+        },
+        {
+          "start": 14.09,
+          "end": 14.39,
+          "word": " llévame",
+          "probability": 0.6666399339834849
+        },
+        {
+          "start": 14.39,
+          "end": 14.61,
+          "word": " a",
+          "probability": 0.9921006560325623
+        },
+        {
+          "start": 14.61,
+          "end": 15.05,
+          "word": " ingeniería",
+          "probability": 0.8148524065812429
+        },
+        {
+          "start": 15.05,
+          "end": 15.69,
+          "word": " informática.",
+          "probability": 0.8670834600925446
+        },
+        {
+          "start": 16.53,
+          "end": 17.03,
+          "word": " Duco",
+          "probability": 0.9966207444667816
+        },
+        {
+          "start": 17.03,
+          "end": 17.27,
+          "word": " puede",
+          "probability": 0.9916947484016418
+        },
+        {
+          "start": 17.27,
+          "end": 17.57,
+          "word": " abrir",
+          "probability": 0.994441568851471
+        },
+        {
+          "start": 17.57,
+          "end": 17.77,
+          "word": " la",
+          "probability": 0.9921683669090271
+        },
+        {
+          "start": 17.77,
+          "end": 18.03,
+          "word": " página",
+          "probability": 0.996304988861084
+        },
+        {
+          "start": 18.03,
+          "end": 18.87,
+          "word": " correspondiente",
+          "probability": 0.9941599071025848
+        },
+        {
+          "start": 18.87,
+          "end": 19.09,
+          "word": " y",
+          "probability": 0.9607105851173401
+        },
+        {
+          "start": 19.09,
+          "end": 19.69,
+          "word": " ayudarle",
+          "probability": 0.8104986548423767
+        },
+        {
+          "start": 19.69,
+          "end": 19.81,
+          "word": " a",
+          "probability": 0.995412290096283
+        },
+        {
+          "start": 19.81,
+          "end": 20.15,
+          "word": " encontrar",
+          "probability": 0.9991074204444885
+        },
+        {
+          "start": 20.15,
+          "end": 20.39,
+          "word": " la",
+          "probability": 0.9517276883125305
+        },
+        {
+          "start": 20.39,
+          "end": 20.79,
+          "word": " información.",
+          "probability": 0.9990429282188416
+        }
+      ]
+    },
+    {
+      "start": 21.79,
+      "end": 28.89,
+      "text": "Si después pide una explicación, puede mostrar los párafos de respaldo y resaltarlo mientras desarrolla la respuesta.",
+      "words": [
+        {
+          "start": 21.79,
+          "end": 22.17,
+          "word": " Si",
+          "probability": 0.9791052937507629
+        },
+        {
+          "start": 22.17,
+          "end": 22.59,
+          "word": " después",
+          "probability": 0.9838756918907166
+        },
+        {
+          "start": 22.59,
+          "end": 23.13,
+          "word": " pide",
+          "probability": 0.970556914806366
+        },
+        {
+          "start": 23.13,
+          "end": 23.25,
+          "word": " una",
+          "probability": 0.9964029788970947
+        },
+        {
+          "start": 23.25,
+          "end": 23.91,
+          "word": " explicación,",
+          "probability": 0.9957273304462433
+        },
+        {
+          "start": 24.37,
+          "end": 24.43,
+          "word": " puede",
+          "probability": 0.9790055155754089
+        },
+        {
+          "start": 24.43,
+          "end": 24.79,
+          "word": " mostrar",
+          "probability": 0.9973312616348267
+        },
+        {
+          "start": 24.79,
+          "end": 24.99,
+          "word": " los",
+          "probability": 0.9665297269821167
+        },
+        {
+          "start": 24.99,
+          "end": 25.43,
+          "word": " párafos",
+          "probability": 0.6462670564651489
+        },
+        {
+          "start": 25.43,
+          "end": 25.61,
+          "word": " de",
+          "probability": 0.9868762493133545
+        },
+        {
+          "start": 25.61,
+          "end": 26.07,
+          "word": " respaldo",
+          "probability": 0.9766886830329895
+        },
+        {
+          "start": 26.07,
+          "end": 26.73,
+          "word": " y",
+          "probability": 0.8793615698814392
+        },
+        {
+          "start": 26.73,
+          "end": 27.41,
+          "word": " resaltarlo",
+          "probability": 0.9597387711207072
+        },
+        {
+          "start": 27.41,
+          "end": 27.69,
+          "word": " mientras",
+          "probability": 0.9952687621116638
+        },
+        {
+          "start": 27.69,
+          "end": 28.31,
+          "word": " desarrolla",
+          "probability": 0.9497227867444357
+        },
+        {
+          "start": 28.31,
+          "end": 28.45,
+          "word": " la",
+          "probability": 0.9906768798828125
+        },
+        {
+          "start": 28.45,
+          "end": 28.89,
+          "word": " respuesta.",
+          "probability": 0.9987930059432983
+        }
+      ]
+    },
+    {
+      "start": 29.75,
+      "end": 35.87,
+      "text": "También puede abrir menús, seleccionar pestaña y desplazar la página hacia una sesión.",
+      "words": [
+        {
+          "start": 29.75,
+          "end": 30.39,
+          "word": " También",
+          "probability": 0.7108311057090759
+        },
+        {
+          "start": 30.39,
+          "end": 30.75,
+          "word": " puede",
+          "probability": 0.8688831329345703
+        },
+        {
+          "start": 30.75,
+          "end": 31.11,
+          "word": " abrir",
+          "probability": 0.9914584755897522
+        },
+        {
+          "start": 31.11,
+          "end": 31.79,
+          "word": " menús,",
+          "probability": 0.7001131772994995
+        },
+        {
+          "start": 32.39,
+          "end": 32.79,
+          "word": " seleccionar",
+          "probability": 0.9969819585482279
+        },
+        {
+          "start": 32.79,
+          "end": 33.37,
+          "word": " pestaña",
+          "probability": 0.8820127844810486
+        },
+        {
+          "start": 33.37,
+          "end": 33.79,
+          "word": " y",
+          "probability": 0.9260087609291077
+        },
+        {
+          "start": 33.79,
+          "end": 34.23,
+          "word": " desplazar",
+          "probability": 0.96808922290802
+        },
+        {
+          "start": 34.23,
+          "end": 34.43,
+          "word": " la",
+          "probability": 0.9865777492523193
+        },
+        {
+          "start": 34.43,
+          "end": 34.75,
+          "word": " página",
+          "probability": 0.9901589751243591
+        },
+        {
+          "start": 34.75,
+          "end": 35.09,
+          "word": " hacia",
+          "probability": 0.9887899160385132
+        },
+        {
+          "start": 35.09,
+          "end": 35.35,
+          "word": " una",
+          "probability": 0.9949601888656616
+        },
+        {
+          "start": 35.35,
+          "end": 35.87,
+          "word": " sesión.",
+          "probability": 0.9759924411773682
+        }
+      ]
+    },
+    {
+      "start": 36.85,
+      "end": 44.85,
+      "text": "Además, conserva el contexto temporal de la conversación durante la navegación. Así cambiar de página no significa comenzar de nuevo.",
+      "words": [
+        {
+          "start": 36.85,
+          "end": 37.49,
+          "word": " Además,",
+          "probability": 0.9828594326972961
+        },
+        {
+          "start": 37.49,
+          "end": 38.13,
+          "word": " conserva",
+          "probability": 0.9840644896030426
+        },
+        {
+          "start": 38.13,
+          "end": 38.21,
+          "word": " el",
+          "probability": 0.9988529682159424
+        },
+        {
+          "start": 38.21,
+          "end": 38.49,
+          "word": " contexto",
+          "probability": 0.9936750531196594
+        },
+        {
+          "start": 38.49,
+          "end": 39.11,
+          "word": " temporal",
+          "probability": 0.9723266363143921
+        },
+        {
+          "start": 39.11,
+          "end": 39.31,
+          "word": " de",
+          "probability": 0.9980741739273071
+        },
+        {
+          "start": 39.31,
+          "end": 39.41,
+          "word": " la",
+          "probability": 0.998375415802002
+        },
+        {
+          "start": 39.41,
+          "end": 40.15,
+          "word": " conversación",
+          "probability": 0.9953799247741699
+        },
+        {
+          "start": 40.15,
+          "end": 40.41,
+          "word": " durante",
+          "probability": 0.9848105907440186
+        },
+        {
+          "start": 40.41,
+          "end": 40.73,
+          "word": " la",
+          "probability": 0.9979292154312134
+        },
+        {
+          "start": 40.73,
+          "end": 41.25,
+          "word": " navegación.",
+          "probability": 0.9994150201479594
+        },
+        {
+          "start": 41.95,
+          "end": 42.27,
+          "word": " Así",
+          "probability": 0.9854688048362732
+        },
+        {
+          "start": 42.27,
+          "end": 42.73,
+          "word": " cambiar",
+          "probability": 0.4607110023498535
+        },
+        {
+          "start": 42.73,
+          "end": 42.93,
+          "word": " de",
+          "probability": 0.9966720342636108
+        },
+        {
+          "start": 42.93,
+          "end": 43.25,
+          "word": " página",
+          "probability": 0.9949711561203003
+        },
+        {
+          "start": 43.25,
+          "end": 43.49,
+          "word": " no",
+          "probability": 0.956812858581543
+        },
+        {
+          "start": 43.49,
+          "end": 43.93,
+          "word": " significa",
+          "probability": 0.9994422793388367
+        },
+        {
+          "start": 43.93,
+          "end": 44.55,
+          "word": " comenzar",
+          "probability": 0.9981522262096405
+        },
+        {
+          "start": 44.55,
+          "end": 44.65,
+          "word": " de",
+          "probability": 0.9979711174964905
+        },
+        {
+          "start": 44.65,
+          "end": 44.85,
+          "word": " nuevo.",
+          "probability": 0.9992623925209045
+        }
+      ]
+    },
+    {
+      "start": 45.81,
+      "end": 52.85,
+      "text": "La propuesta es pasar de un chat que entrega instrucciones a un asistente que orienta, muestra y acompaña dentro del sitio.",
+      "words": [
+        {
+          "start": 45.81,
+          "end": 46.09,
+          "word": " La",
+          "probability": 0.9868237972259521
+        },
+        {
+          "start": 46.09,
+          "end": 46.59,
+          "word": " propuesta",
+          "probability": 0.9981243908405304
+        },
+        {
+          "start": 46.59,
+          "end": 46.97,
+          "word": " es",
+          "probability": 0.9932184815406799
+        },
+        {
+          "start": 46.97,
+          "end": 47.27,
+          "word": " pasar",
+          "probability": 0.9970820546150208
+        },
+        {
+          "start": 47.27,
+          "end": 47.53,
+          "word": " de",
+          "probability": 0.9950430393218994
+        },
+        {
+          "start": 47.53,
+          "end": 47.69,
+          "word": " un",
+          "probability": 0.9815489649772644
+        },
+        {
+          "start": 47.69,
+          "end": 47.91,
+          "word": " chat",
+          "probability": 0.2545776069164276
+        },
+        {
+          "start": 47.91,
+          "end": 48.11,
+          "word": " que",
+          "probability": 0.993394672870636
+        },
+        {
+          "start": 48.11,
+          "end": 48.41,
+          "word": " entrega",
+          "probability": 0.9863011240959167
+        },
+        {
+          "start": 48.41,
+          "end": 48.99,
+          "word": " instrucciones",
+          "probability": 0.934039572874705
+        },
+        {
+          "start": 48.99,
+          "end": 49.31,
+          "word": " a",
+          "probability": 0.9880809783935547
+        },
+        {
+          "start": 49.31,
+          "end": 49.43,
+          "word": " un",
+          "probability": 0.9888976216316223
+        },
+        {
+          "start": 49.43,
+          "end": 49.95,
+          "word": " asistente",
+          "probability": 0.988601823647817
+        },
+        {
+          "start": 49.95,
+          "end": 50.15,
+          "word": " que",
+          "probability": 0.9897168874740601
+        },
+        {
+          "start": 50.15,
+          "end": 50.75,
+          "word": " orienta,",
+          "probability": 0.8460890650749207
+        },
+        {
+          "start": 50.97,
+          "end": 51.45,
+          "word": " muestra",
+          "probability": 0.9934108257293701
+        },
+        {
+          "start": 51.45,
+          "end": 51.69,
+          "word": " y",
+          "probability": 0.9636273384094238
+        },
+        {
+          "start": 51.69,
+          "end": 52.17,
+          "word": " acompaña",
+          "probability": 0.9791687428951263
+        },
+        {
+          "start": 52.17,
+          "end": 52.39,
+          "word": " dentro",
+          "probability": 0.9363677501678467
+        },
+        {
+          "start": 52.39,
+          "end": 52.63,
+          "word": " del",
+          "probability": 0.9665132164955139
+        },
+        {
+          "start": 52.63,
+          "end": 52.85,
+          "word": " sitio.",
+          "probability": 0.9967420697212219
+        }
+      ]
+    }
+  ]
+}

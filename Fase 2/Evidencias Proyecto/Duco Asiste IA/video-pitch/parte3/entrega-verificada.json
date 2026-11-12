@@ -1,0 +1,22 @@
+{
+  "durationSeconds": 76.766667,
+  "integratedLufs": "-15.91",
+  "truePeakDb": "-3.41",
+  "files": [
+    {
+      "name": "Parte3_Duco_Asiste.mp4",
+      "bytes": 12687793,
+      "sha256": "e6c59a581dd986922ee7636a40d5bfba5c08697e2721677f90c813b5874511f9"
+    },
+    {
+      "name": "Parte3_Audio_Editado.mp3",
+      "bytes": 1815020,
+      "sha256": "5c7d1acaf0b3e8b328177d641da5cff442913db23f9a90718fdac1aec2d1df23"
+    },
+    {
+      "name": "Parte3_Audio_Editado.wav",
+      "bytes": 10880022,
+      "sha256": "e895ce7e123c64ce9f72f2a8eb176703d292c3e73483ab4ccc44b56fb49a0f77"
+    }
+  ]
+}

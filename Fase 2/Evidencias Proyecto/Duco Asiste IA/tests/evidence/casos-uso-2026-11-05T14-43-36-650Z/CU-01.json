@@ -1,0 +1,34 @@
+{
+  "id": "CU-01",
+  "title": "Abrir y cerrar el asistente",
+  "mode": "UI real, teclado y movil emulado",
+  "startedAt": "2026-11-05T14:43:37.909Z",
+  "images": [
+    {
+      "file": "CU-01-01-cerrado.png",
+      "label": "cerrado",
+      "url": "http://127.0.0.1:8765/duco",
+      "timestamp": "2026-11-05T14:43:44.028Z"
+    },
+    {
+      "file": "CU-01-02-abierto.png",
+      "label": "abierto",
+      "url": "http://127.0.0.1:8765/duco",
+      "timestamp": "2026-11-05T14:43:44.851Z"
+    },
+    {
+      "file": "CU-01-03-movil-abierto.png",
+      "label": "movil-abierto",
+      "url": "http://127.0.0.1:8765/duco",
+      "timestamp": "2026-11-05T14:43:45.481Z"
+    }
+  ],
+  "inputs": [],
+  "replies": [],
+  "actions": [],
+  "outcomes": [],
+  "modelResponses": [],
+  "errors": [],
+  "status": "VERIFICADO",
+  "finishedAt": "2026-11-05T14:43:45.481Z"
+}

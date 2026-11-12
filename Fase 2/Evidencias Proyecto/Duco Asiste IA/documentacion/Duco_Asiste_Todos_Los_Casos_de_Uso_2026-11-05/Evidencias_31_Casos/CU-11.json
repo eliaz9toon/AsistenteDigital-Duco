@@ -1,0 +1,47 @@
+{
+  "id": "CU-11",
+  "title": "Cerrar menus abiertos por la guia",
+  "mode": "Integracion apertura y cierre explicito; no temporizador automatico",
+  "startedAt": "2026-11-05T14:45:32.533Z",
+  "images": [
+    {
+      "file": "CU-11-01-abierto.png",
+      "label": "abierto",
+      "url": "http://127.0.0.1:8765/duco",
+      "timestamp": "2026-11-05T14:45:35.962Z"
+    },
+    {
+      "file": "CU-11-02-cerrado.png",
+      "label": "cerrado",
+      "url": "http://127.0.0.1:8765/duco",
+      "timestamp": "2026-11-05T14:45:36.768Z"
+    }
+  ],
+  "inputs": [],
+  "replies": [],
+  "actions": [
+    {
+      "type": "dropdown",
+      "terms": [
+        "Admision"
+      ]
+    },
+    {
+      "type": "closeDropdown"
+    }
+  ],
+  "outcomes": [
+    {
+      "success": true,
+      "detail": "El menú se abrió"
+    },
+    {
+      "success": true,
+      "detail": "Se cerraron los menús transitorios"
+    }
+  ],
+  "modelResponses": [],
+  "errors": [],
+  "status": "VERIFICADO",
+  "finishedAt": "2026-11-05T14:45:36.768Z"
+}

@@ -1,0 +1,55 @@
+{
+  "date": "2026-11-05T17:46:59.414Z",
+  "checks": [
+    {
+      "name": "Real negative user rating persisted",
+      "session": "964da9db-dea5-4bf1-9e5a-47bf7070f66d"
+    },
+    {
+      "name": "Approval publishes the own demo proposal only; verified through independent Oracle connection",
+      "proposalId": 127
+    },
+    {
+      "name": "Mobile viewport recording",
+      "physicalDevice": false,
+      "viewport": [
+        375,
+        812
+      ]
+    }
+  ],
+  "fixture": "Temporary, clearly labelled demo records; existing records are not modified.",
+  "oracle": {
+    "mode": "inspect",
+    "databaseVersion": "23.26.3.0.0",
+    "proposal": [
+      [
+        127,
+        "APROBADA"
+      ]
+    ],
+    "faq": [
+      122
+    ],
+    "sessions": [
+      {
+        "session": "964da9db-dea5-4bf1-9e5a-47bf7070f66d",
+        "rows": 1
+      }
+    ]
+  },
+  "passed": true,
+  "cleanup": {
+    "mode": "cleanup",
+    "databaseVersion": "23.26.3.0.0",
+    "proposal": [],
+    "faq": [],
+    "sessions": [
+      {
+        "session": "964da9db-dea5-4bf1-9e5a-47bf7070f66d",
+        "rows": 0
+      }
+    ],
+    "clean": true
+  }
+}

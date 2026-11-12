@@ -1,0 +1,476 @@
+{
+  "date": "2026-11-05T00:25:51.064Z",
+  "externalNetwork": true,
+  "pages": [
+    {
+      "route": "/duco",
+      "errors": [
+        "TypeError: $(...).prop(...).animate is not a function\n    at HTMLElement.<anonymous> (http://127.0.0.1:8765/duco:3415:48)\n    at ce.each (http://127.0.0.1:8765/duoc_files/jquery-3.7.1.slim.min.js.descarga:2:3335)\n    at ce.fn.init.each (http://127.0.0.1:8765/duoc_files/jquery-3.7.1.slim.min.js.descarga:2:1800)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:8765/duco:3414:37)\n    at e (http://127.0.0.1:8765/duoc_files/jquery-3.7.1.slim.min.js.descarga:2:27234)\n    at t (http://127.0.0.1:8765/duoc_files/jquery-3.7.1.slim.min.js.descarga:2:27536)"
+      ],
+      "httpErrors": [
+        {
+          "url": "http://127.0.0.1:8765/webfonts/fa-brands-400.woff2",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8765/webfonts/fa-solid-900.woff2",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8765/webfonts/fa-brands-400.woff",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8765/webfonts/fa-solid-900.woff",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8765/webfonts/fa-brands-400.ttf",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8765/webfonts/fa-solid-900.ttf",
+          "status": 404
+        }
+      ],
+      "chatVisible": true,
+      "assistantCount": 1,
+      "mobileOverflow": false
+    },
+    {
+      "route": "/carreras.html",
+      "errors": [],
+      "httpErrors": [],
+      "chatVisible": true,
+      "assistantCount": 1,
+      "mobileOverflow": false
+    },
+    {
+      "route": "/carreras-detalle/ingenieria-en-informatica.html",
+      "errors": [],
+      "httpErrors": [],
+      "chatVisible": true,
+      "assistantCount": 1,
+      "controls": {
+        "selected": {
+          "success": true,
+          "detail": "Pestaña seleccionada"
+        },
+        "opened": {
+          "success": true,
+          "detail": "Se abrió el contenido solicitado"
+        },
+        "closed": true
+      },
+      "mobileOverflow": false
+    }
+  ],
+  "catalog": [
+    {
+      "route": "/carreras-detalle/ingenieria-recursos-naturales-sostenibilidad.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/ingenieria-control-gestion.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/tecnico-modelador-proyectista.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/ingenieria-minas.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/tecnico-laboratorio-clinico-banco-sangre-imagenologia.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/ingenieria-administracion-seguridad-privada.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/tecnico-desabolladura-pintura-automotriz.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/ingenieria-en-informatica.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/ingenieria-en-ciberseguridad.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/ingenieria-en-ciencia-de-datos.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/tecnico-audiovisual-2.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/administracion-en-turismo-y-hospitalidad-mencion-administracion-hotelera-2.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/ingenieria-en-marketing-digital-2.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/tecnico-en-electricidad-y-automatizacion-industrial.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/tecnico-en-mantenimiento-industrial.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/auditoria-y-analisis-de-negocios.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/tecnico-en-turismo-y-hospitalidad-2.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/tecnico-en-trabajo-social.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/ingenieria-industrial.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/ingenieria-en-automatizacion-y-control-industrial.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/ingenieria-en-maquinaria-y-vehiculos-pesados.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/ingenieria-en-mantenimiento-industrial-2.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/ingenieria-en-electricidad-y-automatizacion-industrial.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/ingenieria-agricola-4.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/preparador-fisico-2.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/informatica-biomedica-2.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/ingenieria-en-mecanica-automotriz-y-autotronica.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/tecnico-en-electricidad-y-energias-renovables.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/tecnico-en-control-y-monitoreo-remoto-de-procesos-mineros.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/tecnico-en-calidad-de-alimentos-3.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/tecnico-veterinario-y-pecuario.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/tecnico-en-operacion-y-supervision-de-procesos-mineros-2.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/tecnico-en-mecanica-automotriz-y-autotronica-2.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/tecnico-en-maquinaria-y-vehiculos-pesados.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/tecnico-en-geologia-3.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/tecnico-en-enfermeria-2.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/tecnico-en-quimica-y-farmacia.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/tecnico-en-odontologia-2.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/desarrollo-de-aplicaciones-5.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/analista-programador-computacional.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/analista-programador-2.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/ingenieria-en-infraestructura-tecnologica.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/ilustracion-para-contextos-globales.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/ingenieria-en-desarrollo-de-software-2.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/diseno-industrial-3.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/ingenieria-en-redes-y-telecomunicaciones.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/diseno-grafico-3.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/tecnico-en-redes-y-telecomunicaciones.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/diseno-de-vestuario-2.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/diseno-de-ambientes.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/gastronomia-internacional-2.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/gastronomia-2.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/desarrollo-y-diseno-web.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/comunicacion-audiovisual-2.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/relaciones-publicas-y-comunicacion-organizacional.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/publicidad-2.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/animacion-digital-2.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/conservacion-restauracion-patrimonio.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/ingenieria-en-gestion-de-personas.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/contabilidad-tributaria-5.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/ingenieria-en-construccion-2.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/ingenieria-en-prevencion-de-riesgos.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/tecnico-en-construccion-2.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/tecnico-topografo-geomatico.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/tecnico-en-prevencion-de-riesgos-laborales-2.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/tecnico-en-prevencion-de-riesgos.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/contabilidad-general-mencion-legislacion-tributaria.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/auditoria-2.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/comercio-exterior-2.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/administracion-publica-2.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/administracion-de-empresas.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/ingenieria-en-sonido.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/ingenieria-en-gestion-logistica-2.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/ingenieria-en-comercio-exterior.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/tecnologia-en-sonido-e-iluminacion.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/ingenieria-en-administracion-mencion-gestion-de-personas-2.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/ingenieria-en-administracion-mencion-innovacion-y-emprendimiento-3.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/ingenieria-en-administracion-mencion-finanzas-2.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/tecnico-en-administracion.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/tecnico-en-operaciones-logisticas.html",
+      "status": 200,
+      "chatScript": true
+    },
+    {
+      "route": "/carreras-detalle/tecnico-en-gestion-logistica.html",
+      "status": 200,
+      "chatScript": true
+    }
+  ],
+  "passed": false
+}

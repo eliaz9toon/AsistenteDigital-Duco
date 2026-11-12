@@ -1,0 +1,16 @@
+{
+  "date": "2026-11-05T15:00:21.099Z",
+  "checks": [
+    "Chat structure, welcome, input and send control visible",
+    "Empty input is rejected",
+    "Enter submits; user and assistant messages have separate roles",
+    "Navigation retains session and dialogue",
+    "Mobile controls >=44px and no horizontal overflow"
+  ],
+  "mobile": {
+    "send": 48,
+    "close": 44,
+    "overflow": false
+  },
+  "passed": true
+}

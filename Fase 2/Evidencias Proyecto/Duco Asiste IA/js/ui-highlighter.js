@@ -6,7 +6,13 @@
 class UIHighlighter {
   constructor() {
     this.highlightedElement = null;
+    this.highlightTimer = null;
+    this.highlightFadeTimer = null;
+    this.highlightEntranceTokens = new WeakMap();
+    this.controlOverlay = null;
+    this.controlOverlayFrame = null;
     this.pageHighlightTimers = [];
+    this.termHighlightGroup = null;
     this.fadeOutDuration = 700;
     this.guidedScrollCooldown = 900;
     this.lastGuidedScrollAt = 0;
@@ -17,7 +23,6 @@ class UIHighlighter {
     this.scrollLocked = false;
     this.scrollBlockHandlers = [];
     this.panelRestoreTimer = null;
-    this.panelBaseInlineStyle = null;
     this.transientDropdownState = new Map();
     this.transientCollapseState = new Map();
     this.transientDetailsState = new Set();
@@ -34,46 +39,48 @@ class UIHighlighter {
     this.highlightStyle.id = 'duco-highlight-styles';
     this.highlightStyle.textContent = `
       .duco-highlight {
-        position: relative !important;
-        z-index: 2147483646 !important;
-        isolation: isolate !important;
-      }
-
-      .duco-highlight::before {
-        content: '';
-        position: absolute;
-        top: -10px;
-        left: -10px;
-        right: -10px;
-        bottom: -10px;
-        border: 3px solid #FFB800;
+        outline: 3px solid #FFB800 !important;
+        outline-offset: -3px;
+        box-shadow: inset 0 0 0 6px rgba(255, 184, 0, 0.24) !important;
         border-radius: 8px;
-        box-shadow: 0 0 0 4px rgba(255, 184, 0, 0.2);
-        animation: duco-pulse 2s ease-in-out infinite;
-        pointer-events: none;
+        transition: outline-color 0.35s ease, box-shadow 0.35s ease, filter 0.35s ease;
+      }
+
+      /* En controles interactivos, marcar el perímetro sin cambiar su relleno,
+         color, sombra ni dimensiones. */
+      .duco-control-highlight,
+      .duco-option-highlight {
+        outline: 3px solid rgba(255, 184, 0, 0.95) !important;
+        outline-offset: 3px;
+        animation: duco-control-ring 1.1s ease-in-out 3 !important;
+        animation-delay: 0.35s !important;
+        transition: outline-color 0.35s ease;
+      }
+
+      .duco-control-highlight.duco-control-anchor {
+        outline: none !important;
+        animation: none !important;
+      }
+      .duco-control-overlay {
+        position: fixed !important;
         z-index: 2147483646 !important;
+        pointer-events: none !important;
+        background: transparent !important;
+        box-sizing: border-box !important;
+        outline-offset: -3px !important;
+        margin: 0 !important;
+        padding: 0 !important;
       }
 
-      nav .duco-highlight::before,
-      .navbar .duco-highlight::before,
-      .header .duco-highlight::before {
-        box-shadow: 0 0 0 4px rgba(255, 184, 0, 0.4),
-                    0 0 12px rgba(255, 184, 0, 0.6);
-        border-width: 4px;
+      @keyframes duco-control-ring {
+        0%, 100% { outline-color: rgba(255, 184, 0, 0.95); }
+        50% { outline-color: rgba(255, 184, 0, 0.3); }
       }
 
-      @keyframes duco-pulse {
-        0% {
-          box-shadow: 0 0 0 4px rgba(255, 184, 0, 0.2), 
-                      0 0 0 8px rgba(255, 184, 0, 0.1);
-        }
-        50% {
-          box-shadow: 0 0 0 8px rgba(255, 184, 0, 0.3), 
-                      0 0 0 12px rgba(255, 184, 0, 0.15);
-        }
-        100% {
-          box-shadow: 0 0 0 4px rgba(255, 184, 0, 0.2), 
-                      0 0 0 8px rgba(255, 184, 0, 0.1);
+      @media (prefers-reduced-motion: reduce) {
+        .duco-control-highlight,
+        .duco-option-highlight {
+          animation: none !important;
         }
       }
 
@@ -128,12 +135,31 @@ class UIHighlighter {
         text-decoration-thickness: 2px;
       }
 
-      .duco-page-highlight-bg {
-        background: rgba(255, 184, 0, 0.42);
-        color: inherit;
+      span.duco-page-highlight.duco-page-highlight-bg {
+        background-color: #ffe082 !important;
+        color: #172b43 !important;
         border-radius: 0.35em;
         box-shadow: inset 0 -0.52em 0 rgba(255, 184, 0, 0.24);
         text-decoration: none;
+        transition: background-color 0.35s ease, color 0.35s ease, box-shadow 0.35s ease;
+      }
+
+      span.duco-page-highlight.duco-page-highlight-bg.duco-highlight-enter {
+        background-color: transparent !important;
+        color: inherit !important;
+        box-shadow: inset 0 -0.52em 0 rgba(255, 184, 0, 0) !important;
+        transition: none !important;
+      }
+      .duco-control-highlight.duco-highlight-enter,
+      .duco-option-highlight.duco-highlight-enter,
+      .duco-highlight.duco-highlight-enter {
+        outline-color: transparent !important;
+        animation: none !important;
+        transition: none !important;
+      }
+      .duco-highlight.duco-highlight-enter {
+        box-shadow: inset 0 0 0 6px rgba(255, 184, 0, 0) !important;
+        filter: none !important;
       }
 
       .duco-page-highlight-text {
@@ -179,17 +205,33 @@ class UIHighlighter {
       }
 
       .duco-option-highlight {
-        outline: 2px solid rgba(255, 184, 0, 0.9);
-        outline-offset: 2px;
-        box-shadow: 0 0 0 4px rgba(255, 184, 0, 0.2);
-        border-radius: 6px;
-        transition: all 0.25s ease;
+        transition: outline-color 0.35s ease;
       }
 
       .duco-option-highlight-fade-out {
         outline-color: rgba(255, 184, 0, 0) !important;
-        box-shadow: none !important;
-        transition: box-shadow 0.7s ease, outline-color 0.7s ease !important;
+        animation: none !important;
+        transition: outline-color 0.7s ease !important;
+      }
+
+      /* Igualar la prioridad del amarillo para que la transición gane antes
+         de retirar el span. El texto permanece visible durante la salida. */
+      span.duco-page-highlight.duco-page-highlight-bg.duco-highlight-fade-out {
+        background-color: transparent !important;
+        color: inherit !important;
+        box-shadow: inset 0 -0.52em 0 rgba(255, 184, 0, 0) !important;
+        transition: background-color 0.7s ease, color 0.7s ease, box-shadow 0.7s ease !important;
+      }
+
+      .duco-control-highlight.duco-element-highlight-fade-out,
+      .duco-highlight.duco-element-highlight-fade-out {
+        outline-color: transparent !important;
+        animation: none !important;
+        transition: outline-color 0.7s ease, box-shadow 0.7s ease, filter 0.7s ease !important;
+      }
+      .duco-highlight.duco-element-highlight-fade-out {
+        box-shadow: inset 0 0 0 6px rgba(255, 184, 0, 0) !important;
+        filter: none !important;
       }
 
       .duco-highlight-fade-out {
@@ -240,13 +282,22 @@ class UIHighlighter {
     }
 
     this.highlightedElement = target;
-    target.classList.add('duco-highlight', 'duco-glow');
-    this.avoidChatPanelOverlap(target, duration);
+    const isInteractiveControl = target.matches?.('button, a, input, select, [role="button"], [role="link"], [role="menuitem"]');
+    target.classList.add(isInteractiveControl ? 'duco-control-highlight' : 'duco-highlight');
+    if (isInteractiveControl) target.classList.add('duco-control-anchor');
+    if (!isInteractiveControl) target.classList.add('duco-glow');
+    // Forzar un ciclo de render para que pulsar dos veces el mismo destino
+    // reinicie la animación CSS de forma visible.
+    void target.offsetWidth;
+    const visualTarget = isInteractiveControl ? this.createControlOverlay(target) : target;
+    this.animateHighlightEntrance([visualTarget]);
 
     const { guide = true, closeTransientUi = false } = options;
 
     if (guide !== false) {
-      this.guideToElement(target);
+      this.guideAndAvoidPanel(target, duration);
+    } else {
+      this.avoidChatPanelOverlap(target, duration);
     }
 
     // Auto remover si se especifica duración
@@ -254,7 +305,14 @@ class UIHighlighter {
       if (closeTransientUi) {
         this.scheduleTransientUiClose(duration + this.fadeOutDuration);
       }
-      setTimeout(() => this.removeHighlight(), duration);
+      this.highlightTimer = setTimeout(() => {
+        if (this.highlightedElement !== target) return;
+        target.classList.add('duco-element-highlight-fade-out');
+        if (this.controlOverlay) this.controlOverlay.classList.add('duco-element-highlight-fade-out');
+        this.highlightFadeTimer = setTimeout(() => {
+          if (this.highlightedElement === target) this.removeHighlight();
+        }, this.fadeOutDuration);
+      }, duration);
     }
   }
 
@@ -262,22 +320,62 @@ class UIHighlighter {
    * Quita el destacado del elemento actual
    */
   removeHighlight() {
+    if (this.controlOverlayFrame !== null) {
+      cancelAnimationFrame(this.controlOverlayFrame);
+      this.controlOverlayFrame = null;
+    }
+    this.controlOverlay?.remove();
+    this.controlOverlay = null;
+    if (this.highlightFadeTimer) {
+      clearTimeout(this.highlightFadeTimer);
+      this.highlightFadeTimer = null;
+    }
+    if (this.highlightTimer) {
+      clearTimeout(this.highlightTimer);
+      this.highlightTimer = null;
+    }
     if (this.highlightedElement) {
-      this.highlightedElement.classList.remove('duco-highlight', 'duco-glow');
+      this.highlightedElement.classList.remove('duco-highlight', 'duco-glow', 'duco-control-highlight', 'duco-control-anchor', 'duco-element-highlight-fade-out');
       this.highlightedElement = null;
     }
+  }
+
+  createControlOverlay(target) {
+    const overlay = document.createElement('div');
+    overlay.className = 'duco-control-overlay duco-control-highlight';
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(overlay);
+    this.controlOverlay = overlay;
+    const update = () => {
+      if (this.controlOverlay !== overlay) return;
+      if (!target.isConnected) {
+        this.removeHighlight();
+        return;
+      }
+      const rect = target.getBoundingClientRect();
+      overlay.style.left = rect.left + 'px';
+      overlay.style.top = rect.top + 'px';
+      overlay.style.width = rect.width + 'px';
+      overlay.style.height = rect.height + 'px';
+      overlay.style.borderRadius = window.getComputedStyle(target).borderRadius;
+      overlay.style.visibility = rect.width && rect.height ? 'visible' : 'hidden';
+      this.controlOverlayFrame = requestAnimationFrame(update);
+    };
+    update();
+    return overlay;
   }
 
   /**
    * Limpia el estado visual temporal para dejar la página sin resaltados activos.
    */
   clearAllHighlights() {
+    this.clearTermHighlights();
     this.removeHighlight();
     this.closeTransientUi();
     this.pageHighlightTimers.forEach((timerId) => clearTimeout(timerId));
     this.pageHighlightTimers = [];
-    document.querySelectorAll('.duco-highlight, .duco-glow, .duco-option-highlight, .duco-option-highlight-fade-out, .duco-page-element-fade-out').forEach((element) => {
-      element.classList.remove('duco-highlight', 'duco-glow', 'duco-option-highlight', 'duco-option-highlight-fade-out', 'duco-page-element-fade-out');
+    document.querySelectorAll('.duco-highlight, .duco-glow, .duco-control-highlight, .duco-option-highlight, .duco-option-highlight-fade-out, .duco-page-element-fade-out').forEach((element) => {
+      element.classList.remove('duco-highlight', 'duco-glow', 'duco-control-highlight', 'duco-option-highlight', 'duco-option-highlight-fade-out', 'duco-page-element-fade-out');
     });
     document.querySelectorAll('.duco-page-highlight, .duco-page-highlight-grow, .duco-page-highlight-bg, .duco-page-highlight-text, .duco-page-highlight-combo, .duco-page-text-highlight-grow, .duco-page-text-highlight-bg, .duco-page-text-highlight-text, .duco-page-text-highlight-combo').forEach((element) => {
       element.classList.remove(
@@ -556,15 +654,16 @@ class UIHighlighter {
       .filter(Boolean)
       .map((term) => String(term).trim())
       .filter((term) => term.length >= 3)
-      .flatMap((term) => {
-        if (term.includes(' ') || term.includes('-')) {
-          return [term, ...term.split(/[\s\-]+/).filter(w => w.length >= 3)];
-        }
-        return [term];
-      });
+      // Las frases son objetivos completos. Separarlas en palabras causa que
+      // un error tipográfico o una coincidencia parcial resalte solo el primer
+      // token de la frase.
+      .flatMap(term => [term]);
 
     const uniqueTerms = [...new Set(normalizedTerms)];
     if (!uniqueTerms.length) return 0;
+    // Las coincidencias existentes están excluidas del TreeWalker. Retirarlas
+    // antes de repetir evita caer al contorno como si el texto no existiera.
+    this.clearTermHighlights();
 
     const {
       duration = 5000,
@@ -573,16 +672,17 @@ class UIHighlighter {
       autoGuide = true,
       openLimit = Infinity,
       singleOpen = false,
-      closeTransientUi = false
+      closeTransientUi = false,
+      roots = null
     } = options;
     const effectiveDuration = this.resolveDuration(duration, options.endAt);
     const limitAncestorsToOne = singleOpen || openLimit === 1;
 
-    this.prepareContentForHighlight(uniqueTerms, { openLimit });
+    if (!roots) this.prepareContentForHighlight(uniqueTerms, { openLimit });
 
     const regex = new RegExp(`(${uniqueTerms.map((term) => this.escapeRegExp(term)).join('|')})`, 'gi');
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
-      acceptNode: (node) => this.acceptTextNode(node)
+      acceptNode: (node) => this.acceptTextNode(node) && (!roots || roots.some(root=>root.contains(node)))
         ? NodeFilter.FILTER_ACCEPT
         : NodeFilter.FILTER_REJECT
     });
@@ -590,7 +690,12 @@ class UIHighlighter {
     let totalMatches = 0;
     const createdHighlights = [];
     const optionContainers = new Set();
-    let currentNode = walker.nextNode();
+    // Guardar los nodos antes de envolverlos evita que el TreeWalker pierda
+    // su posición cuando se reemplaza el primer nodo de un párrafo.
+    const scopedNodes = roots ? [] : null;
+    if (scopedNodes) { let node; while ((node = walker.nextNode())) scopedNodes.push(node); }
+    let nodeIndex = 0;
+    let currentNode = scopedNodes ? scopedNodes[nodeIndex++] : walker.nextNode();
     let stopAfterFirstMatch = false;
 
     while (currentNode && totalMatches < maxMatches && !stopAfterFirstMatch) {
@@ -604,13 +709,16 @@ class UIHighlighter {
           optionContainer.classList.add('duco-option-highlight');
           optionContainers.add(optionContainer);
 
-          // Si ya estamos marcando el control (botón/link/card), no duplicar con highlight en el texto.
-          span.classList.remove(
-            'duco-page-highlight-bg',
-            'duco-page-highlight-grow',
-            'duco-page-highlight-text',
-            'duco-page-highlight-combo'
-          );
+          // Solo los controles conservan su relleno original. Una tarjeta,
+          // lista o contenedor común no debe quitar el amarillo del texto.
+          if (optionContainer.matches('button, a, [role="button"], [role="link"], [role="menuitem"]')) {
+            span.classList.remove(
+              'duco-page-highlight-bg',
+              'duco-page-highlight-grow',
+              'duco-page-highlight-text',
+              'duco-page-highlight-combo'
+            );
+          }
         }
       });
 
@@ -618,30 +726,49 @@ class UIHighlighter {
         stopAfterFirstMatch = true;
       }
 
-      currentNode = walker.nextNode();
+      currentNode = scopedNodes ? scopedNodes[nodeIndex++] : walker.nextNode();
     }
 
     if (totalMatches > maxMatches * 0.8) {
       console.warn(`[Duco] highlightByTerms: ${totalMatches} coincidencias (límite ${maxMatches}). Términos muy genéricos.`);
     }
 
+    this.animateHighlightEntrance([...createdHighlights, ...optionContainers]);
     if (createdHighlights.length) {
       const guideCandidates = optionContainers.size ? Array.from(optionContainers) : createdHighlights;
       const guideTarget = this.getBestGuideTarget(guideCandidates);
       if (autoGuide) {
-        this.guideToElement(guideTarget);
+        this.guideAndAvoidPanel(guideTarget, effectiveDuration);
+      } else {
         this.avoidChatPanelOverlap(guideTarget, effectiveDuration);
       }
     }
 
-    if (createdHighlights.length && effectiveDuration > 0) {
-      this.scheduleCleanup(() => {
-        this.fadeOutSpanHighlights(createdHighlights);
-        this.fadeOutElements(Array.from(optionContainers), 'duco-option-highlight');
-      }, effectiveDuration, { closeTransientUi });
+    if (createdHighlights.length) {
+      const group = {spans:createdHighlights, containers:[...optionContainers], timers:[]};
+      this.termHighlightGroup = group;
+      if (effectiveDuration > 0) {
+        const fadeTimer = setTimeout(() => {
+          if (this.termHighlightGroup !== group) return;
+          group.spans.forEach(span => span.classList.add('duco-highlight-fade-out'));
+          group.containers.forEach(element => element.classList.add('duco-option-highlight-fade-out'));
+          group.timers.push(setTimeout(() => this.clearTermHighlights(group), this.fadeOutDuration));
+        }, effectiveDuration);
+        group.timers.push(fadeTimer);
+        if (closeTransientUi) this.scheduleTransientUiClose(effectiveDuration + this.fadeOutDuration);
+      }
     }
 
     return totalMatches;
+  }
+
+  clearTermHighlights(group = this.termHighlightGroup) {
+    if (!group || this.termHighlightGroup !== group) return;
+    group.timers.forEach(timer => clearTimeout(timer));
+    this.removeSpanHighlights(group.spans);
+    group.containers.forEach(element =>
+      element.classList.remove('duco-option-highlight', 'duco-option-highlight-fade-out', 'duco-highlight-enter'));
+    this.termHighlightGroup = null;
   }
 
   /**
@@ -674,7 +801,8 @@ class UIHighlighter {
     if (candidates.length) {
       const guideTarget = this.getBestGuideTarget(candidates);
       if (autoGuide) {
-        this.guideToElement(guideTarget);
+        this.guideAndAvoidPanel(guideTarget, effectiveDuration);
+      } else {
         this.avoidChatPanelOverlap(guideTarget, effectiveDuration);
       }
     }
@@ -788,13 +916,13 @@ class UIHighlighter {
     if (autoGuide) {
       if (createdHighlights.length) {
         const guideTarget = this.getBestGuideTarget(createdHighlights);
-        this.guideToElement(guideTarget);
-        this.avoidChatPanelOverlap(guideTarget, effectiveDuration);
+        this.guideAndAvoidPanel(guideTarget, effectiveDuration);
       } else if (contactLinks.length) {
         const guideTarget = this.getBestGuideTarget(contactLinks);
-        this.guideToElement(guideTarget);
-        this.avoidChatPanelOverlap(guideTarget, effectiveDuration);
+        this.guideAndAvoidPanel(guideTarget, effectiveDuration);
       }
+    } else if (createdHighlights.length || contactLinks.length) {
+      this.avoidChatPanelOverlap(createdHighlights[0] || contactLinks[0], effectiveDuration);
     }
 
     if ((createdHighlights.length || contactLinks.length || matchedTextElements.length) && effectiveDuration > 0) {
@@ -823,6 +951,11 @@ class UIHighlighter {
     if (blockedTags.includes(parent.tagName)) return false;
     if (parent.closest('#duco-assistant-container')) return false;
     if (parent.closest('.duco-page-highlight')) return false;
+    // No contar copias ocultas (menús, carruseles o versiones móviles) como
+    // resultado visible ni detener singleOpen en una coincidencia invisible.
+    const style = window.getComputedStyle(parent);
+    if (style.display === 'none' || style.visibility === 'hidden' || style.visibility === 'collapse') return false;
+    if (!parent.getClientRects().length) return false;
 
     const content = node.textContent ? node.textContent.trim() : '';
     return content.length >= 3;
@@ -870,6 +1003,26 @@ class UIHighlighter {
 
     textNode.parentNode.replaceChild(fragment, textNode);
     return { matches: found.length, highlights };
+  }
+
+  animateHighlightEntrance(elements) {
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+    const targets = [...new Set(elements)].filter(element => element?.isConnected);
+    if (!targets.length) return;
+    targets.forEach(element => element.classList.add('duco-highlight-enter'));
+    const token = {};
+    targets.forEach(element => this.highlightEntranceTokens.set(element, token));
+    // Dar al navegador un fotograma completo para pintar la transparencia.
+    // Cambiar ambas clases en la misma tarea puede fusionarse en un solo estilo.
+    targets.forEach(element => { void window.getComputedStyle(element).outlineColor; });
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      targets.forEach(element => {
+        if (this.highlightEntranceTokens.get(element) === token) {
+          element.classList.remove('duco-highlight-enter');
+          this.highlightEntranceTokens.delete(element);
+        }
+      });
+    }));
   }
 
   removeSpanHighlights(spans) {
@@ -1134,6 +1287,21 @@ class UIHighlighter {
       .filter((term) => term.length >= 3);
 
     if (!normalizedTerms.length) return;
+
+    document.querySelectorAll('.carousel').forEach(carousel => {
+      const slides = [...carousel.querySelectorAll('.carousel-item')].filter(slide => slide.closest('.carousel') === carousel);
+      const target = slides.find(slide => normalizedTerms.some(term => this.normalizeForMatch(slide.textContent).includes(term)));
+      if (!target) return;
+      // La rotacion automatica no debe ocultar el objetivo durante la guia.
+      if (typeof window.jQuery?.fn?.carousel === 'function') window.jQuery(carousel).carousel('pause');
+      slides.forEach(slide => {
+        slide.classList.remove('carousel-item-next', 'carousel-item-prev', 'carousel-item-left', 'carousel-item-right');
+        slide.classList.toggle('active', slide === target);
+      });
+      carousel.querySelectorAll('.carousel-indicators [data-slide-to]').forEach(indicator => {
+        indicator.classList.toggle('active', Number(indicator.getAttribute('data-slide-to')) === slides.indexOf(target));
+      });
+    });
 
     const openLimit = Number.isFinite(options.openLimit)
       ? Math.max(0, options.openLimit)
@@ -1578,8 +1746,8 @@ class UIHighlighter {
       }
     };
 
-    // Bloquear scroll con métodos múltiples
-    document.body.style.overflow = 'hidden';
+    // Frenar la rueda durante la guía sin cambiar el overflow del sitio.
+    // Quitar y devolver la barra altera el ancho y puede mover el ancla de scroll.
     window.addEventListener('scroll', preventScroll, { passive: false });
     window.addEventListener('wheel', preventWheel, { passive: false });
     window.addEventListener('touchmove', preventWheel, { passive: false });
@@ -1601,8 +1769,6 @@ class UIHighlighter {
     });
     this.scrollBlockHandlers = [];
 
-    // Restaurar scroll
-    document.body.style.overflow = '';
   }
 
   performGuidedScroll(target) {
@@ -1626,14 +1792,15 @@ class UIHighlighter {
     const rect = target.getBoundingClientRect();
     const desiredViewportTop = headerOffset + 24;
     const deltaY = rect.top - desiredViewportTop;
-    const targetY = Math.max(0, Math.round((window.scrollY || 0) + deltaY));
+    const maxScrollY = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+    const targetY = Math.min(maxScrollY, Math.max(0, Math.round((window.scrollY || 0) + deltaY)));
 
     if (Math.abs(deltaY) <= 2) {
       return { targetY, deltaY: 0 };
     }
 
-    window.scrollBy({ top: deltaY, left: 0, behavior: 'smooth' });
-    return { targetY, deltaY };
+    window.scrollTo({ top: targetY, left: window.scrollX || 0, behavior: 'smooth' });
+    return { targetY, deltaY: targetY - (window.scrollY || 0) };
   }
 
   async waitForScrollSettled(targetState) {
@@ -1697,6 +1864,13 @@ class UIHighlighter {
   getFixedHeaderGuideState(target) {
     const pinnedAncestor = this.findPinnedViewportAncestor(target);
     if (!pinnedAncestor) return null;
+
+    // Los banners fijos quedan detras del contenido al bajar. Su rectangulo
+    // no cambia con el scroll: hay que descubrirlos volviendo al inicio.
+    if (pinnedAncestor.matches('.home.carousel, .inner-top-banner, .inner-top-banner-buscador') &&
+        window.getComputedStyle(pinnedAncestor).position === 'fixed') {
+      return { targetY: 0 };
+    }
 
     const fixedHeader = pinnedAncestor.closest
       ? pinnedAncestor.closest('header.fixed-top, header.sticky-top')
@@ -1829,6 +2003,11 @@ class UIHighlighter {
   }
 
   cleanupAllTransientState() {
+    clearTimeout(this.transientUiCloseTimer);
+    clearTimeout(this.transientUiFadeTimer);
+    this.transientUiCloseTimer = null;
+    this.transientUiFadeTimer = null;
+    this.transientUiCloseAt = 0;
     this.transientDropdownState.forEach((state, menu) => {
       if (!menu) return;
       menu.classList.remove('duco-transient-ui-fade-out', 'show', 'hide');
@@ -1868,6 +2047,7 @@ class UIHighlighter {
     this.transientDetailsState.clear();
 
     this.removeHighlight();
+    this.schedulePanelRestore(0);
   }
 
   /**
@@ -2034,58 +2214,66 @@ class UIHighlighter {
     return container;
   }
 
-  avoidChatPanelOverlap(targetElement, duration = 3000) {
-    const panel = document.getElementById('duco-chat-panel');
-    if (!panel || !panel.classList.contains('open') || !targetElement) return;
-
-    const targetRectRaw = targetElement.getBoundingClientRect();
-    const targetRect = {
-      left: Math.max(0, targetRectRaw.left - 24),
-      top: Math.max(0, targetRectRaw.top - 24),
-      right: Math.min(window.innerWidth, targetRectRaw.right + 24),
-      bottom: Math.min(window.innerHeight, targetRectRaw.bottom + 24)
-    };
-    const panelRect = panel.getBoundingClientRect();
-
-    if (this.getIntersectionArea(panelRect, targetRect) === 0) {
-      return;
-    }
-
-    const candidatePositions = this.getPanelCandidatePositions(panelRect.width, panelRect.height);
-    let best = null;
-    let bestOverlap = Number.POSITIVE_INFINITY;
-
-    candidatePositions.forEach((pos) => {
-      const simulated = this.simulatePanelRect(pos, panelRect.width, panelRect.height);
-      const overlap = this.getIntersectionArea(simulated, targetRect);
-      if (overlap < bestOverlap) {
-        bestOverlap = overlap;
-        best = pos;
-      }
+  guideAndAvoidPanel(target, duration = 3000) {
+    Promise.resolve(this.guideToElement(target)).then(() => {
+      requestAnimationFrame(() => this.avoidChatPanelOverlap(target, duration));
     });
-
-    if (!best) return;
-
-    const currentOverlap = this.getIntersectionArea(panelRect, targetRect);
-    if (bestOverlap >= currentOverlap) return;
-
-    this.storePanelBaseInlineStyle(panel);
-    panel.style.left = best.left;
-    panel.style.right = best.right;
-    panel.style.top = best.top;
-    panel.style.bottom = best.bottom;
-
-    this.schedulePanelRestore(duration + this.fadeOutDuration + 150);
   }
 
-  storePanelBaseInlineStyle(panel) {
-    if (this.panelBaseInlineStyle) return;
-    this.panelBaseInlineStyle = {
-      left: panel.style.left || '',
-      right: panel.style.right || '',
-      top: panel.style.top || '',
-      bottom: panel.style.bottom || ''
+  avoidChatPanelOverlap(targetElement, duration = 3000) {
+    const panel = document.getElementById('duco-chat-panel');
+    if (!panel || !panel.classList.contains('open') || !targetElement?.isConnected) return;
+
+    // Si ya está apartado, prolongar la posición durante la nueva ejecución,
+    // aunque ahora no exista intersección precisamente por ese desplazamiento.
+    if (duration > 0 && this.panelRestoreTimer) {
+      this.schedulePanelRestore(duration + this.fadeOutDuration + 150);
+    }
+
+    if (duration === 0 && this.panelRestoreTimer) {
+      clearTimeout(this.panelRestoreTimer);
+      this.panelRestoreTimer = null;
+    }
+    const viewportWidth = document.documentElement.clientWidth;
+    const rawTarget = targetElement.getBoundingClientRect();
+    const target = {
+      left: Math.max(0, rawTarget.left - 24),
+      top: Math.max(0, rawTarget.top - 24),
+      right: Math.min(viewportWidth, rawTarget.right + 24),
+      bottom: Math.min(window.innerHeight, rawTarget.bottom + 24)
     };
+    const panelRect = panel.getBoundingClientRect();
+    const currentOverlap = this.getIntersectionArea(panelRect, target);
+    if (!currentOverlap) return;
+
+    // Usa el margen CSS real: 20px en escritorio y 10px en móvil.
+    const configuredMargin = Number.parseFloat(getComputedStyle(panel).right);
+    const margin = Number.isFinite(configuredMargin) ? configuredMargin : 20;
+    const baseRightX = viewportWidth - margin - panelRect.width;
+    const candidateXs = [...new Set([
+      Math.max(margin, 0),
+      Math.max(margin, viewportWidth - margin - panelRect.width)
+    ])];
+    let bestX = panelRect.left;
+    let bestOverlap = currentOverlap;
+
+    for (const x of candidateXs) {
+      const candidate = {
+        left: x,
+        right: x + panelRect.width,
+        top: panelRect.top,
+        bottom: panelRect.bottom
+      };
+      const overlap = this.getIntersectionArea(candidate, target);
+      if (overlap < bestOverlap) {
+        bestOverlap = overlap;
+        bestX = x;
+      }
+    }
+
+    if (bestOverlap >= currentOverlap || Math.abs(bestX - panelRect.left) < 2) return;
+    panel.style.setProperty('--duco-chat-shift-x', `${bestX - baseRightX}px`);
+    if (duration > 0) this.schedulePanelRestore(duration + this.fadeOutDuration + 150);
   }
 
   schedulePanelRestore(delayMs) {
@@ -2095,57 +2283,10 @@ class UIHighlighter {
 
     this.panelRestoreTimer = setTimeout(() => {
       const panel = document.getElementById('duco-chat-panel');
-      if (!panel || !this.panelBaseInlineStyle) return;
-      panel.style.left = this.panelBaseInlineStyle.left;
-      panel.style.right = this.panelBaseInlineStyle.right;
-      panel.style.top = this.panelBaseInlineStyle.top;
-      panel.style.bottom = this.panelBaseInlineStyle.bottom;
-      this.panelBaseInlineStyle = null;
+      if (!panel) return;
+      panel.style.setProperty('--duco-chat-shift-x', '0px');
       this.panelRestoreTimer = null;
     }, Math.max(0, delayMs));
-  }
-
-  getPanelCandidatePositions(panelWidth, panelHeight) {
-    const margin = 20;
-    const footerOffset = 100;
-    const fitsTop = panelHeight + margin * 2 <= window.innerHeight;
-    const fitsBottom = panelHeight + footerOffset + margin <= window.innerHeight;
-
-    const positions = [];
-    if (fitsBottom) {
-      positions.push({ left: `${margin}px`, right: 'auto', top: 'auto', bottom: `${footerOffset}px` });
-      positions.push({ left: 'auto', right: `${margin}px`, top: 'auto', bottom: `${footerOffset}px` });
-    }
-    if (fitsTop) {
-      positions.push({ left: `${margin}px`, right: 'auto', top: `${margin}px`, bottom: 'auto' });
-      positions.push({ left: 'auto', right: `${margin}px`, top: `${margin}px`, bottom: 'auto' });
-    }
-
-    // Fallback por si viewport es muy pequeño.
-    if (!positions.length) {
-      positions.push({ left: `${margin}px`, right: 'auto', top: `${margin}px`, bottom: 'auto' });
-    }
-
-    return positions;
-  }
-
-  simulatePanelRect(position, width, height) {
-    const viewportWidth = window.innerWidth;
-    const viewportHeight = window.innerHeight;
-
-    const left = position.left !== 'auto'
-      ? parseInt(position.left, 10)
-      : viewportWidth - parseInt(position.right, 10) - width;
-    const top = position.top !== 'auto'
-      ? parseInt(position.top, 10)
-      : viewportHeight - parseInt(position.bottom, 10) - height;
-
-    return {
-      left,
-      top,
-      right: left + width,
-      bottom: top + height
-    };
   }
 
   getIntersectionArea(a, b) {

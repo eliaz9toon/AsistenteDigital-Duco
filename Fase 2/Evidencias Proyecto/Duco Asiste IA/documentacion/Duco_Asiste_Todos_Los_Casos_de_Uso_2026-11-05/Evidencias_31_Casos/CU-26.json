@@ -1,0 +1,28 @@
+{
+  "id": "CU-26",
+  "title": "Crear un registro administrativo",
+  "mode": "Formulario real y commit Oracle independiente",
+  "startedAt": "2026-11-05T14:47:11.779Z",
+  "images": [
+    {
+      "file": "CU-26-01-formulario-alta.png",
+      "label": "formulario-alta",
+      "url": "http://127.0.0.1:8765/",
+      "timestamp": "2026-11-05T14:47:12.642Z"
+    },
+    {
+      "file": "CU-26-02-registro-creado.png",
+      "label": "registro-creado",
+      "url": "http://127.0.0.1:8765/",
+      "timestamp": "2026-11-05T14:47:13.454Z"
+    }
+  ],
+  "inputs": [],
+  "replies": [],
+  "actions": [],
+  "outcomes": [],
+  "modelResponses": [],
+  "errors": [],
+  "status": "VERIFICADO",
+  "finishedAt": "2026-11-05T14:47:13.817Z"
+}

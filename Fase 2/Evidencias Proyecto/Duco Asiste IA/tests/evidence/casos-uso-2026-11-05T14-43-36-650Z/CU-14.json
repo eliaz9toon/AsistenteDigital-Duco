@@ -1,0 +1,65 @@
+{
+  "id": "CU-14",
+  "title": "Aclarar una consulta ambigua",
+  "mode": "Solicitudes por UI y servicio de IA real",
+  "startedAt": "2026-11-05T14:45:48.718Z",
+  "images": [
+    {
+      "file": "CU-14-01-solicita-aclaracion.png",
+      "label": "solicita-aclaracion",
+      "url": "http://127.0.0.1:8765/duco",
+      "timestamp": "2026-11-05T14:46:02.891Z"
+    },
+    {
+      "file": "CU-14-02-aclaracion-procesada.png",
+      "label": "aclaracion-procesada",
+      "url": "http://127.0.0.1:8765/duco",
+      "timestamp": "2026-11-05T14:46:31.714Z"
+    }
+  ],
+  "inputs": [
+    "Abreme eso.",
+    "Me refiero al menu Admision."
+  ],
+  "replies": [
+    "¿Qué página o elemento quieres que muestre?",
+    "Te señalo el menú «Admisión»."
+  ],
+  "actions": [],
+  "outcomes": [],
+  "modelResponses": [
+    {
+      "status": 200,
+      "model": "qwen3.5:9b",
+      "content": "{\"route\": \"browser_action\"}"
+    },
+    {
+      "status": 200,
+      "model": "qwen3.5:9b",
+      "content": "{\n  \"rejectsPrevious\": false,\n  \"goal\": \"Abrir el menú o control específico que el usuario refiere con 'eso'.\",\n  \"differentTarget\": true,\n  \"alternativeKind\": \"none\",\n  \"constraints\": [],\n  \"needsClarification\": true,\n  \"mode\": \"answer\",\n  \"topic\": \"other\",\n  \"operation\": \"none\",\n  \"operations\": [],\n  \"destination\": \"none\"\n}"
+    },
+    {
+      "status": 200,
+      "model": "qwen3.5:9b",
+      "content": "{\"route\": \"browser_action\"}"
+    },
+    {
+      "status": 200,
+      "model": "qwen3.5:9b",
+      "content": "{\n  \"rejectsPrevious\": true,\n  \"goal\": \"Abrir el menú Admision.\",\n  \"differentTarget\": false,\n  \"alternativeKind\": \"none\",\n  \"constraints\": [],\n  \"needsClarification\": false,\n  \"mode\": \"correction\",\n  \"topic\": \"page\",\n  \"operation\": \"dropdown\",\n  \"operations\": [\"dropdown\"],\n  \"destination\": \"none\"\n}"
+    },
+    {
+      "status": 200,
+      "model": "qwen3.5:9b",
+      "content": "{\n  \"intent\": {\n    \"kind\": \"correction\",\n    \"reference\": \"none\",\n    \"action\": \"dropdown\",\n    \"openMenu\": true,\n    \"closeMenu\": false,\n    \"menuIndex\": 5,\n    \"highlightScope\": \"menu_control\",\n    \"menuItemIndex\": -1\n  },\n  \"actions\": [\n    {\n      \"type\": \"dropdown\",\n      \"terms\": [\"Admisión\"],\n      \"pauseAfter\": 1000\n    }\n  ],\n  \"reply\": \"Aquí tienes el menú desplegable de Admisión.\"\n}"
+    },
+    {
+      "status": 200,
+      "model": "qwen3.5:9b",
+      "content": "{\"matches\":true}"
+    }
+  ],
+  "errors": [],
+  "status": "VERIFICADO",
+  "finishedAt": "2026-11-05T14:46:31.715Z"
+}

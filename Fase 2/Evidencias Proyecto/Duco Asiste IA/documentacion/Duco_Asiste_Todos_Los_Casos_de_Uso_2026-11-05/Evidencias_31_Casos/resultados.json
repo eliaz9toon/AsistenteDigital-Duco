@@ -1,0 +1,1349 @@
+{
+  "startedAt": "2026-11-05T14:43:36.654Z",
+  "timezone": "America/Santiago",
+  "baseUrl": "http://127.0.0.1:8765",
+  "cases": [
+    {
+      "id": "CU-01",
+      "title": "Abrir y cerrar el asistente",
+      "mode": "UI real, teclado y movil emulado",
+      "startedAt": "2026-11-05T14:43:37.909Z",
+      "images": [
+        {
+          "file": "CU-01-01-cerrado.png",
+          "label": "cerrado",
+          "url": "http://127.0.0.1:8765/duco",
+          "timestamp": "2026-11-05T14:43:44.028Z"
+        },
+        {
+          "file": "CU-01-02-abierto.png",
+          "label": "abierto",
+          "url": "http://127.0.0.1:8765/duco",
+          "timestamp": "2026-11-05T14:43:44.851Z"
+        },
+        {
+          "file": "CU-01-03-movil-abierto.png",
+          "label": "movil-abierto",
+          "url": "http://127.0.0.1:8765/duco",
+          "timestamp": "2026-11-05T14:43:45.481Z"
+        }
+      ],
+      "inputs": [],
+      "replies": [],
+      "actions": [],
+      "outcomes": [],
+      "modelResponses": [],
+      "errors": [],
+      "status": "VERIFICADO",
+      "finishedAt": "2026-11-05T14:43:45.481Z"
+    },
+    {
+      "id": "CU-02",
+      "title": "Consultar informacion institucional",
+      "mode": "Consulta por UI y servicio de IA real",
+      "startedAt": "2026-11-05T14:43:45.496Z",
+      "images": [
+        {
+          "file": "CU-02-01-antes.png",
+          "label": "antes",
+          "url": "http://127.0.0.1:8765/duco",
+          "timestamp": "2026-11-05T14:43:48.172Z"
+        },
+        {
+          "file": "CU-02-02-respuesta.png",
+          "label": "respuesta",
+          "url": "http://127.0.0.1:8765/duco",
+          "timestamp": "2026-11-05T14:44:07.464Z"
+        }
+      ],
+      "inputs": [
+        "Que es Duoc UC? Solo explicamelo, no navegues."
+      ],
+      "replies": [
+        "Duoc UC es una institución educativa chilena que forma especialistas capaces de adaptarse al mundo laboral actual. Ofrece carreras técnicas y profesionales diseñadas para responder a las necesidades del mercado, con un enfoque práctico y flexible."
+      ],
+      "actions": [],
+      "outcomes": [],
+      "modelResponses": [
+        {
+          "status": 200,
+          "model": "qwen3.5:9b",
+          "content": "{\"route\": \"conversation\"}"
+        },
+        {
+          "status": 200,
+          "model": "qwen3.5:9b",
+          "content": "{\n  \"reply\": \"Duoc UC es una institución educativa chilena que forma especialistas capaces de adaptarse al mundo laboral actual. Ofrece carreras técnicas y profesionales diseñadas para responder a las necesidades del mercado, con un enfoque práctico y flexible.\"\n}"
+        }
+      ],
+      "errors": [],
+      "status": "VERIFICADO",
+      "finishedAt": "2026-11-05T14:44:07.465Z"
+    },
+    {
+      "id": "CU-03",
+      "title": "Buscar y filtrar carreras",
+      "mode": "Buscador institucional real; no clasificacion IA",
+      "startedAt": "2026-11-05T14:44:07.469Z",
+      "images": [
+        {
+          "file": "CU-03-01-catalogo.png",
+          "label": "catalogo",
+          "url": "http://127.0.0.1:8765/carreras.html",
+          "timestamp": "2026-11-05T14:44:10.244Z"
+        },
+        {
+          "file": "CU-03-02-filtro-informatica.png",
+          "label": "filtro-informatica",
+          "url": "http://127.0.0.1:8765/carreras.html?q=informatica",
+          "timestamp": "2026-11-05T14:44:10.830Z"
+        }
+      ],
+      "inputs": [],
+      "replies": [],
+      "actions": [],
+      "outcomes": [],
+      "modelResponses": [],
+      "errors": [],
+      "detail": "Carrera Profesional\nIngeniería en Recursos Naturales y Sostenibilidad\n\nDuración: 8 semestres\n\nVer Carrera\nCarrera Profesional\nIngeniería en Control de Gestión\n\nDuración: 18 bimestres\n\n100% Online\nVer Carrera\nCarrera Técnica\nTécnico Modelador Proyectista\n\nDuración: 5 semestres\n\nVer Carrera\nCarrera Profesional\nIngeniería en Minas\n\nDuración: 18 bimestres\n\n100% Online\nVer Carrera\nCarrera Técnica\nTécnico en Laboratorio Clínico, Banco de Sangre e Imagenología\n\nDuración: 5 semestres\n\nVer Carrera\nCarrera Profesional\nIngeniería en Administración de Seguridad Privada\n\nDuración: 18 bimestres\n\n100% Online\nVer Carrera\nCarrera Técnica\nTécnico en Desabolladura y Pintura Automotriz\n\nDuración: 5 semestres\n\nVer Carrera\nCarrera Profesional\nIngeniería en Informática\n\nDuración: 8 semestres\n\nVer Carrera\nCarrera Profesional\nIngeniería en Ciberseguridad\n\nDuración: 8 bimestres\n\n100% Online\nVer Carrera\nCarrera Profesional\nIngeniería en Ciencia de Datos\n\nDuración: 8 bimestres\n\n100% Online\nVer Carrera\nCarrera Técnica\nTécnico Audiovisual\n\nDuración: 5 semestres\n\nVer Carrera\nCarrera Profesional\nAdministración en Turismo y Hospitalidad\n\nDuración: 8 semestres\n\nVer Carrera\nCarrera Profesional\nIngeniería en Marketing Digital\n\nDuración: 8 semestres (Presencial) / 16 bimestres (Online)\n\nVer Carrera\nCarrera Técnica\nTécnico en Electricidad y Automatización Industrial\n\nDuración: 5 semestres\n\nVer Carrera\nCarrera Técnica\nTécnico en Mantenimiento Industrial\n\nDuración: 5 semestres\n\nVer Carrera\nCarrera Profesional\nAuditoría y Análisis de Negocios\n\nDuración: 18 bimestres\n\n100% Online\nVer Carrera\nCarrera Técnica\nTécnico en Turismo y Hospitalidad\n\nDuración: 4 Semestres\n\nVer Carrera\nCarrera Técnica\nTécnico en Trabajo Social\n\nDuración: 10 bimestres\n\n100% Online\nVer Carrera",
+      "status": "VERIFICADO",
+      "finishedAt": "2026-11-05T14:44:10.831Z"
+    },
+    {
+      "id": "CU-04",
+      "title": "Consultar la ficha de una carrera",
+      "mode": "Ficha local y consulta estructurada por UI",
+      "startedAt": "2026-11-05T14:44:10.835Z",
+      "images": [
+        {
+          "file": "CU-04-01-ficha.png",
+          "label": "ficha",
+          "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+          "timestamp": "2026-11-05T14:44:14.753Z"
+        },
+        {
+          "file": "CU-04-02-datos-carrera.png",
+          "label": "datos-carrera",
+          "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+          "timestamp": "2026-11-05T14:44:16.730Z"
+        }
+      ],
+      "inputs": [
+        "Cuanto dura Ingenieria en Informatica?"
+      ],
+      "replies": [
+        "Ingeniería en Informática\nDuración: 8 semestres.\nFuente: https://www.duoc.cl/carreras/ingenieria-en-informatica/\nCatálogo de referencia: 2026-10-29. No implica información en tiempo real."
+      ],
+      "actions": [],
+      "outcomes": [],
+      "modelResponses": [],
+      "errors": [],
+      "status": "VERIFICADO",
+      "finishedAt": "2026-11-05T14:44:16.730Z"
+    },
+    {
+      "id": "CU-05",
+      "title": "Solicitar una explicacion de una carrera",
+      "mode": "Motor de explicacion guiada con Ollama real; no clasificacion de la solicitud",
+      "startedAt": "2026-11-05T14:44:16.740Z",
+      "images": [
+        {
+          "file": "CU-05-01-parte-1.png",
+          "label": "parte-1",
+          "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+          "timestamp": "2026-11-05T14:44:42.806Z"
+        },
+        {
+          "file": "CU-05-02-parte-2.png",
+          "label": "parte-2",
+          "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+          "timestamp": "2026-11-05T14:44:49.229Z"
+        },
+        {
+          "file": "CU-05-03-parte-3.png",
+          "label": "parte-3",
+          "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+          "timestamp": "2026-11-05T14:44:55.877Z"
+        },
+        {
+          "file": "CU-05-04-parte-4.png",
+          "label": "parte-4",
+          "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+          "timestamp": "2026-11-05T14:45:03.134Z"
+        },
+        {
+          "file": "CU-05-05-explicacion-completa.png",
+          "label": "explicacion-completa",
+          "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+          "timestamp": "2026-11-05T14:45:08.810Z"
+        }
+      ],
+      "inputs": [],
+      "replies": [],
+      "actions": [
+        {
+          "type": "explainCareer",
+          "terms": [
+            "Ingenieria en Informatica"
+          ],
+          "guided": true
+        }
+      ],
+      "outcomes": [
+        {
+          "success": true,
+          "detail": "Se explicaron 4 partes, resaltando su respaldo en secuencia"
+        }
+      ],
+      "modelResponses": [
+        {
+          "status": 200,
+          "model": "qwen3.5:9b",
+          "content": "{\n  \"steps\": [\n    {\n      \"explanation\": \"La carrera inicia con un plan común de dos años donde se desarrollan las competencias fundamentales para el futuro ingeniero, permitiendo inmersión en la creación y análisis de tecnologías de información.\",\n      \"sourceIndex\": 4\n    },\n    {\n      \"explanation\": \"Durante el segundo año, el estudiante debe elegir formalmente una especialización como desarrollo de software o inteligencia artificial, cuyas asignaturas comienzan a cursarse desde el quinto semestre.\",\n      \"sourceIndex\": 5\n    },\n    {\n      \"explanation\": \"Al graduarse, se obtiene el título de Ingeniero en Informática junto con un certificado adicional de la especialización elegida, consolidando una base sólida para insertarse en la industria.\",\n      \"sourceIndex\": 12\n    },\n    {\n      \"explanation\": \"El perfil egresado está preparado para diseñar soluciones innovadoras aplicando el ciclo de vida del software, gestionar proyectos y resolver requerimientos de información con bases de datos relacionales.\",\n      \"sourceIndex\": 16\n    }\n  ]\n}"
+        }
+      ],
+      "errors": [],
+      "detail": "Partes capturadas: 1, 2, 3, 4",
+      "status": "VERIFICADO",
+      "finishedAt": "2026-11-05T14:45:08.810Z"
+    },
+    {
+      "id": "CU-06",
+      "title": "Navegar a otra pagina mediante Duco",
+      "mode": "Solicitud por UI, ruta real y continuidad de sesion",
+      "startedAt": "2026-11-05T14:45:08.820Z",
+      "images": [
+        {
+          "file": "CU-06-01-solicitud.png",
+          "label": "solicitud",
+          "url": "http://127.0.0.1:8765/duco",
+          "timestamp": "2026-11-05T14:45:11.506Z"
+        },
+        {
+          "file": "CU-06-02-destino.png",
+          "label": "destino",
+          "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+          "timestamp": "2026-11-05T14:45:16.075Z"
+        }
+      ],
+      "inputs": [
+        "Llevame a Ingenieria en Informatica"
+      ],
+      "replies": [],
+      "actions": [],
+      "outcomes": [],
+      "modelResponses": [],
+      "errors": [],
+      "status": "VERIFICADO",
+      "finishedAt": "2026-11-05T14:45:16.075Z"
+    },
+    {
+      "id": "CU-07",
+      "title": "Localizar una seccion mediante desplazamiento",
+      "mode": "Integracion motor de desplazamiento sobre contenido real",
+      "startedAt": "2026-11-05T14:45:16.082Z",
+      "images": [
+        {
+          "file": "CU-07-01-antes-scroll.png",
+          "label": "antes-scroll",
+          "url": "http://127.0.0.1:8765/duco",
+          "timestamp": "2026-11-05T14:45:18.829Z"
+        },
+        {
+          "file": "CU-07-02-estado-del-fallo.png",
+          "label": "estado-del-fallo",
+          "url": "http://127.0.0.1:8765/duco",
+          "timestamp": "2026-11-05T14:45:19.558Z"
+        }
+      ],
+      "inputs": [],
+      "replies": [],
+      "actions": [
+        {
+          "type": "scroll",
+          "terms": [
+            "Vida Estudiantil"
+          ]
+        }
+      ],
+      "outcomes": [
+        {
+          "success": false,
+          "detail": "No se encontró el destino del desplazamiento"
+        }
+      ],
+      "modelResponses": [],
+      "errors": [],
+      "status": "FALLO",
+      "error": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(outcome.success)\n\n    at C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\tests\\use-case-evidence.cjs:160:81\n    at async check (C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\tests\\use-case-evidence.cjs:76:5)\n    at async C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\tests\\use-case-evidence.cjs:157:5",
+      "finishedAt": "2026-11-05T14:45:19.558Z"
+    },
+    {
+      "id": "CU-08",
+      "title": "Resaltar un texto o elemento",
+      "mode": "Integracion motor de resaltado; carrusel real",
+      "startedAt": "2026-11-05T14:45:19.561Z",
+      "images": [
+        {
+          "file": "CU-08-01-texto-resaltado.png",
+          "label": "texto-resaltado",
+          "url": "http://127.0.0.1:8765/duco",
+          "timestamp": "2026-11-05T14:45:22.551Z"
+        },
+        {
+          "file": "CU-08-02-resaltado-limpiado.png",
+          "label": "resaltado-limpiado",
+          "url": "http://127.0.0.1:8765/duco",
+          "timestamp": "2026-11-05T14:45:23.248Z"
+        }
+      ],
+      "inputs": [],
+      "replies": [],
+      "actions": [
+        {
+          "type": "highlightTerms",
+          "terms": [
+            "Congreso i2T 2026"
+          ],
+          "duration": 15000
+        },
+        {
+          "type": "clearHighlights"
+        }
+      ],
+      "outcomes": [
+        {
+          "success": true,
+          "detail": "Se resaltó la frase completa en 1 coincidencia(s)"
+        },
+        {
+          "success": true,
+          "detail": "Se limpiaron los resaltados activos"
+        }
+      ],
+      "modelResponses": [],
+      "errors": [],
+      "status": "VERIFICADO",
+      "finishedAt": "2026-11-05T14:45:23.248Z"
+    },
+    {
+      "id": "CU-09",
+      "title": "Mostrar el respaldo de una explicacion",
+      "mode": "Reutiliza parrafos obtenidos realmente en CU-05; motor de evidencia",
+      "startedAt": "2026-11-05T14:45:23.253Z",
+      "images": [
+        {
+          "file": "CU-09-01-antes.png",
+          "label": "antes",
+          "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+          "timestamp": "2026-11-05T14:45:26.590Z"
+        },
+        {
+          "file": "CU-09-02-parrafos-fuente.png",
+          "label": "parrafos-fuente",
+          "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+          "timestamp": "2026-11-05T14:45:28.626Z"
+        }
+      ],
+      "inputs": [],
+      "replies": [],
+      "actions": [
+        {
+          "type": "showEvidence",
+          "terms": [
+            "texto de la ficha"
+          ],
+          "evidenceTexts": [
+            "La carrera de Ingeniería en Informática de Duoc UC cuenta con un plan común de dos años, en el que se desarrollan las competencias y capacidades fundamentales para el desempeño del futuro Ingeniero en Informática.",
+            "Durante el segundo año de la carrera, el estudiante deberá escoger formalmente una de las especializaciones, cuyas asignaturas se cursan a partir del 5.º semestre:",
+            "La persona titulada de la carrera recibirá el título de Ingeniero o Ingeniera en Informática y, de manera adicional, un certificado de la especialización que cursó.",
+            "Diseñar y generar soluciones de software innovadoras y de calidad, aplicando el ciclo de vida de éste, según las características del proyecto, las mejores prácticas de la industria y sus estándares de calidad."
+          ],
+          "duration": 20000
+        }
+      ],
+      "outcomes": [
+        {
+          "success": true,
+          "detail": "Se destacaron los textos de la ficha"
+        }
+      ],
+      "modelResponses": [],
+      "errors": [],
+      "detail": "La carrera de Ingeniería en Informática de Duoc UC cuenta con un plan común de dos años, en el que se desarrollan las competencias y capacidades fundamentales para el desempeño del futuro Ingeniero en Informática.\n\nDurante el segundo año de la carrera, el estudiante deberá escoger formalmente una de las especializaciones, cuyas asignaturas se cursan a partir del 5.º semestre:\n\nLa persona titulada de la carrera recibirá el título de Ingeniero o Ingeniera en Informática y, de manera adicional, un certificado de la especialización que cursó.\n\nDiseñar y generar soluciones de software innovadoras y de calidad, aplicando el ciclo de vida de éste, según las características del proyecto, las mejores prácticas de la industria y sus estándares de calidad.",
+      "status": "VERIFICADO",
+      "finishedAt": "2026-11-05T14:45:28.626Z"
+    },
+    {
+      "id": "CU-10",
+      "title": "Abrir un menu del sitio",
+      "mode": "Integracion motor de menus con DOM real",
+      "startedAt": "2026-11-05T14:45:28.633Z",
+      "images": [
+        {
+          "file": "CU-10-01-menu-cerrado.png",
+          "label": "menu-cerrado",
+          "url": "http://127.0.0.1:8765/duco",
+          "timestamp": "2026-11-05T14:45:31.287Z"
+        },
+        {
+          "file": "CU-10-02-menu-abierto.png",
+          "label": "menu-abierto",
+          "url": "http://127.0.0.1:8765/duco",
+          "timestamp": "2026-11-05T14:45:32.529Z"
+        }
+      ],
+      "inputs": [],
+      "replies": [],
+      "actions": [
+        {
+          "type": "dropdown",
+          "terms": [
+            "Oferta Academica"
+          ]
+        }
+      ],
+      "outcomes": [
+        {
+          "success": true,
+          "detail": "El menú se abrió"
+        }
+      ],
+      "modelResponses": [],
+      "errors": [],
+      "status": "VERIFICADO",
+      "finishedAt": "2026-11-05T14:45:32.529Z"
+    },
+    {
+      "id": "CU-11",
+      "title": "Cerrar menus abiertos por la guia",
+      "mode": "Integracion apertura y cierre explicito; no temporizador automatico",
+      "startedAt": "2026-11-05T14:45:32.533Z",
+      "images": [
+        {
+          "file": "CU-11-01-abierto.png",
+          "label": "abierto",
+          "url": "http://127.0.0.1:8765/duco",
+          "timestamp": "2026-11-05T14:45:35.962Z"
+        },
+        {
+          "file": "CU-11-02-cerrado.png",
+          "label": "cerrado",
+          "url": "http://127.0.0.1:8765/duco",
+          "timestamp": "2026-11-05T14:45:36.768Z"
+        }
+      ],
+      "inputs": [],
+      "replies": [],
+      "actions": [
+        {
+          "type": "dropdown",
+          "terms": [
+            "Admision"
+          ]
+        },
+        {
+          "type": "closeDropdown"
+        }
+      ],
+      "outcomes": [
+        {
+          "success": true,
+          "detail": "El menú se abrió"
+        },
+        {
+          "success": true,
+          "detail": "Se cerraron los menús transitorios"
+        }
+      ],
+      "modelResponses": [],
+      "errors": [],
+      "status": "VERIFICADO",
+      "finishedAt": "2026-11-05T14:45:36.768Z"
+    },
+    {
+      "id": "CU-12",
+      "title": "Seleccionar una pestana de la ficha",
+      "mode": "Integracion control real de pestanas",
+      "startedAt": "2026-11-05T14:45:36.772Z",
+      "images": [
+        {
+          "file": "CU-12-01-antes.png",
+          "label": "antes",
+          "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+          "timestamp": "2026-11-05T14:45:40.241Z"
+        },
+        {
+          "file": "CU-12-02-perfil-seleccionado.png",
+          "label": "perfil-seleccionado",
+          "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+          "timestamp": "2026-11-05T14:45:42.699Z"
+        }
+      ],
+      "inputs": [],
+      "replies": [],
+      "actions": [
+        {
+          "type": "selectPageControl",
+          "terms": [
+            "PERFIL DE EGRESO INSTITUCIONAL"
+          ]
+        }
+      ],
+      "outcomes": [
+        {
+          "success": true,
+          "detail": "Pestaña seleccionada"
+        }
+      ],
+      "modelResponses": [],
+      "errors": [],
+      "detail": "{\"className\":\"nav-link ml-3 menu-ficha-carrera-admi duco-control-highlight duco-control-anchor active\",\"ariaSelected\":\"true\"}",
+      "status": "VERIFICADO",
+      "finishedAt": "2026-11-05T14:45:42.699Z"
+    },
+    {
+      "id": "CU-13",
+      "title": "Abrir contenido multimedia de una carrera",
+      "mode": "Apertura y cierre del dialogo real; no certifica reproduccion",
+      "startedAt": "2026-11-05T14:45:42.709Z",
+      "images": [
+        {
+          "file": "CU-13-01-boton-video.png",
+          "label": "boton-video",
+          "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+          "timestamp": "2026-11-05T14:45:45.977Z"
+        },
+        {
+          "file": "CU-13-02-reproductor-abierto.png",
+          "label": "reproductor-abierto",
+          "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+          "timestamp": "2026-11-05T14:45:48.136Z"
+        },
+        {
+          "file": "CU-13-03-reproductor-cerrado.png",
+          "label": "reproductor-cerrado",
+          "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+          "timestamp": "2026-11-05T14:45:48.703Z"
+        }
+      ],
+      "inputs": [],
+      "replies": [],
+      "actions": [
+        {
+          "type": "clickControl",
+          "terms": [
+            "Video de la carrera"
+          ],
+          "dialogId": "dfc-modal-video-carrera"
+        }
+      ],
+      "outcomes": [
+        {
+          "success": true,
+          "detail": "Se abrió el contenido solicitado"
+        }
+      ],
+      "modelResponses": [],
+      "errors": [],
+      "status": "VERIFICADO",
+      "finishedAt": "2026-11-05T14:45:48.703Z"
+    },
+    {
+      "id": "CU-14",
+      "title": "Aclarar una consulta ambigua",
+      "mode": "Solicitudes por UI y servicio de IA real",
+      "startedAt": "2026-11-05T14:45:48.718Z",
+      "images": [
+        {
+          "file": "CU-14-01-solicita-aclaracion.png",
+          "label": "solicita-aclaracion",
+          "url": "http://127.0.0.1:8765/duco",
+          "timestamp": "2026-11-05T14:46:02.891Z"
+        },
+        {
+          "file": "CU-14-02-aclaracion-procesada.png",
+          "label": "aclaracion-procesada",
+          "url": "http://127.0.0.1:8765/duco",
+          "timestamp": "2026-11-05T14:46:31.714Z"
+        }
+      ],
+      "inputs": [
+        "Abreme eso.",
+        "Me refiero al menu Admision."
+      ],
+      "replies": [
+        "¿Qué página o elemento quieres que muestre?",
+        "Te señalo el menú «Admisión»."
+      ],
+      "actions": [],
+      "outcomes": [],
+      "modelResponses": [
+        {
+          "status": 200,
+          "model": "qwen3.5:9b",
+          "content": "{\"route\": \"browser_action\"}"
+        },
+        {
+          "status": 200,
+          "model": "qwen3.5:9b",
+          "content": "{\n  \"rejectsPrevious\": false,\n  \"goal\": \"Abrir el menú o control específico que el usuario refiere con 'eso'.\",\n  \"differentTarget\": true,\n  \"alternativeKind\": \"none\",\n  \"constraints\": [],\n  \"needsClarification\": true,\n  \"mode\": \"answer\",\n  \"topic\": \"other\",\n  \"operation\": \"none\",\n  \"operations\": [],\n  \"destination\": \"none\"\n}"
+        },
+        {
+          "status": 200,
+          "model": "qwen3.5:9b",
+          "content": "{\"route\": \"browser_action\"}"
+        },
+        {
+          "status": 200,
+          "model": "qwen3.5:9b",
+          "content": "{\n  \"rejectsPrevious\": true,\n  \"goal\": \"Abrir el menú Admision.\",\n  \"differentTarget\": false,\n  \"alternativeKind\": \"none\",\n  \"constraints\": [],\n  \"needsClarification\": false,\n  \"mode\": \"correction\",\n  \"topic\": \"page\",\n  \"operation\": \"dropdown\",\n  \"operations\": [\"dropdown\"],\n  \"destination\": \"none\"\n}"
+        },
+        {
+          "status": 200,
+          "model": "qwen3.5:9b",
+          "content": "{\n  \"intent\": {\n    \"kind\": \"correction\",\n    \"reference\": \"none\",\n    \"action\": \"dropdown\",\n    \"openMenu\": true,\n    \"closeMenu\": false,\n    \"menuIndex\": 5,\n    \"highlightScope\": \"menu_control\",\n    \"menuItemIndex\": -1\n  },\n  \"actions\": [\n    {\n      \"type\": \"dropdown\",\n      \"terms\": [\"Admisión\"],\n      \"pauseAfter\": 1000\n    }\n  ],\n  \"reply\": \"Aquí tienes el menú desplegable de Admisión.\"\n}"
+        },
+        {
+          "status": 200,
+          "model": "qwen3.5:9b",
+          "content": "{\"matches\":true}"
+        }
+      ],
+      "errors": [],
+      "status": "VERIFICADO",
+      "finishedAt": "2026-11-05T14:46:31.715Z"
+    },
+    {
+      "id": "CU-15",
+      "title": "Corregir una interpretacion o accion de Duco",
+      "mode": "Precondicion controlada con titulo resaltado; correccion por UI con IA real",
+      "startedAt": "2026-11-05T14:46:31.719Z",
+      "images": [
+        {
+          "file": "CU-15-01-titulo-antes-de-corregir.png",
+          "label": "titulo-antes-de-corregir",
+          "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+          "timestamp": "2026-11-05T14:46:35.527Z"
+        },
+        {
+          "file": "CU-15-02-estado-del-fallo.png",
+          "label": "estado-del-fallo",
+          "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+          "timestamp": "2026-11-05T14:46:37.429Z"
+        }
+      ],
+      "inputs": [
+        "No, te pedi el parrafo explicativo, no el titulo. Resalta el texto que usaste para explicar la carrera."
+      ],
+      "replies": [
+        "¿Qué carrera quieres que explique y vaya resaltando? Indícame su nombre completo."
+      ],
+      "actions": [
+        {
+          "type": "highlightTerms",
+          "terms": [
+            "Ingenieria en Informatica"
+          ],
+          "duration": 15000
+        }
+      ],
+      "outcomes": [
+        {
+          "success": true,
+          "detail": "El texto quedó resaltado"
+        }
+      ],
+      "modelResponses": [],
+      "errors": [],
+      "status": "FALLO",
+      "error": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(await page.locator('main p .duco-page-highlight, main li .duco-page-highlight').count())\n\n    at C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\tests\\use-case-evidence.cjs:207:7\n    at async check (C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\tests\\use-case-evidence.cjs:76:5)\n    at async C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\tests\\use-case-evidence.cjs:202:5",
+      "finishedAt": "2026-11-05T14:46:37.429Z"
+    },
+    {
+      "id": "CU-16",
+      "title": "Continuar una conversacion durante la navegacion",
+      "mode": "UI real, Session Storage, navegacion y recarga; sin llamada generativa necesaria",
+      "startedAt": "2026-11-05T14:46:37.435Z",
+      "images": [
+        {
+          "file": "CU-16-01-antes-de-navegar.png",
+          "label": "antes-de-navegar",
+          "url": "http://127.0.0.1:8765/duco",
+          "timestamp": "2026-11-05T14:46:41.030Z"
+        },
+        {
+          "file": "CU-16-02-historial-en-catalogo.png",
+          "label": "historial-en-catalogo",
+          "url": "http://127.0.0.1:8765/carreras.html",
+          "timestamp": "2026-11-05T14:46:43.301Z"
+        },
+        {
+          "file": "CU-16-03-historial-tras-recarga.png",
+          "label": "historial-tras-recarga",
+          "url": "http://127.0.0.1:8765/carreras.html",
+          "timestamp": "2026-11-05T14:46:45.022Z"
+        }
+      ],
+      "inputs": [
+        "hola duco"
+      ],
+      "replies": [
+        "¡Hola! ¿En qué puedo ayudarte?"
+      ],
+      "actions": [],
+      "outcomes": [],
+      "modelResponses": [],
+      "errors": [],
+      "status": "VERIFICADO",
+      "finishedAt": "2026-11-05T14:46:45.022Z"
+    },
+    {
+      "id": "CU-17",
+      "title": "Repetir una guia o un resaltado anterior",
+      "mode": "Boton real de repeticion, generado desde accion del motor",
+      "startedAt": "2026-11-05T14:46:45.026Z",
+      "images": [
+        {
+          "file": "CU-17-01-primer-resaltado.png",
+          "label": "primer-resaltado",
+          "url": "http://127.0.0.1:8765/duco",
+          "timestamp": "2026-11-05T14:46:48.025Z"
+        },
+        {
+          "file": "CU-17-02-sin-resaltado.png",
+          "label": "sin-resaltado",
+          "url": "http://127.0.0.1:8765/duco",
+          "timestamp": "2026-11-05T14:46:48.709Z"
+        },
+        {
+          "file": "CU-17-03-repetido-por-boton.png",
+          "label": "repetido-por-boton",
+          "url": "http://127.0.0.1:8765/duco",
+          "timestamp": "2026-11-05T14:46:49.895Z"
+        }
+      ],
+      "inputs": [],
+      "replies": [],
+      "actions": [
+        {
+          "type": "highlightTerms",
+          "terms": [
+            "Congreso i2T 2026"
+          ],
+          "duration": 15000
+        },
+        {
+          "type": "clearHighlights"
+        }
+      ],
+      "outcomes": [
+        {
+          "success": true,
+          "detail": "Se resaltó la frase completa en 1 coincidencia(s)"
+        },
+        {
+          "success": true,
+          "detail": "Se limpiaron los resaltados activos"
+        }
+      ],
+      "modelResponses": [],
+      "errors": [],
+      "detail": "Se conecta el boton real a una accion conocida para aislar la repeticion; no se prueba el clasificador de lenguaje en este caso.",
+      "status": "VERIFICADO",
+      "finishedAt": "2026-11-05T14:46:49.895Z"
+    },
+    {
+      "id": "CU-18",
+      "title": "Iniciar una nueva conversacion",
+      "mode": "Boton real y almacenamiento de sesion",
+      "startedAt": "2026-11-05T14:46:49.901Z",
+      "images": [
+        {
+          "file": "CU-18-01-conversacion-previa.png",
+          "label": "conversacion-previa",
+          "url": "http://127.0.0.1:8765/duco",
+          "timestamp": "2026-11-05T14:46:53.574Z"
+        },
+        {
+          "file": "CU-18-02-nueva-conversacion.png",
+          "label": "nueva-conversacion",
+          "url": "http://127.0.0.1:8765/duco",
+          "timestamp": "2026-11-05T14:46:54.355Z"
+        }
+      ],
+      "inputs": [
+        "hola duco"
+      ],
+      "replies": [
+        "¡Hola! ¿En qué puedo ayudarte?"
+      ],
+      "actions": [],
+      "outcomes": [],
+      "modelResponses": [],
+      "errors": [],
+      "status": "VERIFICADO",
+      "finishedAt": "2026-11-05T14:46:54.355Z"
+    },
+    {
+      "id": "CU-19",
+      "title": "Valorar una respuesta o una guia",
+      "mode": "Boton negativo real, persistencia Oracle independiente",
+      "startedAt": "2026-11-05T14:46:54.359Z",
+      "images": [
+        {
+          "file": "CU-19-01-controles-de-valoracion.png",
+          "label": "controles-de-valoracion",
+          "url": "http://127.0.0.1:8765/duco",
+          "timestamp": "2026-11-05T14:46:57.939Z"
+        },
+        {
+          "file": "CU-19-02-valoracion-guardada.png",
+          "label": "valoracion-guardada",
+          "url": "http://127.0.0.1:8765/duco",
+          "timestamp": "2026-11-05T14:46:59.407Z"
+        }
+      ],
+      "inputs": [
+        "hola duco"
+      ],
+      "replies": [
+        "¡Hola! ¿En qué puedo ayudarte?"
+      ],
+      "actions": [],
+      "outcomes": [],
+      "modelResponses": [],
+      "errors": [],
+      "status": "VERIFICADO",
+      "finishedAt": "2026-11-05T14:46:59.408Z"
+    },
+    {
+      "id": "CU-20",
+      "title": "Proponer informacion para revision",
+      "mode": "Motor proposeKnowledge y API Oracle reales; no interpretacion de solicitud",
+      "startedAt": "2026-11-05T14:46:59.412Z",
+      "images": [
+        {
+          "file": "CU-20-01-antes.png",
+          "label": "antes",
+          "url": "http://127.0.0.1:8765/duco",
+          "timestamp": "2026-11-05T14:47:02.156Z"
+        },
+        {
+          "file": "CU-20-02-propuesta-enviada.png",
+          "label": "propuesta-enviada",
+          "url": "http://127.0.0.1:8765/duco",
+          "timestamp": "2026-11-05T14:47:03.375Z"
+        }
+      ],
+      "inputs": [],
+      "replies": [],
+      "actions": [
+        {
+          "type": "proposeKnowledge",
+          "question": "DUCO_EVIDENCE_b169901c1e30420f955e3bef5449c8bb propuesta visitante",
+          "answer": "Dato sintetico de prueba para revision, no publicar como informacion institucional."
+        }
+      ],
+      "outcomes": [
+        null
+      ],
+      "modelResponses": [],
+      "errors": [],
+      "status": "VERIFICADO",
+      "finishedAt": "2026-11-05T14:47:03.375Z"
+    },
+    {
+      "id": "CU-21",
+      "title": "Consultar propuestas de conocimiento pendientes",
+      "mode": "UI administrativa y Oracle reales; solo datos sinteticos creados para prueba",
+      "startedAt": "2026-11-05T14:47:03.378Z",
+      "images": [
+        {
+          "file": "CU-21-01-propuesta-pendiente.png",
+          "label": "propuesta-pendiente",
+          "url": "http://127.0.0.1:8765/",
+          "timestamp": "2026-11-05T14:47:04.374Z"
+        }
+      ],
+      "inputs": [],
+      "replies": [],
+      "actions": [],
+      "outcomes": [],
+      "modelResponses": [],
+      "errors": [],
+      "status": "VERIFICADO",
+      "finishedAt": "2026-11-05T14:47:04.376Z"
+    },
+    {
+      "id": "CU-22",
+      "title": "Aprobar una propuesta de conocimiento",
+      "mode": "UI real; commit y publicacion verificados por conexion Oracle independiente",
+      "startedAt": "2026-11-05T14:47:04.379Z",
+      "images": [
+        {
+          "file": "CU-22-01-pendiente-aprobacion.png",
+          "label": "pendiente-aprobacion",
+          "url": "http://127.0.0.1:8765/",
+          "timestamp": "2026-11-05T14:47:05.190Z"
+        },
+        {
+          "file": "CU-22-02-aprobacion-confirmada.png",
+          "label": "aprobacion-confirmada",
+          "url": "http://127.0.0.1:8765/",
+          "timestamp": "2026-11-05T14:47:05.854Z"
+        },
+        {
+          "file": "CU-22-03-faq-publicada.png",
+          "label": "faq-publicada",
+          "url": "http://127.0.0.1:8765/",
+          "timestamp": "2026-11-05T14:47:06.989Z"
+        }
+      ],
+      "inputs": [],
+      "replies": [],
+      "actions": [],
+      "outcomes": [],
+      "modelResponses": [],
+      "errors": [],
+      "status": "VERIFICADO",
+      "finishedAt": "2026-11-05T14:47:06.989Z"
+    },
+    {
+      "id": "CU-23",
+      "title": "Rechazar una propuesta de conocimiento",
+      "mode": "UI real; rechazo y ausencia de FAQ verificados en Oracle",
+      "startedAt": "2026-11-05T14:47:06.992Z",
+      "images": [
+        {
+          "file": "CU-23-01-pendiente-rechazo.png",
+          "label": "pendiente-rechazo",
+          "url": "http://127.0.0.1:8765/",
+          "timestamp": "2026-11-05T14:47:07.824Z"
+        },
+        {
+          "file": "CU-23-02-rechazo-confirmado.png",
+          "label": "rechazo-confirmado",
+          "url": "http://127.0.0.1:8765/",
+          "timestamp": "2026-11-05T14:47:08.453Z"
+        }
+      ],
+      "inputs": [],
+      "replies": [],
+      "actions": [],
+      "outcomes": [],
+      "modelResponses": [],
+      "errors": [],
+      "status": "VERIFICADO",
+      "finishedAt": "2026-11-05T14:47:08.813Z"
+    },
+    {
+      "id": "CU-24",
+      "title": "Revisar valoraciones negativas",
+      "mode": "UI real sobre voto registrado en CU-19 y verificacion Oracle",
+      "startedAt": "2026-11-05T14:47:08.816Z",
+      "images": [
+        {
+          "file": "CU-24-01-valoracion-pendiente.png",
+          "label": "valoracion-pendiente",
+          "url": "http://127.0.0.1:8765/",
+          "timestamp": "2026-11-05T14:47:09.973Z"
+        },
+        {
+          "file": "CU-24-02-revisada.png",
+          "label": "revisada",
+          "url": "http://127.0.0.1:8765/",
+          "timestamp": "2026-11-05T14:47:10.611Z"
+        }
+      ],
+      "inputs": [],
+      "replies": [],
+      "actions": [],
+      "outcomes": [],
+      "modelResponses": [],
+      "errors": [],
+      "status": "VERIFICADO",
+      "finishedAt": "2026-11-05T14:47:10.993Z"
+    },
+    {
+      "id": "CU-25",
+      "title": "Consultar tablas y registros administrables",
+      "mode": "Selector y listado de tabla Oracle por UI real",
+      "startedAt": "2026-11-05T14:47:10.997Z",
+      "images": [
+        {
+          "file": "CU-25-01-listado-configuraciones.png",
+          "label": "listado-configuraciones",
+          "url": "http://127.0.0.1:8765/",
+          "timestamp": "2026-11-05T14:47:11.773Z"
+        }
+      ],
+      "inputs": [],
+      "replies": [],
+      "actions": [],
+      "outcomes": [],
+      "modelResponses": [],
+      "errors": [],
+      "detail": "ACCIONES_NAVEGACION, AUDITORIA_CAMBIOS, CATEGORIAS_FAQ, CONFIGURACIONES, DETECCIONES_INTENCION, EJECUCIONES_NAVEGACION, ENLACES_SECCION, ETIQUETAS, EVENTOS_SISTEMA, EXPERIENCIAS_ACCION, FAQ_FUENTES, FUENTES_INFORMACION, FUENTES_RESPUESTA, GENERACIONES_IA, INTENCIONES, MENSAJES, METRICAS_RENDIMIENTO, MODELOS_IA, PAGINAS_WEB, PREGUNTAS_FRECUENTES, PROPUESTAS_CONOCIMIENTO, REGISTROS_ERROR, ROLES, SECCIONES_WEB, SECCION_ETIQUETA, SESIONES_ADMIN, SESIONES_CHAT, SINONIMOS_CONSULTA, TIPOS_ERROR, USUARIOS_ADMIN, VALORACIONES_RESPUESTA, VERSIONES_PROMPT",
+      "status": "VERIFICADO",
+      "finishedAt": "2026-11-05T14:47:11.776Z"
+    },
+    {
+      "id": "CU-26",
+      "title": "Crear un registro administrativo",
+      "mode": "Formulario real y commit Oracle independiente",
+      "startedAt": "2026-11-05T14:47:11.779Z",
+      "images": [
+        {
+          "file": "CU-26-01-formulario-alta.png",
+          "label": "formulario-alta",
+          "url": "http://127.0.0.1:8765/",
+          "timestamp": "2026-11-05T14:47:12.642Z"
+        },
+        {
+          "file": "CU-26-02-registro-creado.png",
+          "label": "registro-creado",
+          "url": "http://127.0.0.1:8765/",
+          "timestamp": "2026-11-05T14:47:13.454Z"
+        }
+      ],
+      "inputs": [],
+      "replies": [],
+      "actions": [],
+      "outcomes": [],
+      "modelResponses": [],
+      "errors": [],
+      "status": "VERIFICADO",
+      "finishedAt": "2026-11-05T14:47:13.817Z"
+    },
+    {
+      "id": "CU-27",
+      "title": "Modificar un registro administrativo",
+      "mode": "Formulario real y commit Oracle independiente; registro de CU-26",
+      "startedAt": "2026-11-05T14:47:13.820Z",
+      "images": [
+        {
+          "file": "CU-27-01-valor-anterior.png",
+          "label": "valor-anterior",
+          "url": "http://127.0.0.1:8765/",
+          "timestamp": "2026-11-05T14:47:14.572Z"
+        },
+        {
+          "file": "CU-27-02-formulario-edicion.png",
+          "label": "formulario-edicion",
+          "url": "http://127.0.0.1:8765/",
+          "timestamp": "2026-11-05T14:47:15.158Z"
+        },
+        {
+          "file": "CU-27-03-registro-actualizado.png",
+          "label": "registro-actualizado",
+          "url": "http://127.0.0.1:8765/",
+          "timestamp": "2026-11-05T14:47:15.921Z"
+        }
+      ],
+      "inputs": [],
+      "replies": [],
+      "actions": [],
+      "outcomes": [],
+      "modelResponses": [],
+      "errors": [],
+      "status": "VERIFICADO",
+      "finishedAt": "2026-11-05T14:47:16.271Z"
+    },
+    {
+      "id": "CU-28",
+      "title": "Eliminar un registro administrativo",
+      "mode": "Boton y confirmacion reales; ausencia verificada en Oracle",
+      "startedAt": "2026-11-05T14:47:16.274Z",
+      "images": [
+        {
+          "file": "CU-28-01-antes-eliminar.png",
+          "label": "antes-eliminar",
+          "url": "http://127.0.0.1:8765/",
+          "timestamp": "2026-11-05T14:47:17.038Z"
+        },
+        {
+          "file": "CU-28-02-listado-sin-registro.png",
+          "label": "listado-sin-registro",
+          "url": "http://127.0.0.1:8765/",
+          "timestamp": "2026-11-05T14:47:17.848Z"
+        }
+      ],
+      "inputs": [],
+      "replies": [],
+      "actions": [],
+      "outcomes": [],
+      "modelResponses": [],
+      "errors": [],
+      "detail": "Confirmacion real: ¿Eliminar este registro? Si otras tablas lo referencian, Oracle impedirá borrarlo.",
+      "status": "VERIFICADO",
+      "finishedAt": "2026-11-05T14:47:18.201Z"
+    },
+    {
+      "id": "CU-29",
+      "title": "Reintentar una consulta tras un fallo del servicio de IA",
+      "mode": "Fallo de IA simulado, recuperacion posterior con Ollama real por UI",
+      "startedAt": "2026-11-05T14:47:18.204Z",
+      "images": [
+        {
+          "file": "CU-29-01-fallo-controlado.png",
+          "label": "fallo-controlado",
+          "url": "http://127.0.0.1:8765/duco",
+          "timestamp": "2026-11-05T14:47:21.808Z"
+        },
+        {
+          "file": "CU-29-02-reintento-exitoso.png",
+          "label": "reintento-exitoso",
+          "url": "http://127.0.0.1:8765/duco",
+          "timestamp": "2026-11-05T14:47:30.490Z"
+        }
+      ],
+      "inputs": [
+        "Que es Duoc UC? Solo explicamelo, no navegues.",
+        "Que es Duoc UC? Solo explicamelo, no navegues."
+      ],
+      "replies": [
+        "No pude conectarme con Ollama. Verifica que esté iniciado e intenta nuevamente.",
+        "Duoc UC es una institución de educación superior chilena dedicada a formar especialistas capaces de adaptarse al mundo laboral actual. Ofrece programas técnicos y profesionales diseñados para responder a las necesidades del mercado, con un enfoque práctico y flexible que permite estudiar en horarios vespertinos o los fines de semana, ideal para quienes trabajan durante el día."
+      ],
+      "actions": [],
+      "outcomes": [],
+      "modelResponses": [
+        {
+          "status": 200,
+          "model": "qwen3.5:9b",
+          "content": "{\"route\": \"conversation\"}"
+        },
+        {
+          "status": 200,
+          "model": "qwen3.5:9b",
+          "content": "{\n  \"reply\": \"Duoc UC es una institución de educación superior chilena dedicada a formar especialistas capaces de adaptarse al mundo laboral actual. Ofrece programas técnicos y profesionales diseñados para responder a las necesidades del mercado, con un enfoque práctico y flexible que permite estudiar en horarios vespertinos o los fines de semana, ideal para quienes trabajan durante el día.\"\n}"
+        }
+      ],
+      "errors": [],
+      "status": "VERIFICADO",
+      "finishedAt": "2026-11-05T14:47:30.490Z"
+    },
+    {
+      "id": "CU-30",
+      "title": "Solicitar una carrera alternativa",
+      "mode": "Solicitud por UI con contexto de ficha real",
+      "startedAt": "2026-11-05T14:47:30.494Z",
+      "images": [
+        {
+          "file": "CU-30-01-carrera-inicial.png",
+          "label": "carrera-inicial",
+          "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+          "timestamp": "2026-11-05T14:47:33.744Z"
+        },
+        {
+          "file": "CU-30-02-estado-del-fallo.png",
+          "label": "estado-del-fallo",
+          "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+          "timestamp": "2026-11-05T14:49:34.488Z"
+        }
+      ],
+      "inputs": [
+        "me muestras otra carrera cualquiera?"
+      ],
+      "replies": [],
+      "actions": [],
+      "outcomes": [],
+      "modelResponses": [
+        {
+          "status": 200,
+          "model": "qwen3.5:9b",
+          "content": "{\"route\": \"conversation\"}"
+        },
+        {
+          "status": 200,
+          "model": "qwen3.5:9b",
+          "content": "{\n  \"reply\": \"Claro que sí. Dado que ya mencionaste que trabajas durante el día y prefieres horarios vespertinos, te muestro una opción con esa modalidad:\\n\\n**Carrera de Enfermería (Sede Santiago)**\\n*   **Modalidad:** Vespertino.\\n*   **Descripción breve:** Es una carrera profesional enfocada en la atención integral a pacientes, combinando conocimientos científicos con habilidades humanas para el cuidado y la promoción de la salud.\\n\\n¿Te interesa esta opción o prefieres ver otra carrera diferente?\"\n}"
+        }
+      ],
+      "errors": [],
+      "status": "FALLO",
+      "error": "page.waitForURL: Timeout 120000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation to \"**/carreras.html\" until \"load\"\n============================================================\n    at C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\tests\\use-case-evidence.cjs:292:18\n    at async check (C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\tests\\use-case-evidence.cjs:76:5)\n    at async C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\tests\\use-case-evidence.cjs:289:5",
+      "finishedAt": "2026-11-05T14:49:34.488Z"
+    },
+    {
+      "id": "CU-31",
+      "title": "Consultar la ubicacion actual y la peticion anterior",
+      "mode": "Consulta por UI tras navegacion manual; lectura de contexto real",
+      "startedAt": "2026-11-05T14:49:34.494Z",
+      "images": [
+        {
+          "file": "CU-31-01-ubicacion-actual.png",
+          "label": "ubicacion-actual",
+          "url": "http://127.0.0.1:8765/carreras.html",
+          "timestamp": "2026-11-05T14:49:40.765Z"
+        },
+        {
+          "file": "CU-31-02-peticion-anterior.png",
+          "label": "peticion-anterior",
+          "url": "http://127.0.0.1:8765/carreras.html",
+          "timestamp": "2026-11-05T14:49:42.548Z"
+        }
+      ],
+      "inputs": [
+        "hola duco",
+        "En que pagina estoy ahora?",
+        "Cual fue mi pregunta anterior?"
+      ],
+      "replies": [
+        "¡Hola! ¿En qué puedo ayudarte?",
+        "Estás en el catálogo general de carreras.",
+        "Antes me pediste: «En que pagina estoy ahora?»."
+      ],
+      "actions": [],
+      "outcomes": [],
+      "modelResponses": [],
+      "errors": [],
+      "status": "VERIFICADO",
+      "finishedAt": "2026-11-05T14:49:42.548Z"
+    }
+  ],
+  "limitations": [
+    "Chromium de escritorio; capturas moviles por emulacion, no telefono fisico.",
+    "Ollama se usa solo como servicio de IA del prototipo, no como requisito del visitante final.",
+    "Las pruebas del motor de acciones no certifican la interpretacion de lenguaje natural.",
+    "CU-29 provoca un fallo controlado; no se apaga el servicio compartido.",
+    "Abrir el reproductor no certifica reproduccion audiovisual externa.",
+    "No se certifican produccion, autenticacion administrativa ni exactitud semantica completa del modelo."
+  ],
+  "browser": "151.0.7922.34",
+  "negativeFeedbackSession": "108b4607-01ac-483f-bb95-8a65c7c121ae",
+  "cleanup": {
+    "databaseVersion": "23.26.3.0.0",
+    "mode": "cleanup",
+    "marker": "DUCO_EVIDENCE_b169901c1e30420f955e3bef5449c8bb",
+    "configurations": [],
+    "proposals": [],
+    "publishedFaqs": [],
+    "sessionRows": [
+      {
+        "session": "609353cf-97b5-4f67-8606-3d61b51d7124",
+        "count": 0,
+        "ratings": []
+      },
+      {
+        "session": "68420d2d-80bb-4bad-a3da-b5737551fd5c",
+        "count": 0,
+        "ratings": []
+      },
+      {
+        "session": "c5034a02-a7da-4010-af57-dc1011da0e61",
+        "count": 0,
+        "ratings": []
+      },
+      {
+        "session": "1e2a9b38-020c-439e-b05f-f95933f5cba1",
+        "count": 0,
+        "ratings": []
+      },
+      {
+        "session": "92264acd-1053-4ba2-ad67-2fe2529d6ce7",
+        "count": 0,
+        "ratings": []
+      },
+      {
+        "session": "52f90278-a8d0-4f0d-834a-05291dfa5ff9",
+        "count": 0,
+        "ratings": []
+      },
+      {
+        "session": "74f3f06f-cd60-481c-a122-b9dbf16551ae",
+        "count": 0,
+        "ratings": []
+      },
+      {
+        "session": "a26264e4-9723-46ca-8b41-e4b9c0f6378d",
+        "count": 0,
+        "ratings": []
+      },
+      {
+        "session": "3fa494ce-5814-4160-aa79-53d89eebe717",
+        "count": 0,
+        "ratings": []
+      },
+      {
+        "session": "6576178a-5cce-496c-8b6e-c6122a05910e",
+        "count": 0,
+        "ratings": []
+      },
+      {
+        "session": "178a9e20-e60d-4f72-9dc2-bcb58dd05e02",
+        "count": 0,
+        "ratings": []
+      },
+      {
+        "session": "aeac3136-f842-4d67-825a-7699362b5fd7",
+        "count": 0,
+        "ratings": []
+      },
+      {
+        "session": "e96cb9bb-f56d-42f7-8c3b-fe4b3a306e4a",
+        "count": 0,
+        "ratings": []
+      },
+      {
+        "session": "642b4b26-6075-4874-ad95-8a3e2dba780b",
+        "count": 0,
+        "ratings": []
+      },
+      {
+        "session": "be323898-84c7-4848-8162-e90502d14d1d",
+        "count": 0,
+        "ratings": []
+      },
+      {
+        "session": "66093bde-62f1-4a40-be74-d48e9e946dab",
+        "count": 0,
+        "ratings": []
+      },
+      {
+        "session": "b16029fb-7c1a-46a6-a8d2-6ec5a991f383",
+        "count": 0,
+        "ratings": []
+      },
+      {
+        "session": "bdd6359d-61e8-41a4-97f9-ae4d11ad9b5e",
+        "count": 0,
+        "ratings": []
+      },
+      {
+        "session": "108b4607-01ac-483f-bb95-8a65c7c121ae",
+        "count": 0,
+        "ratings": []
+      },
+      {
+        "session": "3974f894-2854-407e-9fd8-ba205d68d61c",
+        "count": 0,
+        "ratings": []
+      },
+      {
+        "session": "bdfe42d4-b852-4a99-ab34-f31b759c84b6",
+        "count": 0,
+        "ratings": []
+      },
+      {
+        "session": "479ba1fe-80e0-404d-b714-9c7ad1b9d2e0",
+        "count": 0,
+        "ratings": []
+      },
+      {
+        "session": "03921818-6580-47c4-96cc-f5ca42a24ae9",
+        "count": 0,
+        "ratings": []
+      }
+    ],
+    "clean": true
+  },
+  "summary": {
+    "verified": 28,
+    "failed": 3,
+    "total": 31,
+    "screenshots": 69
+  },
+  "finishedAt": "2026-11-05T14:49:43.010Z"
+}

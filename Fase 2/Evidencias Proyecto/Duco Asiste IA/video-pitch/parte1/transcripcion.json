@@ -1,0 +1,711 @@
+{
+  "language": "es",
+  "duration": 41.0666875,
+  "segments": [
+    {
+      "start": 0.27,
+      "end": 3.63,
+      "text": "Encontré información, no siempre significa que encontré una respuesta.",
+      "words": [
+        {
+          "start": 0.27,
+          "end": 0.99,
+          "word": " Encontré",
+          "probability": 0.7369396189848582
+        },
+        {
+          "start": 0.99,
+          "end": 1.33,
+          "word": " información,",
+          "probability": 0.9769802093505859
+        },
+        {
+          "start": 1.97,
+          "end": 2.11,
+          "word": " no",
+          "probability": 0.981927216053009
+        },
+        {
+          "start": 2.11,
+          "end": 2.37,
+          "word": " siempre",
+          "probability": 0.9914828538894653
+        },
+        {
+          "start": 2.37,
+          "end": 2.87,
+          "word": " significa",
+          "probability": 0.8998270630836487
+        },
+        {
+          "start": 2.87,
+          "end": 2.99,
+          "word": " que",
+          "probability": 0.7329610586166382
+        },
+        {
+          "start": 2.99,
+          "end": 3.21,
+          "word": " encontré",
+          "probability": 0.4954066053032875
+        },
+        {
+          "start": 3.21,
+          "end": 3.31,
+          "word": " una",
+          "probability": 0.7176885008811951
+        },
+        {
+          "start": 3.31,
+          "end": 3.63,
+          "word": " respuesta.",
+          "probability": 0.9917592406272888
+        }
+      ]
+    },
+    {
+      "start": 4.65,
+      "end": 7.15,
+      "text": "Imagina una persona que quiere estuviera en Duoc UC.",
+      "words": [
+        {
+          "start": 4.65,
+          "end": 5.17,
+          "word": " Imagina",
+          "probability": 0.6681811511516571
+        },
+        {
+          "start": 5.17,
+          "end": 5.41,
+          "word": " una",
+          "probability": 0.5412750244140625
+        },
+        {
+          "start": 5.41,
+          "end": 5.85,
+          "word": " persona",
+          "probability": 0.9868388772010803
+        },
+        {
+          "start": 5.85,
+          "end": 6.09,
+          "word": " que",
+          "probability": 0.9537056684494019
+        },
+        {
+          "start": 6.09,
+          "end": 6.31,
+          "word": " quiere",
+          "probability": 0.8716019988059998
+        },
+        {
+          "start": 6.31,
+          "end": 6.61,
+          "word": " estuviera",
+          "probability": 0.516478106379509
+        },
+        {
+          "start": 6.61,
+          "end": 6.77,
+          "word": " en",
+          "probability": 0.9861807227134705
+        },
+        {
+          "start": 6.77,
+          "end": 6.95,
+          "word": " Duoc",
+          "probability": 0.41829294711351395
+        },
+        {
+          "start": 6.95,
+          "end": 7.15,
+          "word": " UC.",
+          "probability": 0.008313380181789398
+        }
+      ]
+    },
+    {
+      "start": 7.99,
+      "end": 12.73,
+      "text": "Entra el sitio para conocer una carrera, revisar dónde se imparte y entender qué aprenderá.",
+      "words": [
+        {
+          "start": 7.99,
+          "end": 8.47,
+          "word": " Entra",
+          "probability": 0.690200924873352
+        },
+        {
+          "start": 8.47,
+          "end": 8.61,
+          "word": " el",
+          "probability": 0.4059378504753113
+        },
+        {
+          "start": 8.61,
+          "end": 8.83,
+          "word": " sitio",
+          "probability": 0.9964033365249634
+        },
+        {
+          "start": 8.83,
+          "end": 9.09,
+          "word": " para",
+          "probability": 0.9811272025108337
+        },
+        {
+          "start": 9.09,
+          "end": 9.29,
+          "word": " conocer",
+          "probability": 0.8475663065910339
+        },
+        {
+          "start": 9.29,
+          "end": 9.63,
+          "word": " una",
+          "probability": 0.7954623699188232
+        },
+        {
+          "start": 9.63,
+          "end": 10.01,
+          "word": " carrera,",
+          "probability": 0.996273398399353
+        },
+        {
+          "start": 10.35,
+          "end": 10.75,
+          "word": " revisar",
+          "probability": 0.9592087864875793
+        },
+        {
+          "start": 10.75,
+          "end": 10.95,
+          "word": " dónde",
+          "probability": 0.40757739543914795
+        },
+        {
+          "start": 10.95,
+          "end": 11.21,
+          "word": " se",
+          "probability": 0.6618356108665466
+        },
+        {
+          "start": 11.21,
+          "end": 11.61,
+          "word": " imparte",
+          "probability": 0.6657194793224335
+        },
+        {
+          "start": 11.61,
+          "end": 11.79,
+          "word": " y",
+          "probability": 0.36113056540489197
+        },
+        {
+          "start": 11.79,
+          "end": 12.05,
+          "word": " entender",
+          "probability": 0.976072371006012
+        },
+        {
+          "start": 12.05,
+          "end": 12.23,
+          "word": " qué",
+          "probability": 0.8427421450614929
+        },
+        {
+          "start": 12.23,
+          "end": 12.73,
+          "word": " aprenderá.",
+          "probability": 0.8609872460365295
+        }
+      ]
+    },
+    {
+      "start": 13.25,
+      "end": 19.39,
+      "text": "Pero para conseguirlo, necesitas recorrer páginas, abrir menús y reconocer términos que quizás todavía no conocen.",
+      "words": [
+        {
+          "start": 13.25,
+          "end": 13.49,
+          "word": " Pero",
+          "probability": 0.9648034572601318
+        },
+        {
+          "start": 13.49,
+          "end": 13.71,
+          "word": " para",
+          "probability": 0.9635312557220459
+        },
+        {
+          "start": 13.71,
+          "end": 14.37,
+          "word": " conseguirlo,",
+          "probability": 0.9545465409755707
+        },
+        {
+          "start": 14.53,
+          "end": 14.99,
+          "word": " necesitas",
+          "probability": 0.6960374861955643
+        },
+        {
+          "start": 14.99,
+          "end": 15.43,
+          "word": " recorrer",
+          "probability": 0.9732908805211385
+        },
+        {
+          "start": 15.43,
+          "end": 16.13,
+          "word": " páginas,",
+          "probability": 0.9625162283579508
+        },
+        {
+          "start": 16.29,
+          "end": 16.47,
+          "word": " abrir",
+          "probability": 0.9800012707710266
+        },
+        {
+          "start": 16.47,
+          "end": 16.91,
+          "word": " menús",
+          "probability": 0.7725522220134735
+        },
+        {
+          "start": 16.91,
+          "end": 17.07,
+          "word": " y",
+          "probability": 0.9079158902168274
+        },
+        {
+          "start": 17.07,
+          "end": 17.49,
+          "word": " reconocer",
+          "probability": 0.9180145859718323
+        },
+        {
+          "start": 17.49,
+          "end": 17.97,
+          "word": " términos",
+          "probability": 0.6923941075801849
+        },
+        {
+          "start": 17.97,
+          "end": 18.11,
+          "word": " que",
+          "probability": 0.9479463696479797
+        },
+        {
+          "start": 18.11,
+          "end": 18.41,
+          "word": " quizás",
+          "probability": 0.7753998637199402
+        },
+        {
+          "start": 18.41,
+          "end": 18.69,
+          "word": " todavía",
+          "probability": 0.9686800837516785
+        },
+        {
+          "start": 18.69,
+          "end": 18.95,
+          "word": " no",
+          "probability": 0.9965094923973083
+        },
+        {
+          "start": 18.95,
+          "end": 19.39,
+          "word": " conocen.",
+          "probability": 0.6744893491268158
+        }
+      ]
+    },
+    {
+      "start": 20.09,
+      "end": 24.67,
+      "text": "La información puede estar disponible, pero el camino para llegar a ella no siempre es evidente.",
+      "words": [
+        {
+          "start": 20.09,
+          "end": 20.43,
+          "word": " La",
+          "probability": 0.9820522665977478
+        },
+        {
+          "start": 20.43,
+          "end": 20.67,
+          "word": " información",
+          "probability": 0.9773589372634888
+        },
+        {
+          "start": 20.67,
+          "end": 21.11,
+          "word": " puede",
+          "probability": 0.9615500569343567
+        },
+        {
+          "start": 21.11,
+          "end": 21.39,
+          "word": " estar",
+          "probability": 0.9883888959884644
+        },
+        {
+          "start": 21.39,
+          "end": 21.91,
+          "word": " disponible,",
+          "probability": 0.9260814785957336
+        },
+        {
+          "start": 22.11,
+          "end": 22.23,
+          "word": " pero",
+          "probability": 0.9953591227531433
+        },
+        {
+          "start": 22.23,
+          "end": 22.37,
+          "word": " el",
+          "probability": 0.9906256198883057
+        },
+        {
+          "start": 22.37,
+          "end": 22.51,
+          "word": " camino",
+          "probability": 0.9990100860595703
+        },
+        {
+          "start": 22.51,
+          "end": 22.77,
+          "word": " para",
+          "probability": 0.9960241317749023
+        },
+        {
+          "start": 22.77,
+          "end": 23.03,
+          "word": " llegar",
+          "probability": 0.9922130703926086
+        },
+        {
+          "start": 23.03,
+          "end": 23.19,
+          "word": " a",
+          "probability": 0.9407510161399841
+        },
+        {
+          "start": 23.19,
+          "end": 23.37,
+          "word": " ella",
+          "probability": 0.9376938343048096
+        },
+        {
+          "start": 23.37,
+          "end": 23.69,
+          "word": " no",
+          "probability": 0.9118890762329102
+        },
+        {
+          "start": 23.69,
+          "end": 24.03,
+          "word": " siempre",
+          "probability": 0.9385273456573486
+        },
+        {
+          "start": 24.03,
+          "end": 24.19,
+          "word": " es",
+          "probability": 0.6891418695449829
+        },
+        {
+          "start": 24.19,
+          "end": 24.67,
+          "word": " evidente.",
+          "probability": 0.9916185438632965
+        }
+      ]
+    },
+    {
+      "start": 25.31,
+      "end": 26.87,
+      "text": "Entonces no es una pregunta.",
+      "words": [
+        {
+          "start": 25.31,
+          "end": 25.83,
+          "word": " Entonces",
+          "probability": 0.6045091152191162
+        },
+        {
+          "start": 25.83,
+          "end": 26.09,
+          "word": " no",
+          "probability": 0.06333727389574051
+        },
+        {
+          "start": 26.09,
+          "end": 26.19,
+          "word": " es",
+          "probability": 0.8039677143096924
+        },
+        {
+          "start": 26.19,
+          "end": 26.39,
+          "word": " una",
+          "probability": 0.6254611015319824
+        },
+        {
+          "start": 26.39,
+          "end": 26.87,
+          "word": " pregunta.",
+          "probability": 0.9519795775413513
+        }
+      ]
+    },
+    {
+      "start": 27.69,
+      "end": 33.07,
+      "text": "Y si el sitio pudiera acompañar al visitante y la otra busca, en vez de dejarlo recorrer solo.",
+      "words": [
+        {
+          "start": 27.69,
+          "end": 27.95,
+          "word": " Y",
+          "probability": 0.6437404751777649
+        },
+        {
+          "start": 27.95,
+          "end": 28.07,
+          "word": " si",
+          "probability": 0.9715439677238464
+        },
+        {
+          "start": 28.07,
+          "end": 28.21,
+          "word": " el",
+          "probability": 0.9789607524871826
+        },
+        {
+          "start": 28.21,
+          "end": 28.53,
+          "word": " sitio",
+          "probability": 0.9962490200996399
+        },
+        {
+          "start": 28.53,
+          "end": 29.13,
+          "word": " pudiera",
+          "probability": 0.9593422114849091
+        },
+        {
+          "start": 29.13,
+          "end": 29.79,
+          "word": " acompañar",
+          "probability": 0.9808295667171478
+        },
+        {
+          "start": 29.79,
+          "end": 29.93,
+          "word": " al",
+          "probability": 0.6638479232788086
+        },
+        {
+          "start": 29.93,
+          "end": 30.49,
+          "word": " visitante",
+          "probability": 0.9318228662014008
+        },
+        {
+          "start": 30.49,
+          "end": 30.61,
+          "word": " y",
+          "probability": 0.36173370480537415
+        },
+        {
+          "start": 30.61,
+          "end": 30.69,
+          "word": " la",
+          "probability": 0.5250776410102844
+        },
+        {
+          "start": 30.69,
+          "end": 30.91,
+          "word": " otra",
+          "probability": 0.3928189277648926
+        },
+        {
+          "start": 30.91,
+          "end": 31.17,
+          "word": " busca,",
+          "probability": 0.8838706612586975
+        },
+        {
+          "start": 31.41,
+          "end": 31.49,
+          "word": " en",
+          "probability": 0.935657262802124
+        },
+        {
+          "start": 31.49,
+          "end": 31.63,
+          "word": " vez",
+          "probability": 0.9927654266357422
+        },
+        {
+          "start": 31.63,
+          "end": 31.75,
+          "word": " de",
+          "probability": 0.9971241354942322
+        },
+        {
+          "start": 31.75,
+          "end": 32.19,
+          "word": " dejarlo",
+          "probability": 0.7225809842348099
+        },
+        {
+          "start": 32.19,
+          "end": 32.85,
+          "word": " recorrer",
+          "probability": 0.9399289687474569
+        },
+        {
+          "start": 32.85,
+          "end": 33.07,
+          "word": " solo.",
+          "probability": 0.9487752914428711
+        }
+      ]
+    },
+    {
+      "start": 33.81,
+      "end": 35.35,
+      "text": "Así nace Duco Asiste.",
+      "words": [
+        {
+          "start": 33.81,
+          "end": 34.33,
+          "word": " Así",
+          "probability": 0.8617323040962219
+        },
+        {
+          "start": 34.33,
+          "end": 34.63,
+          "word": " nace",
+          "probability": 0.823557436466217
+        },
+        {
+          "start": 34.63,
+          "end": 35.01,
+          "word": " Duco",
+          "probability": 0.2109561786055565
+        },
+        {
+          "start": 35.01,
+          "end": 35.35,
+          "word": " Asiste.",
+          "probability": 0.2144428752362728
+        }
+      ]
+    },
+    {
+      "start": 35.59,
+      "end": 40.01,
+      "text": "Una asistente virtual que busca hacer muy sencilla y ya da la experiencia de navegación.",
+      "words": [
+        {
+          "start": 35.59,
+          "end": 35.87,
+          "word": " Una",
+          "probability": 0.6432140469551086
+        },
+        {
+          "start": 35.87,
+          "end": 36.37,
+          "word": " asistente",
+          "probability": 0.9756211241086324
+        },
+        {
+          "start": 36.37,
+          "end": 36.87,
+          "word": " virtual",
+          "probability": 0.9949581027030945
+        },
+        {
+          "start": 36.87,
+          "end": 37.09,
+          "word": " que",
+          "probability": 0.9643299579620361
+        },
+        {
+          "start": 37.09,
+          "end": 37.31,
+          "word": " busca",
+          "probability": 0.9590710401535034
+        },
+        {
+          "start": 37.31,
+          "end": 37.57,
+          "word": " hacer",
+          "probability": 0.7328557372093201
+        },
+        {
+          "start": 37.57,
+          "end": 37.75,
+          "word": " muy",
+          "probability": 0.45858532190322876
+        },
+        {
+          "start": 37.75,
+          "end": 38.29,
+          "word": " sencilla",
+          "probability": 0.9373141527175903
+        },
+        {
+          "start": 38.29,
+          "end": 38.61,
+          "word": " y",
+          "probability": 0.8877424597740173
+        },
+        {
+          "start": 38.61,
+          "end": 38.75,
+          "word": " ya",
+          "probability": 0.11767671257257462
+        },
+        {
+          "start": 38.75,
+          "end": 38.83,
+          "word": " da",
+          "probability": 0.5144325494766235
+        },
+        {
+          "start": 38.83,
+          "end": 38.95,
+          "word": " la",
+          "probability": 0.9685208797454834
+        },
+        {
+          "start": 38.95,
+          "end": 39.35,
+          "word": " experiencia",
+          "probability": 0.9953255653381348
+        },
+        {
+          "start": 39.35,
+          "end": 39.55,
+          "word": " de",
+          "probability": 0.9872606992721558
+        },
+        {
+          "start": 39.55,
+          "end": 40.01,
+          "word": " navegación.",
+          "probability": 0.989092230796814
+        }
+      ]
+    }
+  ]
+}

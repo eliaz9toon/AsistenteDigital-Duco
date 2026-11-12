@@ -1,0 +1,98 @@
+{
+  "duration": 54.016,
+  "size": [
+    1920,
+    1080
+  ],
+  "fps": 30,
+  "codec": "H.264 / AAC",
+  "scenes": [
+    [
+      "intro",
+      0,
+      5.3,
+      1.0,
+      "center"
+    ],
+    [
+      "accion",
+      5.3,
+      10.85,
+      1.0,
+      "center"
+    ],
+    [
+      "solicitud",
+      10.85,
+      16.55,
+      1.0,
+      "center"
+    ],
+    [
+      "destino",
+      16.55,
+      21.75,
+      1.0,
+      "center"
+    ],
+    [
+      "evidencia1",
+      21.75,
+      25.9,
+      1.0,
+      "center"
+    ],
+    [
+      "fuente",
+      25.9,
+      29.75,
+      1.04,
+      "top"
+    ],
+    [
+      "menus",
+      29.75,
+      32.25,
+      1.1,
+      "top"
+    ],
+    [
+      "pestana",
+      32.25,
+      33.75,
+      1.02,
+      "center"
+    ],
+    [
+      "scroll",
+      33.75,
+      36.85,
+      1.0,
+      "center"
+    ],
+    [
+      "contexto_antes",
+      36.85,
+      40.9,
+      1.0,
+      "center"
+    ],
+    [
+      "contexto_despues",
+      40.9,
+      45.8,
+      1.0,
+      "center"
+    ],
+    [
+      "cierre",
+      45.8,
+      54.016,
+      1.0,
+      "center"
+    ]
+  ],
+  "transitionSeconds": 0.35,
+  "audio": "Original voice with loudness adjustment; mono converted to stereo for consistency with Part 1.",
+  "disclosure": "Demostracion editada: waiting times removed and footage retimed. Replies and actual app behavior are not fabricated."
+}

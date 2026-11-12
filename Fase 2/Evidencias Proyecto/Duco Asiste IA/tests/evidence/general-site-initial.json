@@ -1,0 +1,73 @@
+{
+  "date": "2026-11-05T00:24:05.277Z",
+  "pages": [
+    {
+      "route": "/duco",
+      "errors": [
+        "$(...).prop(...).animate is not a function"
+      ],
+      "httpErrors": [
+        {
+          "url": "http://127.0.0.1:8765/webfonts/fa-brands-400.woff2",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8765/webfonts/fa-solid-900.woff2",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8765/webfonts/fa-brands-400.woff",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8765/webfonts/fa-solid-900.woff",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8765/webfonts/fa-brands-400.ttf",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8765/webfonts/fa-solid-900.ttf",
+          "status": 404
+        }
+      ],
+      "chatVisible": true,
+      "assistantCount": 1,
+      "mobileOverflow": false
+    },
+    {
+      "route": "/carreras.html",
+      "errors": [
+        "$ is not defined",
+        "$ is not defined",
+        "jQuery is not defined",
+        "feather is not defined",
+        "$ is not defined",
+        "$ is not defined",
+        "$ is not defined"
+      ],
+      "httpErrors": [],
+      "chatVisible": true,
+      "assistantCount": 1,
+      "mobileOverflow": false
+    },
+    {
+      "route": "/carreras-detalle/ingenieria-en-informatica.html",
+      "errors": [
+        "$ is not defined",
+        "$ is not defined",
+        "feather is not defined",
+        "$ is not defined",
+        "$ is not defined",
+        "$ is not defined"
+      ],
+      "httpErrors": [],
+      "chatVisible": true,
+      "assistantCount": 1
+    }
+  ],
+  "catalog": [],
+  "passed": false,
+  "error": "page.evaluate: Error: Missing institutional profile tab\n    at eval (eval at evaluate (:311:30), <anonymous>:3:27)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\tests\\general-site.cjs:28:39"
+}

@@ -1,0 +1,106 @@
+{
+  "videoSeconds": 76.75500000000001,
+  "audioEditedSeconds": 75.555,
+  "outroHoldSeconds": 1.2,
+  "size": [
+    1920,
+    1080
+  ],
+  "fps": 30,
+  "audioMasteredOnce": true,
+  "scenes": [
+    {
+      "name": "valor",
+      "start": 0,
+      "end": 8.076,
+      "layout": "desktop"
+    },
+    {
+      "name": "visitante",
+      "start": 8.076,
+      "end": 12.640999999999998,
+      "layout": "desktop"
+    },
+    {
+      "name": "institucion",
+      "start": 12.640999999999998,
+      "end": 19.915,
+      "layout": "desktop"
+    },
+    {
+      "name": "valoracion",
+      "start": 19.915,
+      "end": 23.580000000000002,
+      "layout": "desktop"
+    },
+    {
+      "name": "revision",
+      "start": 23.580000000000002,
+      "end": 27.429999999999996,
+      "layout": "desktop"
+    },
+    {
+      "name": "aprobacion",
+      "start": 27.429999999999996,
+      "end": 28.830000000000002,
+      "layout": "desktop"
+    },
+    {
+      "name": "confirmacion",
+      "start": 28.830000000000002,
+      "end": 30.191,
+      "layout": "desktop"
+    },
+    {
+      "name": "prototipo",
+      "start": 30.191,
+      "end": 38.79100000000001,
+      "layout": "desktop"
+    },
+    {
+      "name": "visitante_sin_instalar",
+      "start": 38.79100000000001,
+      "end": 43.891000000000005,
+      "layout": "desktop"
+    },
+    {
+      "name": "despliegue_propuesto",
+      "start": 43.891000000000005,
+      "end": 49.691,
+      "layout": "desktop"
+    },
+    {
+      "name": "evidencias",
+      "start": 49.691,
+      "end": 57.80999999999999,
+      "layout": "desktop"
+    },
+    {
+      "name": "siguiente_paso",
+      "start": 57.80999999999999,
+      "end": 63.923000000000016,
+      "layout": "mobile"
+    },
+    {
+      "name": "experiencia",
+      "start": 63.923000000000016,
+      "end": 68.67300000000002,
+      "layout": "desktop"
+    },
+    {
+      "name": "personas",
+      "start": 68.67300000000002,
+      "end": 73.42300000000002,
+      "layout": "desktop"
+    },
+    {
+      "name": "marca",
+      "start": 73.42300000000002,
+      "end": 76.75500000000001,
+      "layout": "desktop"
+    }
+  ],
+  "claims": "Prototype functions, recorded moderation demo with temporary records, planned production deployment, physical validation still pending.",
+  "audioEdit": "7 non-word pause cuts, impulse repair and gentle noise reduction; no generated or replaced voice.",
+  "deliveryGainDb": 1
+}

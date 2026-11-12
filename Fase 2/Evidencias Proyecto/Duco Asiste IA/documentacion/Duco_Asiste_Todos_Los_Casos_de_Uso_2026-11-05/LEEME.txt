@@ -1,0 +1,32 @@
+DUCO ASISTE - LOS 31 CASOS DE USO
+Fecha de consolidacion: 5 de noviembre de 2026.
+
+CONTENIDO
+
+1. Casos_de_uso_Duco_Asiste.docx
+   Documento completo de los 31 casos de uso, con sus identificadores originales.
+
+2. Evidencias_31_Casos/index.html
+   Galeria de la ejecucion inicial de los 31 casos: 77 capturas y registros tecnicos.
+
+3. Correcciones_CU07_CU15_CU30/index.html
+   Galeria de correcciones: 10 capturas nuevas y 3 anteriores para comparar.
+   Contiene las pruebas posteriores que verifican las tres correcciones y el
+   resultado de las 14 suites automatizadas sin fallos.
+
+IMPORTANTE
+
+La galeria inicial conserva los fallos originales de CU-07, CU-15 y CU-30.
+Para conocer su revalidacion posterior, consultar la carpeta de correcciones.
+No se han reemplazado ni ocultado las evidencias originales.
+
+Hay 90 archivos PNG: 77 de la recopilacion inicial y 13 en el paquete de
+correcciones. Tres de estos ultimos repiten capturas anteriores para comparar;
+por tanto, son 87 capturas distintas.
+
+Cada galeria distingue pruebas por interfaz, motor de acciones y simulaciones.
+Las pruebas moviles son emuladas: no se uso un dispositivo fisico.
+La revalidacion no equivale a cobertura exhaustiva de todas las variantes.
+
+Los archivos integridad.json de ambas carpetas incluyen hashes SHA-256.
+No se incluyen credenciales ni archivos .env.

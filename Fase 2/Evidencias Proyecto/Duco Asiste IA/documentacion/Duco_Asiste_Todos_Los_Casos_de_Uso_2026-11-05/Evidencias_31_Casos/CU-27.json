@@ -1,0 +1,34 @@
+{
+  "id": "CU-27",
+  "title": "Modificar un registro administrativo",
+  "mode": "Formulario real y commit Oracle independiente; registro de CU-26",
+  "startedAt": "2026-11-05T14:47:13.820Z",
+  "images": [
+    {
+      "file": "CU-27-01-valor-anterior.png",
+      "label": "valor-anterior",
+      "url": "http://127.0.0.1:8765/",
+      "timestamp": "2026-11-05T14:47:14.572Z"
+    },
+    {
+      "file": "CU-27-02-formulario-edicion.png",
+      "label": "formulario-edicion",
+      "url": "http://127.0.0.1:8765/",
+      "timestamp": "2026-11-05T14:47:15.158Z"
+    },
+    {
+      "file": "CU-27-03-registro-actualizado.png",
+      "label": "registro-actualizado",
+      "url": "http://127.0.0.1:8765/",
+      "timestamp": "2026-11-05T14:47:15.921Z"
+    }
+  ],
+  "inputs": [],
+  "replies": [],
+  "actions": [],
+  "outcomes": [],
+  "modelResponses": [],
+  "errors": [],
+  "status": "VERIFICADO",
+  "finishedAt": "2026-11-05T14:47:16.271Z"
+}

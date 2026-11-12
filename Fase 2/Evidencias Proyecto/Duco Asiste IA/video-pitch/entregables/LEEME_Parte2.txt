@@ -1,0 +1,28 @@
+DUCO ASISTE - PITCH - PARTE 2
+
+Video: Parte2_Duco_Asiste.mp4
+Duracion aproximada: 54 segundos, correspondiente al audio original Parte2.mp3.
+Formato: horizontal 16:9, 1920 x 1080, 30 fps.
+Video: H.264, pixeles yuv420p.
+Audio: narracion original incorporada, AAC, 48 kHz, estereo.
+
+Se mantiene la tipografia, la paleta azul y amarilla, las transiciones y los
+margenes de la primera parte. No se agrega musica ni se sustituye la voz.
+
+La demostracion utiliza acciones reales del proyecto:
+- Peticion por chat y navegacion a Ingenieria en Informatica.
+- Explicacion generada con el servicio real de IA y resaltado de sus fuentes.
+- Apertura de un menu, seleccion de una pestana y desplazamiento guiado.
+- Conservacion de la sesion y recuerdo de la consulta anterior al cambiar pagina.
+
+Se recortan esperas y se ajusta la velocidad de algunos planos para acompanarlos
+con la narracion. Por eso se indica DEMOSTRACION EDITADA en pantalla; el video
+no mide el tiempo real de respuesta del servicio. No se fabricaron respuestas.
+Algunos planos de controles se grabaron invocando el motor de acciones real,
+sin pasar de nuevo por el clasificador de lenguaje natural.
+
+Los titulos son sintesis editoriales, no subtitulos literales del audio.
+La parte termina sin un cierre definitivo para continuar con la tercera.
+
+Colocar este archivo directamente despues de Parte1_Duco_Asiste.mp4.
+Como ya contiene la narracion, no superponer otra vez Parte2.mp3 en el editor.

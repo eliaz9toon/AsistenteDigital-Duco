@@ -1,0 +1,978 @@
+{
+  "language": "es",
+  "duration": 80.18,
+  "segments": [
+    {
+      "start": 0.69,
+      "end": 30.67,
+      "text": "Con Duco Asiste buscamos reducir la fracción, detener una pregunta y encontrar información útil. Para visitarte esto significa una interacción más directa, para la institución representa una oportunidad de mejorar la orientación digital y conocer que nuestro propietario necesita revisión, nuestro prototipo incorpora la evaluación de usuario y un módulo de administrativo para revisar propuestas de información hasta publicarla como conocimiento aprobado.",
+      "words": [
+        {
+          "start": 0.69,
+          "end": 1.37,
+          "word": " Con",
+          "probability": 0.5888673663139343
+        },
+        {
+          "start": 1.37,
+          "end": 1.75,
+          "word": " Duco",
+          "probability": 0.6761191636323929
+        },
+        {
+          "start": 1.75,
+          "end": 2.65,
+          "word": " Asiste",
+          "probability": 0.47114209085702896
+        },
+        {
+          "start": 2.65,
+          "end": 3.39,
+          "word": " buscamos",
+          "probability": 0.9734376470247904
+        },
+        {
+          "start": 3.39,
+          "end": 3.93,
+          "word": " reducir",
+          "probability": 0.9971552789211273
+        },
+        {
+          "start": 3.93,
+          "end": 4.07,
+          "word": " la",
+          "probability": 0.9854282736778259
+        },
+        {
+          "start": 4.07,
+          "end": 4.63,
+          "word": " fracción,",
+          "probability": 0.6999251693487167
+        },
+        {
+          "start": 5.11,
+          "end": 5.45,
+          "word": " detener",
+          "probability": 0.6721085757017136
+        },
+        {
+          "start": 5.45,
+          "end": 5.71,
+          "word": " una",
+          "probability": 0.996475875377655
+        },
+        {
+          "start": 5.71,
+          "end": 6.21,
+          "word": " pregunta",
+          "probability": 0.9994250535964966
+        },
+        {
+          "start": 6.21,
+          "end": 6.35,
+          "word": " y",
+          "probability": 0.9980489015579224
+        },
+        {
+          "start": 6.35,
+          "end": 6.65,
+          "word": " encontrar",
+          "probability": 0.31300491094589233
+        },
+        {
+          "start": 6.65,
+          "end": 7.67,
+          "word": " información",
+          "probability": 0.9736844301223755
+        },
+        {
+          "start": 7.67,
+          "end": 8.11,
+          "word": " útil.",
+          "probability": 0.93072909116745
+        },
+        {
+          "start": 8.61,
+          "end": 9.41,
+          "word": " Para",
+          "probability": 0.9948445558547974
+        },
+        {
+          "start": 9.41,
+          "end": 9.97,
+          "word": " visitarte",
+          "probability": 0.8257535994052887
+        },
+        {
+          "start": 9.97,
+          "end": 10.15,
+          "word": " esto",
+          "probability": 0.678303062915802
+        },
+        {
+          "start": 10.15,
+          "end": 10.71,
+          "word": " significa",
+          "probability": 0.9990536570549011
+        },
+        {
+          "start": 10.71,
+          "end": 11.13,
+          "word": " una",
+          "probability": 0.9994009733200073
+        },
+        {
+          "start": 11.13,
+          "end": 12.29,
+          "word": " interacción",
+          "probability": 0.8964373469352722
+        },
+        {
+          "start": 12.29,
+          "end": 12.49,
+          "word": " más",
+          "probability": 0.9993718266487122
+        },
+        {
+          "start": 12.49,
+          "end": 13.11,
+          "word": " directa,",
+          "probability": 0.9998526275157928
+        },
+        {
+          "start": 13.47,
+          "end": 13.55,
+          "word": " para",
+          "probability": 0.6495051980018616
+        },
+        {
+          "start": 13.55,
+          "end": 13.65,
+          "word": " la",
+          "probability": 0.9569427371025085
+        },
+        {
+          "start": 13.65,
+          "end": 14.07,
+          "word": " institución",
+          "probability": 0.9958897531032562
+        },
+        {
+          "start": 14.07,
+          "end": 14.67,
+          "word": " representa",
+          "probability": 0.9880544543266296
+        },
+        {
+          "start": 14.67,
+          "end": 14.93,
+          "word": " una",
+          "probability": 0.9844785928726196
+        },
+        {
+          "start": 14.93,
+          "end": 15.27,
+          "word": " oportunidad",
+          "probability": 0.9544603824615479
+        },
+        {
+          "start": 15.27,
+          "end": 15.49,
+          "word": " de",
+          "probability": 0.9978354573249817
+        },
+        {
+          "start": 15.49,
+          "end": 15.85,
+          "word": " mejorar",
+          "probability": 0.9992265701293945
+        },
+        {
+          "start": 15.85,
+          "end": 16.07,
+          "word": " la",
+          "probability": 0.9997063279151917
+        },
+        {
+          "start": 16.07,
+          "end": 16.83,
+          "word": " orientación",
+          "probability": 0.9978059530258179
+        },
+        {
+          "start": 16.83,
+          "end": 17.25,
+          "word": " digital",
+          "probability": 0.9996880292892456
+        },
+        {
+          "start": 17.25,
+          "end": 18.03,
+          "word": " y",
+          "probability": 0.9756976366043091
+        },
+        {
+          "start": 18.03,
+          "end": 18.45,
+          "word": " conocer",
+          "probability": 0.9946374297142029
+        },
+        {
+          "start": 18.45,
+          "end": 18.79,
+          "word": " que",
+          "probability": 0.974381148815155
+        },
+        {
+          "start": 18.79,
+          "end": 19.07,
+          "word": " nuestro",
+          "probability": 0.7121453285217285
+        },
+        {
+          "start": 19.07,
+          "end": 19.43,
+          "word": " propietario",
+          "probability": 0.6318082312742869
+        },
+        {
+          "start": 19.43,
+          "end": 19.79,
+          "word": " necesita",
+          "probability": 0.9348729848861694
+        },
+        {
+          "start": 19.79,
+          "end": 20.45,
+          "word": " revisión,",
+          "probability": 0.8795112073421478
+        },
+        {
+          "start": 21.19,
+          "end": 21.77,
+          "word": " nuestro",
+          "probability": 0.9895766973495483
+        },
+        {
+          "start": 21.77,
+          "end": 22.67,
+          "word": " prototipo",
+          "probability": 0.989851638674736
+        },
+        {
+          "start": 22.67,
+          "end": 23.25,
+          "word": " incorpora",
+          "probability": 0.9500575065612793
+        },
+        {
+          "start": 23.25,
+          "end": 23.33,
+          "word": " la",
+          "probability": 0.38601794838905334
+        },
+        {
+          "start": 23.33,
+          "end": 23.67,
+          "word": " evaluación",
+          "probability": 0.760216623544693
+        },
+        {
+          "start": 23.67,
+          "end": 23.77,
+          "word": " de",
+          "probability": 0.95663982629776
+        },
+        {
+          "start": 23.77,
+          "end": 24.15,
+          "word": " usuario",
+          "probability": 0.9265018105506897
+        },
+        {
+          "start": 24.15,
+          "end": 24.87,
+          "word": " y",
+          "probability": 0.9754495024681091
+        },
+        {
+          "start": 24.87,
+          "end": 24.99,
+          "word": " un",
+          "probability": 0.997275173664093
+        },
+        {
+          "start": 24.99,
+          "end": 25.31,
+          "word": " módulo",
+          "probability": 0.997062623500824
+        },
+        {
+          "start": 25.31,
+          "end": 25.49,
+          "word": " de",
+          "probability": 0.9234591722488403
+        },
+        {
+          "start": 25.49,
+          "end": 26.43,
+          "word": " administrativo",
+          "probability": 0.9673224886258444
+        },
+        {
+          "start": 26.43,
+          "end": 26.79,
+          "word": " para",
+          "probability": 0.9971557855606079
+        },
+        {
+          "start": 26.79,
+          "end": 27.19,
+          "word": " revisar",
+          "probability": 0.9350188672542572
+        },
+        {
+          "start": 27.19,
+          "end": 27.69,
+          "word": " propuestas",
+          "probability": 0.9954917132854462
+        },
+        {
+          "start": 27.69,
+          "end": 27.83,
+          "word": " de",
+          "probability": 0.9966890215873718
+        },
+        {
+          "start": 27.83,
+          "end": 28.29,
+          "word": " información",
+          "probability": 0.6246631145477295
+        },
+        {
+          "start": 28.29,
+          "end": 28.93,
+          "word": " hasta",
+          "probability": 0.8534520268440247
+        },
+        {
+          "start": 28.93,
+          "end": 29.51,
+          "word": " publicarla",
+          "probability": 0.9096761643886566
+        },
+        {
+          "start": 29.51,
+          "end": 29.81,
+          "word": " como",
+          "probability": 0.9864426851272583
+        },
+        {
+          "start": 29.81,
+          "end": 30.33,
+          "word": " conocimiento",
+          "probability": 0.9781557619571686
+        },
+        {
+          "start": 30.33,
+          "end": 30.67,
+          "word": " aprobado.",
+          "probability": 0.9749969244003296
+        }
+      ]
+    },
+    {
+      "start": 30.69,
+      "end": 50.93,
+      "text": "También actualmente utilizamos o llamamos como servicio de inteligencia artificial para demostrar y aprobar el fundicionamiento. Es una herramienta del prototipo, no algo que deba instalar el visitante. La propuesta al final contempla un servicio desplegado e integrado al sitio.",
+      "words": [
+        {
+          "start": 30.69,
+          "end": 31.91,
+          "word": " También",
+          "probability": 0.7385155558586121
+        },
+        {
+          "start": 31.91,
+          "end": 33.43,
+          "word": " actualmente",
+          "probability": 0.8467688858509064
+        },
+        {
+          "start": 33.43,
+          "end": 33.99,
+          "word": " utilizamos",
+          "probability": 0.9959306120872498
+        },
+        {
+          "start": 33.99,
+          "end": 34.17,
+          "word": " o",
+          "probability": 0.40190693736076355
+        },
+        {
+          "start": 34.17,
+          "end": 34.49,
+          "word": " llamamos",
+          "probability": 0.6381781697273254
+        },
+        {
+          "start": 34.49,
+          "end": 34.67,
+          "word": " como",
+          "probability": 0.9849765300750732
+        },
+        {
+          "start": 34.67,
+          "end": 35.11,
+          "word": " servicio",
+          "probability": 0.9253343939781189
+        },
+        {
+          "start": 35.11,
+          "end": 35.27,
+          "word": " de",
+          "probability": 0.9957959651947021
+        },
+        {
+          "start": 35.27,
+          "end": 35.71,
+          "word": " inteligencia",
+          "probability": 0.9871612985928854
+        },
+        {
+          "start": 35.71,
+          "end": 36.13,
+          "word": " artificial",
+          "probability": 0.9997898936271667
+        },
+        {
+          "start": 36.13,
+          "end": 37.11,
+          "word": " para",
+          "probability": 0.9849883317947388
+        },
+        {
+          "start": 37.11,
+          "end": 37.69,
+          "word": " demostrar",
+          "probability": 0.999472439289093
+        },
+        {
+          "start": 37.69,
+          "end": 37.85,
+          "word": " y",
+          "probability": 0.997150719165802
+        },
+        {
+          "start": 37.85,
+          "end": 38.23,
+          "word": " aprobar",
+          "probability": 0.9986631870269775
+        },
+        {
+          "start": 38.23,
+          "end": 38.95,
+          "word": " el",
+          "probability": 0.993436336517334
+        },
+        {
+          "start": 38.95,
+          "end": 39.91,
+          "word": " fundicionamiento.",
+          "probability": 0.5593005269765854
+        },
+        {
+          "start": 40.25,
+          "end": 40.49,
+          "word": " Es",
+          "probability": 0.993700385093689
+        },
+        {
+          "start": 40.49,
+          "end": 40.61,
+          "word": " una",
+          "probability": 0.9988862872123718
+        },
+        {
+          "start": 40.61,
+          "end": 41.13,
+          "word": " herramienta",
+          "probability": 0.9999455213546753
+        },
+        {
+          "start": 41.13,
+          "end": 41.27,
+          "word": " del",
+          "probability": 0.5305208563804626
+        },
+        {
+          "start": 41.27,
+          "end": 41.85,
+          "word": " prototipo,",
+          "probability": 0.9993657171726227
+        },
+        {
+          "start": 42.01,
+          "end": 42.11,
+          "word": " no",
+          "probability": 0.9996786117553711
+        },
+        {
+          "start": 42.11,
+          "end": 42.35,
+          "word": " algo",
+          "probability": 0.9997720122337341
+        },
+        {
+          "start": 42.35,
+          "end": 42.63,
+          "word": " que",
+          "probability": 0.9999741315841675
+        },
+        {
+          "start": 42.63,
+          "end": 43.23,
+          "word": " deba",
+          "probability": 0.9963614344596863
+        },
+        {
+          "start": 43.23,
+          "end": 43.69,
+          "word": " instalar",
+          "probability": 0.9970868527889252
+        },
+        {
+          "start": 43.69,
+          "end": 43.95,
+          "word": " el",
+          "probability": 0.7398126125335693
+        },
+        {
+          "start": 43.95,
+          "end": 44.51,
+          "word": " visitante.",
+          "probability": 0.989152193069458
+        },
+        {
+          "start": 45.01,
+          "end": 45.49,
+          "word": " La",
+          "probability": 0.9974896907806396
+        },
+        {
+          "start": 45.49,
+          "end": 46.11,
+          "word": " propuesta",
+          "probability": 0.9998162388801575
+        },
+        {
+          "start": 46.11,
+          "end": 46.59,
+          "word": " al",
+          "probability": 0.6907522678375244
+        },
+        {
+          "start": 46.59,
+          "end": 46.87,
+          "word": " final",
+          "probability": 0.999607503414154
+        },
+        {
+          "start": 46.87,
+          "end": 47.67,
+          "word": " contempla",
+          "probability": 0.9997843205928802
+        },
+        {
+          "start": 47.67,
+          "end": 47.89,
+          "word": " un",
+          "probability": 0.9997114539146423
+        },
+        {
+          "start": 47.89,
+          "end": 48.41,
+          "word": " servicio",
+          "probability": 0.9998180270195007
+        },
+        {
+          "start": 48.41,
+          "end": 49.53,
+          "word": " desplegado",
+          "probability": 0.8334073225657145
+        },
+        {
+          "start": 49.53,
+          "end": 49.79,
+          "word": " e",
+          "probability": 0.9981473684310913
+        },
+        {
+          "start": 49.79,
+          "end": 50.35,
+          "word": " integrado",
+          "probability": 0.9989191591739655
+        },
+        {
+          "start": 50.35,
+          "end": 50.55,
+          "word": " al",
+          "probability": 0.9989762306213379
+        },
+        {
+          "start": 50.55,
+          "end": 50.93,
+          "word": " sitio.",
+          "probability": 0.9995414018630981
+        }
+      ]
+    },
+    {
+      "start": 50.93,
+      "end": 58.71,
+      "text": "Hemos documentado que tenemos casos de uso y realizamos pruebas automatizadas sobre expulsiones centrales.",
+      "words": [
+        {
+          "start": 50.93,
+          "end": 51.93,
+          "word": " Hemos",
+          "probability": 0.6431945115327835
+        },
+        {
+          "start": 51.93,
+          "end": 52.69,
+          "word": " documentado",
+          "probability": 0.9366418123245239
+        },
+        {
+          "start": 52.69,
+          "end": 52.81,
+          "word": " que",
+          "probability": 0.5350263714790344
+        },
+        {
+          "start": 52.81,
+          "end": 53.03,
+          "word": " tenemos",
+          "probability": 0.599781334400177
+        },
+        {
+          "start": 53.03,
+          "end": 53.35,
+          "word": " casos",
+          "probability": 0.9976668357849121
+        },
+        {
+          "start": 53.35,
+          "end": 53.55,
+          "word": " de",
+          "probability": 0.9993009567260742
+        },
+        {
+          "start": 53.55,
+          "end": 53.87,
+          "word": " uso",
+          "probability": 0.9992005228996277
+        },
+        {
+          "start": 53.87,
+          "end": 54.19,
+          "word": " y",
+          "probability": 0.9834239482879639
+        },
+        {
+          "start": 54.19,
+          "end": 54.91,
+          "word": " realizamos",
+          "probability": 0.6915493011474609
+        },
+        {
+          "start": 54.91,
+          "end": 55.45,
+          "word": " pruebas",
+          "probability": 0.9998471438884735
+        },
+        {
+          "start": 55.45,
+          "end": 57.21,
+          "word": " automatizadas",
+          "probability": 0.994410773118337
+        },
+        {
+          "start": 57.21,
+          "end": 57.67,
+          "word": " sobre",
+          "probability": 0.9979233145713806
+        },
+        {
+          "start": 57.67,
+          "end": 58.09,
+          "word": " expulsiones",
+          "probability": 0.7310455689827601
+        },
+        {
+          "start": 58.09,
+          "end": 58.71,
+          "word": " centrales.",
+          "probability": 0.8483276665210724
+        }
+      ]
+    },
+    {
+      "start": 59.13,
+      "end": 64.95,
+      "text": "El siguiente paso es aplicar la validación con usuarios reales y dispositivos físicos.",
+      "words": [
+        {
+          "start": 59.13,
+          "end": 59.65,
+          "word": " El",
+          "probability": 0.3715702295303345
+        },
+        {
+          "start": 59.65,
+          "end": 59.91,
+          "word": " siguiente",
+          "probability": 0.9996374845504761
+        },
+        {
+          "start": 59.91,
+          "end": 60.21,
+          "word": " paso",
+          "probability": 0.9991680383682251
+        },
+        {
+          "start": 60.21,
+          "end": 60.59,
+          "word": " es",
+          "probability": 0.9994072914123535
+        },
+        {
+          "start": 60.59,
+          "end": 61.33,
+          "word": " aplicar",
+          "probability": 0.8682386875152588
+        },
+        {
+          "start": 61.33,
+          "end": 61.63,
+          "word": " la",
+          "probability": 0.9984933137893677
+        },
+        {
+          "start": 61.63,
+          "end": 62.45,
+          "word": " validación",
+          "probability": 0.9973224699497223
+        },
+        {
+          "start": 62.45,
+          "end": 62.75,
+          "word": " con",
+          "probability": 0.9990600943565369
+        },
+        {
+          "start": 62.75,
+          "end": 63.17,
+          "word": " usuarios",
+          "probability": 0.8791605234146118
+        },
+        {
+          "start": 63.17,
+          "end": 63.75,
+          "word": " reales",
+          "probability": 0.9996560513973236
+        },
+        {
+          "start": 63.75,
+          "end": 63.95,
+          "word": " y",
+          "probability": 0.996925413608551
+        },
+        {
+          "start": 63.95,
+          "end": 64.47,
+          "word": " dispositivos",
+          "probability": 0.9869581758975983
+        },
+        {
+          "start": 64.47,
+          "end": 64.95,
+          "word": " físicos.",
+          "probability": 0.999927818775177
+        }
+      ]
+    },
+    {
+      "start": 65.21,
+      "end": 74.61,
+      "text": "Porque una buena experiencia digital no consiste en únicamente publicar información, consiste en ayudar a las personas y a encontrar y comprenderla.",
+      "words": [
+        {
+          "start": 65.21,
+          "end": 66.01,
+          "word": " Porque",
+          "probability": 0.9863274097442627
+        },
+        {
+          "start": 66.01,
+          "end": 66.19,
+          "word": " una",
+          "probability": 0.9996833801269531
+        },
+        {
+          "start": 66.19,
+          "end": 66.39,
+          "word": " buena",
+          "probability": 0.99974125623703
+        },
+        {
+          "start": 66.39,
+          "end": 66.81,
+          "word": " experiencia",
+          "probability": 0.9980036616325378
+        },
+        {
+          "start": 66.81,
+          "end": 67.13,
+          "word": " digital",
+          "probability": 0.9002205729484558
+        },
+        {
+          "start": 67.13,
+          "end": 67.37,
+          "word": " no",
+          "probability": 0.999591052532196
+        },
+        {
+          "start": 67.37,
+          "end": 67.93,
+          "word": " consiste",
+          "probability": 0.999496340751648
+        },
+        {
+          "start": 67.93,
+          "end": 68.41,
+          "word": " en",
+          "probability": 0.6399893760681152
+        },
+        {
+          "start": 68.41,
+          "end": 69.03,
+          "word": " únicamente",
+          "probability": 0.980660875638326
+        },
+        {
+          "start": 69.03,
+          "end": 69.49,
+          "word": " publicar",
+          "probability": 0.978259265422821
+        },
+        {
+          "start": 69.49,
+          "end": 69.95,
+          "word": " información,",
+          "probability": 0.9953712821006775
+        },
+        {
+          "start": 70.45,
+          "end": 70.97,
+          "word": " consiste",
+          "probability": 0.9981827735900879
+        },
+        {
+          "start": 70.97,
+          "end": 71.13,
+          "word": " en",
+          "probability": 0.9999823570251465
+        },
+        {
+          "start": 71.13,
+          "end": 71.43,
+          "word": " ayudar",
+          "probability": 0.9990420937538147
+        },
+        {
+          "start": 71.43,
+          "end": 71.77,
+          "word": " a",
+          "probability": 0.9999507665634155
+        },
+        {
+          "start": 71.77,
+          "end": 71.95,
+          "word": " las",
+          "probability": 0.9988769888877869
+        },
+        {
+          "start": 71.95,
+          "end": 72.43,
+          "word": " personas",
+          "probability": 0.999913215637207
+        },
+        {
+          "start": 72.43,
+          "end": 72.75,
+          "word": " y",
+          "probability": 0.9430152177810669
+        },
+        {
+          "start": 72.75,
+          "end": 72.79,
+          "word": " a",
+          "probability": 0.26082566380500793
+        },
+        {
+          "start": 72.79,
+          "end": 73.23,
+          "word": " encontrar",
+          "probability": 0.9312149882316589
+        },
+        {
+          "start": 73.23,
+          "end": 73.61,
+          "word": " y",
+          "probability": 0.9356541037559509
+        },
+        {
+          "start": 73.61,
+          "end": 74.61,
+          "word": " comprenderla.",
+          "probability": 0.8569470445315043
+        }
+      ]
+    },
+    {
+      "start": 74.61,
+      "end": 76.41,
+      "text": "Eso es Duco Assist.",
+      "words": [
+        {
+          "start": 74.61,
+          "end": 75.13,
+          "word": " Eso",
+          "probability": 0.8190357685089111
+        },
+        {
+          "start": 75.13,
+          "end": 75.79,
+          "word": " es",
+          "probability": 0.9891228079795837
+        },
+        {
+          "start": 75.79,
+          "end": 76.21,
+          "word": " Duco",
+          "probability": 0.6953179240226746
+        },
+        {
+          "start": 76.21,
+          "end": 76.41,
+          "word": " Assist.",
+          "probability": 0.5140072703361511
+        }
+      ]
+    }
+  ]
+}

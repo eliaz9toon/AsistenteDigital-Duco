@@ -1,0 +1,80 @@
+[
+  {
+    "name": "intro",
+    "start": 4.974,
+    "duration": 6.506,
+    "file": "C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\video-pitch\\parte2\\clips\\conversacion-real.webm"
+  },
+  {
+    "name": "accion",
+    "start": 11.48,
+    "duration": 6.390999999999998,
+    "file": "C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\video-pitch\\parte2\\clips\\conversacion-real.webm"
+  },
+  {
+    "name": "solicitud",
+    "start": 18.4,
+    "duration": 4.755,
+    "file": "C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\video-pitch\\parte2\\clips\\conversacion-real.webm"
+  },
+  {
+    "name": "destino",
+    "start": 27.192,
+    "duration": 6.829999999999998,
+    "file": "C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\video-pitch\\parte2\\clips\\conversacion-real.webm"
+  },
+  {
+    "name": "evidencia1",
+    "start": 77.774,
+    "duration": 4.6,
+    "file": "C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\video-pitch\\parte2\\clips\\conversacion-real.webm"
+  },
+  {
+    "name": "evidencia2",
+    "start": 83.82100000000001,
+    "duration": 4.6,
+    "file": "C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\video-pitch\\parte2\\clips\\conversacion-real.webm"
+  },
+  {
+    "name": "contexto_antes",
+    "start": 101.867,
+    "duration": 4.0120000000000005,
+    "file": "C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\video-pitch\\parte2\\clips\\conversacion-real.webm"
+  },
+  {
+    "name": "contexto_despues",
+    "start": 107.26,
+    "duration": 5.8089999999999975,
+    "file": "C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\video-pitch\\parte2\\clips\\conversacion-real.webm"
+  },
+  {
+    "name": "cierre",
+    "start": 113.069,
+    "duration": 9.399000000000001,
+    "file": "C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\video-pitch\\parte2\\clips\\conversacion-real.webm"
+  },
+  {
+    "name": "menus",
+    "start": 1.825,
+    "duration": 4.202,
+    "file": "C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\video-pitch\\parte2\\clips\\menu-real.webm"
+  },
+  {
+    "name": "pestana",
+    "start": 3.212,
+    "duration": 4.555,
+    "file": "C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\video-pitch\\parte2\\clips\\pestana-real.webm"
+  },
+  {
+    "name": "scroll",
+    "start": 2.506,
+    "duration": 3.897,
+    "file": "C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\video-pitch\\parte2\\clips\\scroll-real.webm"
+  },
+  {
+    "name": "fuente",
+    "file": "C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\video-pitch\\parte2\\clips\\fuente-sin-panel.webm",
+    "start": 4.104,
+    "duration": 4.703
+  }
+]

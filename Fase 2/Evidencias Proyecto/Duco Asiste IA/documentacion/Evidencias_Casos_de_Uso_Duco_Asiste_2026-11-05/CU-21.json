@@ -1,0 +1,22 @@
+{
+  "id": "CU-21",
+  "title": "Consultar propuestas de conocimiento pendientes",
+  "mode": "UI administrativa y Oracle reales; solo datos sinteticos creados para prueba",
+  "startedAt": "2026-11-05T14:47:03.378Z",
+  "images": [
+    {
+      "file": "CU-21-01-propuesta-pendiente.png",
+      "label": "propuesta-pendiente",
+      "url": "http://127.0.0.1:8765/",
+      "timestamp": "2026-11-05T14:47:04.374Z"
+    }
+  ],
+  "inputs": [],
+  "replies": [],
+  "actions": [],
+  "outcomes": [],
+  "modelResponses": [],
+  "errors": [],
+  "status": "VERIFICADO",
+  "finishedAt": "2026-11-05T14:47:04.376Z"
+}

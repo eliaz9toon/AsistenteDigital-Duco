@@ -1,0 +1,39 @@
+{
+  "date": "2026-11-05T15:01:34.959Z",
+  "request": "Abre el menú Admisión y después ciérralo.",
+  "passed": true,
+  "model": "qwen3.5:9b",
+  "outcomes": [
+    {
+      "type": "dropdown",
+      "request": "Abre el menú Admisión y después ciérralo.",
+      "scope": "page",
+      "menuTerms": [],
+      "evidenceTexts": [],
+      "pagePath": "/duco",
+      "target": [
+        "Admisión"
+      ],
+      "success": true,
+      "detail": "El menú se abrió",
+      "documentId": "8bafd490-b404-42bd-99f4-f460b1d2243f",
+      "timestamp": 1793890909394,
+      "historical": false
+    },
+    {
+      "type": "closeDropdown",
+      "request": "Abre el menú Admisión y después ciérralo.",
+      "scope": "page",
+      "menuTerms": [],
+      "evidenceTexts": [],
+      "pagePath": "/duco",
+      "target": [],
+      "success": true,
+      "detail": "Se cerraron los menús transitorios",
+      "documentId": "8bafd490-b404-42bd-99f4-f460b1d2243f",
+      "timestamp": 1793890910960,
+      "historical": false
+    }
+  ],
+  "remainingMenus": 0
+}

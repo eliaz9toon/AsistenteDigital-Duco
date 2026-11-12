@@ -1,0 +1,107 @@
+{
+  "date": "2026-11-05T14:51:46.648Z",
+  "scenarios": [
+    {
+      "id": "CU-01",
+      "title": "Consulta vacia no enviada",
+      "status": "VERIFICADO",
+      "images": [
+        "CU-01-extra-consulta-vacia-no-enviada.png"
+      ],
+      "scope": "UI o motor real; sin servicio de IA generativa",
+      "detail": {
+        "messages": 0,
+        "processing": false
+      }
+    },
+    {
+      "id": "CU-03",
+      "title": "Buscador sin coincidencias",
+      "status": "VERIFICADO",
+      "images": [
+        "CU-03-extra-buscador-sin-coincidencias.png"
+      ],
+      "scope": "UI o motor real; sin servicio de IA generativa",
+      "detail": {
+        "visible": "No se encontraron carreras"
+      }
+    },
+    {
+      "id": "CU-07",
+      "title": "Desplazamiento a encabezado del contenido",
+      "status": "FALLO",
+      "images": [
+        "CU-07-extra-desplazamiento-a-encabezado-del-contenido.png"
+      ],
+      "scope": "UI o motor real; sin servicio de IA generativa",
+      "error": "page.evaluate: Error: No se encontro el encabezado real esperado\n    at eval (eval at evaluate (:311:30), <anonymous>:3:28)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at p.evaluate.duco.runAssistantFlow.action.type (C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\tests\\use-case-extra-evidence.cjs:24:18)\n    at async C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\tests\\use-case-extra-evidence.cjs:60:18"
+    },
+    {
+      "id": "CU-08",
+      "title": "Contenido inexistente no se informa como resaltado",
+      "status": "VERIFICADO",
+      "images": [
+        "CU-08-extra-contenido-inexistente-no-se-informa-como-resaltado.png"
+      ],
+      "scope": "UI o motor real; sin servicio de IA generativa",
+      "detail": {
+        "outcomes": [
+          {
+            "success": false,
+            "detail": "No se encontró contenido visible que coincidiera con el objetivo"
+          }
+        ],
+        "text": "¡Hola! 👋 Soy Duco, tu asistente virtual de Duoc UC. ¿Cómo puedo ayudarte hoy?\n🖍️ Resaltando: ZXQ987NOEXISTE\nNo pude completar este paso: No se encontró contenido visible que coincidiera con el objetivo."
+      }
+    },
+    {
+      "id": "CU-09",
+      "title": "Parrafo fuente sin el chat encima",
+      "status": "VERIFICADO",
+      "images": [
+        "CU-09-extra-parrafo-fuente-sin-el-chat-encima.png"
+      ],
+      "scope": "UI o motor real; sin servicio de IA generativa",
+      "detail": {
+        "outcome": {
+          "success": true,
+          "detail": "Se destacaron los textos de la ficha"
+        },
+        "source": "Conviértete en una pieza clave para el futuro del desarrollo de sistemas computacionales, estudia la carrera de Ingeniería en Informática de Duoc UC y podrás estar inmerso en la creación, integración, levantamiento y análisis de diferentes tecnologías de información y soluciones tecnológicas."
+      }
+    },
+    {
+      "id": "CU-11",
+      "title": "Cierre automatico tras respuesta con menu",
+      "status": "VERIFICADO",
+      "images": [
+        "CU-11-extra-antes-del-cierre-automatico.png",
+        "CU-11-extra-cierre-automatico-tras-respuesta-con-menu.png"
+      ],
+      "scope": "Plan de IA simulado; temporizador y ciclo UI reales",
+      "detail": {
+        "opened": 1,
+        "remaining": 0,
+        "model": "Plan controlado, no es una respuesta generada por IA"
+      }
+    },
+    {
+      "id": "CU-07",
+      "title": "Desplazamiento a Admision Duoc UC",
+      "status": "VERIFICADO",
+      "images": [
+        "CU-07-extra-desplazamiento-a-admision-duoc-uc.png"
+      ],
+      "scope": "UI o motor real; sin servicio de IA generativa",
+      "detail": {
+        "outcome": {
+          "success": true,
+          "detail": "Se desplazó la página al elemento"
+        },
+        "before": 0,
+        "after": 1151,
+        "target": "Admisión Duoc UC"
+      }
+    }
+  ]
+}

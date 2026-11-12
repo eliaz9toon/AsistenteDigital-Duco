@@ -1,0 +1,41 @@
+{
+  "id": "CU-07",
+  "title": "Localizar una seccion mediante desplazamiento",
+  "mode": "Integracion motor de desplazamiento sobre contenido real",
+  "startedAt": "2026-11-05T14:45:16.082Z",
+  "images": [
+    {
+      "file": "CU-07-01-antes-scroll.png",
+      "label": "antes-scroll",
+      "url": "http://127.0.0.1:8765/duco",
+      "timestamp": "2026-11-05T14:45:18.829Z"
+    },
+    {
+      "file": "CU-07-02-estado-del-fallo.png",
+      "label": "estado-del-fallo",
+      "url": "http://127.0.0.1:8765/duco",
+      "timestamp": "2026-11-05T14:45:19.558Z"
+    }
+  ],
+  "inputs": [],
+  "replies": [],
+  "actions": [
+    {
+      "type": "scroll",
+      "terms": [
+        "Vida Estudiantil"
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "success": false,
+      "detail": "No se encontró el destino del desplazamiento"
+    }
+  ],
+  "modelResponses": [],
+  "errors": [],
+  "status": "FALLO",
+  "error": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(outcome.success)\n\n    at C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\tests\\use-case-evidence.cjs:160:81\n    at async check (C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\tests\\use-case-evidence.cjs:76:5)\n    at async C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\tests\\use-case-evidence.cjs:157:5",
+  "finishedAt": "2026-11-05T14:45:19.558Z"
+}

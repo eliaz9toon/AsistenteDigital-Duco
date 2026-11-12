@@ -1,0 +1,148 @@
+{
+  "databaseVersion": "23.26.3.0.0",
+  "mode": "inspect",
+  "marker": "DUCO_EVIDENCE_b169901c1e30420f955e3bef5449c8bb",
+  "configurations": [
+    [
+      21,
+      "DUCO_EVIDENCE_b169901c1e30420f955e3bef5449c8bb configuracion",
+      "valor actualizado de evidencia"
+    ]
+  ],
+  "proposals": [
+    [
+      123,
+      "DUCO_EVIDENCE_b169901c1e30420f955e3bef5449c8bb propuesta visitante",
+      "PENDIENTE"
+    ],
+    [
+      124,
+      "DUCO_EVIDENCE_b169901c1e30420f955e3bef5449c8bb lista pendientes",
+      "PENDIENTE"
+    ],
+    [
+      125,
+      "DUCO_EVIDENCE_b169901c1e30420f955e3bef5449c8bb aprobar",
+      "APROBADA"
+    ],
+    [
+      126,
+      "DUCO_EVIDENCE_b169901c1e30420f955e3bef5449c8bb rechazar",
+      "RECHAZADA"
+    ]
+  ],
+  "publishedFaqs": [
+    [
+      121,
+      "DUCO_EVIDENCE_b169901c1e30420f955e3bef5449c8bb aprobar"
+    ]
+  ],
+  "sessionRows": [
+    {
+      "session": "609353cf-97b5-4f67-8606-3d61b51d7124",
+      "count": 0,
+      "ratings": []
+    },
+    {
+      "session": "68420d2d-80bb-4bad-a3da-b5737551fd5c",
+      "count": 0,
+      "ratings": []
+    },
+    {
+      "session": "c5034a02-a7da-4010-af57-dc1011da0e61",
+      "count": 0,
+      "ratings": []
+    },
+    {
+      "session": "1e2a9b38-020c-439e-b05f-f95933f5cba1",
+      "count": 0,
+      "ratings": []
+    },
+    {
+      "session": "92264acd-1053-4ba2-ad67-2fe2529d6ce7",
+      "count": 0,
+      "ratings": []
+    },
+    {
+      "session": "52f90278-a8d0-4f0d-834a-05291dfa5ff9",
+      "count": 0,
+      "ratings": []
+    },
+    {
+      "session": "74f3f06f-cd60-481c-a122-b9dbf16551ae",
+      "count": 0,
+      "ratings": []
+    },
+    {
+      "session": "a26264e4-9723-46ca-8b41-e4b9c0f6378d",
+      "count": 0,
+      "ratings": []
+    },
+    {
+      "session": "3fa494ce-5814-4160-aa79-53d89eebe717",
+      "count": 0,
+      "ratings": []
+    },
+    {
+      "session": "6576178a-5cce-496c-8b6e-c6122a05910e",
+      "count": 0,
+      "ratings": []
+    },
+    {
+      "session": "178a9e20-e60d-4f72-9dc2-bcb58dd05e02",
+      "count": 0,
+      "ratings": []
+    },
+    {
+      "session": "aeac3136-f842-4d67-825a-7699362b5fd7",
+      "count": 0,
+      "ratings": []
+    },
+    {
+      "session": "e96cb9bb-f56d-42f7-8c3b-fe4b3a306e4a",
+      "count": 0,
+      "ratings": []
+    },
+    {
+      "session": "642b4b26-6075-4874-ad95-8a3e2dba780b",
+      "count": 0,
+      "ratings": []
+    },
+    {
+      "session": "be323898-84c7-4848-8162-e90502d14d1d",
+      "count": 0,
+      "ratings": []
+    },
+    {
+      "session": "66093bde-62f1-4a40-be74-d48e9e946dab",
+      "count": 0,
+      "ratings": []
+    },
+    {
+      "session": "b16029fb-7c1a-46a6-a8d2-6ec5a991f383",
+      "count": 0,
+      "ratings": []
+    },
+    {
+      "session": "bdd6359d-61e8-41a4-97f9-ae4d11ad9b5e",
+      "count": 0,
+      "ratings": []
+    },
+    {
+      "session": "108b4607-01ac-483f-bb95-8a65c7c121ae",
+      "count": 1,
+      "ratings": [
+        [
+          167,
+          -1,
+          "REVISADA"
+        ]
+      ]
+    },
+    {
+      "session": "3974f894-2854-407e-9fd8-ba205d68d61c",
+      "count": 0,
+      "ratings": []
+    }
+  ]
+}

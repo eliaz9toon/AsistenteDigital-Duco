@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-05T15:00:19.563Z",
+  "checks": [
+    "Bold text and HTTP links render together, including a bold URL",
+    "Session history restores bold and links",
+    "HTML remains literal, unsafe schemes are not linked, unmatched delimiters and user text stay intact",
+    "Bold is applied during typing and remains correct in the final message"
+  ],
+  "passed": true
+}

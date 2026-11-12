@@ -1,0 +1,36 @@
+{
+  "id": "CU-31",
+  "title": "Consultar la ubicacion actual y la peticion anterior",
+  "mode": "Consulta por UI tras navegacion manual; lectura de contexto real",
+  "startedAt": "2026-11-05T14:49:34.494Z",
+  "images": [
+    {
+      "file": "CU-31-01-ubicacion-actual.png",
+      "label": "ubicacion-actual",
+      "url": "http://127.0.0.1:8765/carreras.html",
+      "timestamp": "2026-11-05T14:49:40.765Z"
+    },
+    {
+      "file": "CU-31-02-peticion-anterior.png",
+      "label": "peticion-anterior",
+      "url": "http://127.0.0.1:8765/carreras.html",
+      "timestamp": "2026-11-05T14:49:42.548Z"
+    }
+  ],
+  "inputs": [
+    "hola duco",
+    "En que pagina estoy ahora?",
+    "Cual fue mi pregunta anterior?"
+  ],
+  "replies": [
+    "¡Hola! ¿En qué puedo ayudarte?",
+    "Estás en el catálogo general de carreras.",
+    "Antes me pediste: «En que pagina estoy ahora?»."
+  ],
+  "actions": [],
+  "outcomes": [],
+  "modelResponses": [],
+  "errors": [],
+  "status": "VERIFICADO",
+  "finishedAt": "2026-11-05T14:49:42.548Z"
+}

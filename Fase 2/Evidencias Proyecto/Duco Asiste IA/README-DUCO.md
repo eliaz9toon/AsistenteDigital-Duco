@@ -1,5 +1,18 @@
 # Duco Assistant - Asistente Virtual Interactivo
 
+## Inicio con Ollama automatico
+
+En Windows, abre `Iniciar_Duco.cmd` con doble clic. Inicia el servidor local y abre
+Duco en el navegador. El servidor arranca Ollama en segundo plano si esta apagado;
+si ya estaba activo, lo reutiliza. Requiere Ollama instalado y el modelo
+`qwen3.5:9b` descargado previamente.
+
+Deja abierta la terminal del iniciador mientras uses Duco. Al terminar, pulsa
+`Ctrl+C` en ella: cierra el servidor local y solo el proceso de Ollama que Duco
+haya iniciado. Cerrar la pestana del navegador no detiene el servidor. Si Ollama
+se apaga durante el uso, Duco intenta iniciarlo de nuevo al comprobar la conexion.
+Los detalles de un fallo de arranque quedan en `admin-app/ollama.log`.
+
 ## 📋 Descripción
 
 **Duco** es un asistente virtual conversacional integrado en el sitio frontend de Duoc UC. Ayuda a los usuarios a navegar por el sitio mediante palabras clave, proporcionando respuestas contextuales y guías visuales hacia las secciones relevantes.

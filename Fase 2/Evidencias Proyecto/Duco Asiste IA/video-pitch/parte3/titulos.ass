@@ -1,0 +1,84 @@
+﻿[Script Info]
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1080
+ScaledBorderAndShadow: yes
+WrapStyle: 2
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Text,Bahnschrift,62,&H00FFFFFF,&H00FFFFFF,&H80000000,&H00000000,0,0,0,0,100,100,0,0,1,0,0,7,0,0,0,1
+Style: Title,Bahnschrift,92,&H00FFFFFF,&H00FFFFFF,&H80000000,&H00000000,-1,0,0,0,100,100,0,0,1,0,0,7,0,0,0,1
+Style: Label,Bahnschrift,27,&H00FFFFFF,&H00FFFFFF,&H80000000,&H00000000,-1,0,0,0,100,100,3,0,1,0,0,7,0,0,0,1
+Style: Tag,Bahnschrift,25,&H00FFFFFF,&H00FFFFFF,&H00311E07,&H00311E07,-1,0,0,0,100,100,2,0,3,12,0,7,0,0,0,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 20,0:00:00.00,0:01:16.76,Tag,,0,0,0,,{\an7\move(114,58,96,58,0,420)\fad(200,650)\fs25\1c&HFFFFFF&}DUCO ASISTE   /   03
+Dialogue: 20,0:00:12.64,0:00:30.19,Tag,,0,0,0,,{\an7\move(1533,58,1515,58,0,420)\fad(200,160)\fs19\1c&HFFFFFF&}DEMOSTRACIÓN EDITADA
+Dialogue: 10,0:00:00.00,0:00:08.08,Label,,0,0,0,,{\an7\move(118,233,100,233,0,420)\fad(200,160)\fs28\1c&HD8C5AF&}EL VALOR
+Dialogue: 10,0:00:00.49,0:00:08.08,Title,,0,0,0,,{\an7\move(114,370,96,370,0,420)\fad(200,160)\fs91\1c&HFFFFFF&}De una pregunta
+Dialogue: 10,0:00:04.49,0:00:08.08,Title,,0,0,0,,{\an7\move(114,500,96,500,0,420)\fad(200,160)\fs83\1c&H21C3FF&}a una orientación útil.
+Dialogue: 10,0:00:08.24,0:00:12.64,Label,,0,0,0,,{\an7\move(118,809,100,809,0,420)\fad(200,160)\fs25\1c&HD8C5AF&}PARA EL VISITANTE
+Dialogue: 10,0:00:09.44,0:00:12.64,Title,,0,0,0,,{\an7\move(114,889,96,889,0,420)\fad(200,160)\fs65\1c&HFFFFFF&}Una interacción más directa.
+Dialogue: 10,0:00:12.94,0:00:19.92,Label,,0,0,0,,{\an7\move(118,809,100,809,0,420)\fad(200,160)\fs25\1c&HD8C5AF&}PARA LA INSTITUCIÓN
+Dialogue: 10,0:00:14.54,0:00:19.92,Title,,0,0,0,,{\an7\move(114,889,96,889,0,420)\fad(200,160)\fs59\1c&H21C3FF&}Orientar mejor. Escuchar al usuario.
+Dialogue: 10,0:00:19.98,0:00:23.58,Title,,0,0,0,,{\an7\move(114,889,96,889,0,420)\fad(200,160)\fs61\1c&HFFFFFF&}Valoraciones que ayudan a mejorar.
+Dialogue: 10,0:00:23.78,0:00:27.43,Label,,0,0,0,,{\an7\move(118,809,100,809,0,420)\fad(200,160)\fs25\1c&HD8C5AF&}REVISIÓN HUMANA
+Dialogue: 10,0:00:24.98,0:00:27.43,Title,,0,0,0,,{\an7\move(114,889,96,889,0,420)\fad(200,160)\fs63\1c&H21C3FF&}Antes de publicar conocimiento.
+Dialogue: 10,0:00:27.58,0:00:30.19,Title,,0,0,0,,{\an7\move(114,889,96,889,0,420)\fad(200,160)\fs64\1c&HFFFFFF&}Propuesta revisada y aprobada.
+Dialogue: 10,0:00:30.49,0:00:38.79,Label,,0,0,0,,{\an7\move(118,230,100,230,0,420)\fad(200,160)\fs28\1c&HD8C5AF&}PROTOTIPO ACTUAL
+Dialogue: 10,0:00:32.09,0:00:38.79,Title,,0,0,0,,{\an7\move(114,351,96,351,0,420)\fad(200,160)\fs78\1c&HFFFFFF&}Ollama como herramienta de prueba.
+Dialogue: 5,0:00:33.19,0:00:38.79,Text,,0,0,0,,{\an7\pos(96,535)\p1\1c&H6F4720&\1a&H44&\fad(220,160)}m 0 0 l 520 0 520 170 0 170
+Dialogue: 6,0:00:33.19,0:00:38.79,Text,,0,0,0,,{\an7\pos(96,535)\p1\1c&H21C3FF&\1a&H00&\fad(220,160)}m 0 0 l 520 0 520 2 0 2
+Dialogue: 5,0:00:33.19,0:00:38.79,Text,,0,0,0,,{\an7\pos(700,535)\p1\1c&H6F4720&\1a&H44&\fad(220,160)}m 0 0 l 520 0 520 170 0 170
+Dialogue: 6,0:00:33.19,0:00:38.79,Text,,0,0,0,,{\an7\pos(700,535)\p1\1c&H21C3FF&\1a&H00&\fad(220,160)}m 0 0 l 520 0 520 2 0 2
+Dialogue: 5,0:00:33.19,0:00:38.79,Text,,0,0,0,,{\an7\pos(1304,535)\p1\1c&H6F4720&\1a&H44&\fad(220,160)}m 0 0 l 520 0 520 170 0 170
+Dialogue: 6,0:00:33.19,0:00:38.79,Text,,0,0,0,,{\an7\pos(1304,535)\p1\1c&H21C3FF&\1a&H00&\fad(220,160)}m 0 0 l 520 0 520 2 0 2
+Dialogue: 10,0:00:33.19,0:00:38.79,Title,,0,0,0,,{\an7\move(163,580,145,580,0,420)\fad(200,160)\fs47\1c&HFFFFFF&}Sitio web
+Dialogue: 10,0:00:33.79,0:00:38.79,Title,,0,0,0,,{\an7\move(763,580,745,580,0,420)\fad(200,160)\fs47\1c&H21C3FF&}IA / Ollama
+Dialogue: 10,0:00:35.09,0:00:38.79,Title,,0,0,0,,{\an7\move(1366,580,1348,580,0,420)\fad(200,160)\fs47\1c&HFFFFFF&}Guía visual
+Dialogue: 7,0:00:33.69,0:00:38.79,Text,,0,0,0,,{\an7\pos(610,610)\p1\1c&H21C3FF&\1a&H00&\fad(220,160)}m 0 0 l 60 0 60 -10 80 6 60 22 60 12 0 12
+Dialogue: 7,0:00:34.89,0:00:38.79,Text,,0,0,0,,{\an7\pos(1214,610)\p1\1c&H21C3FF&\1a&H00&\fad(220,160)}m 0 0 l 60 0 60 -10 80 6 60 22 60 12 0 12
+Dialogue: 10,0:00:35.89,0:00:38.79,Text,,0,0,0,,{\an7\move(118,814,100,814,0,420)\fad(200,160)\fs43\1c&HD8C5AF&}Para demostrar y probar el funcionamiento.
+Dialogue: 10,0:00:38.99,0:00:43.89,Label,,0,0,0,,{\an7\move(118,241,100,241,0,420)\fad(200,160)\fs27\1c&HD8C5AF&}DISEÑO DE LA SOLUCIÓN FINAL
+Dialogue: 10,0:00:39.89,0:00:43.89,Title,,0,0,0,,{\an7\move(114,390,96,390,0,420)\fad(200,160)\fs91\1c&HFFFFFF&}El visitante usa el sitio.
+Dialogue: 10,0:00:40.79,0:00:43.89,Title,,0,0,0,,{\an7\move(114,530,96,530,0,420)\fad(200,160)\fs94\1c&H21C3FF&}No instala Ollama.
+Dialogue: 10,0:00:44.19,0:00:49.69,Label,,0,0,0,,{\an7\move(118,230,100,230,0,420)\fad(200,160)\fs27\1c&HD8C5AF&}PROPUESTA FINAL / POR DESPLEGAR
+Dialogue: 10,0:00:45.19,0:00:49.69,Title,,0,0,0,,{\an7\move(114,354,96,354,0,420)\fad(200,160)\fs88\1c&HFFFFFF&}Un servicio integrado al sitio.
+Dialogue: 5,0:00:45.89,0:00:49.69,Text,,0,0,0,,{\an7\pos(96,535)\p1\1c&H6F4720&\1a&H44&\fad(220,160)}m 0 0 l 520 0 520 170 0 170
+Dialogue: 6,0:00:45.89,0:00:49.69,Text,,0,0,0,,{\an7\pos(96,535)\p1\1c&H21C3FF&\1a&H00&\fad(220,160)}m 0 0 l 520 0 520 2 0 2
+Dialogue: 5,0:00:45.89,0:00:49.69,Text,,0,0,0,,{\an7\pos(700,535)\p1\1c&H6F4720&\1a&H44&\fad(220,160)}m 0 0 l 520 0 520 170 0 170
+Dialogue: 6,0:00:45.89,0:00:49.69,Text,,0,0,0,,{\an7\pos(700,535)\p1\1c&H21C3FF&\1a&H00&\fad(220,160)}m 0 0 l 520 0 520 2 0 2
+Dialogue: 5,0:00:45.89,0:00:49.69,Text,,0,0,0,,{\an7\pos(1304,535)\p1\1c&H6F4720&\1a&H44&\fad(220,160)}m 0 0 l 520 0 520 170 0 170
+Dialogue: 6,0:00:45.89,0:00:49.69,Text,,0,0,0,,{\an7\pos(1304,535)\p1\1c&H21C3FF&\1a&H00&\fad(220,160)}m 0 0 l 520 0 520 2 0 2
+Dialogue: 10,0:00:45.89,0:00:49.69,Title,,0,0,0,,{\an7\move(163,580,145,580,0,420)\fad(200,160)\fs44\1c&HFFFFFF&}Visitante
+Dialogue: 10,0:00:46.39,0:00:49.69,Title,,0,0,0,,{\an7\move(763,580,745,580,0,420)\fad(200,160)\fs44\1c&H21C3FF&}Sitio + Duco
+Dialogue: 10,0:00:47.09,0:00:49.69,Title,,0,0,0,,{\an7\move(1366,580,1348,580,0,420)\fad(200,160)\fs44\1c&HFFFFFF&}Servicio de IA
+Dialogue: 7,0:00:46.29,0:00:49.69,Text,,0,0,0,,{\an7\pos(610,610)\p1\1c&H21C3FF&\1a&H00&\fad(220,160)}m 0 0 l 60 0 60 -10 80 6 60 22 60 12 0 12
+Dialogue: 7,0:00:46.89,0:00:49.69,Text,,0,0,0,,{\an7\pos(1214,610)\p1\1c&H21C3FF&\1a&H00&\fad(220,160)}m 0 0 l 60 0 60 -10 80 6 60 22 60 12 0 12
+Dialogue: 10,0:00:49.89,0:00:57.81,Label,,0,0,0,,{\an7\move(118,230,100,230,0,420)\fad(200,160)\fs27\1c&HD8C5AF&}DOCUMENTACIÓN Y PRUEBAS DEL PROTOTIPO
+Dialogue: 5,0:00:50.09,0:00:57.81,Text,,0,0,0,,{\an7\pos(96,370)\p1\1c&H6F4720&\1a&H44&\fad(220,160)}m 0 0 l 804 0 804 370 0 370
+Dialogue: 6,0:00:50.09,0:00:57.81,Text,,0,0,0,,{\an7\pos(96,370)\p1\1c&H21C3FF&\1a&H00&\fad(220,160)}m 0 0 l 804 0 804 2 0 2
+Dialogue: 5,0:00:52.89,0:00:57.81,Text,,0,0,0,,{\an7\pos(1020,370)\p1\1c&H6F4720&\1a&H44&\fad(220,160)}m 0 0 l 804 0 804 370 0 370
+Dialogue: 6,0:00:52.89,0:00:57.81,Text,,0,0,0,,{\an7\pos(1020,370)\p1\1c&H21C3FF&\1a&H00&\fad(220,160)}m 0 0 l 804 0 804 2 0 2
+Dialogue: 10,0:00:50.09,0:00:57.81,Title,,0,0,0,,{\an7\move(158,398,140,398,0,420)\fad(200,160)\fs170\1c&H21C3FF&}31
+Dialogue: 10,0:00:51.09,0:00:57.81,Title,,0,0,0,,{\an7\move(163,636,145,636,0,420)\fad(200,160)\fs39\1c&HFFFFFF&}casos de uso documentados
+Dialogue: 10,0:00:52.89,0:00:57.81,Title,,0,0,0,,{\an7\move(1078,398,1060,398,0,420)\fad(200,160)\fs170\1c&H21C3FF&}14
+Dialogue: 10,0:00:54.39,0:00:57.81,Title,,0,0,0,,{\an7\move(1083,636,1065,636,0,420)\fad(200,160)\fs36\1c&HFFFFFF&}suites automatizadas aprobadas
+Dialogue: 10,0:00:56.19,0:00:57.81,Text,,0,0,0,,{\an7\move(118,830,100,830,0,420)\fad(200,160)\fs27\1c&HD8C5AF&}Evidencia del prototipo: ejecución del 5 de noviembre de 2026.
+Dialogue: 10,0:00:58.01,0:01:03.92,Label,,0,0,0,,{\an7\move(118,233,100,233,0,420)\fad(200,160)\fs28\1c&HD8C5AF&}PRÓXIMA ETAPA
+Dialogue: 10,0:00:58.91,0:01:03.92,Title,,0,0,0,,{\an7\move(114,370,96,370,0,420)\fad(200,160)\fs94\1c&HFFFFFF&}Validar en terreno.
+Dialogue: 10,0:01:00.81,0:01:03.92,Text,,0,0,0,,{\an7\move(118,551,100,551,0,420)\fad(200,160)\fs53\1c&HFFFFFF&}Usuarios reales.
+Dialogue: 10,0:01:02.11,0:01:03.92,Text,,0,0,0,,{\an7\move(118,633,100,633,0,420)\fad(200,160)\fs53\1c&H21C3FF&}Dispositivos físicos.
+Dialogue: 10,0:01:00.11,0:01:03.92,Label,,0,0,0,,{\an7\move(118,840,100,840,0,420)\fad(200,160)\fs23\1c&HD8C5AF&}VISTA MÓVIL EMULADA
+Dialogue: 10,0:01:02.41,0:01:03.92,Text,,0,0,0,,{\an7\move(118,901,100,901,0,420)\fad(200,160)\fs28\1c&HD8C5AF&}Las pruebas físicas siguen pendientes.
+Dialogue: 10,0:01:04.17,0:01:08.67,Title,,0,0,0,,{\an7\move(114,352,96,352,0,420)\fad(200,160)\fs84\1c&HFFFFFF&}Una buena experiencia digital
+Dialogue: 10,0:01:05.97,0:01:08.67,Title,,0,0,0,,{\an7\move(114,489,96,489,0,420)\fad(200,160)\fs80\1c&H21C3FF&}no es solo publicar información.
+Dialogue: 10,0:01:08.82,0:01:13.42,Title,,0,0,0,,{\an7\move(114,365,96,365,0,420)\fad(200,160)\fs94\1c&HFFFFFF&}Es ayudar a encontrarla.
+Dialogue: 10,0:01:11.27,0:01:13.42,Title,,0,0,0,,{\an7\move(114,510,96,510,0,420)\fad(200,160)\fs104\1c&H21C3FF&}Y a comprenderla.
+Dialogue: 10,0:01:13.42,0:01:16.76,Title,,0,0,0,,{\an7\move(114,374,96,374,0,420)\fad(200,650)\fs118\1c&HFFFFFF&}Duco Asiste
+Dialogue: 10,0:01:14.17,0:01:16.76,Text,,0,0,0,,{\an7\move(118,558,100,558,0,420)\fad(200,650)\fs56\1c&H21C3FF&}Orienta. Muestra. Acompaña.
+Dialogue: 10,0:01:14.67,0:01:16.76,Label,,0,0,0,,{\an7\move(118,760,100,760,0,420)\fad(200,650)\fs26\1c&HD8C5AF&}ASISTENTE VIRTUAL PARA DUOC UC
+Dialogue: 21,0:00:00.00,0:01:16.76,Text,,0,0,0,,{\an7\pos(96,1020)\p1\1c&HFFFFFF&\1a&HCE&}m 0 0 l 1728 0 1728 3 0 3
+Dialogue: 22,0:00:00.00,0:01:16.76,Text,,0,0,0,,{\an7\pos(96,1020)\p1\1c&H21C3FF&\clip(96,1020,96,1024)\t(0,76755,\clip(96,1020,1824,1024))}m 0 0 l 1728 0 1728 3 0 3

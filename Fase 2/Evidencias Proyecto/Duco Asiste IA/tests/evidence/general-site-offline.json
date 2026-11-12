@@ -1,0 +1,104 @@
+{
+  "date": "2026-11-05T00:28:05.079Z",
+  "externalNetwork": false,
+  "pages": [
+    {
+      "route": "/duco",
+      "errors": [],
+      "httpErrors": [
+        {
+          "url": "http://127.0.0.1:8765/webfonts/fa-brands-400.woff2",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8765/webfonts/fa-solid-900.woff2",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8765/webfonts/fa-brands-400.woff",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8765/webfonts/fa-solid-900.woff",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8765/webfonts/fa-brands-400.ttf",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8765/webfonts/fa-solid-900.ttf",
+          "status": 404
+        }
+      ],
+      "chatVisible": true,
+      "assistantCount": 1,
+      "mobileOverflow": false
+    },
+    {
+      "route": "/carreras.html",
+      "errors": [
+        "ReferenceError: $ is not defined\n    at http://127.0.0.1:8765/carreras.html:59:13",
+        "ReferenceError: $ is not defined\n    at http://127.0.0.1:8765/carreras.html:1939:9",
+        "ReferenceError: jQuery is not defined\n    at http://127.0.0.1:8765/js/carreras-buscador-local.js?v=20261029:10:1",
+        "ReferenceError: feather is not defined\n    at http://127.0.0.1:8765/carreras.html:2473:5",
+        "ReferenceError: $ is not defined\n    at http://127.0.0.1:8765/carreras.html:2478:5",
+        "ReferenceError: $ is not defined\n    at http://127.0.0.1:8765/carreras.html:2485:5",
+        "ReferenceError: $ is not defined\n    at http://127.0.0.1:8765/carreras.html:2498:5"
+      ],
+      "httpErrors": [],
+      "chatVisible": true,
+      "assistantCount": 1,
+      "mobileOverflow": false
+    },
+    {
+      "route": "/carreras-detalle/ingenieria-en-informatica.html",
+      "errors": [
+        "ReferenceError: $ is not defined\n    at http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html:59:13",
+        "ReferenceError: $ is not defined\n    at http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html:2032:9",
+        "ReferenceError: feather is not defined\n    at http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html:7773:5",
+        "ReferenceError: $ is not defined\n    at http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html:7778:5",
+        "ReferenceError: $ is not defined\n    at http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html:7785:5",
+        "ReferenceError: $ is not defined\n    at http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html:7798:5"
+      ],
+      "httpErrors": [],
+      "chatVisible": true,
+      "assistantCount": 1
+    }
+  ],
+  "catalog": [],
+  "passed": false,
+  "error": "page.evaluate: Error: Missing video control\n    at eval (eval at evaluate (:311:30), <anonymous>:5:29)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\tests\\general-site.cjs:36:39",
+  "warnings": [
+    {
+      "page": "/duco",
+      "url": "http://127.0.0.1:8765/webfonts/fa-brands-400.woff2",
+      "status": 404
+    },
+    {
+      "page": "/duco",
+      "url": "http://127.0.0.1:8765/webfonts/fa-solid-900.woff2",
+      "status": 404
+    },
+    {
+      "page": "/duco",
+      "url": "http://127.0.0.1:8765/webfonts/fa-brands-400.woff",
+      "status": 404
+    },
+    {
+      "page": "/duco",
+      "url": "http://127.0.0.1:8765/webfonts/fa-solid-900.woff",
+      "status": 404
+    },
+    {
+      "page": "/duco",
+      "url": "http://127.0.0.1:8765/webfonts/fa-brands-400.ttf",
+      "status": 404
+    },
+    {
+      "page": "/duco",
+      "url": "http://127.0.0.1:8765/webfonts/fa-solid-900.ttf",
+      "status": 404
+    }
+  ]
+}

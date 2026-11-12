@@ -1,0 +1,42 @@
+DUCO ASISTE - PITCH - PARTE 3 Y CIERRE
+
+Video: Parte3_Duco_Asiste.mp4
+Audio por separado: Parte3_Audio_Editado.mp3 y Parte3_Audio_Editado.wav
+
+EDICION DEL AUDIO
+
+Se conserva el archivo original Parte3.ogg sin modificarlo.
+La copia editada pasa de 80,18 segundos de sonido decodificado a 75,56 segundos.
+Se realizaron siete cortes fuera de los intervalos de palabras reconocidas:
+entrada, pausas largas entre frases y pausa final.
+Los empalmes tienen fundidos cortos para evitar clics de corte.
+Se aplicaron reparacion conservadora de ruido impulsivo, reduccion suave de
+ruido, atenuacion de los huecos sin voz y nivelacion de sonoridad.
+No se acelera globalmente la voz ni se generan o sustituyen palabras.
+
+La revision es acustica y guiada por deteccion de voz y transcripcion local.
+Las trabas dentro de una palabra se conservan si el corte puede eliminar una
+silaba o cambiar el sentido. No se reconstruye pronunciacion: si alguna frase
+sigue poco clara al escucharla, conviene regrabar esa frase.
+
+VIDEO
+
+Formato compatible con las partes anteriores: horizontal 16:9,
+1920 x 1080, 30 fps, H.264 / AAC, audio a 48 kHz estereo.
+Incluye el audio editado y un breve margen final limpio para cerrar el pitch.
+Duracion aproximada del video: 76,77 segundos.
+No agregar de nuevo el MP3 encima del video: la voz ya esta incorporada.
+
+Se incluyen operaciones reales de valoracion y revision administrativa con
+registros temporales identificados como demostracion. Se verifico su limpieza
+posterior en Oracle. No se modificaron registros de negocio existentes.
+Los tiempos de algunas tomas se ajustan y las esperas se recortan.
+
+Las infografias distinguen el prototipo con Ollama de la propuesta final,
+cuyo despliegue sigue planteado como siguiente etapa.
+La vista movil es emulada; la validacion en dispositivos fisicos sigue pendiente.
+Los 31 casos documentados y las 14 suites aprobadas se apoyan en los informes
+existentes del proyecto, no equivalen a una certificacion de produccion.
+
+Colocar el video despues de Parte2_Duco_Asiste.mp4. Esta parte incluye el cierre
+definitivo del pitch y un fundido de salida.

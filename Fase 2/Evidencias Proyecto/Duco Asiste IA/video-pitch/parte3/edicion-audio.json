@@ -1,0 +1,90 @@
+{
+  "original": "C:\\Users\\elias\\Downloads\\Parte3.ogg",
+  "originalDecodedSeconds": 80.18,
+  "originalContainerSeconds": 80.34,
+  "edited": "C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\video-pitch\\parte3\\Parte3_Audio_Editado.wav",
+  "editedSeconds": 75.555,
+  "secondsRemoved": 4.625,
+  "cuts": [
+    {
+      "start": 0,
+      "end": 0.4099999999999999,
+      "reason": "Excess lead-in before speech"
+    },
+    {
+      "start": 8.494,
+      "end": 8.935000000000002,
+      "reason": "Shortened non-speech pause; protected word boundaries retained"
+    },
+    {
+      "start": 20.782,
+      "end": 20.935,
+      "reason": "Shortened non-speech pause; protected word boundaries retained"
+    },
+    {
+      "start": 31.054,
+      "end": 31.334999999999997,
+      "reason": "Shortened non-speech pause; protected word boundaries retained"
+    },
+    {
+      "start": 59.022000000000006,
+      "end": 59.295,
+      "reason": "Shortened non-speech pause; protected word boundaries retained"
+    },
+    {
+      "start": 65.32600000000001,
+      "end": 65.455,
+      "reason": "Shortened non-speech pause; protected word boundaries retained"
+    },
+    {
+      "start": 77.28200000000001,
+      "end": 80.18,
+      "reason": "Trailing pause and incidental mouth noise after the final sentence"
+    }
+  ],
+  "retainedRanges": [
+    {
+      "sourceStart": 0.4099999999999999,
+      "sourceEnd": 8.494,
+      "outputStart": 0,
+      "outputEnd": 8.084
+    },
+    {
+      "sourceStart": 8.935000000000002,
+      "sourceEnd": 20.782,
+      "outputStart": 8.076,
+      "outputEnd": 19.923
+    },
+    {
+      "sourceStart": 20.935,
+      "sourceEnd": 31.054,
+      "outputStart": 19.915,
+      "outputEnd": 30.033999999999995
+    },
+    {
+      "sourceStart": 31.334999999999997,
+      "sourceEnd": 59.022000000000006,
+      "outputStart": 30.026,
+      "outputEnd": 57.71300000000001
+    },
+    {
+      "sourceStart": 59.295,
+      "sourceEnd": 65.32600000000001,
+      "outputStart": 57.705,
+      "outputEnd": 63.736000000000004
+    },
+    {
+      "sourceStart": 65.455,
+      "sourceEnd": 77.28200000000001,
+      "outputStart": 63.728,
+      "outputEnd": 75.55500000000002
+    }
+  ],
+  "crossfadeMs": 8,
+  "protectedWords": 159,
+  "filters": "70Hz high-pass; conservative impulse repair; 5dB spectral noise reduction; soft non-speech attenuation; -16 LUFS normalization",
+  "speechSpeedChanged": false,
+  "voiceSynthesized": false,
+  "wordRangesRemoved": false,
+  "limitations": "Automatic acoustic and transcription-guided edit. Pronunciation is not reconstructed; ambiguous spoken words are retained."
+}

@@ -1,0 +1,33 @@
+[Duco] Ejecutando acción: {"type":"highlightTerms","terms":["Carreras Técnicas y Profesionales"],"closeTransientUi":false}
+[Duco] highlightTerms: [ 'Carreras Técnicas y Profesionales' ]
+[Duco] Ejecutando acción: {"type":"highlightTerms","terms":["Carreras Técnicas y Profesionales"],"closeTransientUi":false,"duration":4500,"endAt":1}
+[Duco] highlightTerms: [ 'Carreras Técnicas y Profesionales' ]
+[Duco] AI Response: {
+  "reply": "Resaltando 'VER TODAS LAS CARRERAS'.",
+  "actions": [
+    {
+      "type": "highlightTerms",
+      "terms": [
+        "Carreras Técnicas y Profesionales"
+      ]
+    }
+  ],
+  "intent": {
+    "reference": "resolved_action",
+    "action": "highlight"
+  }
+}
+[Duco] Acciones de IA: [
+  {
+    type: 'highlightTerms',
+    terms: [ 'Carreras Técnicas y Profesionales' ]
+  }
+]
+[Duco] Acciones sanitizadas: [
+  {
+    type: 'highlightTerms',
+    terms: [ 'Carreras Técnicas y Profesionales' ]
+  }
+]
+OK: título y botón anidado permanecen separados en contexto, selección, etiqueta y resaltado.
+OK: desplazamiento antes del resaltado y limpieza antes de pintar.

@@ -1,0 +1,30 @@
+{
+  "id": "CU-06",
+  "title": "Navegar a otra pagina mediante Duco",
+  "mode": "Solicitud por UI, ruta real y continuidad de sesion",
+  "startedAt": "2026-11-05T14:45:08.820Z",
+  "images": [
+    {
+      "file": "CU-06-01-solicitud.png",
+      "label": "solicitud",
+      "url": "http://127.0.0.1:8765/duco",
+      "timestamp": "2026-11-05T14:45:11.506Z"
+    },
+    {
+      "file": "CU-06-02-destino.png",
+      "label": "destino",
+      "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+      "timestamp": "2026-11-05T14:45:16.075Z"
+    }
+  ],
+  "inputs": [
+    "Llevame a Ingenieria en Informatica"
+  ],
+  "replies": [],
+  "actions": [],
+  "outcomes": [],
+  "modelResponses": [],
+  "errors": [],
+  "status": "VERIFICADO",
+  "finishedAt": "2026-11-05T14:45:16.075Z"
+}

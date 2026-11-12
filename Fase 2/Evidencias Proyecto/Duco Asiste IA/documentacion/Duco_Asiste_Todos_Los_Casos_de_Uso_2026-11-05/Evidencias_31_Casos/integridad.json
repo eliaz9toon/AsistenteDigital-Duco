@@ -1,0 +1,627 @@
+[
+  {
+    "file": "complementarias.json",
+    "bytes": 3969,
+    "sha256": "0e28e52fd7d1bf224c467cb63f99fafe319a3312949b8aa351dcb4489c31e685"
+  },
+  {
+    "file": "CU-01-01-cerrado.png",
+    "bytes": 1552833,
+    "sha256": "6ce51b9b191c33021b970551b3fd37ae6edc052c8a8c1202ae259a2f5144558e"
+  },
+  {
+    "file": "CU-01-02-abierto.png",
+    "bytes": 1222296,
+    "sha256": "7e644b76d3c23b510cdca87cf1c8e5fede284828a3ba763b0f6368690420949c"
+  },
+  {
+    "file": "CU-01-03-movil-abierto.png",
+    "bytes": 71093,
+    "sha256": "4bf9f0681260d7a407f1be30bc2980c2427882fae2d283dd4d31db1640e636f5"
+  },
+  {
+    "file": "CU-01-extra-consulta-vacia-no-enviada.png",
+    "bytes": 1224590,
+    "sha256": "2369df430988aa0e40930d3551d901c7e57b2c69f6009feb970f774fa08937d3"
+  },
+  {
+    "file": "CU-01.json",
+    "bytes": 856,
+    "sha256": "9c7aa6575c5b324556ae9b22cf83c45941fe657db09a5a69a948e0c37d81c06d"
+  },
+  {
+    "file": "CU-02-01-antes.png",
+    "bytes": 1218758,
+    "sha256": "41297a6c99278a4e7ddbea4cbd99cc188e0510d044904e7f24237ece93038c1b"
+  },
+  {
+    "file": "CU-02-02-respuesta.png",
+    "bytes": 1241848,
+    "sha256": "3a629c0193cc384753d2d0e605b8907c8911350dcf6f9169b7db51838b8febc0"
+  },
+  {
+    "file": "CU-02.json",
+    "bytes": 1479,
+    "sha256": "f3865773f0774a011d6c908981292db128d6bd2ac27fba1da4101ae450da7a0b"
+  },
+  {
+    "file": "CU-03-01-catalogo.png",
+    "bytes": 464024,
+    "sha256": "1e62cc32c595dcc9072d989806c65f7cce475d7e96d919c59756d62a012882cf"
+  },
+  {
+    "file": "CU-03-02-filtro-informatica.png",
+    "bytes": 464508,
+    "sha256": "f0f405f37affc44c005188ba6a2c1d41991dea86ef9d642da3f95b06a25b2571"
+  },
+  {
+    "file": "CU-03-extra-buscador-sin-coincidencias.png",
+    "bytes": 453793,
+    "sha256": "ea201919a5ad0737566f7a67de46132deab17acbb00b1bcb6e82ae3949779733"
+  },
+  {
+    "file": "CU-03.json",
+    "bytes": 2682,
+    "sha256": "a4499f1a4194e3bb99f9a9b8619ad396a7e1324f98972a9c6da6570c10733b00"
+  },
+  {
+    "file": "CU-04-01-ficha.png",
+    "bytes": 1274119,
+    "sha256": "5f930c95920a7be96ab2418637d27d899999424e18d55e76b432da083484e84a"
+  },
+  {
+    "file": "CU-04-02-datos-carrera.png",
+    "bytes": 1087921,
+    "sha256": "bad8e5e0d4ab5b55b265e0eca9190c335aee8770cbe7d9b873c10b9a4078d13a"
+  },
+  {
+    "file": "CU-04.json",
+    "bytes": 1041,
+    "sha256": "67872db3571e31543ad6a003055d842635ddb24d0b88177a622d8180f63aae30"
+  },
+  {
+    "file": "CU-05-01-parte-1.png",
+    "bytes": 133256,
+    "sha256": "132d916fbdd1e9d2da381ba721f79a75589d40080ce3335b6148ac18eda111db"
+  },
+  {
+    "file": "CU-05-02-parte-2.png",
+    "bytes": 143945,
+    "sha256": "22e4e30759185a9d8983eb96c4bde0554ae295922d59ebc217e393666ab32bc1"
+  },
+  {
+    "file": "CU-05-03-parte-3.png",
+    "bytes": 136571,
+    "sha256": "d09ca29048dd805bb377747de95d2b684277e8ad4ffa8e35e61980772cbb7be3"
+  },
+  {
+    "file": "CU-05-04-parte-4.png",
+    "bytes": 143328,
+    "sha256": "0b6000e1d1ae2245b5f132663662fa1ccdfb7f2ebfb9349c626cee8abc54302e"
+  },
+  {
+    "file": "CU-05-05-explicacion-completa.png",
+    "bytes": 142421,
+    "sha256": "6a54ff4bfaa61363b37b1dc7fac10a466e08b29853c551399248721fdf26fd2e"
+  },
+  {
+    "file": "CU-05.json",
+    "bytes": 2975,
+    "sha256": "4db458783bb62aae88e0d415db50a24efb904e1b9a6974eaa5c9803d1edf6962"
+  },
+  {
+    "file": "CU-06-01-solicitud.png",
+    "bytes": 1219546,
+    "sha256": "8b67aeb4cc68a2745b3ff68f77b12226eac6f53e82a6d13d74f3c4e7c636eb8b"
+  },
+  {
+    "file": "CU-06-02-destino.png",
+    "bytes": 1082292,
+    "sha256": "68cd1110f14999c936b9db9a0141eaff04a6de223bc40d1227da492937945785"
+  },
+  {
+    "file": "CU-06.json",
+    "bytes": 797,
+    "sha256": "e140379f8a090b2ae9cf9544c13083f2467282e0aa3cad4975611076f4d60e9e"
+  },
+  {
+    "file": "CU-07-01-antes-scroll.png",
+    "bytes": 967992,
+    "sha256": "c624003f6fed93b0ace6c28dff969f5be11d442401b1ed6c5b9da60776edbcb9"
+  },
+  {
+    "file": "CU-07-02-estado-del-fallo.png",
+    "bytes": 967992,
+    "sha256": "c624003f6fed93b0ace6c28dff969f5be11d442401b1ed6c5b9da60776edbcb9"
+  },
+  {
+    "file": "CU-07-extra-desplazamiento-a-admision-duoc-uc.png",
+    "bytes": 1046475,
+    "sha256": "905d42d6c04c334b32b400dc5942e34ab41a517ddd8dfa091adf65690013e736"
+  },
+  {
+    "file": "CU-07-extra-desplazamiento-a-encabezado-del-contenido.png",
+    "bytes": 1552833,
+    "sha256": "6ce51b9b191c33021b970551b3fd37ae6edc052c8a8c1202ae259a2f5144558e"
+  },
+  {
+    "file": "CU-07.json",
+    "bytes": 1383,
+    "sha256": "e4b21f9f260047c0158c10ed0c7937bf8762f2807058dfd4690a2826cb49f56a"
+  },
+  {
+    "file": "CU-08-01-texto-resaltado.png",
+    "bytes": 1011923,
+    "sha256": "369f8b4f2cf8a3be44cc59ce0a66fad22a156d8a30761fd175042bd49e101a38"
+  },
+  {
+    "file": "CU-08-02-resaltado-limpiado.png",
+    "bytes": 1016841,
+    "sha256": "4c6850f3db90a687855abc6da915b7b304334cef79b30f05bfeb1d4f0225c4e9"
+  },
+  {
+    "file": "CU-08-extra-contenido-inexistente-no-se-informa-como-resaltado.png",
+    "bytes": 1228749,
+    "sha256": "d27fbc2d41e8bd7485b8e97b5b6610eb49f658686b4f47662f9a0e5faf1ed81e"
+  },
+  {
+    "file": "CU-08.json",
+    "bytes": 1097,
+    "sha256": "b55f0be66ded552cd8a6d0260e5fb7f8d56e9551d8ecbc600da3b09b0f34fc7b"
+  },
+  {
+    "file": "CU-09-01-antes.png",
+    "bytes": 1069414,
+    "sha256": "4f0e6aa2b54a6fa60f08bf471ae49be2b09722e104c6a0c8da29c54f2b46e78d"
+  },
+  {
+    "file": "CU-09-02-parrafos-fuente.png",
+    "bytes": 112198,
+    "sha256": "596f5356cc830015ef09b6b8886ab62267aaf866ff8487c83a0bcf51085653ad"
+  },
+  {
+    "file": "CU-09-extra-parrafo-fuente-sin-el-chat-encima.png",
+    "bytes": 384408,
+    "sha256": "85a56d65f5f2c28e8fdcde7db5a0800003e512c2a9539e65eebd6b8e03644155"
+  },
+  {
+    "file": "CU-09.json",
+    "bytes": 2685,
+    "sha256": "24dd1f5a9dc875cce0224fbb2aaee52041ce6eab2f9713f4ec656630a1c50c8f"
+  },
+  {
+    "file": "CU-10-01-menu-cerrado.png",
+    "bytes": 1550031,
+    "sha256": "84deeaed2fd16c6563929f6036e4ccaade1b4699e0d6978321fc64495f359a6e"
+  },
+  {
+    "file": "CU-10-02-menu-abierto.png",
+    "bytes": 1520407,
+    "sha256": "42b4d571f2fe47e38280cad71f9090131c6efdafa7cdfc13cd88df05d4fec89c"
+  },
+  {
+    "file": "CU-10.json",
+    "bytes": 869,
+    "sha256": "2cc72c2fb55ce2ed6f1aedb7ff49d15f5c69f121714fdf52eea069c37f0d4b88"
+  },
+  {
+    "file": "CU-11-01-abierto.png",
+    "bytes": 1513942,
+    "sha256": "5cd4b7023f55c1af182bccd158295f0c479ad8363e6a00280c52e219cd909e5b"
+  },
+  {
+    "file": "CU-11-02-cerrado.png",
+    "bytes": 1550031,
+    "sha256": "84deeaed2fd16c6563929f6036e4ccaade1b4699e0d6978321fc64495f359a6e"
+  },
+  {
+    "file": "CU-11-extra-antes-del-cierre-automatico.png",
+    "bytes": 1194669,
+    "sha256": "bb0d6f809a49841d13bff6404f3f569bd8f8fced9dc51a4677b8735178a010f9"
+  },
+  {
+    "file": "CU-11-extra-cierre-automatico-tras-respuesta-con-menu.png",
+    "bytes": 1028663,
+    "sha256": "f8c748a20e9f483ae0287057cc257686d6e4bf6bf9d3c4f1a52c9994204b7c21"
+  },
+  {
+    "file": "CU-11.json",
+    "bytes": 1012,
+    "sha256": "368e25a6fe7c72b5855df90522af8cbe56f36b01b34186316bd98ce40bb7b3b9"
+  },
+  {
+    "file": "CU-12-01-antes.png",
+    "bytes": 1274119,
+    "sha256": "5f930c95920a7be96ab2418637d27d899999424e18d55e76b432da083484e84a"
+  },
+  {
+    "file": "CU-12-02-perfil-seleccionado.png",
+    "bytes": 405526,
+    "sha256": "daf5bd9b3c80a8664333c6b70df170db3467d73a57680c4fce5826b90010b8bd"
+  },
+  {
+    "file": "CU-12.json",
+    "bytes": 1139,
+    "sha256": "719c9dc312506c59ed3b1a3e8659b96ce7303f7a14264446c6437b06fd9217b7"
+  },
+  {
+    "file": "CU-13-01-boton-video.png",
+    "bytes": 300651,
+    "sha256": "312fcf619ae32e330a4e6f46545d4a6142545f44922a59b7358d8f7cbd9959bb"
+  },
+  {
+    "file": "CU-13-02-reproductor-abierto.png",
+    "bytes": 83133,
+    "sha256": "204618bcec78b31c6a1b5ce15f1b5324929ba5e54734b84eb07451653856a588"
+  },
+  {
+    "file": "CU-13-03-reproductor-cerrado.png",
+    "bytes": 81418,
+    "sha256": "6c83de9c671cdc036eda90380ca05880438a60af4798f363db70660158b94347"
+  },
+  {
+    "file": "CU-13.json",
+    "bytes": 1307,
+    "sha256": "37bfdd4de59851a78cbfe04f20f636a6fd353346e5f3943347eb61744c9c4aa1"
+  },
+  {
+    "file": "CU-14-01-solicita-aclaracion.png",
+    "bytes": 934830,
+    "sha256": "48e2822fa7dc8ed8addcd52fc029930700fe3dd8a50844732288ddf6318ebde9"
+  },
+  {
+    "file": "CU-14-02-aclaracion-procesada.png",
+    "bytes": 1199160,
+    "sha256": "211f72520fafbaabbfa859a10a3303b4440534706cf8235827baf4606fcfe73a"
+  },
+  {
+    "file": "CU-14.json",
+    "bytes": 2658,
+    "sha256": "bf65b83a0fee18d9ca4d3e33555fc34662bd929e7c26263ec4559a6289654b17"
+  },
+  {
+    "file": "CU-15-01-titulo-antes-de-corregir.png",
+    "bytes": 1064208,
+    "sha256": "a992cd6ae5015e77d5b06ba814ec9ee1634d28b35aec802c4cf45748fcbab222"
+  },
+  {
+    "file": "CU-15-02-estado-del-fallo.png",
+    "bytes": 1079275,
+    "sha256": "5e314353e5ef9da511e5cf0b35b75143ca63d6a474dcdb2a81071044d0ba87b4"
+  },
+  {
+    "file": "CU-15.json",
+    "bytes": 1810,
+    "sha256": "9f19fe62c9d755c776d4b43eb7a87091d20f24f9192bb5507782ac2fef730e87"
+  },
+  {
+    "file": "CU-16-01-antes-de-navegar.png",
+    "bytes": 1231131,
+    "sha256": "4d321d8f00cd973eed4b41c567576a47a01d70fb208de300892055c5b61c12c9"
+  },
+  {
+    "file": "CU-16-02-historial-en-catalogo.png",
+    "bytes": 463712,
+    "sha256": "b260e97676eebcbb3ef38c712ed4d225cab7287644f98d63cc3f5ead554880fe"
+  },
+  {
+    "file": "CU-16-03-historial-tras-recarga.png",
+    "bytes": 480981,
+    "sha256": "0c76d5607f8e7ad62a23362c67563ac8c4904aa5a117bbc2b5c041d43dbc9079"
+  },
+  {
+    "file": "CU-16.json",
+    "bytes": 1069,
+    "sha256": "77d4727460dafadde21cf1c891497250619bde920d11421a2f13bf17068e099b"
+  },
+  {
+    "file": "CU-17-01-primer-resaltado.png",
+    "bytes": 1013744,
+    "sha256": "34a3984bded22e85b328cf46f085235342a4e1079a0436bbafb0a10ddba73f43"
+  },
+  {
+    "file": "CU-17-02-sin-resaltado.png",
+    "bytes": 1018650,
+    "sha256": "6c2edb2e834e89a6762e15a5b374423d4934e168a84fa6f0caccc7f1881e6cf9"
+  },
+  {
+    "file": "CU-17-03-repetido-por-boton.png",
+    "bytes": 1012893,
+    "sha256": "493440d54eba796508aad96c672fd8eb27c3df5bf6a0621741d50a1332b88949"
+  },
+  {
+    "file": "CU-17.json",
+    "bytes": 1445,
+    "sha256": "495a9dd34f716eabd678d55f29292b6f2352faf0ee2c7f82ed1449ccbaf7aba4"
+  },
+  {
+    "file": "CU-18-01-conversacion-previa.png",
+    "bytes": 1227432,
+    "sha256": "76addc1dc43e6b8f2d4e4c3cf49987b60b14212219c2e024331b629b39d3f453"
+  },
+  {
+    "file": "CU-18-02-nueva-conversacion.png",
+    "bytes": 1216753,
+    "sha256": "2ba2418448c4d5137163e4360c18771ac2f4937927346ba315dccb5f6e014d97"
+  },
+  {
+    "file": "CU-18.json",
+    "bytes": 794,
+    "sha256": "17cae06f7327b905e1a05c567e184c9aa1483f4180eb7a947989de7e559221a2"
+  },
+  {
+    "file": "CU-19-01-controles-de-valoracion.png",
+    "bytes": 1227432,
+    "sha256": "76addc1dc43e6b8f2d4e4c3cf49987b60b14212219c2e024331b629b39d3f453"
+  },
+  {
+    "file": "CU-19-02-valoracion-guardada.png",
+    "bytes": 1227880,
+    "sha256": "babacb2ac3c98f2c5bbe3a29b1c9dcf39a613dae13a1d85e55cead11acf91589"
+  },
+  {
+    "file": "CU-19-oracle-inspect.json",
+    "bytes": 2340,
+    "sha256": "f9009bf90b9885dad2a00fbfcff1a037c9b427f8f8e21c96bb566f7702ea2bb0"
+  },
+  {
+    "file": "CU-19.json",
+    "bytes": 823,
+    "sha256": "5a652cd52c106eb5b3fdcce213b531a120cdc4853e97b010a9f45229b6e8899f"
+  },
+  {
+    "file": "CU-20-01-antes.png",
+    "bytes": 1222548,
+    "sha256": "7f7a4c63c873d78539b0b135c1156b2a268a18abe414f8f54ad588e94737ef78"
+  },
+  {
+    "file": "CU-20-02-propuesta-enviada.png",
+    "bytes": 1225186,
+    "sha256": "a4debec2a10edd7330a79fd59f830c5763bae8e1f0e0af8f1f071eaefce4a31b"
+  },
+  {
+    "file": "CU-20-oracle-inspect.json",
+    "bytes": 2568,
+    "sha256": "2003a44d15b5044fa45d4078495c86094d123ebf82e149402bb354e897f4a861"
+  },
+  {
+    "file": "CU-20.json",
+    "bytes": 994,
+    "sha256": "40875ece7cb5b0bd34b3bcc0a896193a587cb6fa10dd6594f37641bc1425c0b4"
+  },
+  {
+    "file": "CU-21-01-propuesta-pendiente.png",
+    "bytes": 13325,
+    "sha256": "80f5f048391e2860a500ccd7a27c17e3a53995bb414a2791ea082ad9935885d5"
+  },
+  {
+    "file": "CU-21.json",
+    "bytes": 596,
+    "sha256": "406a62f09514e905d9c355e1a9a461f4504324f09805cc7a378506738897c186"
+  },
+  {
+    "file": "CU-22-01-pendiente-aprobacion.png",
+    "bytes": 13110,
+    "sha256": "e25ca59a74f3eb66d3470d328c619fa01f9c13a55de1a4943d58934b1722dace"
+  },
+  {
+    "file": "CU-22-02-aprobacion-confirmada.png",
+    "bytes": 619,
+    "sha256": "6688423794067210a906c3104bdd9f9802aaf8aae151a1195739bf5fb09161e8"
+  },
+  {
+    "file": "CU-22-03-faq-publicada.png",
+    "bytes": 6726,
+    "sha256": "7838f3dfcc94693a29aee21d6e653951b888935b05edffdbdaea4aae56f22e6b"
+  },
+  {
+    "file": "CU-22-oracle-inspect.json",
+    "bytes": 2877,
+    "sha256": "14ad7546c76d15225afd2fbadf18d694fed1b9ddcd2c974e14e9490ef529e176"
+  },
+  {
+    "file": "CU-22.json",
+    "bytes": 951,
+    "sha256": "55b44bac3c6aa4d1e114e414154ded2863a50f6b70a707a15e57a0dfafd5ab6d"
+  },
+  {
+    "file": "CU-23-01-pendiente-rechazo.png",
+    "bytes": 13037,
+    "sha256": "a987606e6fbfe102f39e86ea76e8ccad3757931e0ee0f6ccd815bdea175ddf08"
+  },
+  {
+    "file": "CU-23-02-rechazo-confirmado.png",
+    "bytes": 589,
+    "sha256": "2f7f1da1f5ef7db58ab2f55c31e290c085245c2ffa272d9c598e056699282e1c"
+  },
+  {
+    "file": "CU-23-oracle-inspect.json",
+    "bytes": 2984,
+    "sha256": "eceeee8c9b96ff82a16c8fb9907fcda9720c5b6bbe9e214cb3f2081aa50d8cd9"
+  },
+  {
+    "file": "CU-23.json",
+    "bytes": 747,
+    "sha256": "d1f9839e8c649a1bbd3489c9762b11221bbc4a18b9e4a37b5502ad6f6683db41"
+  },
+  {
+    "file": "CU-24-01-valoracion-pendiente.png",
+    "bytes": 6683,
+    "sha256": "030a9b72d9dd89e82d16278acaee3f12e16511644ccf8ae83280961a30dfa9f4"
+  },
+  {
+    "file": "CU-24-02-revisada.png",
+    "bytes": 619,
+    "sha256": "6688423794067210a906c3104bdd9f9802aaf8aae151a1195739bf5fb09161e8"
+  },
+  {
+    "file": "CU-24-oracle-inspect.json",
+    "bytes": 2983,
+    "sha256": "0457785bf5c238973601b441777854799d8fa66d94d5a205dc2fa0bf8211f06a"
+  },
+  {
+    "file": "CU-24.json",
+    "bytes": 729,
+    "sha256": "3741fb84ca005f6cb4b26965ef923abccda3f565592a928ee367106c8bdb1151"
+  },
+  {
+    "file": "CU-25-01-listado-configuraciones.png",
+    "bytes": 25546,
+    "sha256": "a90d74c5c9dbaff0c0dd50055283f1bb8d90903b12ade5a9ca4f2af76a260b2b"
+  },
+  {
+    "file": "CU-25.json",
+    "bytes": 1136,
+    "sha256": "792c5f90affcb90111319c05f1b0bff9fc50b7b85d990e31aea9e2874db55ae9"
+  },
+  {
+    "file": "CU-26-01-formulario-alta.png",
+    "bytes": 15755,
+    "sha256": "4396dd130fbb627387e3fa138d802a58da2dec9d15392349707df80b2220a412"
+  },
+  {
+    "file": "CU-26-02-registro-creado.png",
+    "bytes": 6122,
+    "sha256": "ee76e3866e0a9d95a485f4ec48de92e52fb0cd9170c60d0e20667d13a057cf9d"
+  },
+  {
+    "file": "CU-26-oracle-inspect.json",
+    "bytes": 3113,
+    "sha256": "9d7c513452c0d61f6160d403d17916d0076f2c72d80ded8a17bc1ba205e9a343"
+  },
+  {
+    "file": "CU-26.json",
+    "bytes": 720,
+    "sha256": "ecfdb2d4f2398284dc7ddff80436d5b5c292cf268e01d6f3655dc94fc1574ef4"
+  },
+  {
+    "file": "CU-27-01-valor-anterior.png",
+    "bytes": 6122,
+    "sha256": "ee76e3866e0a9d95a485f4ec48de92e52fb0cd9170c60d0e20667d13a057cf9d"
+  },
+  {
+    "file": "CU-27-02-formulario-edicion.png",
+    "bytes": 18869,
+    "sha256": "453bcba25bcaae248e8eda16584440bdfdf86a1b37ac6887c9b64f07b1c2aac8"
+  },
+  {
+    "file": "CU-27-03-registro-actualizado.png",
+    "bytes": 6220,
+    "sha256": "88c9eac9b70778215954cf141273bcf5dbc5b76ae4263738500ea477b39641c2"
+  },
+  {
+    "file": "CU-27-oracle-inspect.json",
+    "bytes": 3117,
+    "sha256": "02641af4e039b12f938386880ad7c6f0edf01a3d23dde4d2a65b7366c9b35909"
+  },
+  {
+    "file": "CU-27.json",
+    "bytes": 935,
+    "sha256": "67e398215e28bbe7be2993ad81f4c5e287a800f83257b7c6e15cc09e52fce644"
+  },
+  {
+    "file": "CU-28-01-antes-eliminar.png",
+    "bytes": 6220,
+    "sha256": "88c9eac9b70778215954cf141273bcf5dbc5b76ae4263738500ea477b39641c2"
+  },
+  {
+    "file": "CU-28-02-listado-sin-registro.png",
+    "bytes": 25547,
+    "sha256": "93ee2f2d193c989d8330a2e4b7d28ff2c59b16be1f752129ede7520201bef1e7"
+  },
+  {
+    "file": "CU-28-oracle-inspect.json",
+    "bytes": 2983,
+    "sha256": "0457785bf5c238973601b441777854799d8fa66d94d5a205dc2fa0bf8211f06a"
+  },
+  {
+    "file": "CU-28.json",
+    "bytes": 863,
+    "sha256": "d9b8f4d396d3cedd0082c9da1a86a676e10c773e198a0423f2ea16b103ec7811"
+  },
+  {
+    "file": "CU-29-01-fallo-controlado.png",
+    "bytes": 1233554,
+    "sha256": "ff97f41518d9df78b632eaae59ce588978fcd4dbe52e3647f236368b906f048f"
+  },
+  {
+    "file": "CU-29-02-reintento-exitoso.png",
+    "bytes": 952023,
+    "sha256": "00a078c0a5350170fb79b0c641ee0a662805ca270d39ef815e544af24899f013"
+  },
+  {
+    "file": "CU-29.json",
+    "bytes": 1978,
+    "sha256": "1b9157ead4f6ed8fe97dc82798f47b451d1b8082ad0e2d2ad672e92163a23c90"
+  },
+  {
+    "file": "CU-30-01-carrera-inicial.png",
+    "bytes": 1069414,
+    "sha256": "4f0e6aa2b54a6fa60f08bf471ae49be2b09722e104c6a0c8da29c54f2b46e78d"
+  },
+  {
+    "file": "CU-30-02-estado-del-fallo.png",
+    "bytes": 1092550,
+    "sha256": "25594025b85115bd83779693402fda7261de1f300a8125252c4b33fd871f1022"
+  },
+  {
+    "file": "CU-30.json",
+    "bytes": 2154,
+    "sha256": "89f606e24e99e72f21ad8e0629e86470ef02427805cb90fe798d38c76824e200"
+  },
+  {
+    "file": "CU-31-01-ubicacion-actual.png",
+    "bytes": 489618,
+    "sha256": "daffe389427076f176da6a45130f031ecb92bf8f9c2bffa990bd62ce45e746f3"
+  },
+  {
+    "file": "CU-31-02-peticion-anterior.png",
+    "bytes": 492300,
+    "sha256": "742d8cea1b585eb8682e40901c0c3d66b800059fa0d9f07eafec776d966cdef1"
+  },
+  {
+    "file": "CU-31.json",
+    "bytes": 1033,
+    "sha256": "74f68419d265cc87b96d61e3c470233809e21ad64a049b25218b662c2df3ce2b"
+  },
+  {
+    "file": "final-oracle-cleanup.json",
+    "bytes": 2711,
+    "sha256": "ed7cba625fa7b0425cc96dd89fbd75d6d5122655f5663ce4e74a98de6fd7713d"
+  },
+  {
+    "file": "fixtures.json",
+    "bytes": 1096,
+    "sha256": "974aa1dbeabd0e917373954e74df6797928b0b11f57583131c83f50015622015"
+  },
+  {
+    "file": "limpieza.json",
+    "bytes": 2711,
+    "sha256": "ed7cba625fa7b0425cc96dd89fbd75d6d5122655f5663ce4e74a98de6fd7713d"
+  },
+  {
+    "file": "resultados.json",
+    "bytes": 49526,
+    "sha256": "341f793e64fb1fd03496f5b4203345b4453d8b758626bdbde06d728e06dd4670"
+  },
+  {
+    "file": "scripts/package-use-case-evidence.cjs",
+    "bytes": 8749,
+    "sha256": "e0fcb9b25514d27fd7da55ee2fad22388b56ee34247e30a2f4209dbd218af1df"
+  },
+  {
+    "file": "scripts/use-case-evidence.cjs",
+    "bytes": 31533,
+    "sha256": "b1d9aeaea6fea6bb7ae16d5c843dd902ed703ea1166a92c048478a483a09fd8e"
+  },
+  {
+    "file": "scripts/use-case-extra-evidence.cjs",
+    "bytes": 5694,
+    "sha256": "0c06a2bb23d75a94efee0f124dedfe8dc6e9da80893f5d9cc22a7c36057018f3"
+  },
+  {
+    "file": "scripts/use-case-oracle.py",
+    "bytes": 2967,
+    "sha256": "9973708eae2e4d60622e18acc860b851ee76554ef17c163e309521bc253c56bb"
+  }
+]

@@ -1,0 +1,41 @@
+{
+  "id": "CU-12",
+  "title": "Seleccionar una pestana de la ficha",
+  "mode": "Integracion control real de pestanas",
+  "startedAt": "2026-11-05T14:45:36.772Z",
+  "images": [
+    {
+      "file": "CU-12-01-antes.png",
+      "label": "antes",
+      "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+      "timestamp": "2026-11-05T14:45:40.241Z"
+    },
+    {
+      "file": "CU-12-02-perfil-seleccionado.png",
+      "label": "perfil-seleccionado",
+      "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+      "timestamp": "2026-11-05T14:45:42.699Z"
+    }
+  ],
+  "inputs": [],
+  "replies": [],
+  "actions": [
+    {
+      "type": "selectPageControl",
+      "terms": [
+        "PERFIL DE EGRESO INSTITUCIONAL"
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "success": true,
+      "detail": "Pestaña seleccionada"
+    }
+  ],
+  "modelResponses": [],
+  "errors": [],
+  "detail": "{\"className\":\"nav-link ml-3 menu-ficha-carrera-admi duco-control-highlight duco-control-anchor active\",\"ariaSelected\":\"true\"}",
+  "status": "VERIFICADO",
+  "finishedAt": "2026-11-05T14:45:42.699Z"
+}

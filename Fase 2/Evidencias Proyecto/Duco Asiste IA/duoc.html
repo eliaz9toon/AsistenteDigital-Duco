@@ -21,7 +21,9 @@
       <link rel="dns-prefetch" href="https://cdn.jsdelivr.net/">
       <link rel="dns-prefetch" href="https://fonts.googleapis.com/">
 
-      <script src="./duoc_files/jquery-3.7.1.slim.min.js.descarga" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+      <script src="./duoc_files/jquery.min.js.descarga"></script>
+      <!-- La copia WordPress libera el alias; los scripts de esta pagina lo usan. -->
+      <script>window.$ = window.jQuery;</script>
       <script src="./duoc_files/popper.min.js.descarga" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
       <script src="./duoc_files/bootstrap.min.js.descarga" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
       <link rel="stylesheet" href="./duoc_files/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -1800,7 +1802,7 @@ section#busqueda-estudiar + .nav-tabs {
                                                 
 
                                                                                                 <!-- Carreras 100% online -->
-                                                    <a class="dropdown-item" href="https://www.duoc.cl/oferta-academica/carreras/" target="" role="button" data-uw-rm-brl="PR" data-uw-original-href="https://www.duoc.cl/oferta-academica/carreras/"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-right"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg> Carreras                                                                                                            </a>
+                                                    <a class="dropdown-item" href="./carreras.html" target="" role="button" data-uw-rm-brl="PR" data-uw-original-href="./carreras.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-right"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg> Carreras                                                                                                            </a>
                                                 
 
                                                                                                 <!-- Carreras 100% online -->
@@ -3206,7 +3208,7 @@ a.link-flotante img {
             <div class="col-12 col-lg-6">
                 <div href="#" target="_self" class="grow-on-hover A">
                     <h1 class="dark" role="heading" aria-level="2" data-uw-rm-heading="level">
-                        Carreras Técnicas y Profesionales                        <a role="button" href="https://www.duoc.cl/oferta-academica/carreras/" class="btn btn-primary dark" data-uw-rm-brl="PR" data-uw-original-href="./oferta-academica/carreras/">VER TODAS LAS CARRERAS <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></a>
+                        Carreras Técnicas y Profesionales                        <a role="button" href="./carreras.html" class="btn btn-primary dark" data-uw-rm-brl="PR" data-uw-original-href="./oferta-academica/carreras/">VER TODAS LAS CARRERAS <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></a>
                     </h1>
                     <img src="./duoc_files/carreras.jpg" alt="Responsive image" data-uw-rm-alt-original="Responsive image" data-uw-rm-alt="ALT">
                 </div>
@@ -3511,7 +3513,7 @@ a.link-flotante img {
                 <div class="collapse navbar-collapse" id="dondeestamos">
                                             <ul class="navbar-nav mr-auto">
                                                             <li class="nav-item active">
-                                    <a class="nav-link" href="https://www.duoc.cl/oferta-academica/carreras/" target="" data-uw-rm-brl="PR" data-uw-original-href="https://www.duoc.cl/oferta-academica/carreras/">Carreras<span class="sr-only">(current)</span></a>
+                                    <a class="nav-link" href="./carreras.html" target="" data-uw-rm-brl="PR" data-uw-original-href="./carreras.html">Carreras<span class="sr-only">(current)</span></a>
                                 </li>
                                                             <li class="nav-item active">
                                     <a class="nav-link" href="https://www.duoc.cl/?page_id=36303" target="" data-uw-rm-brl="PR" data-uw-original-href="https://www.duoc.cl/?page_id=36303">Cursos y Diplomados<span class="sr-only">(current)</span></a>
@@ -3743,23 +3745,24 @@ if($('#cifras').length){
 
 <!-- ============ DUCO ASSISTANT - COMPLEMENTOS ============ -->
 <!-- Estilos de Duco -->
-<link rel="stylesheet" href="./css/duco-styles.css?v=20260428v4">
+<link rel="stylesheet" href="./css/duco-styles.css?v=20261104-compatibility-focus">
 
 <!-- Módulos de Duco -->
 <script src="./js/navigation-mapper.js?v=20260428v4"></script>
-<script src="./js/ui-highlighter.js?v=20260428v4"></script>
-<script src="./js/chat-handler.js?v=20260428v4"></script>
-<script src="./js/site-context.js?v=20260504v1"></script>
+<script src="./js/ui-highlighter.js?v=20261104-sprint3-1"></script>
+<script src="./js/chat-handler.js?v=20261029-session-context3"></script>
+<script src="./js/site-context.js?v=20261029-heading-text1"></script>
 <script>
     // Configuración de Ollama (servidor local).
-    // Cambia ollamaModel si usas otro modelo (ej: 'mistral', 'gemma2', 'qwen2.5').
+    // Cambia ollamaModel si usas otro modelo de Ollama.
     window.ducoConfig = {
         ollamaBaseUrl: 'http://localhost:11434',
-        ollamaModel: 'llama3'
+        ollamaModel: 'qwen3.5:9b',
+        knowledgeApiBaseUrl: 'http://127.0.0.1:8765'
     };
 </script>
-<script src="./js/ollama-client.js?v=20260504v1"></script>
-<script src="./js/duco-assistant.js?v=20260428v4"></script>
+<script src="./js/ollama-client.js?v=20261105-three-incidents1"></script>
+<script src="./js/duco-assistant.js?v=20261105-three-incidents1"></script>
 <!-- ============ FIN DUCO ASSISTANT ============ -->
 <script>
     (function() {

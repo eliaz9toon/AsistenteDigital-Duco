@@ -1,0 +1,178 @@
+{
+  "date": "2026-11-05T15:00:22.874Z",
+  "cases": [
+    {
+      "name": "E4-H1-T01: keyboard launcher and focus",
+      "passed": true
+    },
+    {
+      "name": "E4-H1-T03: full response beyond 2000 characters; safe text",
+      "passed": true,
+      "detail": {
+        "characters": 2147,
+        "safe": true
+      }
+    },
+    {
+      "name": "E4-H1-T04: restored messages retain clickable links",
+      "passed": true
+    },
+    {
+      "name": "E1-H1-T02: blank and oversized queries never reach the model",
+      "passed": true,
+      "detail": {
+        "calls": 0,
+        "users": 0
+      }
+    },
+    {
+      "name": "E1-H1-T01 / E4-H1-T03: duplicate submissions blocked; draft retained",
+      "passed": true
+    },
+    {
+      "name": "E1-H1-T01 / E1-H1-T03: exact size limit accepted; composition Enter ignored",
+      "passed": true
+    },
+    {
+      "name": "E4-H1-T04: new conversation clears draft and persists reset",
+      "passed": true
+    },
+    {
+      "name": "E1-H1-T03 / E4-H1-T04: timeout releases UI and persists error",
+      "passed": true
+    },
+    {
+      "name": "E4-H1-T01: mobile geometry and controls at 320/375/600px",
+      "passed": true,
+      "detail": [
+        {
+          "width": 320,
+          "panel": {
+            "left": 8,
+            "right": 312,
+            "width": 304,
+            "height": 700,
+            "top": 104,
+            "bottom": 804
+          },
+          "send": {
+            "left": 244,
+            "right": 292,
+            "width": 48,
+            "height": 48,
+            "top": 714,
+            "bottom": 762
+          },
+          "close": {
+            "left": 255,
+            "right": 299,
+            "width": 44,
+            "height": 44,
+            "top": 122.6875,
+            "bottom": 166.6875
+          },
+          "input": {
+            "left": 25,
+            "right": 236,
+            "width": 211,
+            "height": 48,
+            "top": 714,
+            "bottom": 762
+          }
+        },
+        {
+          "width": 375,
+          "panel": {
+            "left": 8,
+            "right": 367,
+            "width": 359,
+            "height": 700,
+            "top": 104,
+            "bottom": 804
+          },
+          "send": {
+            "left": 299,
+            "right": 347,
+            "width": 48,
+            "height": 48,
+            "top": 714,
+            "bottom": 762
+          },
+          "close": {
+            "left": 310,
+            "right": 354,
+            "width": 44,
+            "height": 44,
+            "top": 119,
+            "bottom": 163
+          },
+          "input": {
+            "left": 25,
+            "right": 291,
+            "width": 266,
+            "height": 48,
+            "top": 714,
+            "bottom": 762
+          }
+        },
+        {
+          "width": 600,
+          "panel": {
+            "left": 8,
+            "right": 592,
+            "width": 584,
+            "height": 700,
+            "top": 104,
+            "bottom": 804
+          },
+          "send": {
+            "left": 524,
+            "right": 572,
+            "width": 48,
+            "height": 48,
+            "top": 714,
+            "bottom": 762
+          },
+          "close": {
+            "left": 535,
+            "right": 579,
+            "width": 44,
+            "height": 44,
+            "top": 119,
+            "bottom": 163
+          },
+          "input": {
+            "left": 25,
+            "right": 516,
+            "width": 491,
+            "height": 48,
+            "top": 714,
+            "bottom": 762
+          }
+        }
+      ]
+    },
+    {
+      "name": "E1-H1-T03 / E4-H1-T04: real Ollama via UI; navigation/back/reload",
+      "passed": true,
+      "detail": {
+        "answer": "Duoc UC es una institución educativa chilena que forma especialistas capaces de adaptarse al mundo laboral actual. Ofrece carreras técnicas y profesionales diseñadas para responder a las necesidades del mercado, con un enfoque práctico y flexible.",
+        "model": "qwen3.5:9b"
+      }
+    }
+  ],
+  "modelResponses": [
+    {
+      "status": 200,
+      "model": "qwen3.5:9b",
+      "content": "{\"route\": \"conversation\"}"
+    },
+    {
+      "status": 200,
+      "model": "qwen3.5:9b",
+      "content": "{\n  \"reply\": \"Duoc UC es una institución educativa chilena que forma especialistas capaces de adaptarse al mundo laboral actual. Ofrece carreras técnicas y profesionales diseñadas para responder a las necesidades del mercado, con un enfoque práctico y flexible.\"\n}"
+    }
+  ],
+  "realModelSkipped": false,
+  "passed": true
+}

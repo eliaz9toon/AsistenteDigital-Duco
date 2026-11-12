@@ -1,0 +1,75 @@
+{
+  "text": "Tienes funciones para viajar a traves de paginas, llevame hasta ingenieria en informatica",
+  "response": {
+    "reply": "Abriendo el menú de Escuelas para buscar Ingeniería en Informática.\n\nIngeniería en Informática:\nTipo: Profesional.\nDuración: 8 semestres.\nEscuela: Informática y Telecomunicaciones.\nSedes y modalidades: Sede Alameda (Diurna, Vespertina); Sede Antonio Varas (Diurna, Vespertina); Sede San Andrés de Concepción (Diurna); Sede Maipú (Diurna, Vespertina); Sede Melipilla (Diurna, Vespertina); Sede Padre Alonso de Ovalle (Diurna, Vespertina); Sede Plaza Norte (Diurna, Vespertina); Sede Plaza Oeste (Diurna, Vespertina); Sede Plaza Vespucio (Diurna, Vespertina); Sede Puente Alto (Diurna, Vespertina); Sede Puerto Montt (Diurna, Vespertina); Sede San Bernardo (Diurna, Vespertina); Sede San Carlos de Apoquindo (Diurna); Sede San Joaquín (Diurna, Vespertina); Sede Valparaíso (Diurna, Vespertina); Sede Viña del Mar (Diurna, Vespertina). Fuente: https://www.duoc.cl/carreras/ingenieria-en-informatica/ Datos del catálogo guardado el 29 de octubre de 2026; consulta la fuente para información actualizada.",
+    "actions": [
+      {
+        "type": "dropdown",
+        "terms": [
+          "Escuelas"
+        ]
+      },
+      {
+        "type": "navigate",
+        "terms": [
+          "Carreras"
+        ]
+      },
+      {
+        "type": "highlightTerms",
+        "terms": [
+          "Ingeniería en Informática"
+        ],
+        "careerCard": true,
+        "duration": 6000
+      }
+    ],
+    "intent": {
+      "kind": "correction",
+      "reference": "none",
+      "action": "dropdown",
+      "openMenu": true,
+      "closeMenu": false,
+      "menuIndex": 1,
+      "highlightScope": "none",
+      "menuItemIndex": -1
+    },
+    "confidence": null,
+    "raw": {
+      "intent": {
+        "kind": "correction",
+        "reference": "none",
+        "action": "dropdown",
+        "openMenu": true,
+        "closeMenu": false,
+        "menuIndex": 1,
+        "highlightScope": "none",
+        "menuItemIndex": -1
+      },
+      "actions": [
+        {
+          "type": "dropdown",
+          "terms": [
+            "Escuelas"
+          ]
+        }
+      ],
+      "reply": "Abriendo el menú de Escuelas para buscar Ingeniería en Informática.\n\nIngeniería en Informática:\nTipo: Profesional.\nDuración: 8 semestres.\nEscuela: Informática y Telecomunicaciones.\nSedes y modalidades: Sede Alameda (Diurna, Vespertina); Sede Antonio Varas (Diurna, Vespertina); Sede San Andrés de Concepción (Diurna); Sede Maipú (Diurna, Vespertina); Sede Melipilla (Diurna, Vespertina); Sede Padre Alonso de Ovalle (Diurna, Vespertina); Sede Plaza Norte (Diurna, Vespertina); Sede Plaza Oeste (Diurna, Vespertina); Sede Plaza Vespucio (Diurna, Vespertina); Sede Puente Alto (Diurna, Vespertina); Sede Puerto Montt (Diurna, Vespertina); Sede San Bernardo (Diurna, Vespertina); Sede San Carlos de Apoquindo (Diurna); Sede San Joaquín (Diurna, Vespertina); Sede Valparaíso (Diurna, Vespertina); Sede Viña del Mar (Diurna, Vespertina). Fuente: https://www.duoc.cl/carreras/ingenieria-en-informatica/ Datos del catálogo guardado el 29 de octubre de 2026; consulta la fuente para información actualizada."
+    },
+    "turnDecision": {
+      "rejectsPrevious": true,
+      "goal": "Navegar hasta la página de detalle de la carrera Ingeniería en Informática",
+      "differentTarget": false,
+      "alternativeKind": "none",
+      "constraints": [],
+      "needsClarification": false,
+      "mode": "correction",
+      "topic": "career",
+      "operation": "navigate",
+      "operations": [
+        "navigate"
+      ],
+      "destination": "none"
+    }
+  }
+}

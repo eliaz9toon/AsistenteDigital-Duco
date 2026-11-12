@@ -1,0 +1,87 @@
+{
+  "file": "C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\video-pitch\\parte1\\Duco_Asiste_Pitch_Parte_1.mp4",
+  "seconds": 41.066667,
+  "width": 1920,
+  "height": 1080,
+  "fps": "30",
+  "videoCodec": "h264",
+  "audioCodec": "aac",
+  "sampleRate": 48000,
+  "channels": 2,
+  "frames": 1232,
+  "samples": [
+    {
+      "target": 0.8,
+      "actual": 0.8,
+      "file": "frame-00.8.png"
+    },
+    {
+      "target": 3.4,
+      "actual": 3.4,
+      "file": "frame-03.4.png"
+    },
+    {
+      "target": 6.5,
+      "actual": 6.5,
+      "file": "frame-06.5.png"
+    },
+    {
+      "target": 11.9,
+      "actual": 11.9,
+      "file": "frame-11.9.png"
+    },
+    {
+      "target": 14.5,
+      "actual": 14.5,
+      "file": "frame-14.5.png"
+    },
+    {
+      "target": 16.8,
+      "actual": 16.8,
+      "file": "frame-16.8.png"
+    },
+    {
+      "target": 18.5,
+      "actual": 18.5,
+      "file": "frame-18.5.png"
+    },
+    {
+      "target": 23.8,
+      "actual": 23.8,
+      "file": "frame-23.8.png"
+    },
+    {
+      "target": 28.3,
+      "actual": 28.3,
+      "file": "frame-28.3.png"
+    },
+    {
+      "target": 30.4,
+      "actual": 30.4,
+      "file": "frame-30.4.png"
+    },
+    {
+      "target": 35.8,
+      "actual": 35.8,
+      "file": "frame-35.8.png"
+    },
+    {
+      "target": 38.9,
+      "actual": 38.9,
+      "file": "frame-38.9.png"
+    },
+    {
+      "target": 40.7,
+      "actual": 40.7,
+      "file": "frame-40.7.png"
+    },
+    {
+      "target": 40.9,
+      "actual": 40.9,
+      "file": "frame-40.9.png"
+    }
+  ],
+  "audioDecodedSeconds": 41.04533333333333,
+  "sourceAudioDecodedSeconds": 41.06666666666667,
+  "decodePassed": true
+}

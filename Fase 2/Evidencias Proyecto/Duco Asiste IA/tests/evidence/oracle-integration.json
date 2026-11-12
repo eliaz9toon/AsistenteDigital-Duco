@@ -1,0 +1,18 @@
+{
+  "date": "2026-11-04T21:33:08.992796",
+  "driver": "3.4.2",
+  "marker": "DUCO_TEST_a51e813148d6406a9c229bc4dd5885b0",
+  "checks": [
+    "Live Oracle connection and admin table metadata",
+    "API insert committed; read from independent Oracle connection and HTTP list",
+    "Update committed and invalid column rejected without changing the row",
+    "Delete committed; a second deletion reports missing record",
+    "Timestamp, numeric FK and long Unicode CLOB persisted; Oracle prevents deleting a referenced parent",
+    "Proposal approval creates real FAQ retrievable by Duco; repeated review rejected",
+    "Rejection does not publish a FAQ; proposal, negative-feedback and experience queries run against Oracle"
+  ],
+  "databaseVersion": "23.26.3.0.0",
+  "passed": true,
+  "cleanup": true,
+  "auditNote": "Application-generated audit events are intentionally retained. No existing business rows are modified."
+}

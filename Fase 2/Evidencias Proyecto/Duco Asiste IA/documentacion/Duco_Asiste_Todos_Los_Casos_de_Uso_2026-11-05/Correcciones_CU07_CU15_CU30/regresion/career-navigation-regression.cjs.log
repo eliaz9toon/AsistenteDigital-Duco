@@ -1,0 +1,7 @@
+{"name":"me buscas las carreras?","passed":true,"detail":{"destination":"/carreras.html","sessionPreserved":true}}
+{"name":"buscame ingenieria en informatica","passed":true,"detail":{"destination":"/carreras-detalle/ingenieria-en-informatica.html","sessionPreserved":true}}
+{"name":"Me llevarias hasta donde esta toda esa informacion?","passed":true,"detail":{"destination":"/carreras-detalle/ingenieria-en-informatica.html","sessionPreserved":true}}
+{"name":"Tienes funciones para viajar a traves de paginas, llevame hasta ingenieria en informatica","passed":true,"detail":{"destination":"/carreras-detalle/ingenieria-en-informatica.html","sessionPreserved":true}}
+{"name":"carrera -> ingenieria en informatica","passed":true,"detail":{"destination":"/carreras-detalle/ingenieria-en-informatica.html","sessionPreserved":true}}
+{"name":"Guard cases do not authorize unrelated navigation","passed":true,"detail":{"untouched":11,"alreadyAtDestination":true,"untrustedRouteRejected":true}}
+{"name":"Structured source overrides invented history without re-generating facts","passed":true,"detail":{"reply":"Ingeniería en Informática\nSede Alameda: Diurna, Vespertina.\nFuente: https://www.duoc.cl/carreras/ingenieria-en-informatica/\nCatálogo de referencia: 2026-10-29. No implica información en tiempo real.","actions":[],"intent":{"kind":"answer","reference":"resolved_action","action":"none"},"turnDecision":{"mode":"answer","operation":"none","operations":[],"destination":"none","needsClarification":false}}}

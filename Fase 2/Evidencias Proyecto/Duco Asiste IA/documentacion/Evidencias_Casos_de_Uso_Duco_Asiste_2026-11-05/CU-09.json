@@ -1,0 +1,48 @@
+{
+  "id": "CU-09",
+  "title": "Mostrar el respaldo de una explicacion",
+  "mode": "Reutiliza parrafos obtenidos realmente en CU-05; motor de evidencia",
+  "startedAt": "2026-11-05T14:45:23.253Z",
+  "images": [
+    {
+      "file": "CU-09-01-antes.png",
+      "label": "antes",
+      "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+      "timestamp": "2026-11-05T14:45:26.590Z"
+    },
+    {
+      "file": "CU-09-02-parrafos-fuente.png",
+      "label": "parrafos-fuente",
+      "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+      "timestamp": "2026-11-05T14:45:28.626Z"
+    }
+  ],
+  "inputs": [],
+  "replies": [],
+  "actions": [
+    {
+      "type": "showEvidence",
+      "terms": [
+        "texto de la ficha"
+      ],
+      "evidenceTexts": [
+        "La carrera de Ingeniería en Informática de Duoc UC cuenta con un plan común de dos años, en el que se desarrollan las competencias y capacidades fundamentales para el desempeño del futuro Ingeniero en Informática.",
+        "Durante el segundo año de la carrera, el estudiante deberá escoger formalmente una de las especializaciones, cuyas asignaturas se cursan a partir del 5.º semestre:",
+        "La persona titulada de la carrera recibirá el título de Ingeniero o Ingeniera en Informática y, de manera adicional, un certificado de la especialización que cursó.",
+        "Diseñar y generar soluciones de software innovadoras y de calidad, aplicando el ciclo de vida de éste, según las características del proyecto, las mejores prácticas de la industria y sus estándares de calidad."
+      ],
+      "duration": 20000
+    }
+  ],
+  "outcomes": [
+    {
+      "success": true,
+      "detail": "Se destacaron los textos de la ficha"
+    }
+  ],
+  "modelResponses": [],
+  "errors": [],
+  "detail": "La carrera de Ingeniería en Informática de Duoc UC cuenta con un plan común de dos años, en el que se desarrollan las competencias y capacidades fundamentales para el desempeño del futuro Ingeniero en Informática.\n\nDurante el segundo año de la carrera, el estudiante deberá escoger formalmente una de las especializaciones, cuyas asignaturas se cursan a partir del 5.º semestre:\n\nLa persona titulada de la carrera recibirá el título de Ingeniero o Ingeniera en Informática y, de manera adicional, un certificado de la especialización que cursó.\n\nDiseñar y generar soluciones de software innovadoras y de calidad, aplicando el ciclo de vida de éste, según las características del proyecto, las mejores prácticas de la industria y sus estándares de calidad.",
+  "status": "VERIFICADO",
+  "finishedAt": "2026-11-05T14:45:28.626Z"
+}

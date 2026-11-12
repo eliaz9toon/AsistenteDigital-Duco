@@ -1,0 +1,36 @@
+{
+  "id": "CU-20",
+  "title": "Proponer informacion para revision",
+  "mode": "Motor proposeKnowledge y API Oracle reales; no interpretacion de solicitud",
+  "startedAt": "2026-11-05T14:46:59.412Z",
+  "images": [
+    {
+      "file": "CU-20-01-antes.png",
+      "label": "antes",
+      "url": "http://127.0.0.1:8765/duco",
+      "timestamp": "2026-11-05T14:47:02.156Z"
+    },
+    {
+      "file": "CU-20-02-propuesta-enviada.png",
+      "label": "propuesta-enviada",
+      "url": "http://127.0.0.1:8765/duco",
+      "timestamp": "2026-11-05T14:47:03.375Z"
+    }
+  ],
+  "inputs": [],
+  "replies": [],
+  "actions": [
+    {
+      "type": "proposeKnowledge",
+      "question": "DUCO_EVIDENCE_b169901c1e30420f955e3bef5449c8bb propuesta visitante",
+      "answer": "Dato sintetico de prueba para revision, no publicar como informacion institucional."
+    }
+  ],
+  "outcomes": [
+    null
+  ],
+  "modelResponses": [],
+  "errors": [],
+  "status": "VERIFICADO",
+  "finishedAt": "2026-11-05T14:47:03.375Z"
+}

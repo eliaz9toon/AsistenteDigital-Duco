@@ -1,0 +1,29 @@
+{
+  "id": "CU-03",
+  "title": "Buscar y filtrar carreras",
+  "mode": "Buscador institucional real; no clasificacion IA",
+  "startedAt": "2026-11-05T14:44:07.469Z",
+  "images": [
+    {
+      "file": "CU-03-01-catalogo.png",
+      "label": "catalogo",
+      "url": "http://127.0.0.1:8765/carreras.html",
+      "timestamp": "2026-11-05T14:44:10.244Z"
+    },
+    {
+      "file": "CU-03-02-filtro-informatica.png",
+      "label": "filtro-informatica",
+      "url": "http://127.0.0.1:8765/carreras.html?q=informatica",
+      "timestamp": "2026-11-05T14:44:10.830Z"
+    }
+  ],
+  "inputs": [],
+  "replies": [],
+  "actions": [],
+  "outcomes": [],
+  "modelResponses": [],
+  "errors": [],
+  "detail": "Carrera Profesional\nIngeniería en Recursos Naturales y Sostenibilidad\n\nDuración: 8 semestres\n\nVer Carrera\nCarrera Profesional\nIngeniería en Control de Gestión\n\nDuración: 18 bimestres\n\n100% Online\nVer Carrera\nCarrera Técnica\nTécnico Modelador Proyectista\n\nDuración: 5 semestres\n\nVer Carrera\nCarrera Profesional\nIngeniería en Minas\n\nDuración: 18 bimestres\n\n100% Online\nVer Carrera\nCarrera Técnica\nTécnico en Laboratorio Clínico, Banco de Sangre e Imagenología\n\nDuración: 5 semestres\n\nVer Carrera\nCarrera Profesional\nIngeniería en Administración de Seguridad Privada\n\nDuración: 18 bimestres\n\n100% Online\nVer Carrera\nCarrera Técnica\nTécnico en Desabolladura y Pintura Automotriz\n\nDuración: 5 semestres\n\nVer Carrera\nCarrera Profesional\nIngeniería en Informática\n\nDuración: 8 semestres\n\nVer Carrera\nCarrera Profesional\nIngeniería en Ciberseguridad\n\nDuración: 8 bimestres\n\n100% Online\nVer Carrera\nCarrera Profesional\nIngeniería en Ciencia de Datos\n\nDuración: 8 bimestres\n\n100% Online\nVer Carrera\nCarrera Técnica\nTécnico Audiovisual\n\nDuración: 5 semestres\n\nVer Carrera\nCarrera Profesional\nAdministración en Turismo y Hospitalidad\n\nDuración: 8 semestres\n\nVer Carrera\nCarrera Profesional\nIngeniería en Marketing Digital\n\nDuración: 8 semestres (Presencial) / 16 bimestres (Online)\n\nVer Carrera\nCarrera Técnica\nTécnico en Electricidad y Automatización Industrial\n\nDuración: 5 semestres\n\nVer Carrera\nCarrera Técnica\nTécnico en Mantenimiento Industrial\n\nDuración: 5 semestres\n\nVer Carrera\nCarrera Profesional\nAuditoría y Análisis de Negocios\n\nDuración: 18 bimestres\n\n100% Online\nVer Carrera\nCarrera Técnica\nTécnico en Turismo y Hospitalidad\n\nDuración: 4 Semestres\n\nVer Carrera\nCarrera Técnica\nTécnico en Trabajo Social\n\nDuración: 10 bimestres\n\n100% Online\nVer Carrera",
+  "status": "VERIFICADO",
+  "finishedAt": "2026-11-05T14:44:10.831Z"
+}

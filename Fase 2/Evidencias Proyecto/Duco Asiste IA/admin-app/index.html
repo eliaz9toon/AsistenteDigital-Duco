@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Duco Asiste | Administración de datos</title>
+  <style>
+    :root { color-scheme: light; --blue:#035bb3; --ink:#17324d; --muted:#62758a; --line:#dce5ee; --bg:#f3f7fb; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.45 system-ui,Segoe UI,Arial,sans-serif; }
+    header { background:#fff; border-bottom:1px solid var(--line); padding:22px clamp(16px,4vw,48px); display:flex; justify-content:space-between; gap:18px; align-items:center; }
+    h1 { margin:0; font-size:22px; } header p { margin:3px 0 0; color:var(--muted); }
+    main { max-width:1500px; padding:24px clamp(12px,3vw,36px); margin:auto; }
+    .toolbar { display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-bottom:16px; }
+    select, input, textarea { font:inherit; color:inherit; }
+    select, button { min-height:40px; border-radius:7px; }
+    select { border:1px solid var(--line); background:white; padding:8px 12px; }
+    button { border:0; background:var(--blue); color:white; font-weight:600; padding:8px 14px; cursor:pointer; }
+    button.secondary { background:#e8f2ff; color:#064a8c; border:1px solid #b6d4fe; }
+    button.danger { background:#fff0f0; color:#a12b2b; border:1px solid #f0c6c6; }
+    button:disabled { opacity:.5; cursor:wait; }
+    .status { color:var(--muted); min-height:22px; }
+    .error { color:#a12b2b; }
+    .card { border:1px solid var(--line); border-radius:10px; background:#fff; overflow:hidden; }
+    .table-wrap { overflow:auto; max-height:65vh; }
+    table { width:100%; border-collapse:collapse; font-size:13px; white-space:nowrap; }
+    th, td { padding:9px 11px; text-align:left; border-bottom:1px solid #edf1f5; max-width:300px; overflow:hidden; text-overflow:ellipsis; }
+    th { position:sticky; top:0; z-index:1; background:#edf5fc; color:#294c6c; }
+    td.actions { display:flex; gap:6px; }
+    td.actions button { min-height:31px; padding:4px 9px; font-size:12px; }
+    .empty { padding:30px; text-align:center; color:var(--muted); }
+    dialog { width:min(720px,calc(100vw - 24px)); max-height:90vh; border:1px solid var(--line); border-radius:12px; padding:0; box-shadow:0 20px 70px #17324d33; }
+    dialog::backdrop { background:#11283d88; }
+    .dialog-head, .dialog-foot { padding:16px 20px; display:flex; justify-content:space-between; align-items:center; gap:12px; border-bottom:1px solid var(--line); }
+    .dialog-head h2 { margin:0; font-size:18px; } .dialog-foot { border:0; border-top:1px solid var(--line); justify-content:flex-end; }
+    form#editor { padding:16px 20px; overflow:auto; max-height:65vh; }
+    .field { display:grid; grid-template-columns:minmax(130px,1fr) minmax(180px,2fr); align-items:start; gap:12px; margin-bottom:13px; }
+    .field label { padding-top:8px; font-size:13px; font-weight:650; }
+    .field small { display:block; color:var(--muted); font-weight:400; }
+    .field input, .field textarea { width:100%; min-width:0; border:1px solid var(--line); border-radius:6px; padding:8px 10px; }
+    .field textarea { min-height:84px; resize:vertical; }
+    .readonly { color:#718197; background:#f1f4f7; }
+    .proposal { border:1px solid var(--line); border-radius:8px; padding:14px; margin:12px 20px; }
+    .proposal h3 { margin:0 0 8px; font-size:15px; }
+    .proposal p { white-space:pre-wrap; margin:6px 0 12px; }
+    .proposal-actions { display:flex; justify-content:flex-end; gap:8px; }
+    .review-section-title { margin:18px 20px 6px; font-size:16px; }
+    @media(max-width:600px) { header { align-items:flex-start; flex-direction:column; } .field { grid-template-columns:1fr; gap:4px; } .field label { padding-top:0; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div><h1>Duco Asiste · Administración de datos</h1><p>Edición local de las tablas del esquema Oracle conectado.</p></div>
+    <div class="toolbar"><button class="secondary" id="review-proposals">Propuestas para revisar</button><button class="secondary" id="refresh">Actualizar</button></div>
+  </header>
+  <main>
+    <div class="toolbar">
+      <label for="tables">Tabla</label><select id="tables"><option value="">Conectando…</option></select>
+      <button id="add">Nuevo registro</button>
+      <span id="status" class="status" role="status"></span>
+    </div>
+    <section class="card"><div class="table-wrap" id="grid"><div class="empty">Conectando con Oracle…</div></div></section>
+  </main>
+  <dialog id="modal">
+    <div class="dialog-head"><h2 id="modal-title">Registro</h2><button class="secondary" id="dismiss" type="button">Cerrar</button></div>
+    <form id="editor"></form>
+    <div class="dialog-foot"><button class="secondary" id="cancel" type="button">Cancelar</button><button id="save" type="button">Guardar</button></div>
+  </dialog>
+  <dialog id="proposals-modal">
+    <div class="dialog-head"><h2>Revisión de Duco</h2><button class="secondary" id="close-proposals" type="button">Cerrar</button></div>
+    <div class="table-wrap" style="max-height:70vh;padding:8px 0">
+      <h3 class="review-section-title">Propuestas de conocimiento</h3><div id="proposal-list"></div>
+      <h3 class="review-section-title">Respuestas con valoración negativa</h3><div id="negative-feedback-list"></div>
+    </div>
+  </dialog>
+  <script>
+    const $ = (s) => document.querySelector(s);
+    let tableMeta = null, rows = [], editingRow = null;
+    const status = (message, error = false) => { $('#status').textContent = message; $('#status').className = error ? 'status error' : 'status'; };
+    async function api(path, options = {}) {
+      const response = await fetch(path, { ...options, headers: { 'Content-Type':'application/json', ...(options.headers || {}) } });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || `Error HTTP ${response.status}`);
+      return result;
+    }
+    function keyOf(row) { return Object.fromEntries(tableMeta.primaryKey.map((key) => [key, row[key]])); }
+    function showValue(value) { if (value == null) return ''; if (typeof value === 'object') return JSON.stringify(value); return String(value); }
+    async function loadTables() {
+      const data = await api('/api/tables');
+      $('#tables').replaceChildren(...data.tables.map((name) => new Option(name, name)));
+      if (!data.tables.length) throw new Error('No hay tablas en el esquema. Ejecuta database/oracle/schema.sql como DUCO_APP.');
+      await loadRows();
+    }
+    async function loadRows() {
+      const name = $('#tables').value;
+      if (!name) return;
+      status('Cargando…');
+      const data = await api(`/api/tables/${encodeURIComponent(name)}/rows`);
+      tableMeta = data.meta; rows = data.rows;
+      drawGrid();
+      status(`${rows.length} registro(s) · máximo ${data.limit} mostrados`);
+    }
+    function drawGrid() {
+      const wrap = $('#grid');
+      if (!rows.length) { wrap.innerHTML = '<div class="empty">Esta tabla todavía no tiene registros.</div>'; return; }
+      const columns = tableMeta.columns.map((c) => c.name);
+      const head = columns.map((c) => `<th>${escapeHtml(c)}</th>`).join('');
+      const body = rows.map((row, index) => `<tr>${columns.map((c) => `<td title="${escapeHtml(showValue(row[c]))}">${escapeHtml(showValue(row[c]))}</td>`).join('')}<td class="actions"><button class="secondary edit" data-index="${index}">Editar</button><button class="danger delete" data-index="${index}">Eliminar</button></td></tr>`).join('');
+      wrap.innerHTML = `<table><thead><tr>${head}<th>Acciones</th></tr></thead><tbody>${body}</tbody></table>`;
+      wrap.querySelectorAll('.edit').forEach((b) => b.addEventListener('click', () => openEditor(rows[Number(b.dataset.index)])));
+      wrap.querySelectorAll('.delete').forEach((b) => b.addEventListener('click', () => removeRow(rows[Number(b.dataset.index)])));
+    }
+    function escapeHtml(value) { return String(value).replace(/[&<>"']/g, (char) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char])); }
+    function inputValue(row, column) {
+      const value = row[column.name];
+      if (value == null) return '';
+      if (column.type === 'DATE' || column.type.startsWith('TIMESTAMP')) return String(value).replace(' ', 'T').slice(0, 26);
+      return showValue(value);
+    }
+    function openEditor(row = null) {
+      editingRow = row;
+      $('#modal-title').textContent = row ? `Editar en ${tableMeta.name}` : `Nuevo registro en ${tableMeta.name}`;
+      const form = $('#editor'); form.replaceChildren();
+      for (const column of tableMeta.columns) {
+        if (column.identity && !row) continue;
+        const isKey = tableMeta.primaryKey.includes(column.name);
+        const disabled = column.identity || (row && isKey);
+        const field = document.createElement('div'); field.className = 'field';
+        const label = document.createElement('label'); label.htmlFor = `field-${column.name}`;
+        label.innerHTML = `${escapeHtml(column.name)} <small>${escapeHtml(column.type)}${column.nullable ? ' · opcional' : ' · requerido'}${isKey ? ' · clave primaria' : ''}</small>`;
+        const control = ['CLOB','NCLOB','LONG'].includes(column.type) ? document.createElement('textarea') : document.createElement('input');
+        control.id = `field-${column.name}`; control.name = column.name;
+        control.value = row ? inputValue(row, column) : '';
+        if (column.type === 'NUMBER') control.type = 'number', control.step = 'any';
+        else if (column.type === 'DATE' || column.type.startsWith('TIMESTAMP')) control.type = 'datetime-local', control.step = 'any';
+        else control.type = 'text';
+        if (disabled) control.disabled = true, control.classList.add('readonly');
+        if (!column.nullable && !disabled) control.required = true;
+        field.append(label, control); form.append(field);
+      }
+      $('#modal').showModal();
+    }
+    async function saveRow() {
+      const form = $('#editor'); if (!form.reportValidity()) return;
+      const values = Object.fromEntries([...new FormData(form).entries()]);
+      const url = `/api/tables/${encodeURIComponent(tableMeta.name)}`;
+      try {
+        await api(url, { method: editingRow ? 'PUT' : 'POST', body: JSON.stringify(editingRow ? {key:keyOf(editingRow), values} : {values}) });
+        $('#modal').close(); status('Registro guardado.'); await loadRows();
+      } catch (error) { status(error.message, true); }
+    }
+    async function removeRow(row) {
+      if (!confirm('¿Eliminar este registro? Si otras tablas lo referencian, Oracle impedirá borrarlo.')) return;
+      try { await api(`/api/tables/${encodeURIComponent(tableMeta.name)}`, {method:'DELETE', body:JSON.stringify({key:keyOf(row)})}); status('Registro eliminado.'); await loadRows(); }
+      catch (error) { status(error.message, true); }
+    }
+    async function loadProposals() {
+      const wrap = $('#proposal-list');
+      const negativeWrap = $('#negative-feedback-list');
+      wrap.innerHTML = '<div class="empty">Cargando…</div>';
+      negativeWrap.innerHTML = '<div class="empty">Cargando…</div>';
+      try {
+        const [data, negativeData] = await Promise.all([
+          api('/api/duco/proposals'),
+          api('/api/duco/negative-feedback')
+        ]);
+        if (!data.proposals.length) wrap.innerHTML = '<div class="empty">No hay propuestas pendientes.</div>';
+        else {
+        wrap.innerHTML = data.proposals.map((item) => `<article class="proposal" data-id="${Number(item.id)}"><h3>${escapeHtml(item.question)}</h3><p>${escapeHtml(item.answer)}</p><small>Recibida: ${escapeHtml(showValue(item.createdAt))}</small><small class="community-votes">Valoraciones de la comunidad (sesiones únicas): 👍 ${Number(item.positiveVotes) || 0} · 👎 ${Number(item.negativeVotes) || 0}</small><div class="proposal-actions"><button class="danger reject">Rechazar</button><button class="approve">Aprobar</button></div></article>`).join('');
+        wrap.querySelectorAll('.approve').forEach((button) => button.addEventListener('click', () => reviewProposal(button, 'APROBADA')));
+        wrap.querySelectorAll('.reject').forEach((button) => button.addEventListener('click', () => reviewProposal(button, 'RECHAZADA')));
+        }
+        if (!negativeData.feedback.length) negativeWrap.innerHTML = '<div class="empty">No hay respuestas negativas pendientes.</div>';
+        else {
+          negativeWrap.innerHTML = negativeData.feedback.map((item) => `<article class="proposal" data-id="${Number(item.id)}"><h3>${escapeHtml(item.question)}</h3><p>${escapeHtml(item.answer)}</p><small>Valorada: ${escapeHtml(showValue(item.createdAt))}</small><div class="proposal-actions"><button class="secondary mark-feedback-reviewed">Marcar revisada</button></div></article>`).join('');
+          negativeWrap.querySelectorAll('.mark-feedback-reviewed').forEach((button) => button.addEventListener('click', () => reviewNegativeFeedback(button)));
+        }
+        $('#review-proposals').textContent = `Revisar Duco (${data.proposals.length + negativeData.feedback.length})`;
+      } catch (error) { wrap.innerHTML = `<div class="empty error">${escapeHtml(error.message)}</div>`; }
+    }
+    async function reviewNegativeFeedback(button) {
+      const card = button.closest('.proposal'); button.disabled = true;
+      try {
+        await api(`/api/duco/feedback/${card.dataset.id}/review`, { method:'POST', body:JSON.stringify({}) });
+        status('Valoración negativa marcada como revisada.'); await loadProposals();
+      } catch (error) { status(error.message, true); button.disabled = false; }
+    }
+    async function reviewProposal(button, decision) {
+      const card = button.closest('.proposal');
+      card.querySelectorAll('button').forEach((item) => item.disabled = true);
+      try {
+        await api(`/api/duco/proposals/${card.dataset.id}/review`, { method:'POST', body:JSON.stringify({decision}) });
+        status(decision === 'APROBADA' ? 'Propuesta aprobada y disponible para Duco.' : 'Propuesta rechazada.');
+        await loadProposals();
+      } catch (error) { status(error.message, true); card.querySelectorAll('button').forEach((item) => item.disabled = false); }
+    }
+    $('#tables').addEventListener('change', () => loadRows().catch((e) => status(e.message, true)));
+    $('#refresh').addEventListener('click', () => loadRows().catch((e) => status(e.message, true)));
+    $('#add').addEventListener('click', () => tableMeta && openEditor());
+    $('#save').addEventListener('click', saveRow);
+    $('#dismiss').addEventListener('click', () => $('#modal').close());
+    $('#cancel').addEventListener('click', () => $('#modal').close());
+    $('#review-proposals').addEventListener('click', () => { $('#proposals-modal').showModal(); loadProposals(); });
+    $('#close-proposals').addEventListener('click', () => $('#proposals-modal').close());
+    loadTables().catch((error) => { status(error.message, true); $('#grid').innerHTML = `<div class="empty error">${escapeHtml(error.message)}<br>Comprueba la conexión y las credenciales en admin-app/.env.</div>`; });
+  </script>
+</body>
+</html>

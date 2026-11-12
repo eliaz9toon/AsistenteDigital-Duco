@@ -1,0 +1,44 @@
+[
+  {
+    "name": "busqueda",
+    "file": "C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\video-pitch\\parte1\\clips\\busqueda.webm",
+    "start": 2.222,
+    "duration": 8.246,
+    "route": "/carreras.html"
+  },
+  {
+    "name": "ficha",
+    "file": "C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\video-pitch\\parte1\\clips\\ficha.webm",
+    "start": 3.384,
+    "duration": 9.654,
+    "route": "/carreras-detalle/ingenieria-en-informatica.html"
+  },
+  {
+    "name": "pregunta",
+    "file": "C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\video-pitch\\parte1\\clips\\pregunta.webm",
+    "start": 2.093,
+    "duration": 8.592,
+    "route": "/carreras.html"
+  },
+  {
+    "name": "inicio",
+    "file": "C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\video-pitch\\parte1\\clips\\inicio.webm",
+    "start": 5.226,
+    "duration": 7.095999999999999,
+    "route": "/duco"
+  },
+  {
+    "name": "menus",
+    "file": "C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\video-pitch\\parte1\\clips\\menus.webm",
+    "start": 2.87,
+    "duration": 10.123000000000001,
+    "route": "/duco"
+  },
+  {
+    "name": "duco",
+    "file": "C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\video-pitch\\parte1\\clips\\duco.webm",
+    "start": 2.804,
+    "duration": 10.179,
+    "route": "/duco"
+  }
+]

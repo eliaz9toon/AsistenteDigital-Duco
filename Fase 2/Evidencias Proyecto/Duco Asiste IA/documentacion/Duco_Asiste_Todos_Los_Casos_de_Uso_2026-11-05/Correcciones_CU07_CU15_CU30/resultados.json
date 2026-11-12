@@ -1,0 +1,463 @@
+{
+  "date": "2026-11-05T15:02:52.013Z",
+  "cases": [
+    {
+      "id": "CU-07",
+      "title": "Desplazamiento a Vida Estudiantil",
+      "images": [
+        {
+          "file": "CU-07-01-antes-abajo.png",
+          "label": "antes-abajo",
+          "time": "2026-11-05T15:02:55.083Z"
+        },
+        {
+          "file": "CU-07-02-navbar-visible.png",
+          "label": "navbar-visible",
+          "time": "2026-11-05T15:02:56.857Z"
+        },
+        {
+          "file": "CU-07-03-seccion-del-contenido.png",
+          "label": "seccion-del-contenido",
+          "time": "2026-11-05T15:02:58.325Z"
+        }
+      ],
+      "inputs": [],
+      "replies": [],
+      "modelResponses": [],
+      "detail": {
+        "result": {
+          "before": 1600,
+          "after": 0,
+          "samples": [
+            1600,
+            1598,
+            1553,
+            1518,
+            1388,
+            1118,
+            800,
+            584,
+            439,
+            382,
+            291,
+            222,
+            167,
+            123,
+            89,
+            75,
+            51,
+            41,
+            25,
+            13,
+            6,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "outcome": {
+            "success": true,
+            "detail": "Se desplazó la página al elemento"
+          },
+          "target": "VIDA ESTUDIANTIL",
+          "visible": true,
+          "uncovered": true
+        },
+        "missing": {
+          "success": false,
+          "detail": "No se encontró el destino del desplazamiento"
+        },
+        "body": {
+          "outcome": {
+            "success": true,
+            "detail": "Se desplazó la página al elemento"
+          },
+          "y": 947
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "CU-15",
+      "title": "Corregir del titulo al parrafo explicativo",
+      "images": [
+        {
+          "file": "CU-15-01-explicacion-generada.png",
+          "label": "explicacion-generada",
+          "time": "2026-11-05T15:03:49.117Z"
+        },
+        {
+          "file": "CU-15-02-titulo-antes-de-corregir.png",
+          "label": "titulo-antes-de-corregir",
+          "time": "2026-11-05T15:03:51.747Z"
+        },
+        {
+          "file": "CU-15-03-parrafos-corregidos.png",
+          "label": "parrafos-corregidos",
+          "time": "2026-11-05T15:03:54.580Z"
+        },
+        {
+          "file": "CU-15-04-fuentes-sin-panel.png",
+          "label": "fuentes-sin-panel",
+          "time": "2026-11-05T15:03:54.982Z"
+        }
+      ],
+      "inputs": [
+        "No, te pedi el parrafo explicativo, no el titulo. Resalta el texto que usaste para explicar la carrera."
+      ],
+      "replies": [
+        "Te muestro el texto que respalda la explicación, no el título."
+      ],
+      "modelResponses": [
+        {
+          "model": "qwen3.5:9b",
+          "status": 200,
+          "content": "{\n  \"steps\": [\n    {\n      \"explanation\": \"La carrera inicia con un plan común de dos años donde se desarrollan las competencias fundamentales para el futuro ingeniero, permitiendo inmersión en la creación y análisis de tecnologías de información.\",\n      \"sourceIndex\": 4\n    },\n    {\n      \"explanation\": \"Durante el segundo año, el estudiante debe elegir formalmente una especialización como desarrollo de software o inteligencia artificial, cuyas asignaturas comienzan a cursarse desde el quinto semestre.\",\n      \"sourceIndex\": 5\n    },\n    {\n      \"explanation\": \"Al graduarse, se obtiene el título de Ingeniero en Informática junto con un certificado adicional de la especialización elegida, consolidando una base sólida para insertarse en la industria.\",\n      \"sourceIndex\": 12\n    },\n    {\n      \"explanation\": \"El perfil egresado está preparado para diseñar soluciones innovadoras aplicando el ciclo de vida del software, gestionar proyectos y resolver requerimientos de información con bases de datos relacionales.\",\n      \"sourceIndex\": 16\n    }\n  ]\n}"
+        }
+      ],
+      "detail": {
+        "saved": {
+          "path": "/carreras-detalle/ingenieria-en-informatica.html",
+          "answer": "**Parte 1 de 4**\nLa carrera inicia con un plan común de dos años donde se desarrollan las competencias fundamentales para el futuro ingeniero, permitiendo inmersión en la creación y análisis de tecnologías de información.\n\n**Parte 2 de 4**\nDurante el segundo año, el estudiante debe elegir formalmente una especialización como desarrollo de software o inteligencia artificial, cuyas asignaturas comienzan a cursarse desde el quinto semestre.\n\n**Parte 3 de 4**\nAl graduarse, se obtiene el título de Ingeniero en Informática junto con un certificado adicional de la especialización elegida, consolidando una base sólida para insertarse en la industria.\n\n**Parte 4 de 4**\nEl perfil egresado está preparado para diseñar soluciones innovadoras aplicando el ciclo de vida del software, gestionar proyectos y resolver requerimientos de información con bases de datos relacionales.",
+          "blocks": [
+            "La carrera de Ingeniería en Informática de Duoc UC cuenta con un plan común de dos años, en el que se desarrollan las competencias y capacidades fundamentales para el desempeño del futuro Ingeniero en Informática.",
+            "Durante el segundo año de la carrera, el estudiante deberá escoger formalmente una de las especializaciones, cuyas asignaturas se cursan a partir del 5.º semestre:",
+            "La persona titulada de la carrera recibirá el título de Ingeniero o Ingeniera en Informática y, de manera adicional, un certificado de la especialización que cursó.",
+            "Diseñar y generar soluciones de software innovadoras y de calidad, aplicando el ciclo de vida de éste, según las características del proyecto, las mejores prácticas de la industria y sus estándares de calidad."
+          ]
+        },
+        "corrected": {
+          "sources": [
+            "La carrera de Ingeniería en Informática de Duoc UC cuenta con un plan común de dos años, en el que se desarrollan las competencias y capacidades fundamentales para el desempeño del futuro Ingeniero en Informática.",
+            "Durante el segundo año de la carrera, el estudiante deberá escoger formalmente una de las especializaciones, cuyas asignaturas se cursan a partir del 5.º semestre:",
+            "La persona titulada de la carrera recibirá el título de Ingeniero o Ingeniera en Informática y, de manera adicional, un certificado de la especialización que cursó.",
+            "Diseñar y generar soluciones de software innovadoras y de calidad, aplicando el ciclo de vida de éste, según las características del proyecto, las mejores prácticas de la industria y sus estándares de calidad."
+          ],
+          "titleMarks": 0,
+          "outcomes": [
+            {
+              "type": "showEvidence",
+              "request": "Explicación guiada",
+              "scope": "page",
+              "menuTerms": [],
+              "evidenceTexts": [
+                "La carrera de Ingeniería en Informática de Duoc UC cuenta con un plan común de dos años, en el que se desarrollan las competencias y capacidades fundamentales para el desempeño del futuro Ingeniero en Informática."
+              ],
+              "pagePath": "/carreras-detalle/ingenieria-en-informatica.html",
+              "target": [
+                "texto de la ficha"
+              ],
+              "success": true,
+              "detail": "Se destacaron los textos de la ficha",
+              "documentId": "67f2516f-0ebc-40bd-b7d7-d6e3afde1fbc",
+              "timestamp": 1793891005029,
+              "historical": false
+            },
+            {
+              "type": "showEvidence",
+              "request": "Explicación guiada",
+              "scope": "page",
+              "menuTerms": [],
+              "evidenceTexts": [
+                "Durante el segundo año de la carrera, el estudiante deberá escoger formalmente una de las especializaciones, cuyas asignaturas se cursan a partir del 5.º semestre:"
+              ],
+              "pagePath": "/carreras-detalle/ingenieria-en-informatica.html",
+              "target": [
+                "texto de la ficha"
+              ],
+              "success": true,
+              "detail": "Se destacaron los textos de la ficha",
+              "documentId": "67f2516f-0ebc-40bd-b7d7-d6e3afde1fbc",
+              "timestamp": 1793891010934,
+              "historical": false
+            },
+            {
+              "type": "showEvidence",
+              "request": "Explicación guiada",
+              "scope": "page",
+              "menuTerms": [],
+              "evidenceTexts": [
+                "La persona titulada de la carrera recibirá el título de Ingeniero o Ingeniera en Informática y, de manera adicional, un certificado de la especialización que cursó."
+              ],
+              "pagePath": "/carreras-detalle/ingenieria-en-informatica.html",
+              "target": [
+                "texto de la ficha"
+              ],
+              "success": true,
+              "detail": "Se destacaron los textos de la ficha",
+              "documentId": "67f2516f-0ebc-40bd-b7d7-d6e3afde1fbc",
+              "timestamp": 1793891017021,
+              "historical": false
+            },
+            {
+              "type": "showEvidence",
+              "request": "Explicación guiada",
+              "scope": "page",
+              "menuTerms": [],
+              "evidenceTexts": [
+                "Diseñar y generar soluciones de software innovadoras y de calidad, aplicando el ciclo de vida de éste, según las características del proyecto, las mejores prácticas de la industria y sus estándares de calidad."
+              ],
+              "pagePath": "/carreras-detalle/ingenieria-en-informatica.html",
+              "target": [
+                "texto de la ficha"
+              ],
+              "success": true,
+              "detail": "Se destacaron los textos de la ficha",
+              "documentId": "67f2516f-0ebc-40bd-b7d7-d6e3afde1fbc",
+              "timestamp": 1793891023605,
+              "historical": false
+            },
+            {
+              "type": "showEvidence",
+              "request": "No, te pedi el parrafo explicativo, no el titulo. Resalta el texto que usaste para explicar la carrera.",
+              "scope": "page",
+              "menuTerms": [],
+              "evidenceTexts": [
+                "La carrera de Ingeniería en Informática de Duoc UC cuenta con un plan común de dos años, en el que se desarrollan las competencias y capacidades fundamentales para el desempeño del futuro Ingeniero en Informática.",
+                "Durante el segundo año de la carrera, el estudiante deberá escoger formalmente una de las especializaciones, cuyas asignaturas se cursan a partir del 5.º semestre:",
+                "La persona titulada de la carrera recibirá el título de Ingeniero o Ingeniera en Informática y, de manera adicional, un certificado de la especialización que cursó.",
+                "Diseñar y generar soluciones de software innovadoras y de calidad, aplicando el ciclo de vida de éste, según las características del proyecto, las mejores prácticas de la industria y sus estándares de calidad."
+              ],
+              "pagePath": "/carreras-detalle/ingenieria-en-informatica.html",
+              "target": [
+                "texto de la ficha"
+              ],
+              "success": true,
+              "detail": "Se destacaron los textos de la ficha",
+              "documentId": "67f2516f-0ebc-40bd-b7d7-d6e3afde1fbc",
+              "timestamp": 1793891034191,
+              "historical": false
+            }
+          ]
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "CU-30",
+      "title": "Mostrar otra carrera del catalogo",
+      "images": [
+        {
+          "file": "CU-30-01-carrera-inicial.png",
+          "label": "carrera-inicial",
+          "time": "2026-11-05T15:03:58.299Z"
+        },
+        {
+          "file": "CU-30-02-alternativa-real.png",
+          "label": "alternativa-real",
+          "time": "2026-11-05T15:04:02.538Z"
+        },
+        {
+          "file": "CU-30-03-segunda-alternativa.png",
+          "label": "segunda-alternativa",
+          "time": "2026-11-05T15:04:04.688Z"
+        }
+      ],
+      "inputs": [
+        "me muestras otra carrera cualquiera?",
+        "muestrame otra carrera cualquiera"
+      ],
+      "replies": [
+        "Te muestro Ingeniería en Control de Gestión, una alternativa del catálogo."
+      ],
+      "modelResponses": [],
+      "detail": {
+        "original": "Ingeniería en Informática",
+        "selected": {
+          "career": {
+            "title": "Ingeniería en Recursos Naturales y Sostenibilidad",
+            "source": "https://www.duoc.cl/carreras/ingenieria-recursos-naturales-sostenibilidad/",
+            "localLink": "carreras-detalle/ingenieria-recursos-naturales-sostenibilidad.html"
+          },
+          "title": "Ingeniería en Recursos Naturales y Sostenibilidad",
+          "outcomes": [
+            {
+              "type": "highlightTerms",
+              "request": "me muestras otra carrera cualquiera?",
+              "scope": "page",
+              "menuTerms": [],
+              "evidenceTexts": [],
+              "pagePath": "/carreras.html",
+              "target": [
+                "Ingeniería en Recursos Naturales y Sostenibilidad"
+              ],
+              "success": true,
+              "detail": "Ficha de carrera encontrada y destacada",
+              "documentId": "278a058e-4727-4560-a9b8-7c5ee42c3035",
+              "timestamp": 1793891042136,
+              "historical": false
+            }
+          ]
+        },
+        "next": {
+          "career": {
+            "title": "Ingeniería en Control de Gestión",
+            "source": "https://www.duoc.cl/carreras/ingenieria-control-gestion/",
+            "localLink": "carreras-detalle/ingenieria-control-gestion.html"
+          },
+          "title": "Ingeniería en Control de Gestión"
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "RUTAS",
+      "title": "Limites de los atajos de enrutamiento",
+      "images": [],
+      "inputs": [],
+      "replies": [],
+      "modelResponses": [],
+      "detail": {
+        "guided": {
+          "reply": "Voy a explicarte Ingeniería en Informática por partes y resaltar el texto de respaldo de cada parte.",
+          "selectedCareer": {
+            "title": "Ingeniería en Informática",
+            "localLink": "carreras-detalle/ingenieria-en-informatica.html",
+            "source": "https://www.duoc.cl/carreras/ingenieria-en-informatica/"
+          },
+          "actions": [
+            {
+              "type": "explainCareer",
+              "terms": [
+                "Ingeniería en Informática"
+              ],
+              "guided": true
+            }
+          ],
+          "intent": {
+            "kind": "new_request",
+            "reference": "resolved_action",
+            "action": "none"
+          },
+          "turnDecision": {
+            "mode": "explain",
+            "topic": "career",
+            "operation": "explainCareer",
+            "operations": [
+              "explainCareer"
+            ],
+            "destination": "none",
+            "needsClarification": false
+          }
+        },
+        "evidence": {
+          "reply": "Te muestro el texto que respalda la explicación, no el título.",
+          "actions": [
+            {
+              "type": "showEvidence",
+              "terms": [
+                "texto de la ficha"
+              ],
+              "evidenceTexts": [
+                "Parrafo fuente real de ejemplo para probar el enrutador."
+              ]
+            }
+          ],
+          "intent": {
+            "kind": "correction",
+            "reference": "resolved_action",
+            "action": "none"
+          },
+          "turnDecision": {
+            "mode": "correction",
+            "topic": "career",
+            "operation": "showEvidence",
+            "operations": [
+              "showEvidence"
+            ],
+            "destination": "none",
+            "needsClarification": false,
+            "goal": "Mostrar los párrafos de respaldo de la explicación"
+          }
+        },
+        "negatives": [
+          {
+            "q": "No me muestres otra carrera",
+            "response": null
+          },
+          {
+            "q": "Muestrame otra carrera con horario vespertino",
+            "response": null
+          },
+          {
+            "q": "Explicame otra carrera y despues resaltala",
+            "response": null
+          },
+          {
+            "q": "Muestrame otra carrera de salud",
+            "response": null
+          },
+          {
+            "q": "Cual es otra carrera cualquiera?",
+            "response": null
+          }
+        ],
+        "notGuided": null,
+        "negatedEvidence": null,
+        "missingEvidence": {
+          "reply": "No tengo los párrafos de esa explicación en la página actual. ¿Qué explicación quieres revisar?",
+          "actions": [],
+          "intent": {
+            "kind": "follow_up",
+            "reference": "resolved_action",
+            "action": "none"
+          },
+          "turnDecision": {
+            "mode": "evidence",
+            "topic": "career",
+            "operation": "showEvidence",
+            "operations": [],
+            "destination": "none",
+            "needsClarification": true,
+            "goal": "Mostrar los párrafos de respaldo de la explicación"
+          }
+        }
+      },
+      "passed": true
+    }
+  ],
+  "scope": "Chromium, UI real y pruebas de enrutamiento. Ollama real solo para la explicacion inicial. No telefono fisico.",
+  "browser": "151.0.7922.34",
+  "cleanup": {
+    "databaseVersion": "23.26.3.0.0",
+    "mode": "cleanup",
+    "marker": "DUCO_EVIDENCE_0967c454f7f54889872e5b5cb29a59b9",
+    "configurations": [],
+    "proposals": [],
+    "publishedFaqs": [],
+    "sessionRows": [
+      {
+        "session": "1da1d5c9-37af-41f7-abc9-aa2326ec80b9",
+        "count": 0,
+        "ratings": []
+      },
+      {
+        "session": "49931ce0-36d1-4368-ab13-b2bd8d016982",
+        "count": 0,
+        "ratings": []
+      },
+      {
+        "session": "b227b95b-afd0-4e55-986a-4f7ce6670474",
+        "count": 0,
+        "ratings": []
+      },
+      {
+        "session": "d0686c65-39aa-411f-8fc7-9026c121d93f",
+        "count": 0,
+        "ratings": []
+      }
+    ],
+    "clean": true
+  },
+  "passed": true
+}

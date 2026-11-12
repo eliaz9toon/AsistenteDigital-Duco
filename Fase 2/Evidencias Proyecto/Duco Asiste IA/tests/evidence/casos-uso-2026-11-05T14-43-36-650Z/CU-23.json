@@ -1,0 +1,28 @@
+{
+  "id": "CU-23",
+  "title": "Rechazar una propuesta de conocimiento",
+  "mode": "UI real; rechazo y ausencia de FAQ verificados en Oracle",
+  "startedAt": "2026-11-05T14:47:06.992Z",
+  "images": [
+    {
+      "file": "CU-23-01-pendiente-rechazo.png",
+      "label": "pendiente-rechazo",
+      "url": "http://127.0.0.1:8765/",
+      "timestamp": "2026-11-05T14:47:07.824Z"
+    },
+    {
+      "file": "CU-23-02-rechazo-confirmado.png",
+      "label": "rechazo-confirmado",
+      "url": "http://127.0.0.1:8765/",
+      "timestamp": "2026-11-05T14:47:08.453Z"
+    }
+  ],
+  "inputs": [],
+  "replies": [],
+  "actions": [],
+  "outcomes": [],
+  "modelResponses": [],
+  "errors": [],
+  "status": "VERIFICADO",
+  "finishedAt": "2026-11-05T14:47:08.813Z"
+}

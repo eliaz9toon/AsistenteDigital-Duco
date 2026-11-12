@@ -1,0 +1,28 @@
+{
+  "id": "CU-24",
+  "title": "Revisar valoraciones negativas",
+  "mode": "UI real sobre voto registrado en CU-19 y verificacion Oracle",
+  "startedAt": "2026-11-05T14:47:08.816Z",
+  "images": [
+    {
+      "file": "CU-24-01-valoracion-pendiente.png",
+      "label": "valoracion-pendiente",
+      "url": "http://127.0.0.1:8765/",
+      "timestamp": "2026-11-05T14:47:09.973Z"
+    },
+    {
+      "file": "CU-24-02-revisada.png",
+      "label": "revisada",
+      "url": "http://127.0.0.1:8765/",
+      "timestamp": "2026-11-05T14:47:10.611Z"
+    }
+  ],
+  "inputs": [],
+  "replies": [],
+  "actions": [],
+  "outcomes": [],
+  "modelResponses": [],
+  "errors": [],
+  "status": "VERIFICADO",
+  "finishedAt": "2026-11-05T14:47:10.993Z"
+}

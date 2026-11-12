@@ -1,0 +1,45 @@
+[
+  {
+    "name": "valoraciones",
+    "start": 5.432,
+    "duration": 5.895,
+    "file": "C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\video-pitch\\parte3\\clips\\valoracion-real.webm"
+  },
+  {
+    "name": "valoracion_guardada",
+    "start": 11.436,
+    "duration": 5.803000000000001,
+    "file": "C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\video-pitch\\parte3\\clips\\valoracion-real.webm"
+  },
+  {
+    "name": "admin_pendiente",
+    "start": 1.871,
+    "duration": 6.202,
+    "file": "C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\video-pitch\\parte3\\clips\\revision-administrativa.webm"
+  },
+  {
+    "name": "admin_aprobar",
+    "start": 8.073,
+    "duration": 1.0139999999999993,
+    "file": "C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\video-pitch\\parte3\\clips\\revision-administrativa.webm"
+  },
+  {
+    "name": "admin_confirmado",
+    "start": 9.429,
+    "duration": 4.506,
+    "file": "C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\video-pitch\\parte3\\clips\\revision-administrativa.webm"
+  },
+  {
+    "name": "movil",
+    "start": 1.898,
+    "duration": 7.41,
+    "layout": "mobile",
+    "file": "C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\video-pitch\\parte3\\clips\\vista-movil-emulada.webm"
+  },
+  {
+    "name": "despedida",
+    "start": 1.955,
+    "duration": 10.929,
+    "file": "C:\\Users\\elias\\OneDrive\\Escritorio\\Proyecto capstone\\video-pitch\\parte3\\clips\\duco-cierre.webm"
+  }
+]

@@ -1,0 +1,48 @@
+{
+  "id": "CU-08",
+  "title": "Resaltar un texto o elemento",
+  "mode": "Integracion motor de resaltado; carrusel real",
+  "startedAt": "2026-11-05T14:45:19.561Z",
+  "images": [
+    {
+      "file": "CU-08-01-texto-resaltado.png",
+      "label": "texto-resaltado",
+      "url": "http://127.0.0.1:8765/duco",
+      "timestamp": "2026-11-05T14:45:22.551Z"
+    },
+    {
+      "file": "CU-08-02-resaltado-limpiado.png",
+      "label": "resaltado-limpiado",
+      "url": "http://127.0.0.1:8765/duco",
+      "timestamp": "2026-11-05T14:45:23.248Z"
+    }
+  ],
+  "inputs": [],
+  "replies": [],
+  "actions": [
+    {
+      "type": "highlightTerms",
+      "terms": [
+        "Congreso i2T 2026"
+      ],
+      "duration": 15000
+    },
+    {
+      "type": "clearHighlights"
+    }
+  ],
+  "outcomes": [
+    {
+      "success": true,
+      "detail": "Se resaltó la frase completa en 1 coincidencia(s)"
+    },
+    {
+      "success": true,
+      "detail": "Se limpiaron los resaltados activos"
+    }
+  ],
+  "modelResponses": [],
+  "errors": [],
+  "status": "VERIFICADO",
+  "finishedAt": "2026-11-05T14:45:23.248Z"
+}

@@ -1,0 +1,47 @@
+{
+  "id": "CU-13",
+  "title": "Abrir contenido multimedia de una carrera",
+  "mode": "Apertura y cierre del dialogo real; no certifica reproduccion",
+  "startedAt": "2026-11-05T14:45:42.709Z",
+  "images": [
+    {
+      "file": "CU-13-01-boton-video.png",
+      "label": "boton-video",
+      "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+      "timestamp": "2026-11-05T14:45:45.977Z"
+    },
+    {
+      "file": "CU-13-02-reproductor-abierto.png",
+      "label": "reproductor-abierto",
+      "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+      "timestamp": "2026-11-05T14:45:48.136Z"
+    },
+    {
+      "file": "CU-13-03-reproductor-cerrado.png",
+      "label": "reproductor-cerrado",
+      "url": "http://127.0.0.1:8765/carreras-detalle/ingenieria-en-informatica.html",
+      "timestamp": "2026-11-05T14:45:48.703Z"
+    }
+  ],
+  "inputs": [],
+  "replies": [],
+  "actions": [
+    {
+      "type": "clickControl",
+      "terms": [
+        "Video de la carrera"
+      ],
+      "dialogId": "dfc-modal-video-carrera"
+    }
+  ],
+  "outcomes": [
+    {
+      "success": true,
+      "detail": "Se abrió el contenido solicitado"
+    }
+  ],
+  "modelResponses": [],
+  "errors": [],
+  "status": "VERIFICADO",
+  "finishedAt": "2026-11-05T14:45:48.703Z"
+}

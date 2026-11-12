@@ -1,0 +1,55 @@
+{
+  "id": "CU-17",
+  "title": "Repetir una guia o un resaltado anterior",
+  "mode": "Boton real de repeticion, generado desde accion del motor",
+  "startedAt": "2026-11-05T14:46:45.026Z",
+  "images": [
+    {
+      "file": "CU-17-01-primer-resaltado.png",
+      "label": "primer-resaltado",
+      "url": "http://127.0.0.1:8765/duco",
+      "timestamp": "2026-11-05T14:46:48.025Z"
+    },
+    {
+      "file": "CU-17-02-sin-resaltado.png",
+      "label": "sin-resaltado",
+      "url": "http://127.0.0.1:8765/duco",
+      "timestamp": "2026-11-05T14:46:48.709Z"
+    },
+    {
+      "file": "CU-17-03-repetido-por-boton.png",
+      "label": "repetido-por-boton",
+      "url": "http://127.0.0.1:8765/duco",
+      "timestamp": "2026-11-05T14:46:49.895Z"
+    }
+  ],
+  "inputs": [],
+  "replies": [],
+  "actions": [
+    {
+      "type": "highlightTerms",
+      "terms": [
+        "Congreso i2T 2026"
+      ],
+      "duration": 15000
+    },
+    {
+      "type": "clearHighlights"
+    }
+  ],
+  "outcomes": [
+    {
+      "success": true,
+      "detail": "Se resaltó la frase completa en 1 coincidencia(s)"
+    },
+    {
+      "success": true,
+      "detail": "Se limpiaron los resaltados activos"
+    }
+  ],
+  "modelResponses": [],
+  "errors": [],
+  "detail": "Se conecta el boton real a una accion conocida para aislar la repeticion; no se prueba el clasificador de lenguaje en este caso.",
+  "status": "VERIFICADO",
+  "finishedAt": "2026-11-05T14:46:49.895Z"
+}

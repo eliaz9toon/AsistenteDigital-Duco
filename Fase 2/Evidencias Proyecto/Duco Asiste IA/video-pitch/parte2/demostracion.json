@@ -1,0 +1,107 @@
+{
+  "date": "2026-11-05T17:17:57.064Z",
+  "modelResponses": [
+    {
+      "status": 200,
+      "model": "qwen3.5:9b",
+      "content": "{\n  \"steps\": [\n    {\n      \"explanation\": \"La carrera inicia con un plan común de dos años donde se desarrollan las competencias fundamentales para el futuro ingeniero, permitiendo inmersión en la creación y análisis de tecnologías de información.\",\n      \"sourceIndex\": 4\n    },\n    {\n      \"explanation\": \"Durante el segundo año, el estudiante debe elegir formalmente una especialización cuyas asignaturas comienzan a cursarse desde el quinto semestre, definiendo su enfoque profesional temprano.\",\n      \"sourceIndex\": 5\n    },\n    {\n      \"explanation\": \"Al graduarse, el titular recibe el título de Ingeniero en Informática junto con un certificado adicional de la especialización elegida, consolidando una base troncal sólida y conocimientos específicos.\",\n      \"sourceIndex\": 12\n    },\n    {\n      \"explanation\": \"El perfil egresado está preparado para diseñar soluciones innovadoras aplicando el ciclo de vida del software, gestionar proyectos en contextos ágiles y resolver requerimientos de información complejas.\",\n      \"sourceIndex\": 19\n    }\n  ]\n}"
+    }
+  ],
+  "guidedStages": [
+    {
+      "step": 1,
+      "text": "**Parte 1 de 4**\nLa carrera inicia con un plan común de dos años donde se desarrollan las competencias fundamentales para el futuro ingeniero, permitiendo inmersión en la creación y análisis de tecnologías de información.",
+      "sources": [
+        "La carrera de Ingeniería en Informática de Duoc UC cuenta con un plan común de dos años, en el que se desarrollan las competencias y capacidades fundamentales para el desempeño del futuro Ingeniero en Informática."
+      ]
+    },
+    {
+      "step": 2,
+      "text": "**Parte 2 de 4**\nDurante el segundo año, el estudiante debe elegir formalmente una especialización cuyas asignaturas comienzan a cursarse desde el quinto semestre, definiendo su enfoque profesional temprano.",
+      "sources": [
+        "Durante el segundo año de la carrera, el estudiante deberá escoger formalmente una de las especializaciones, cuyas asignaturas se cursan a partir del 5.º semestre:"
+      ]
+    },
+    {
+      "step": 3,
+      "text": "**Parte 3 de 4**\nAl graduarse, el titular recibe el título de Ingeniero en Informática junto con un certificado adicional de la especialización elegida, consolidando una base troncal sólida y conocimientos específicos.",
+      "sources": [
+        "La persona titulada de la carrera recibirá el título de Ingeniero o Ingeniera en Informática y, de manera adicional, un certificado de la especialización que cursó."
+      ]
+    },
+    {
+      "step": 4,
+      "text": "**Parte 4 de 4**\nEl perfil egresado está preparado para diseñar soluciones innovadoras aplicando el ciclo de vida del software, gestionar proyectos en contextos ágiles y resolver requerimientos de información complejas.",
+      "sources": [
+        "Evaluar y gestionar proyectos en su área de especialización profesional, durante todo el ciclo de vida, de acuerdo a buenas prácticas y utilizando metodologías y herramientas de software, para cumplir con los requerimientos de la organización en contextos tradicionales y ágiles."
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "name": "Real homepage highlight",
+      "outcome": {
+        "success": true,
+        "detail": "Se resaltó la frase completa en 1 coincidencia(s)"
+      }
+    },
+    {
+      "name": "Natural-language navigation via chat",
+      "path": "/carreras-detalle/ingenieria-en-informatica.html"
+    },
+    {
+      "name": "Real AI explanation with source highlights",
+      "saved": {
+        "path": "/carreras-detalle/ingenieria-en-informatica.html",
+        "answer": "**Parte 1 de 4**\nLa carrera inicia con un plan común de dos años donde se desarrollan las competencias fundamentales para el futuro ingeniero, permitiendo inmersión en la creación y análisis de tecnologías de información.\n\n**Parte 2 de 4**\nDurante el segundo año, el estudiante debe elegir formalmente una especialización cuyas asignaturas comienzan a cursarse desde el quinto semestre, definiendo su enfoque profesional temprano.\n\n**Parte 3 de 4**\nAl graduarse, el titular recibe el título de Ingeniero en Informática junto con un certificado adicional de la especialización elegida, consolidando una base troncal sólida y conocimientos específicos.\n\n**Parte 4 de 4**\nEl perfil egresado está preparado para diseñar soluciones innovadoras aplicando el ciclo de vida del software, gestionar proyectos en contextos ágiles y resolver requerimientos de información complejas.",
+        "blocks": [
+          "La carrera de Ingeniería en Informática de Duoc UC cuenta con un plan común de dos años, en el que se desarrollan las competencias y capacidades fundamentales para el desempeño del futuro Ingeniero en Informática.",
+          "Durante el segundo año de la carrera, el estudiante deberá escoger formalmente una de las especializaciones, cuyas asignaturas se cursan a partir del 5.º semestre:",
+          "La persona titulada de la carrera recibirá el título de Ingeniero o Ingeniera en Informática y, de manera adicional, un certificado de la especialización que cursó.",
+          "Evaluar y gestionar proyectos en su área de especialización profesional, durante todo el ciclo de vida, de acuerdo a buenas prácticas y utilizando metodologías y herramientas de software, para cumplir con los requerimientos de la organización en contextos tradicionales y ágiles."
+        ]
+      },
+      "stages": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "name": "Same session and previous query preserved after manual navigation",
+      "session": "db8e2dc6-9b57-444c-9820-daddd88b5473",
+      "answer": "Antes me pediste: «Explicame Ingenieria en Informatica y resalta el texto de respaldo a medida que explicas.»."
+    },
+    {
+      "name": "Real dropdown action",
+      "outcome": {
+        "success": true,
+        "detail": "El menú se abrió"
+      }
+    },
+    {
+      "name": "Real page tab",
+      "outcome": {
+        "success": true,
+        "detail": "Pestaña seleccionada"
+      }
+    },
+    {
+      "name": "Real guided scroll",
+      "outcome": {
+        "success": true,
+        "detail": "Se desplazó la página al elemento"
+      }
+    }
+  ],
+  "passed": true,
+  "sourceCloseup": {
+    "source": "Durante el segundo año de la carrera, el estudiante deberá escoger formalmente una de las especializaciones, cuyas asignaturas se cursan a partir del 5.º semestre:",
+    "outcome": {
+      "success": true,
+      "detail": "Se destacaron los textos de la ficha"
+    },
+    "note": "Additional view of the same generated source paragraph with the chat panel closed for legibility."
+  }
+}

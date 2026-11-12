@@ -1,0 +1,14 @@
+{
+  "project": "Duco Asiste",
+  "canvas": {"width": 1920, "height": 1080, "fps": 30, "aspect": "16:9"},
+  "delivery": {"container": "mp4", "videoCodec": "libx264", "pixelFormat": "yuv420p", "crf": 18, "audioCodec": "aac", "audioBitrate": "192k", "sampleRate": 48000, "channels": 2},
+  "typeface": "Bahnschrift",
+  "colors": {"navy": "#04182A", "yellow": "#FFC321", "white": "#FFFFFF", "muted": "#AFC5D8"},
+  "safeMarginX": 96,
+  "transitionSeconds": 0.35,
+  "audio": {"integratedLufs": -16, "truePeakDb": -1.5, "music": false, "voiceReplacement": false},
+  "visuals": "Actual website recordings with editorial titles, restrained reframing and crossfades; no fabricated assistant functions.",
+  "part1": {"audio": "C:/Users/elias/Downloads/Parte1.mp3", "duration": 41.066667, "topic": "El problema y la presentacion de Duco Asiste"},
+  "part2": {"audio": "C:/Users/elias/Downloads/Parte2.mp3", "duration": 54.016, "topic": "La solucion y la demostracion real de sus funciones", "demoDisclosure": "Demostracion editada; esperas recortadas"},
+  "part3": {"originalAudio": "C:/Users/elias/Downloads/Parte3.ogg", "editedAudioSeconds": 75.555, "videoSeconds": 76.766667, "safePauseCuts": 7, "topic": "Valor, revision administrativa, prototipo, proximos pasos y cierre", "voiceReplacement": false}
+}
