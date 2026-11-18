@@ -494,6 +494,10 @@
   100% { transform: scale(1); }
 }
 
+/* Mensajes solo de pantalla (confirmar reinicio, errores locales) y botón Reintentar */
+.duco-transient-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.duco-retry-btn { margin-top: 6px; }
+
 /* Controles de conversación (mejora funcional R-9) */
 .duco-reset { border: 1px solid #b6d4fe; background: #e8f2ff;
   color: #064a8c; border-radius: 6px; padding: 6px 9px; font-size: 12px;
@@ -663,3 +667,40 @@
     animation: none !important; transition-duration: .01ms !important;
   }
 }
+
+/* ---- Tarjetas de mapa y calendario (js/duco-places.js) ---- */
+#duco-assistant-container .duco-message-card .duco-message-content {
+  max-width: 100%; width: 100%; padding: 10px; white-space: normal; box-sizing: border-box;
+}
+#duco-assistant-container .duco-map {
+  width: 100%; height: 210px; border-radius: 10px; overflow: hidden; background: #e8eef6; position: relative; z-index: 0;
+}
+#duco-assistant-container .duco-map-fallback {
+  display: flex; align-items: center; justify-content: center; padding: 14px; text-align: center; font-size: 12px; color: #476684;
+}
+#duco-assistant-container .duco-map-links { display: grid; gap: 6px; margin-top: 8px; font-size: 12px; line-height: 1.4; }
+#duco-assistant-container .duco-map-links > div { display: flex; flex-direction: column; gap: 2px; }
+#duco-assistant-container .duco-map-links a,
+#duco-assistant-container .duco-calendar-row a {
+  color: #075fba; font-weight: 600; text-decoration: none;
+}
+#duco-assistant-container .duco-map-links a:hover,
+#duco-assistant-container .duco-calendar-row a:hover { text-decoration: underline; }
+#duco-assistant-container .duco-map-credit { display: block; margin-top: 6px; font-size: 10px; color: #7b8b9e; }
+.duco-pin span {
+  display: block; width: 22px; height: 22px; background: #075fba; border: 2px solid #fff; border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg); box-shadow: 0 2px 5px rgba(0, 0, 0, .35);
+}
+#duco-assistant-container .duco-calendar-row {
+  display: grid; gap: 3px; padding: 8px 0; border-bottom: 1px solid #eef2f7; font-size: 12.5px; line-height: 1.4;
+}
+#duco-assistant-container .duco-calendar-row:last-of-type { border-bottom: 0; }
+#duco-assistant-container .duco-calendar-row strong { color: #173a60; }
+#duco-assistant-container .duco-calendar-row span { color: #476684; }
+#duco-assistant-container .duco-card-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 3px; align-items: center; }
+#duco-assistant-container .duco-card-actions button,
+#duco-assistant-container .duco-card-all {
+  border: 1px solid #c6ddf7; background: #f2f8ff; color: #075fba; font-size: 12px; font-weight: 600;
+  padding: 4px 9px; border-radius: 8px; cursor: pointer;
+}
+#duco-assistant-container .duco-card-all { margin-top: 8px; }

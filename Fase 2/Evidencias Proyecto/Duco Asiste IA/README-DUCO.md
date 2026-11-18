@@ -5,7 +5,10 @@
 En Windows, abre `Iniciar_Duco.cmd` con doble clic. Inicia el servidor local y abre
 Duco en el navegador. El servidor arranca Ollama en segundo plano si esta apagado;
 si ya estaba activo, lo reutiliza. Requiere Ollama instalado y el modelo
-`qwen3.5:9b` descargado previamente.
+`qwen3.5:4b` descargado previamente (`ollama pull qwen3.5:4b`, 3,3 GB). Cabe entero en una GPU de 6 GB
+y responde unas 2,5 veces más rápido que `qwen3.5:9b`, con igual calidad en la batería de `tests/model-bench.js`.
+Para cambiar de modelo, edita `ollamaModel` en la configuración de `duoc.html` (y de las demás páginas) o
+el valor por defecto en `js/ollama-client.js`.
 
 Deja abierta la terminal del iniciador mientras uses Duco. Al terminar, pulsa
 `Ctrl+C` en ella: cierra el servidor local y solo el proceso de Ollama que Duco

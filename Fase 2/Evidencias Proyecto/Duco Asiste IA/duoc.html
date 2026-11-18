@@ -3745,24 +3745,25 @@ if($('#cifras').length){
 
 <!-- ============ DUCO ASSISTANT - COMPLEMENTOS ============ -->
 <!-- Estilos de Duco -->
-<link rel="stylesheet" href="./css/duco-styles.css?v=20261104-compatibility-focus">
+<link rel="stylesheet" href="./css/duco-styles.css?v=20261114-ct1">
 
 <!-- Módulos de Duco -->
 <script src="./js/navigation-mapper.js?v=20260428v4"></script>
 <script src="./js/ui-highlighter.js?v=20261104-sprint3-1"></script>
-<script src="./js/chat-handler.js?v=20261029-session-context3"></script>
+<script src="./js/chat-handler.js?v=20261114-ct1"></script>
 <script src="./js/site-context.js?v=20261029-heading-text1"></script>
 <script>
     // Configuración de Ollama (servidor local).
     // Cambia ollamaModel si usas otro modelo de Ollama.
     window.ducoConfig = {
         ollamaBaseUrl: 'http://localhost:11434',
-        ollamaModel: 'qwen3.5:9b',
+        ollamaModel: 'qwen3.5:4b',
         knowledgeApiBaseUrl: 'http://127.0.0.1:8765'
     };
 </script>
-<script src="./js/ollama-client.js?v=20261105-three-incidents1"></script>
-<script src="./js/duco-assistant.js?v=20261105-three-incidents1"></script>
+<script src="./js/duco-places.js?v=20261114-ct1"></script>
+<script src="./js/ollama-client.js?v=20261114-ct1"></script>
+<script src="./js/duco-assistant.js?v=20261114-ct1"></script>
 <!-- ============ FIN DUCO ASSISTANT ============ -->
 <script>
     (function() {

@@ -3,6 +3,66 @@
  * Maneja la conversación y el historial de mensajes
  */
 
+/**
+ * Protección de datos sensibles: contraseñas, claves, PIN, tarjetas, RUT, tokens y cuentas bancarias.
+ * El asistente no los necesita. Si alguien los escribe, se tapan ANTES de guardarlos en el historial y NO se envían a la IA.
+ *   inspect(texto) → {sensitive, kinds, redacted, ask}
+ */
+(function () {
+  const MARK = '[dato sensible omitido]';
+  const luhn = digits => {
+    let sum = 0, alt = false;
+    for (let i = digits.length - 1; i >= 0; i--) {
+      let n = Number(digits[i]);
+      if (alt) { n *= 2; if (n > 9) n -= 9; }
+      sum += n; alt = !alt;
+    }
+    return sum % 10 === 0;
+  };
+  const rules = [
+    // "mi contraseña es X", "clave: X", "password = X", "pin es 1234"
+    {kind: 'clave', re: /(\b(?:mi |la |el |su |tu )?(?:contraseñ?a|contrasena|clave|password|passwd|pwd|pin|cvv|cvc|token|api[ _-]?key|secreto)\b[^:=\n]{0,14}?(?:\bes\b|\bis\b|\bseria\b|\bsera\b|\bson\b|:|=)\s*)([^\s,;]+)/gi, replace: (m, head) => head + MARK},
+    // "mi clave 1234abc" (sin "es"): solo si el valor tiene algún dígito o símbolo
+    {kind: 'clave', re: /(\b(?:mi |la |el |su )?(?:contraseñ?a|contrasena|clave|password|pin)\s+)(?!de\b|del\b|para\b|es\b|que\b|no\b|y\b|o\b|en\b|se\b|la\b|el\b)(\S*(?:\d|[^\w\sáéíóúñÁÉÍÓÚÑ.,;:¿?¡!])\S*)/gi, replace: (m, head) => head + MARK},
+    {kind: 'token', re: /\b(?:sk-[A-Za-z0-9_-]{16,}|ghp_[A-Za-z0-9]{20,}|AKIA[0-9A-Z]{12,}|xox[baprs]-[A-Za-z0-9-]{10,}|eyJ[A-Za-z0-9_-]{20,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{5,})/g, replace: () => MARK},
+    {kind: 'conexión', re: /\b[\w.$#-]+\/[^\s@\/]{3,}@[\w.:\/-]{3,}/g, replace: () => MARK},
+    {kind: 'rut', re: /\b\d{1,2}\.?\d{3}\.?\d{3}-[\dkK]\b/g, replace: () => MARK},
+    {kind: 'cuenta', re: /(\bcuenta\s+(?:corriente|vista|rut|de ahorros?|bancaria)?[^\d\n]{0,15})(\d{6,})/gi, replace: (m, head) => head + MARK},
+    {kind: 'tarjeta', re: /\b(?:\d[ -]?){13,19}\b/g, test: match => { const digits = match.replace(/\D/g, ''); return digits.length >= 13 && digits.length <= 19 && luhn(digits); }, replace: () => MARK}
+  ];
+  // "¿Puedo pasarte mi contraseña?", "¿necesitas mi clave?": sin valor, pero se aclara que no hace falta. Recuperar/cambiar una clave es otro tema.
+  const ASK_ITEM = /\b(?:mi|tu|su|mis)\s+(?:contraseñ?as?|contrasenas?|claves?|password|pin|tarjeta|rut|datos bancarios)\b/;
+  const ASK_VERB = /\b(?:puedo|te doy|te paso|te digo|te envio|te mando|necesitas|necesito|requieres|pides|pido|debo|tengo que|hace falta|quieres|te la)\b/;
+  const ASK_NOT = /\b(?:recuperar|recupero|olvide|olvidar|cambiar|cambio|restablecer|resetear|perdi|bloquead\w*|no recuerdo|no me acuerdo)\b/;
+
+  window.ducoPrivacy = {
+    mark: MARK,
+    inspect(text) {
+      let redacted = String(text || '');
+      const kinds = [];
+      for (const rule of rules) {
+        redacted = redacted.replace(rule.re, (...args) => {
+          const match = args[0];
+          if (rule.test && !rule.test(match)) return match;
+          if (!kinds.includes(rule.kind)) kinds.push(rule.kind);
+          return rule.replace(...args);
+        });
+      }
+      const norm = String(text || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+      // (norm no tiene tildes ni ñ: "contraseña" → "contrasena")
+      const ask = !kinds.length && ASK_ITEM.test(norm) && ASK_VERB.test(norm) && !ASK_NOT.test(norm);
+      return {sensitive: kinds.length > 0, kinds, redacted, ask};
+    },
+    redact(text) { return this.inspect(text).redacted; },
+    reply(info = {}) {
+      const rut = info.kinds?.length === 1 && info.kinds[0] === 'rut';
+      const what = rut ? 'tu RUT' : 'contraseñas, claves ni datos de tarjetas o cuentas';
+      const done = info.sensitive ? ' Taché ese dato en la conversación y no se envió a la IA.' : '';
+      return `Por tu seguridad no necesito ${what}, y no conviene compartirlos en un chat.${done} Si necesitas ingresar a un servicio (por ejemplo Pago en línea), hazlo directamente en el sitio oficial de Duoc UC. ¿En qué más puedo ayudarte?`;
+    }
+  };
+})();
+
 class ChatHandler {
   constructor() {
     this.messages = [];
@@ -160,7 +220,8 @@ class ChatHandler {
     const message = {
       id: Date.now(),
       type: 'user',
-      text: text,
+      // Nada sensible llega al historial, a la sesión del navegador ni al modelo.
+      text: window.ducoPrivacy ? window.ducoPrivacy.redact(text) : text,
       timestamp: new Date().toISOString(),
       displayed: false
     };
@@ -185,6 +246,8 @@ class ChatHandler {
       displayed: false,
       isTyping: isTyping,
       category: metadata.category || (Array.isArray(metadata.highlightTerms) ? 'action' : 'dialogue'),
+      // Cierre de tarea ("Listo, ya estás en…"): se guarda, pero no cuenta como "la última respuesta" para repetir o simplificar.
+      ...(metadata.closing === true ? {closing: true} : {}),
       ...(Array.isArray(metadata.highlightTerms) ? {
         highlightTerms: metadata.highlightTerms.map(term => String(term || '').trim()).filter(Boolean).slice(0, 6)
       } : {})

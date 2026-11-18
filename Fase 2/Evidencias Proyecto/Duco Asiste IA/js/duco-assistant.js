@@ -349,9 +349,24 @@ class DucoAssistant {
     }
   }
 
-  /** Reinicia la conversación y elimina sus mensajes de Session Storage. */
-  resetConversation() {
+  /**
+   * CU-07 Iniciar una nueva conversación. Si ya hay conversación se pide confirmación (A2: se puede cancelar y se conserva);
+   * sin conversación previa (A1) se reinicia igual. Un error local (A3) se informa y se puede reintentar.
+   */
+  resetConversation(force = false) {
     if (this.isProcessing) return;
+    try {
+      const hasConversation = (window.chatHandler?.getDialogueMessages?.() || []).some(message => message.type === 'user');
+      if (hasConversation && !force) { this.showResetConfirmation(); return; }
+      this.performReset();
+    } catch (error) {
+      console.error('[Duco] No se pudo reiniciar la conversación:', error);
+      this.showTransientMessage('No se pudo reiniciar la conversación. Puedes intentarlo de nuevo.', [{label: '🔄 Reintentar', onClick: () => this.resetConversation(true)}]);
+    }
+  }
+
+  /** Borra historial, borrador, resaltados y contexto de sesión, y muestra la bienvenida. */
+  performReset() {
     sessionStorage.removeItem('duco-navigation-pending');
     sessionStorage.removeItem('duco-navigation-previous');
     window.ducoHighlighter?.clearAllHighlights?.();
@@ -360,7 +375,7 @@ class DucoAssistant {
     const messages = document.getElementById(this.messagesId);
     if (messages) messages.replaceChildren();
     this.hideTypingIndicator();
-    const welcome = '¡Hola! 👋 Soy Duco. ¿En qué puedo ayudarte?';
+    const welcome = '¡Hola! 👋 Soy Duco, tu asistente virtual de Duoc UC. ¿Cómo puedo ayudarte hoy?';
     window.chatHandler?.addAssistantMessage(welcome, false);
     if (messages) {
       const row = document.createElement('div');
@@ -373,6 +388,69 @@ class DucoAssistant {
     }
     const input = document.getElementById(this.inputId);
     if (input) { input.value = ''; input.focus(); }
+  }
+
+  /** Mensaje del asistente que vive solo en pantalla (no entra al historial), con botones opcionales. Devuelve la fila. */
+  showTransientMessage(text, buttons = []) {
+    const messages = document.getElementById(this.messagesId);
+    if (!messages) return null;
+    const row = document.createElement('div');
+    row.className = 'duco-message duco-message-assistant duco-message-transient';
+    row.setAttribute('role', 'alert');
+    const content = document.createElement('div');
+    content.className = 'duco-message-content';
+    content.textContent = text;
+    row.appendChild(content);
+    if (buttons.length) {
+      const bar = document.createElement('div');
+      bar.className = 'duco-transient-actions';
+      buttons.forEach(({label, onClick}) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'duco-action-btn';
+        button.textContent = label;
+        button.addEventListener('click', () => { row.remove(); onClick?.(); });
+        bar.appendChild(button);
+      });
+      row.appendChild(bar);
+    }
+    messages.appendChild(row);
+    messages.scrollTop = messages.scrollHeight;
+    return row;
+  }
+
+  /** CU-07 A2: pide confirmar antes de borrar la conversación; «Cancelar» la conserva. */
+  showResetConfirmation() {
+    const messages = document.getElementById(this.messagesId);
+    messages?.querySelectorAll('.duco-reset-confirm').forEach(node => node.remove());
+    const row = this.showTransientMessage('¿Quieres empezar una conversación nueva? Se borrará el historial de esta.', [
+      {label: 'Sí, empezar de nuevo', onClick: () => this.resetConversation(true)},
+      {label: 'Cancelar', onClick: () => { this.showTransientMessage('Listo, seguimos con esta conversación.'); }}
+    ]);
+    row?.classList.add('duco-reset-confirm');
+    row?.querySelector('button')?.focus();
+  }
+
+  /** CU-01/02/03/06 A3: tras una falla se ofrece reintentar la misma consulta sin volver a escribirla. */
+  addRetryButton(text, messageElement = null) {
+    const messages = document.getElementById(this.messagesId);
+    const row = messageElement || messages?.querySelector('.duco-message-assistant:last-of-type');
+    if (!row || row.querySelector('.duco-retry-btn')) return;
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'duco-action-btn duco-retry-btn';
+    button.textContent = '🔄 Reintentar';
+    button.setAttribute('aria-label', 'Reintentar la consulta anterior');
+    button.addEventListener('click', async () => {
+      if (this.isProcessing) return;
+      button.remove();
+      this.setProcessing(true);
+      try {
+        this.showTypingIndicator();
+        await this.processUserInput(text);
+      } finally { this.setProcessing(false); }
+    });
+    row.appendChild(button);
   }
 
   /** Evita preguntas simultáneas que mezclan respuestas y acciones visuales. */
@@ -406,6 +484,7 @@ class DucoAssistant {
         return;
       }
       this.setProcessing(true);
+      this._lastSubmittedText = text;
 
       // Limpiar input
       input.value = '';
@@ -413,6 +492,17 @@ class DucoAssistant {
       // Agregar mensaje del usuario
       if (!window.chatHandler) {
         console.error('[Duco] ChatHandler no disponible');
+        return;
+      }
+
+      // Datos sensibles (claves, tarjetas, RUT...): se tapan, se muestra el mensaje ya tachado y no se consulta a la IA.
+      const privacy = window.ducoPrivacy?.inspect(text);
+      if (privacy?.sensitive || privacy?.ask) {
+        window.chatHandler.addUserMessage(text);
+        this.displayMessage(privacy.redacted, 'user');
+        const message = window.ducoPrivacy.reply(privacy);
+        window.chatHandler.addAssistantMessage(message, false);
+        await this.displayMessage(message, 'assistant');
         return;
       }
 
@@ -427,9 +517,10 @@ class DucoAssistant {
     } catch (error) {
       console.error('[Duco] Error procesando entrada:', error);
       this.hideTypingIndicator();
-      const message = 'Disculpa, ocurrió un error procesando tu pregunta. Intenta de nuevo.';
+      const message = 'Disculpa, ocurrió un error procesando tu pregunta. Puedes reintentar cuando quieras.';
       window.chatHandler?.addAssistantMessage(message);
-      await this.displayMessage(message, 'assistant');
+      const element = await this.displayMessage(message, 'assistant');
+      if (this._lastSubmittedText) this.addRetryButton(this._lastSubmittedText, element?.nodeType === 1 ? element : null);
     } finally {
       this.setProcessing(false);
     }
@@ -463,9 +554,10 @@ class DucoAssistant {
         : await this.requestAiResponse(text);
       if (!aiResponse) {
         this.hideTypingIndicator();
-        const message = 'No pude conectarme con la IA. Intenta de nuevo.';
+        const message = 'No pude conectarme con la IA. Puedes reintentar cuando quieras.';
         window.chatHandler.addAssistantMessage(message);
-        await this.displayMessage(message, 'assistant');
+        const element = await this.displayMessage(message, 'assistant');
+        this.addRetryButton(text, element?.nodeType === 1 ? element : null);
         return;
       }
 
@@ -614,8 +706,10 @@ class DucoAssistant {
       this.hideTypingIndicator();
       const message = this.getUserFacingError(error);
       window.chatHandler?.addAssistantMessage(message);
-      await this.displayMessage(message, 'assistant');
+      const element = await this.displayMessage(message, 'assistant');
+      this.addRetryButton(text, element?.nodeType === 1 ? element : null);
     } finally {
+      this.discardLiveStream();
       const highlighter = window.ducoHighlighter;
       if (highlighter?.transientDropdownState?.size || highlighter?.transientCollapseState?.size || highlighter?.transientDetailsState?.size) {
         highlighter.scheduleTransientUiClose(transientCloseDelay);
@@ -645,7 +739,7 @@ class DucoAssistant {
         try {
           const catalogResponse=await fetch('/assets/carreras-catalogo.json');
           const catalog=catalogResponse.ok ? await catalogResponse.json() : [];
-          careerAlternatives=catalog.filter(item=>item.title && item.local_link).map(item=>({title:item.title,source:item.link,localLink:item.local_link}));
+          careerAlternatives=catalog.filter(item=>item.title && item.local_link).map(item=>({title:item.title,source:item.link,localLink:item.local_link,escuela:item.escuela || [],duracion:item.duracion || '',tipo:item.tipo || [],sedes_modalidades:item.sedes_modalidades || []}));
         } catch (error) { console.warn('[Duco] No se pudo consultar el catálogo:',error); }
       }
       if (!window.chatHandler.conversationContext.lastRequestedTarget) {
@@ -660,6 +754,13 @@ class DucoAssistant {
       }
       const pageResearch = await this.findPageResearch(text);
       const selectedCareers = pageResearch.filter(item=>item.kind === 'catalogo');
+      // Seguimientos sin nombre ("¿cuánto dura esa carrera?", "¿y en qué sedes?"): se adjuntan los datos de la carrera activa.
+      if (!selectedCareers.length) {
+        const active=this.getActiveLastCareer(text,careerAlternatives);
+        const item=active && careerAlternatives.find(candidate=>candidate.title===active.title);
+        if (item) pageResearch.unshift({kind:'catalogo',title:item.title,source:item.source,localLink:item.localLink,fromContext:true,
+          detail:{duracion:item.duracion,tipo:item.tipo,escuela:item.escuela,sedes_modalidades:item.sedes_modalidades},captured:'2026-10-29'});
+      }
       if (selectedCareers.length === 1) {
         window.chatHandler.conversationContext.lastCareer = selectedCareers[0];
         window.chatHandler.saveToSession();
@@ -703,14 +804,19 @@ class DucoAssistant {
       }
 
       actionExperiences=await this.getActionExperiences(text);
+      this.discardLiveStream();
       const response = await this.aiClient.generateResponse(text, {
+        // Streaming: la respuesta conversacional aparece mientras el modelo la escribe.
+        // Sin streaming en preguntas de direcciones o contactos: un dato inventado no debe llegar a mostrarse ni un instante.
+        onToken: (options.actionReview || options.actionRepair || options.actionRecovery || /\b(?:direccion|telefono|correo|mail|sede|sedes|ubicacion|donde)\b/i.test(String(text).normalize('NFD').replace(/[̀-ͯ]/g,''))) ? undefined : partial => this.updateLiveStream(partial),
         context: {
           navigationCapabilities: window.ducoHighlightSystem?.capabilities ? window.ducoHighlightSystem.capabilities() : {},
           databaseKnowledge,
           actionExperiences,
           lastCorrection:window.chatHandler?.conversationContext?.lastCorrection || null,
           pageResearch,
-          lastCareer: window.chatHandler?.conversationContext?.lastCareer || null,
+          lastCareer: this.getActiveLastCareer(text, careerAlternatives),
+          pendingCareerSuggestion: window.chatHandler?.conversationContext?.pendingCareerSuggestion || null,
           lastRequestedTarget: window.chatHandler?.conversationContext?.lastRequestedTarget || null,
           careerCandidates: selectedCareers.map(item=>item.title),
           careerAlternatives,
@@ -736,20 +842,27 @@ class DucoAssistant {
         messages: conversation
       });
       if (!response || typeof response.reply !== 'string' || !response.reply.trim()) {
+        this.discardLiveStream();
         throw new Error('OLLAMA_INVALID_RESPONSE');
       }
+      // Si la respuesta ya se mostró en vivo, displayMessage reutiliza ese mismo elemento al final.
+      if (this._live) this._live.finalText = response.reply;
       if (response.turnDecision?.mode==='correction') await this.recordUserCorrection(text,response.turnDecision);
       else if (['new','alternative','explain'].includes(response.turnDecision?.mode)) {
         delete window.chatHandler.conversationContext.lastCorrection;
         window.chatHandler.saveToSession();
       }
+      // La sugerencia "¿Quisiste decir X?" solo vale para el mensaje siguiente.
+      if (response.suggestedCareer) window.chatHandler.conversationContext.pendingCareerSuggestion=response.suggestedCareer;
+      else delete window.chatHandler.conversationContext.pendingCareerSuggestion;
+      window.chatHandler.saveToSession();
       if (response.selectedCareer) {
         window.chatHandler.conversationContext.lastCareer=response.selectedCareer;
         const visited=window.chatHandler.conversationContext.visitedCareers || [];
         window.chatHandler.conversationContext.visitedCareers=[...new Set([...visited,response.selectedCareer.title])].slice(-81);
         window.chatHandler.saveToSession();
       }
-      const careers = pageResearch.filter(item=>item.kind === 'catalogo');
+      const careers = pageResearch.filter(item=>item.kind === 'catalogo' && !item.fromContext);
       if (!options.actionReview && !options.actionRepair && response.intent?.reference!=='resolved_action' && careers.length === 1 &&
           !(response.actions || []).some(action=>['navigate','explainCareer'].includes(action.type)) &&
           !/\b(?:abre|cerrar|cierra|selecciona|navega|volver)\b/i.test(text)) {
@@ -768,6 +881,50 @@ class DucoAssistant {
       console.warn('[Duco] IA no disponible:', error.message);
       throw error;
     }
+  }
+
+  /**
+   * La última carrera vista solo cuenta como contexto mientras el usuario sigue en su ficha
+   * o la menciona ("esa carrera", "ve hacia allá", su nombre). Si volvió al menú o a otra
+   * página y pide algo distinto, arrastrarla hace que el asistente siga "en la carrera".
+   */
+  getActiveLastCareer(text, careerAlternatives = []) {
+    const last = window.chatHandler?.conversationContext?.lastCareer || null;
+    if (!last) return null;
+    if (/\/carreras-detalle\//.test(location.pathname)) return last;
+    const normalize = value=>String(value || '').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+    const current = normalize(text);
+    const referential = /\b(?:esa|esta|aquella|la misma|misma|dicha)\s+(?:carrera|ficha|informacion)\b|\b(?:ficha|alla|ahi|de nuevo|otra vez|vuelve|volver|regresa\w*|anterior|ultima|antes)\b/.test(current);
+    const named = current.includes(normalize(last.title));
+    // Seguimiento natural ("¿y en qué sedes?", "¿cuánto dura?"): la carrera sigue activa si se habló de ella en los últimos mensajes.
+    const recent = (window.chatHandler?.getDialogueMessages?.() || []).slice(-6).some(message => message.type === 'assistant' && normalize(message.text).includes(normalize(last.title)));
+    const followUp = recent && /\b(?:y|ademas|tambien)\b|\b(?:sedes?|duracion|dura|jornadas?|horarios?|modalidad\w*|escuela|tipo|malla|requisitos?|cuesta|arancel|esa|esta|ella)\b/.test(current) && current.split(' ').length <= 12;
+    return referential || named || followUp ? last : null;
+  }
+
+  /** Muestra (o actualiza) un mensaje del asistente con el texto parcial que llega del modelo. */
+  updateLiveStream(partial) {
+    const container = document.getElementById(this.messagesId);
+    if (!container || !partial) return;
+    if (!this._live) {
+      this.hideTypingIndicator();
+      const el = document.createElement('div');
+      el.className = 'duco-message duco-message-assistant duco-message-live';
+      const contentEl = document.createElement('div');
+      contentEl.className = 'duco-message-content';
+      el.appendChild(contentEl);
+      container.appendChild(el);
+      this._live = {el, contentEl, finalText: null};
+    }
+    // Se oculta un posible arranque de JSON mientras llega ("{"reply":"..."): solo se muestra texto legible.
+    this._live.contentEl.textContent = String(partial).replace(/^\s*\{\s*"reply"\s*:\s*"?/, '');
+    container.scrollTop = container.scrollHeight;
+  }
+
+  /** Descarta un mensaje en vivo que no llegó a ser la respuesta final (error, reparación, etc.). */
+  discardLiveStream() {
+    if (this._live?.el?.isConnected) this._live.el.remove();
+    this._live = null;
   }
 
   getSourceParagraphElements() {
@@ -845,6 +1002,14 @@ class DucoAssistant {
           ties.forEach(({item})=>results.push({kind:'catalogo',title:item.title,source:item.link,localLink:item.local_link,
             detail:{duracion:item.duracion,tipo:item.tipo,escuela:item.escuela,sedes_modalidades:item.sedes_modalidades},
             captured:'2026-10-29'}));
+        }
+        if (!results.length && typeof this.aiClient?.resolveCareerMentions === 'function') {
+          // Sin coincidencia literal: probar siglas (TENS) y nombres parecidos antes de rendirse.
+          const careerCue=/\b(?:carreras?|ficha|tecnico|ingenieria)\b/.test(normalize(question));
+          const similar=this.aiClient.resolveCareerMentions(question,catalog,{allowFuzzy:careerCue});
+          similar.matches.slice(0,3).forEach(item=>results.push({kind:'catalogo',title:item.title,source:item.link,localLink:item.local_link,
+            detail:{duracion:item.duracion,tipo:item.tipo,escuela:item.escuela,sedes_modalidades:item.sedes_modalidades},
+            captured:'2026-10-29',matchedBy:similar.kind}));
         }
       }
     } catch (error) { console.warn('[Duco] Catálogo local no disponible:',error); }
@@ -929,18 +1094,20 @@ class DucoAssistant {
   getUserFacingError(error) {
     const message = String(error?.message || '');
     if (message === 'OLLAMA_UNAVAILABLE' || /Ollama no está disponible/i.test(message)) {
-      return 'No pude conectarme con Ollama. Verifica que esté iniciado e intenta nuevamente.';
+      return 'No pude conectarme con la IA (Ollama). Verifica que esté iniciado e intenta nuevamente. Mientras tanto sigo pudiendo buscar carreras, mostrar sedes en el mapa, dar fechas de admisión y abrir menús.';
     }
     if (message === 'OLLAMA_TIMEOUT' || error?.name === 'AbortError') {
-      return 'Ollama tardó demasiado en responder. Intenta nuevamente.';
+      return 'La IA tardó demasiado en responder. Intenta nuevamente; puedo seguir buscando carreras, sedes y fechas.';
     }
     if (message === 'OLLAMA_INVALID_RESPONSE') {
       return 'Ollama respondió con un resultado vacío o inválido. Intenta nuevamente.';
     }
     if (message === 'OLLAMA_NETWORK_ERROR' || /fetch|network|failed to fetch/i.test(message)) {
-      return 'No se pudo establecer conexión con Ollama. Verifica que esté iniciado e intenta nuevamente.';
+      return 'No se pudo establecer conexión con la IA (Ollama). Verifica que esté iniciado e intenta nuevamente. Mientras tanto sigo pudiendo buscar carreras, mostrar sedes en el mapa, dar fechas de admisión y abrir menús.';
     }
-    return 'Ocurrió un error al procesar tu pregunta. Intenta nuevamente.';
+    // Se deja el detalle técnico para poder diagnosticar el fallo la próxima vez (y queda en window.__ducoLastError).
+    try { window.__ducoLastError = {message: String(error?.message || error), stack: String(error?.stack || '').split('\n').slice(0, 6).join(' | '), at: new Date().toISOString()}; } catch { /* sin detalle */ }
+    return `Ocurrió un error al procesar tu pregunta. Intenta nuevamente. (Detalle técnico: ${String(error?.message || error).replace(/\s+/g, ' ').slice(0, 140)})`;
   }
 
   isValidHighlightTerm(term) {
@@ -1038,7 +1205,7 @@ class DucoAssistant {
 
   sanitizeActions(actions) {
     const actionsWithoutTerms = ['closeDropdown', 'clearHighlights', 'close'];
-    const supported = new Set(['highlight','highlightTerms','dropdown','closeDropdown','clearHighlights','clear','close','scroll','viewport','move','goto','navigate','explainCareer','showEvidence','clickControl','selectPageControl','proposeKnowledge']);
+    const supported = new Set(['highlight','highlightTerms','dropdown','closeDropdown','clearHighlights','clear','close','scroll','viewport','move','goto','navigate','explainCareer','showEvidence','clickControl','selectPageControl','proposeKnowledge','showMap','showCalendar']);
     return (actions || []).filter(Boolean).map(action => {
       const sanitized = { ...action };
       if (sanitized.terms) {
@@ -1110,6 +1277,13 @@ class DucoAssistant {
     });
     return bound.flatMap(action => {
       if (!['highlight', 'highlightTerms', 'scroll', 'viewport', 'move', 'goto'].includes(action.type)) return [action];
+      // Señalar el control de un menú (sin abrirlo): se resalta el botón de la barra, no el mismo texto del pie de página.
+      if (action.menuControl === true && action.type === 'highlightTerms') {
+        const control = this.resolveDropdownControl(action.terms || []);
+        if (control?.trigger?.getClientRects().length) {
+          return [{...action, terms:[control.label], menuTrigger:control.trigger, menuElement:control.menu, autoGuide:false, closeTransientUi:false}];
+        }
+      }
       if (action.scope === 'opened_menu' && ['highlight','highlightTerms'].includes(action.type)) {
         const binding = bindings.find(item => (action.menuTerms || []).some(term=>normalize(term)===normalize(item.label))) || bindings[0];
         if (!binding) return [action];
@@ -1346,6 +1520,7 @@ class DucoAssistant {
               type: 'highlightTerms',
               careerCard: action.careerCard,
               menuTrigger: action.menuTrigger,
+              guideFirst: action.guideFirst,
               menuElement: action.menuElement,
               scope: action.scope,
               menuTerms: action.menuTerms,
@@ -1378,6 +1553,10 @@ class DucoAssistant {
           });
         } else if (action.type === 'navigate') {
           flow.push({action:{type:'navigate',terms:action.terms || [],target:action.target},pauseAfter:action.pauseAfter});
+        } else if (action.type === 'showMap') {
+          flow.push({action:{type:'showMap',terms:action.terms || [],sedeIds:action.sedeIds || []}});
+        } else if (action.type === 'showCalendar') {
+          flow.push({action:{type:'showCalendar',terms:action.terms || [],eventIds:action.eventIds || []}});
         } else if (action.type === 'explainCareer') {
           flow.push({action:{type:'explainCareer',terms:action.terms || [],guided:action.guided === true}});
         } else if (action.type === 'clickControl') {
@@ -1513,7 +1692,8 @@ class DucoAssistant {
           window.chatHandler.addAssistantMessage(actionMsg);
           await this.displayMessage(actionMsg, 'assistant', { action: true });
         } else if (step.action.type === 'clickControl' || step.action.type === 'selectPageControl') {
-          const actionMsg = `🖱️ Seleccionando: ${step.action.terms.join(', ')}`;
+          const filterLabel = /^bc-[a-z]+-/.test(String(step.action.terms[0] || '')) ? (document.getElementById(step.action.terms[0])?.labels?.[0]?.textContent.trim() || 'filtro') : null;
+          const actionMsg = `🖱️ Seleccionando: ${filterLabel || step.action.terms.join(', ')}`;
           window.chatHandler.addAssistantMessage(actionMsg);
           await this.displayMessage(actionMsg, 'assistant', { action: true });
         } else if (step.action.type === 'showEvidence') {
@@ -1563,8 +1743,44 @@ class DucoAssistant {
     }
     if (context.userText) window.chatHandler?.recordActionPlan?.(context.userText,
       flowSteps.filter(step=>step?.action).map(step=>({...step.action,pauseAfter:step.pauseAfter})),actionOutcomes);
+    try { await this.announceCompletion(flowSteps,actionOutcomes,context); } catch (error) { console.warn('[Duco] No se pudo anunciar el cierre:',error); }
     this.finishActionFeedback(context);
     return actionOutcomes;
+  }
+
+  /**
+   * Al terminar una tarea con acciones en la página, el asistente avisa que terminó y ofrece el siguiente paso
+   * ("Listo, ya estás en la ficha de «X». ¿Quieres que te la explique?"). Si algo falló, ya se dijo y aquí no se agrega nada.
+   */
+  async announceCompletion(flowSteps,outcomes,context) {
+    if (context.silentCompletion) return;
+    const actions=flowSteps.filter(step=>step?.action).map(step=>step.action);
+    if (!actions.length && !context.arrived) return;
+    if (outcomes.some(outcome=>outcome?.success!==true)) return;
+    // Estas acciones ya entregan su propio contenido (explicación, mapa, calendario, texto resaltado).
+    if (actions.some(action=>['explainCareer','showEvidence','showMap','showCalendar','proposeKnowledge'].includes(action.type))) return;
+    const path=location.pathname;
+    const pageName=()=>(document.querySelector('main h1, h1')?.textContent || document.title.split('–')[0]).replace(/\s+/g,' ').trim();
+    let message=null;
+    if (context.arrived || actions.some(action=>action.type==='navigate')) {
+      if (/\/carreras-detalle\//.test(path)) message=`Listo, ya estás en la ficha de «${pageName()}». ¿Quieres que te la explique punto por punto, o prefieres ver en qué sedes y jornadas se imparte?`;
+      else if (/\/carreras\.html$/.test(path)) message='Listo, estás en el catálogo de carreras. Dime qué área te interesa y aplico los filtros por ti, o pídeme una carrera por su nombre.';
+      else if (['/duco','/duoc.html','/'].includes(path)) message='Listo, estás en la página de inicio. ¿Qué quieres ver ahora?';
+      else message=`Listo, ya estás en «${pageName()}». ¿Qué necesitas ver aquí?`;
+    } else if (actions.some(action=>action.type==='selectPageControl' && /^bc-[a-z]+-/.test(String(action.terms?.[0] || '')))) {
+      const count=document.querySelector('.bc-count')?.textContent.replace(/\s+/g,' ').trim();
+      message=count ? `Listo: ahora el catálogo muestra ${count}. ¿Quieres afinar más el filtro o abrir alguna carrera?` : 'Listo, apliqué el filtro. ¿Quieres afinarlo más?';
+    } else {
+      const last=actions.at(-1);
+      if (last.type==='dropdown') message=`Listo, el menú «${last.terms?.[0] || ''}» está abierto. ¿Quieres que te señale alguna opción?`;
+      else if (last.type==='closeDropdown') message='Listo, cerré el menú. ¿Seguimos con otra cosa?';
+      else if (last.type==='highlightTerms' || last.type==='highlight') message='Listo, ya lo tienes señalado en pantalla. ¿Quieres que te explique qué es o seguimos con otra cosa?';
+      else if (['scroll','viewport','move','goto'].includes(last.type)) message='Listo, ya estás en esa parte de la página. ¿Necesitas algo más?';
+      else if (last.type==='clearHighlights') message='Listo, quité los resaltados. ¿Seguimos?';
+    }
+    if (!message) return;
+    window.chatHandler.addAssistantMessage(message,false,{closing:true});
+    await this.displayMessage(message,'assistant');
   }
 
   finishActionFeedback(context) {
@@ -1620,7 +1836,7 @@ class DucoAssistant {
     setTimeout(async()=>{
       try {
         const actions = this.bindMenuActions(this.sanitizeActions(pending.remaining));
-        await this.runAssistantFlow(this.buildFlowFromAiResponse({actions}),{userText:pending.request,feedbackInteraction:pending.feedbackInteraction,recoveryAttempted:pending.recoveryAttempted});
+        await this.runAssistantFlow(this.buildFlowFromAiResponse({actions}),{userText:pending.request,feedbackInteraction:pending.feedbackInteraction,recoveryAttempted:pending.recoveryAttempted,arrived:true});
       } catch (error) {
         console.error('[Duco] Error al continuar la navegación:',error);
         const message = 'No pude continuar la acción en esta página.';
@@ -1752,6 +1968,42 @@ class DucoAssistant {
     if (!action) return;
 
     console.log('[Duco] Ejecutando acción:', JSON.stringify(action));
+
+    if (action.type === 'showMap' || action.type === 'showCalendar') {
+      const places = window.ducoPlaces;
+      const container = document.getElementById(this.messagesId);
+      if (!places || !container) return {success:false,detail:'El módulo de ubicaciones no está disponible'};
+      const message = document.createElement('div');
+      message.className = 'duco-message duco-message-assistant duco-message-card';
+      const content = document.createElement('div');
+      content.className = 'duco-message-content';
+      message.appendChild(content);
+      container.appendChild(message);
+      const count = action.type === 'showMap' ? await places.renderMap(content, action.sedeIds || []) : places.renderCalendar(content, action.eventIds || []);
+      container.scrollTop = container.scrollHeight;
+      if (!count) { message.remove(); return {success:false,detail:'No hay datos para mostrar'}; }
+      return {success:true,detail:action.type === 'showMap' ? `Se mostró el mapa con ${count} sede(s)` : `Se mostraron ${count} fecha(s) con botones para agregar al calendario`};
+    }
+
+    if (action.type === 'selectPageControl' && /^bc-[a-z]+-/.test(String(action.terms?.[0] || ''))) {
+      // Filtro real del catálogo de carreras (Modalidad, Tipo, Escuela, Sede, Jornada): se abre su grupo, se señala y se marca.
+      const input = document.getElementById(action.terms[0]);
+      if (!input) return {success:false,detail:'No se encontró ese filtro en esta página'};
+      const label = input.labels?.[0];
+      if (!label?.getClientRects().length) {
+        const header = [...document.querySelectorAll('.bc-filtro-header')].find(item => item.parentElement?.contains(input));
+        header?.click();
+        await this.sleep(450);
+      }
+      const target = input.labels?.[0]?.getClientRects().length ? input.labels[0] : input;
+      await window.ducoHighlighter?.guideToElement?.(target);
+      window.ducoHighlighter?.highlight?.(target,1400,{guide:false});
+      await this.sleep(700);
+      if (!input.checked) input.click();
+      await this.sleep(500);
+      const count = document.querySelector('.bc-count')?.textContent.replace(/\s+/g,' ').trim();
+      return {success:input.checked,detail:`Filtro aplicado${count ? ` (${count})` : ''}`};
+    }
 
     if (action.type === 'selectPageControl') {
       const normalize=value=>String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\s+/g,' ').trim();
@@ -2016,9 +2268,15 @@ class DucoAssistant {
         if (!action.menuTrigger.getClientRects().length || style.visibility === 'hidden' || style.display === 'none') {
           return { success: false, detail: 'La opción del menú no está visible' };
         }
+        // Elemento de contenido (no de menú) fuera de pantalla: primero se baja hasta él y se espera a que termine el desplazamiento;
+        // si no, el resaltado se dibujaba durante el scroll y se borraba al terminar de moverse la página.
+        if (action.guideFirst && window.ducoHighlighter.guideToElement) {
+          await window.ducoHighlighter.guideToElement(action.menuTrigger);
+          await this.sleep(350);
+        }
         window.ducoHighlighter.highlight(action.menuTrigger, action.duration || 4500, {guide:false});
         window.ducoHighlighter.avoidChatPanelOverlap(action.menuElement || action.menuTrigger, 0);
-        return {success:true, detail:'Se resaltó el control del menú abierto'};
+        return {success:true, detail:action.guideFirst ? 'Se resaltó el título de la página' : 'Se resaltó el control del menú abierto'};
       }
       // El efecto necesita tiempo visible suficiente aunque el modelo proponga
       // una duración demasiado corta.
@@ -2182,6 +2440,16 @@ class DucoAssistant {
       if (!messagesContainer) {
         console.error('[Duco] Contenedor de mensajes no encontrado');
         return;
+      }
+
+      // La respuesta ya apareció en streaming: se conserva ese elemento y solo se fija su texto final.
+      if (type === 'assistant' && this._live && this._live.finalText === text) {
+        const live = this._live;
+        this._live = null;
+        live.el.classList.remove('duco-message-live');
+        this.linkifyAssistantMessage(live.contentEl, text);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        return live.el;
       }
 
       const messageEl = document.createElement('div');

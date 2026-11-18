@@ -1,0 +1,707 @@
+{
+  "_nota": "Respuestas a preguntas frecuentes, tomadas de centroayuda.duoc.cl y duoc.cl (consultadas el 2026-11-12). Revisar antes de cada admisión. 'patterns' son expresiones regulares sobre el texto sin tildes y en minúsculas. 'menu' y 'item' señalan la sección real del sitio.",
+  "entries": [
+    {
+      "id": "tipo-institucion",
+      "patterns": [
+        "\\bes (?:una )?universidad\\b",
+        "\\bduoc\\b.*\\b(?:universidad|instituto|cft|centro de formacion)\\b",
+        "\\b(?:que tipo de|que clase de) (?:institucion|instituto|plantel)\\b",
+        "\\bes (?:un )?instituto profesional\\b",
+        "\\bque es duoc(?: uc)?$",
+        "\\bque es duoc(?: uc)? (?:exactamente|realmente)\\b"
+      ],
+      "answer": "Duoc UC no es una universidad: es un Instituto Profesional, fundado en 1968 por la Pontificia Universidad Católica de Chile. Imparte carreras técnicas y profesionales. Según su Observatorio, en 2024 obtuvo por tercera vez consecutiva la acreditación institucional por el máximo de 7 años de la Comisión Nacional de Acreditación (CNA).",
+      "source": "https://observatorio.duoc.cl/editorial/duoc-uc-una-historia-de-excelencia-y-compromiso-con-la-calidad-educativa-en-chile/",
+      "menu": {
+        "menu": "Nosotros",
+        "item": "Sobre Duoc UC"
+      }
+    },
+    {
+      "id": "acreditacion",
+      "patterns": [
+        "\\bacredit\\w*",
+        "\\bcna\\b",
+        "\\bes reconocid\\w*",
+        "\\btitulo (?:es )?(?:valido|reconocido)\\b"
+      ],
+      "answer": "Duoc UC está acreditada por la Comisión Nacional de Acreditación (CNA). Según su Observatorio, en 2024 obtuvo el máximo de 7 años, por tercera vez consecutiva. Para el detalle vigente conviene revisar el sitio de la CNA.",
+      "source": "https://observatorio.duoc.cl/editorial/duoc-uc-una-historia-de-excelencia-y-compromiso-con-la-calidad-educativa-en-chile/",
+      "menu": {
+        "menu": "Nosotros",
+        "item": "Sobre Duoc UC"
+      }
+    },
+    {
+      "id": "paes",
+      "patterns": [
+        "\\bpaes\\b",
+        "\\bpsu\\b",
+        "\\bpuntaje\\b",
+        "\\bprueba de (?:admision|seleccion|transicion)\\b",
+        "\\bdar (?:la )?prueba\\b",
+        "\\bexamen de admision\\b"
+      ],
+      "answer": "No. Duoc UC no exige la PAES para la admisión regular. El requisito principal es tener la Licencia de Enseñanza Media (LEM) y una cédula de identidad vigente. Algunas carreras tienen requisitos adicionales: por ejemplo, 7 carreras piden una prueba o instancia extra para 2027 (Gastronomía, Gastronomía Internacional, Animación Digital, Ilustración para Contextos Globales, Administración en Turismo y Hospitalidad mención Hospitality Management y dos técnicos del Campus Arauco).",
+      "source": "https://centroayuda.duoc.cl/",
+      "menu": {
+        "menu": "Admisión",
+        "item": "Tu Primer Paso"
+      }
+    },
+    {
+      "id": "requisitos",
+      "patterns": [
+        "\\brequisitos?\\b",
+        "\\blicencia (?:de )?(?:ensenanza )?media\\b",
+        "\\bnem\\b",
+        "\\bpromedio de (?:notas|ensenanza media)\\b",
+        "\\bnotas? de (?:la )?(?:media|ensenanza media)\\b",
+        "\\bque (?:necesito|piden|se necesita|hay que tener|documentos)\\b",
+        "\\bdocumentos?\\b",
+        "\\bpapeles\\b",
+        "\\bpara (?:entrar|ingresar|postular|matricularme|matricularse)\\b",
+        "\\bcomo (?:entro|ingreso|postulo|me matriculo|puedo entrar|puedo ingresar)\\b",
+        "\\bcomo (?:entrar|ingresar|postular|matricularse|matricularme)\\b",
+        "\\bquiero (?:entrar|ingresar|postular|matricularme)\\b"
+      ],
+      "answer": "Para ingresar necesitas:\n• Licencia de Enseñanza Media (LEM), validada con el Mineduc, y cédula de identidad vigente.\n• No se exige PAES en la admisión regular.\n• NEM mínimo de 4.0 como regla general (en las carreras de Turismo y Hospitalidad es 5.5 hasta el 29-11-2026, luego 4.0).\n• Un sostenedor (puede ser tu mismo si eres mayor de edad, con domicilio en Chile y sin deudas; si tienes menos de 22 años debe acreditar ingresos).\n• Si eres menor de edad, la autorización de tu apoderado.\nSi estás en IV medio 2026 sin la LEM aún, puedes iniciar la matrícula de forma condicional: debes entregarla antes del inicio de clases.",
+      "source": "https://centroayuda.duoc.cl/",
+      "menu": {
+        "menu": "Admisión",
+        "item": "Tu Primer Paso"
+      }
+    },
+    {
+      "id": "matricula-pasos",
+      "patterns": [
+        "\\breserv\\w*",
+        "\\bcupo\\b",
+        "\\bmatricul\\w* (?:presencial|online|en linea)\\b",
+        "\\bque pasa (?:despues|luego) de (?:reservar|matricul\\w*)\\b",
+        "\\bestoy matriculado\\b",
+        "\\binscribir (?:los )?ramos\\b",
+        "\\bcomo (?:es|funciona) (?:la )?matricula\\b",
+        "\\bpasos? (?:para )?(?:la )?matricula\\b"
+      ],
+      "answer": "El proceso es: 1) te pre-registras y reservas tu cupo en admision.duoc.cl (la reserva dura 18 días desde que firmas el contrato); 2) se verifican tus requisitos; 3) Duoc firma el contrato y quedas oficialmente matriculado. Reservar no es lo mismo que estar matriculado. Los cupos son limitados. No necesitas inscribir asignaturas al matricularte. La matrícula presencial exige pre-registro previo en admision.duoc.cl.",
+      "source": "https://centroayuda.duoc.cl/",
+      "menu": {
+        "menu": "Admisión",
+        "item": "Tu Primer Paso"
+      }
+    },
+    {
+      "id": "arancel",
+      "patterns": [
+        "\\barancel\\b",
+        "\\bcuanto (?:cuesta|vale|sale)\\b",
+        "\\bprecio\\b",
+        "\\bcosto\\b",
+        "\\bmensualidad\\b",
+        "\\bvalor de (?:la )?(?:carrera|matricula)\\b",
+        "\\bcuanto (?:hay que )?pag\\w*\\b"
+      ],
+      "answer": "El valor (arancel y matrícula) depende de cada carrera y está publicado en la ficha de la carrera. No tengo cifras propias para entregarte sin inventar. Dime el nombre de la carrera y te llevo a su ficha. Para pagar puedes usar medios en línea (BancoEstado, Banco de Chile, Santander, Webpay, Getnet) o presencial en las cajas de las sedes, Servipag o YoPago.",
+      "source": "https://centroayuda.duoc.cl/",
+      "menu": {
+        "menu": "Pago en línea"
+      }
+    },
+    {
+      "id": "pago",
+      "patterns": [
+        "\\bcomo (?:se )?pag\\w*\\b",
+        "\\bmedios? de pago\\b",
+        "\\bformas? de pago\\b",
+        "\\bpago en linea\\b",
+        "\\bwebpay\\b",
+        "\\bpagar (?:la )?(?:cuota|matricula|arancel)\\b"
+      ],
+      "answer": "Puedes pagar en línea (BancoEstado, Banco de Chile, Santander, Webpay, Getnet) o de forma presencial en las cajas de las sedes, Servipag o YoPago. El sitio tiene un acceso directo a «Pago en línea».",
+      "source": "https://centroayuda.duoc.cl/",
+      "menu": {
+        "menu": "Pago en línea"
+      }
+    },
+    {
+      "id": "cae",
+      "patterns": [
+        "\\bcae\\b",
+        "\\bcredito con aval\\b"
+      ],
+      "answer": "El CAE es el Crédito con Aval del Estado: un crédito para financiar estudios de educación superior. Según el Centro de Ayuda de Duoc UC, sí puede usarse en carreras online. Para conocer requisitos y cómo postular, revisa el Centro de Ayuda o consulta directamente a Duoc UC.",
+      "source": "https://centroayuda.duoc.cl/",
+      "menu": {
+        "menu": "Vida Estudiantil",
+        "item": "Apoyo y bienestar estudiantil"
+      }
+    },
+    {
+      "id": "gratuidad",
+      "patterns": [
+        "\\bgratuidad\\b",
+        "\\bfuas\\b",
+        "\\bcarrera gratis\\b",
+        "\\bestudiar gratis\\b",
+        "\\bes gratis\\b"
+      ],
+      "answer": "Duoc UC está adscrita a la Gratuidad (se postula por el FUAS), pero la Gratuidad no aplica a las carreras 100% online. No necesitas esperar el resultado de la Gratuidad para matricularte. El CAE sí puede usarse en carreras online.",
+      "source": "https://centroayuda.duoc.cl/",
+      "menu": {
+        "menu": "Vida Estudiantil",
+        "item": "Apoyo y bienestar estudiantil"
+      }
+    },
+    {
+      "id": "recuperar-clave",
+      "patterns": [
+        "\\b(?:olvide|perdi|no recuerdo|no me acuerdo|recuperar|restablecer|resetear|cambiar|bloquearon|bloqueada|bloqueado)\\b.*\\b(?:clave|contrasena|password|cuenta)\\b",
+        "\\b(?:clave|contrasena|password)\\b.*\\b(?:olvide|perdi|recuperar|restablecer|resetear|bloquead\\w*)\\b"
+      ],
+      "answer": "No puedo ver, recuperar ni cambiar claves. Para recuperarla usa la opción de recuperación del portal donde ingresas, o pide ayuda en el Centro de Ayuda de Duoc UC. Nunca compartas tu clave por este chat.",
+      "source": "https://centroayuda.duoc.cl/",
+      "menu": {
+        "menu": "Admisión",
+        "item": "Contáctanos"
+      }
+    },
+    {
+      "id": "sin-recursos",
+      "patterns": [
+        "\\bno me alcanza\\b",
+        "\\bno tengo (?:plata|dinero|recursos)\\b",
+        "\\bsin (?:plata|dinero)\\b",
+        "\\bpoca plata\\b",
+        "\\bproblemas? (?:economicos?|de plata|de dinero)\\b",
+        "\\bno puedo pagar\\b",
+        "\\b(?:poco|bajo|limitado) presupuesto\\b",
+        "\\bpresupuesto (?:bajo|limitado|ajustado)\\b",
+        "\\bmuy caro\\b",
+        "\\bes caro\\b"
+      ],
+      "answer": "Hay varias vías de apoyo: la Gratuidad (se postula por el FUAS, en carreras presenciales), el CAE (también para carreras online) y las becas internas de Duoc UC (Padre o Madre Sostenedor, Hermano, Deportiva, entre otras; solo se usa un beneficio interno a la vez). Para tu caso concreto conviene hablar con admisión.",
+      "source": "https://centroayuda.duoc.cl/",
+      "menu": {
+        "menu": "Vida Estudiantil",
+        "item": "Apoyo y bienestar estudiantil"
+      }
+    },
+    {
+      "id": "beca-hermano",
+      "patterns": [
+        "\\bmi (?:hermano|hermana)\\b.*\\b(?:estudia|estudio)\\b",
+        "\\bbeca hermano\\b",
+        "\\btengo (?:un )?(?:hermano|hermana) (?:en|que estudia)\\b"
+      ],
+      "answer": "Existe la Beca Hermano, con un descuento de 20% o 50%. Solo puedes usar un beneficio interno a la vez. Los requisitos exactos los confirmas con admisión.",
+      "source": "https://centroayuda.duoc.cl/",
+      "menu": {
+        "menu": "Admisión",
+        "item": "Contáctanos"
+      }
+    },
+    {
+      "id": "beca-deportiva",
+      "patterns": [
+        "\\bsoy deportista\\b",
+        "\\bbeca deportiva\\b",
+        "\\bsoy (?:futbolista|atleta|nadador\\w*|tenista)\\b"
+      ],
+      "answer": "Existe la Beca Deportiva, con un descuento de 20% o 40%. Los requisitos y cómo postular los confirmas con admisión. Las actividades deportivas están en Vida Estudiantil > Deportes.",
+      "source": "https://centroayuda.duoc.cl/",
+      "menu": {
+        "menu": "VIDA ESTUDIANTIL",
+        "item": "Deportes"
+      }
+    },
+    {
+      "id": "horarios-dias",
+      "patterns": [
+        "\\bsabados?\\b",
+        "\\bdomingos?\\b",
+        "\\bfines? de semana\\b",
+        "\\bhorarios? de (?:clases|las clases)\\b",
+        "\\ba que hora (?:son|empiezan|salen)\\b",
+        "\\bque dias? (?:son|hay) clases\\b"
+      ],
+      "answer": "El catálogo solo indica la jornada de cada carrera (diurna, vespertina u online); no tengo los horarios por día ni si hay clases en sábado. Eso lo informa cada sede al inicio del semestre. Si necesitas flexibilidad, las carreras online son asincrónicas en su mayoría.",
+      "source": "https://centroayuda.duoc.cl/",
+      "menu": {
+        "menu": "Admisión",
+        "item": "Contáctanos"
+      }
+    },
+    {
+      "id": "orientacion-emocional",
+      "patterns": [
+        "\\bestoy (?:muy |super )?(?:estresad\\w*|ansios\\w*|angustiad\\w*|perdid\\w*|confundid\\w*|nervios\\w*)\\b",
+        "\\bno se si (?:estudiar|seguir)\\b",
+        "\\bno estoy seguro de (?:mi carrera|estudiar)\\b",
+        "^no se que estudiar$",
+        "^no se que carrera (?:elegir|estudiar)$"
+      ],
+      "answer": "Es normal sentirse así al decidir. No tienes que resolverlo todo ahora: cuéntame qué te gusta (por ejemplo, tecnología, salud, cocina, diseño, trabajar con personas) o qué tipo de trabajo te imaginas, y te propongo carreras reales del catálogo. Si lo que sientes pesa más, en Vida Estudiantil > Apoyo y bienestar estudiantil hay ayuda.",
+      "source": "https://www.duoc.cl/",
+      "menu": {
+        "menu": "Vida Estudiantil",
+        "item": "Apoyo y bienestar estudiantil"
+      }
+    },
+    {
+      "id": "becas",
+      "patterns": [
+        "\\bbecas?\\b",
+        "\\bbeneficios?\\b",
+        "\\bdescuentos?\\b",
+        "\\bayuda economica\\b",
+        "\\bfinanciamiento\\b",
+        "\\bfinanciar\\b"
+      ],
+      "answer": "Duoc UC tiene becas internas: Beca Padre o Madre Sostenedor, Beca Hermano (20% o 50%), Beca Deportiva (20% o 40%), Liceo Politécnico Andes (30%) y descuentos por pago al contado. Solo puedes usar un beneficio interno a la vez. Además existe la Gratuidad (FUAS) en carreras presenciales. Para ayuda y bienestar, mira Vida Estudiantil.",
+      "source": "https://centroayuda.duoc.cl/",
+      "menu": {
+        "menu": "Vida Estudiantil",
+        "item": "Apoyo y bienestar estudiantil"
+      }
+    },
+    {
+      "id": "dicom",
+      "patterns": [
+        "\\bdicom\\b",
+        "\\bdeuda\\w*\\b",
+        "\\bmoroso\\b"
+      ],
+      "answer": "Estar en DICOM no impide por sí solo matricularte. Para tu sostenedor sí se pide, como regla, no tener deudas. Para tu caso concreto consulta con admisión.",
+      "source": "https://centroayuda.duoc.cl/",
+      "menu": {
+        "menu": "Admisión",
+        "item": "Contáctanos"
+      }
+    },
+    {
+      "id": "semestre-cero",
+      "patterns": [
+        "\\bsemestre cero\\b",
+        "\\bsemestre 0\\b",
+        "\\bnivelacion\\b",
+        "\\bnivelar\\b"
+      ],
+      "answer": "Semestre Cero es un programa online y gratuito para nivelar conocimientos: Lenguaje y Comunicación, Matemática Elemental, Álgebra e Inglés Básico I y II. Cada curso toma entre 20 y 36 horas. Si lo apruebas con 70% o más puedes convalidar la asignatura, y recibes un certificado de participación.",
+      "source": "https://www.duoc.cl/semestrecero",
+      "menu": {
+        "menu": "Oferta Académica",
+        "item": "Semestre Cero"
+      }
+    },
+    {
+      "id": "bimestre",
+      "patterns": [
+        "\\bque es (?:un )?bimestre\\b",
+        "\\bcuanto dura (?:un )?bimestre\\b",
+        "\\bbimestres?\\b.*\\b(?:semanas|dura|significa)\\b"
+      ],
+      "answer": "Un bimestre es un periodo académico de 9 semanas, equivalente a medio semestre. Duoc UC Online organiza sus carreras en bimestres: son 5 por año.",
+      "source": "https://www.duoc.cl/duoc-online/",
+      "menu": {
+        "menu": "Oferta Académica",
+        "item": "Duoc Online"
+      }
+    },
+    {
+      "id": "cuotas",
+      "patterns": [
+        "\\bcuotas?\\b",
+        "\\bpagar a plazos\\b",
+        "\\bpago (?:en )?cuotas\\b",
+        "\\bpagar mensual\\b"
+      ],
+      "answer": "No tengo publicadas las condiciones de pago en cuotas, así que no te las voy a inventar. El valor y las condiciones de cada carrera están en su ficha, y los medios de pago son: en línea (BancoEstado, Banco de Chile, Santander, Webpay, Getnet) o presencial (cajas de las sedes, Servipag, YoPago). Para cuotas, consulta en Admisión > Contáctanos.",
+      "source": "https://centroayuda.duoc.cl/",
+      "menu": {
+        "menu": "Admisión",
+        "item": "Contáctanos"
+      }
+    },
+    {
+      "id": "convalidacion",
+      "patterns": [
+        "\\bconvalid\\w*",
+        "\\bhomolog\\w*",
+        "\\breconocimiento de (?:ramos|asignaturas|estudios)\\b",
+        "\\bya estudie\\b",
+        "\\bestudios (?:previos|anteriores)\\b",
+        "\\bvengo de (?:otra|una)\\b",
+        "\\bme cambio de (?:universidad|instituto)\\b"
+      ],
+      "answer": "Si tienes estudios superiores previos, se canaliza por la Admisión Especial. La convalidación de asignaturas se resuelve con una evaluación de tus antecedentes. También existe la articulación con la Educación Media Técnico Profesional y el reintegro para ex alumnos.",
+      "source": "https://centroayuda.duoc.cl/",
+      "menu": {
+        "menu": "Admisión",
+        "item": "Admisión Especial"
+      }
+    },
+    {
+      "id": "admision-especial",
+      "patterns": [
+        "\\badmision especial\\b",
+        "\\bsegunda carrera\\b",
+        "\\btitulado\\b.*\\bestudiar\\b",
+        "\\bpostulacion especial\\b"
+      ],
+      "answer": "La Admisión Especial es la vía para quienes ya tienen estudios superiores o vienen de otra situación distinta a la regular. Hay una versión interna y una externa. Las fechas vigentes las tengo en el calendario de admisión: pídemelas.",
+      "source": "https://centroayuda.duoc.cl/",
+      "menu": {
+        "menu": "Admisión",
+        "item": "Admisión Especial"
+      }
+    },
+    {
+      "id": "cambio-carrera",
+      "patterns": [
+        "\\bcambio de (?:carrera|sede|jornada|horario)\\b",
+        "\\bcambiar(?:me)? de (?:carrera|sede|jornada|horario)\\b",
+        "\\bme equivoque de carrera\\b"
+      ],
+      "answer": "Los cambios de carrera dependen de que cumplas los requisitos y de que haya vacantes. El cambio de sede o de jornada también depende de la disponibilidad de vacantes. Consulta con tu sede o con el equipo de admisión.",
+      "source": "https://centroayuda.duoc.cl/",
+      "menu": {
+        "menu": "Admisión",
+        "item": "Contáctanos"
+      }
+    },
+    {
+      "id": "online",
+      "patterns": [
+        "\\b(?:estudiar|estudio|se puede|puedo|existe|hay|tienen|ofrecen|duoc online)\\b.*\\b(?:online|a distancia|virtual|en linea|remot\\w*)\\b",
+        "\\bdesde (?:mi )?casa\\b",
+        "\\bsin ir a (?:clases|la sede)\\b",
+        "\\bque es duoc online\\b",
+        "\\bcomo funciona duoc online\\b",
+        "\\bduoc online\\b"
+      ],
+      "answer": "Sí. Duoc UC Online tiene 23 carreras para 2027. Los periodos son bimestres de 9 semanas (5 por año), con clases mayormente asincrónicas y apoyo de tutores. Hay dos ingresos: octubre 2026–marzo 2027 y mayo–agosto 2027. Las clases comienzan el 9 de marzo de 2027. Contacto: (+56) 2 2712 0640, WhatsApp +56 9 5814 2089, admisionduoconline@duoc.cl.",
+      "source": "https://www.duoc.cl/duoc-online/",
+      "menu": {
+        "menu": "Oferta Académica",
+        "item": "Duoc Online"
+      }
+    },
+    {
+      "id": "tecnico-profesional",
+      "patterns": [
+        "\\bdiferencia (?:entre )?(?:tecnic\\w*|profesional\\w*)\\b",
+        "\\btecnico (?:o|vs|versus|y) profesional\\b",
+        "\\bson (?:de )?titulos? profesionales?\\b",
+        "\\btitulo profesional\\b",
+        "\\bque titulo (?:entregan|dan|obtengo|recibo)\\b",
+        "\\bque me titulo\\b"
+      ],
+      "answer": "Duoc UC ofrece programas de distinto nivel formativo: técnicos y profesionales (incluye carreras con título profesional, como las ingenierías). La duración y el título dependen de cada carrera: está en su ficha. Dime la carrera y te muestro su duración y tipo.",
+      "source": "https://centroayuda.duoc.cl/",
+      "menu": {
+        "menu": "Oferta Académica",
+        "item": "Carreras"
+      }
+    },
+    {
+      "id": "pdf-matricula-informado",
+      "patterns": [
+        "\\bmatriculate informado\\b",
+        "\\bmalla\\b",
+        "\\bplan de estudios?\\b"
+      ],
+      "answer": "La malla y el detalle de cada carrera están en su ficha dentro de Oferta Académica > Carreras. Duoc además publica el documento «Matricúlate Informado» con las condiciones de cada programa.",
+      "source": "https://centroayuda.duoc.cl/",
+      "menu": {
+        "menu": "Oferta Académica",
+        "item": "Carreras"
+      }
+    },
+    {
+      "id": "materiales",
+      "patterns": [
+        "\\buniforme\\b",
+        "\\bmateriales\\b",
+        "\\butiles\\b",
+        "\\bimplementos\\b",
+        "\\bcuchillos\\b"
+      ],
+      "answer": "Algunas carreras requieren materiales o uniforme (por ejemplo, Gastronomía). Los detalles están en la ficha de cada carrera. Dime cuál te interesa y te llevo.",
+      "source": "https://centroayuda.duoc.cl/",
+      "menu": {
+        "menu": "Oferta Académica",
+        "item": "Carreras"
+      }
+    },
+    {
+      "id": "discapacidad",
+      "patterns": [
+        "\\bdiscapacidad\\b",
+        "\\binclusion\\b",
+        "\\binclusiv\\w*\\b",
+        "\\bnecesidades especiales\\b"
+      ],
+      "answer": "Las personas con discapacidad tienen igualdad de acceso a la admisión. Para apoyos específicos, consulta en Apoyo y bienestar estudiantil.",
+      "source": "https://centroayuda.duoc.cl/",
+      "menu": {
+        "menu": "Vida Estudiantil",
+        "item": "Apoyo y bienestar estudiantil"
+      }
+    },
+    {
+      "id": "calendario-academico",
+      "patterns": [
+        "\\bcalendario academico\\b",
+        "\\bcalendario\\b.*\\b(?:2026|2027|semestre)\\b",
+        "\\bcalendario de (?:clases|actividades)\\b",
+        "\\bdonde (?:veo|puedo ver|esta|encuentro|hay) (?:el )?calendario\\b",
+        "\\bcalendario 2026\\b",
+        "\\bfechas? del? (?:semestre|ano academico)\\b",
+        "\\bvacaciones\\b",
+        "\\bferiados?\\b"
+      ],
+      "answer": "El calendario académico está en Vida Estudiantil > Calendario 2026. Las fechas de admisión y matrícula las tengo yo directamente: pídemelas y las agrego a tu calendario.",
+      "source": "https://www.duoc.cl/",
+      "menu": {
+        "menu": "VIDA ESTUDIANTIL",
+        "item": "Calendario 2026"
+      }
+    },
+    {
+      "id": "deportes",
+      "patterns": [
+        "\\bdeportes?\\b",
+        "\\bdeportiv\\w*\\b",
+        "\\bseleccion(?:es)?\\b",
+        "\\bgimnasio\\b",
+        "\\bfutbol\\b",
+        "\\btalleres?\\b",
+        "\\bactividades extraprogramaticas\\b"
+      ],
+      "answer": "La oferta deportiva está en Vida Estudiantil > Deportes. Además existe la Beca Deportiva (20% o 40%).",
+      "source": "https://www.duoc.cl/",
+      "menu": {
+        "menu": "VIDA ESTUDIANTIL",
+        "item": "Deportes"
+      }
+    },
+    {
+      "id": "biblioteca",
+      "patterns": [
+        "\\bbiblioteca\\b",
+        "\\blibros?\\b",
+        "\\bprestamo\\b"
+      ],
+      "answer": "La Biblioteca tiene un acceso directo en la parte superior del sitio.",
+      "source": "https://www.duoc.cl/",
+      "menu": {
+        "menu": "Biblioteca"
+      }
+    },
+    {
+      "id": "pastoral",
+      "patterns": [
+        "\\bpastoral\\b",
+        "\\bcapilla\\b",
+        "\\bmisa\\b",
+        "\\bvoluntariado\\b"
+      ],
+      "answer": "Pastoral está en Vida Estudiantil > Pastoral.",
+      "source": "https://www.duoc.cl/",
+      "menu": {
+        "menu": "VIDA ESTUDIANTIL",
+        "item": "Pastoral"
+      }
+    },
+    {
+      "id": "intercambio",
+      "patterns": [
+        "\\bintercambio\\b",
+        "\\bal extranjero\\b",
+        "\\bmovilidad internacional\\b",
+        "\\brelaciones internacionales\\b",
+        "\\bpasantia\\b"
+      ],
+      "answer": "Las oportunidades de movilidad están en Nosotros > Relaciones Internacionales.",
+      "source": "https://www.duoc.cl/internacionalizacion-movilidad-internacional/",
+      "menu": {
+        "menu": "Nosotros",
+        "item": "Relaciones Internacionales"
+      }
+    },
+    {
+      "id": "reintegro",
+      "patterns": [
+        "\\breintegro\\b",
+        "\\bvolver a estudiar\\b",
+        "\\bretomar\\b",
+        "\\bretome\\b",
+        "\\bex alumno\\b",
+        "\\bcongel\\w*\\b"
+      ],
+      "answer": "Los ex alumnos pueden volver mediante el proceso de reintegro. Está en Vida Estudiantil > Reintegros.",
+      "source": "https://centroayuda.duoc.cl/",
+      "menu": {
+        "menu": "VIDA ESTUDIANTIL",
+        "item": "Reintegros"
+      }
+    },
+    {
+      "id": "titulados",
+      "patterns": [
+        "\\btitulados?\\b",
+        "\\begresados?\\b",
+        "\\bcertificado de (?:titulo|egreso)\\b",
+        "\\bcomo me titulo\\b"
+      ],
+      "answer": "La información para titulados está en Vida Estudiantil > Titulados.",
+      "source": "https://www.duoc.cl/",
+      "menu": {
+        "menu": "VIDA ESTUDIANTIL",
+        "item": "Titulados"
+      }
+    },
+    {
+      "id": "contacto",
+      "patterns": [
+        "\\b(?:correo|email|mail|e mail|telefono|fono|numero|celular)\\b.*\\b(?:admision|duoc|contacto|matricula|sede)\\b",
+        "\\b(?:admision|contacto)\\b.*\\b(?:correo|email|telefono|numero|celular)\\b",
+        "\\bdonde (?:esta|veo|encuentro) (?:el )?(?:telefono|correo|contacto)\\b",
+        "\\bcontacto\\b",
+        "\\bcontactar\\b",
+        "\\bcomunic(?:o|arme|arse|ar|ame)\\b",
+        "\\bllamar\\b",
+        "\\bescribir(?:les)?\\b",
+        "\\bhablar con (?:alguien|una persona|un ejecutivo)\\b",
+        "\\bejecutivo\\b",
+        "\\bwhatsapp\\b",
+        "\\btelefono de admision\\b",
+        "\\bayuda humana\\b"
+      ],
+      "answer": "Estos son los datos de contacto que aparecen en el pie de página del sitio:\n• Central: (+56) 2 2999 3862.\n• Admisión: (+56) 227 120 640 y WhatsApp +56 9 5814 2089.\n• Mesa de Servicios (académicos, financiamiento, vida estudiantil, tecnológicos y otros): WhatsApp +56 9 3663 9565 y teléfonos (+56) 442 201 098 y (+56) 227 120 245.\nTambién puedes usar el botón Contáctanos del pie de página.",
+      "source": "https://centroayuda.duoc.cl/",
+      "menu": {
+        "menu": "Admisión",
+        "item": "Contáctanos"
+      }
+    },
+    {
+      "id": "reprobar",
+      "patterns": [
+        "\\bque pasa si (?:repruebo|reprueb\\w*)\\b",
+        "\\breprobar\\b",
+        "\\bramo reprobado\\b",
+        "\\brepetir (?:un )?ramo\\b",
+        "\\bnota minima\\b",
+        "\\bnota de aprobacion\\b",
+        "\\basistencia\\b"
+      ],
+      "answer": "No tengo publicada la normativa de reprobación ni de asistencia, así que no te voy a dar un dato a medias. Esa información está en el Reglamento Académico: pregunta en Admisión > Contáctanos o en la sede.",
+      "source": "https://centroayuda.duoc.cl/",
+      "menu": {
+        "menu": "Admisión",
+        "item": "Contáctanos"
+      }
+    },
+    {
+      "id": "ranking-sin-datos",
+      "patterns": [
+        "^(?:la |una |alguna )?(?:carrera )?(?:mas )?(?:facil|dificil|barata|cara|popular|demandada|rapida de estudiar)$",
+        "\\bcarrera (?:mas )?(?:facil|dificil|barata|cara|popular|demandada)\\b",
+        "^la mejor$",
+        "^(?:la |el )?(?:mas|menos) (?:facil|dificil|barata|barato|caro|cara|popular|demandada)$",
+        "\\bque carrera (?:es )?(?:mas )?(?:facil|dificil|barata|popular|demandada)\\b"
+      ],
+      "answer": "No tengo datos de dificultad, de precios comparados ni de popularidad entre carreras, y no voy a inventarlos. Lo que sí puedo hacer: mostrarte las carreras más cortas, filtrar por área, jornada o sede, o recomendarte según lo que te guste. El valor de cada una está en su ficha.",
+      "source": "https://centroayuda.duoc.cl/",
+      "menu": {
+        "menu": "Oferta Académica",
+        "item": "Carreras"
+      }
+    },
+    {
+      "id": "empleabilidad",
+      "patterns": [
+        "\\bempleabilidad\\b",
+        "\\bsueldo\\b",
+        "\\bcuanto (?:gano|gana|ganan|se gana|paga|pagan)\\b",
+        "\\bsalario\\b",
+        "\\bcampo laboral\\b",
+        "\\bconsiguen trabajo\\b",
+        "\\bmejor carrera\\b",
+        "\\bmejor sede\\b",
+        "\\bcarrera con mas futuro\\b",
+        "\\bmas demanda\\b"
+      ],
+      "answer": "No tengo cifras confiables de sueldos, empleabilidad ni un ranking de mejores carreras o sedes, y prefiero no inventarlas. El Observatorio Duoc UC publica estudios (Nosotros > Observatorio Duoc UC). Si me cuentas tus intereses, te recomiendo carreras del catálogo.",
+      "source": "https://observatorio.duoc.cl/",
+      "menu": {
+        "menu": "Nosotros",
+        "item": "Observatorio Duoc UC"
+      }
+    },
+    {
+      "id": "trabajar-y-estudiar",
+      "patterns": [
+        "\\bestudiar y trabajar\\b",
+        "\\btrabajo y estudio\\b",
+        "\\btrabajo (?:de dia|durante el dia)\\b",
+        "\\bsi trabajo\\b",
+        "\\bpuedo trabajar\\b",
+        "\\bcarreras? para (?:los )?(?:que )?trabaj\\w*\\b",
+        "\\bpara trabajadores\\b",
+        "\\bsoy trabajador\\b",
+        "\\btrabajo todo el dia\\b"
+      ],
+      "answer": "Para compatibilizar trabajo y estudio puedes mirar las carreras en jornada vespertina o las 100% online (bimestres, clases mayormente asincrónicas). Dime tu carrera de interés y te cuento en qué jornadas y sedes está.",
+      "source": "https://www.duoc.cl/duoc-online/",
+      "menu": {
+        "menu": "Oferta Académica",
+        "item": "Duoc Online"
+      }
+    },
+    {
+      "id": "edad",
+      "patterns": [
+        "\\bedad (?:minima|maxima|limite)\\b",
+        "\\bmenor de edad\\b",
+        "\\bmuy (?:viejo|grande|mayor)\\b",
+        "\\bsoy menor\\b"
+      ],
+      "answer": "No hay una edad máxima de ingreso en lo que consta en las preguntas frecuentes. Si eres menor de edad, puedes matricularte con autorización de tu apoderado.",
+      "source": "https://centroayuda.duoc.cl/",
+      "menu": {
+        "menu": "Admisión",
+        "item": "Contáctanos"
+      }
+    },
+    {
+      "id": "extranjero-ingreso",
+      "patterns": [
+        "\\bsoy extranjero\\b",
+        "\\bextranjeros?\\b.*\\bestudiar\\b",
+        "\\bvisa\\b",
+        "\\bestudiantes? extranjer\\w*\\b"
+      ],
+      "answer": "Se pide una cédula de identidad vigente y la Licencia de Enseñanza Media validada con el Mineduc. Para casos de estudios hechos en el extranjero, consulta con admisión en Admisión > Contáctanos.",
+      "source": "https://centroayuda.duoc.cl/",
+      "menu": {
+        "menu": "Admisión",
+        "item": "Contáctanos"
+      }
+    },
+    {
+      "id": "estacionamiento",
+      "patterns": [
+        "\\bestacionamientos?\\b",
+        "\\bparking\\b",
+        "\\bdonde estaciono\\b",
+        "\\bdejar (?:el|mi) auto\\b"
+      ],
+      "answer": "No tengo información sobre estacionamientos de las sedes. Consúltalo directamente con tu sede o en la sección de sedes del sitio de Duoc UC.",
+      "source": "https://www.duoc.cl/"
+    }
+  ]
+}

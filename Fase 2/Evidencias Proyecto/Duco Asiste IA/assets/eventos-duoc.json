@@ -1,0 +1,81 @@
+{
+  "_nota": "Fechas copiadas de https://www.duoc.cl/admision/ (consultado el 2026-11-12). Revísalas antes de la presentación: Duoc UC puede modificarlas. 'topics' decide qué eventos responde el asistente según la pregunta.",
+  "events": [
+    {
+      "id": "reserva-cupo-2027",
+      "title": "Reserva de cupo Admisión 2027",
+      "start": "2026-09-22",
+      "end": "2026-10-06",
+      "topics": [
+        "reserva",
+        "admision"
+      ],
+      "details": "Etapa de reserva de cupo de la Admisión 2027 de Duoc UC.",
+      "source": "https://www.duoc.cl/admision/"
+    },
+    {
+      "id": "matriculas-abiertas-2027",
+      "title": "Matrículas abiertas Admisión 2027 (cierre admisión ordinaria)",
+      "start": "2026-10-07",
+      "end": "2027-03-08",
+      "topics": [
+        "matricula",
+        "admision"
+      ],
+      "details": "Período de matrículas abiertas. La Admisión Ordinaria 2027 cierra el 8 de marzo de 2027.",
+      "source": "https://www.duoc.cl/admision/"
+    },
+    {
+      "id": "postulacion-admision-especial-2027",
+      "title": "Postulación Admisión Especial (reconocimiento de estudios y titulados técnicos)",
+      "start": "2026-11-02",
+      "end": "2027-02-27",
+      "topics": [
+        "postulacion",
+        "admision",
+        "especial"
+      ],
+      "details": "Período de postulación de Admisión Especial para reconocimiento de estudios de otras instituciones y titulados(as) técnicos(as) de otras instituciones.",
+      "source": "https://www.duoc.cl/admision/"
+    },
+    {
+      "id": "postulacion-admision-interna-2027",
+      "title": "Postulación Admisión Especial Interna (cambio de carrera)",
+      "start": "2026-12-28",
+      "end": "2027-03-06",
+      "topics": [
+        "postulacion",
+        "interna",
+        "admision"
+      ],
+      "details": "Período de postulación de la Admisión Especial Interna (cambio de carrera).",
+      "source": "https://centroayuda.duoc.cl/hc/es-419/articles/32251820558221-Admisi%C3%B3n-Especial-Interna-cambio-de-carrera"
+    },
+    {
+      "id": "inicio-clases-online-primer-ingreso-2027",
+      "title": "Inicio de clases Duoc UC Online (primer ingreso 2027)",
+      "start": "2027-03-09",
+      "end": "2027-03-09",
+      "topics": [
+        "clases",
+        "online",
+        "admision"
+      ],
+      "details": "Las clases del primer ingreso de Duoc UC Online comienzan el 9 de marzo de 2027.",
+      "source": "https://www.duoc.cl/admision/"
+    },
+    {
+      "id": "matricula-online-segundo-ingreso-2027",
+      "title": "Matrícula Duoc UC Online (segundo ingreso 2027)",
+      "start": "2027-05-03",
+      "end": "2027-08-15",
+      "topics": [
+        "matricula",
+        "online",
+        "admision"
+      ],
+      "details": "Segundo período de matrícula de Duoc UC Online, entre el 3 de mayo y el 15 de agosto de 2027.",
+      "source": "https://www.duoc.cl/admision/"
+    }
+  ]
+}

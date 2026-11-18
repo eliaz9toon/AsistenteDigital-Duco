@@ -1,0 +1,329 @@
+{
+  "_nota": "Direcciones copiadas de https://www.duoc.cl/nosotros/donde-estamos/sedes/ (consultado 2026-11-12). Coordenadas de OpenStreetMap: 'exacta' = el punto es una sede/edificio Duoc mapeado que coincide con la dirección oficial; 'aproximada' (Nacimiento y Concepción) = OSM no tiene la sede con su número, se usó el punto Duoc o paradero más cercano y el mapa lo avisa.",
+  "sedes": [
+    {
+      "id": "alameda",
+      "name": "Sede Alameda",
+      "address": "Av. España 8",
+      "comuna": "Santiago Centro",
+      "lat": -33.448944,
+      "lng": -70.670084,
+      "coordsPrecision": "exacta",
+      "coordsNote": "OSM: 'DuocUC Sede Metropolitana', Avenida España 8",
+      "aliases": [
+        "alameda",
+        "sede alameda",
+        "metropolitana",
+        "avenida españa",
+        "av españa",
+        "estacion republica"
+      ],
+      "url": "https://www.duoc.cl/sedes/alameda/"
+    },
+    {
+      "id": "alonso-ovalle",
+      "name": "Sede Padre Alonso de Ovalle",
+      "address": "Padre Alonso de Ovalle 1586",
+      "comuna": "Santiago Centro",
+      "lat": -33.447294,
+      "lng": -70.657592,
+      "coordsPrecision": "exacta",
+      "coordsNote": "OSM: 'DuocUC Sede Alonso de Ovalle', número 1586",
+      "aliases": [
+        "padre alonso de ovalle",
+        "alonso de ovalle",
+        "ovalle",
+        "sede ovalle"
+      ],
+      "url": "https://www.duoc.cl/sedes/alonso-ovalle/"
+    },
+    {
+      "id": "antonio-varas",
+      "name": "Sede Antonio Varas",
+      "address": "Antonio Varas 666",
+      "comuna": "Providencia",
+      "lat": -33.433048,
+      "lng": -70.614952,
+      "coordsPrecision": "exacta",
+      "coordsNote": "OSM: 'DuocUC Sede Antonio Varas', número 666",
+      "aliases": [
+        "antonio varas",
+        "sede antonio varas",
+        "providencia"
+      ],
+      "url": "https://www.duoc.cl/sedes/antonio-varas/"
+    },
+    {
+      "id": "maipu",
+      "name": "Sede Maipú",
+      "address": "Av. Esquina Blanca 501",
+      "comuna": "Maipú",
+      "lat": -33.512003,
+      "lng": -70.752379,
+      "coordsPrecision": "exacta",
+      "coordsNote": "OSM: 'Instituto Profesional Duoc UC Sede Maipú', número 501",
+      "aliases": [
+        "maipu",
+        "sede maipu",
+        "esquina blanca"
+      ],
+      "url": "https://www.duoc.cl/sedes/maipu/"
+    },
+    {
+      "id": "melipilla",
+      "name": "Sede Melipilla",
+      "address": "Serrano 1105",
+      "comuna": "Melipilla",
+      "lat": -33.694554,
+      "lng": -71.213702,
+      "coordsPrecision": "exacta",
+      "coordsNote": "OSM: 'Duoc UC Sede Melipilla'. Verificado: la numeración de calle Serrano (334 y 879 en OSM) extrapolada a 1105 coincide con el punto.",
+      "aliases": [
+        "melipilla",
+        "sede melipilla"
+      ],
+      "url": "https://www.duoc.cl/sedes/melipilla/"
+    },
+    {
+      "id": "plaza-norte",
+      "name": "Sede Plaza Norte",
+      "address": "Calle Nueva 1660",
+      "comuna": "Huechuraba",
+      "lat": -33.363001,
+      "lng": -70.677711,
+      "coordsPrecision": "exacta",
+      "coordsNote": "OSM: 'DuocUC Sede Plaza Norte', número 1660",
+      "aliases": [
+        "plaza norte",
+        "sede plaza norte",
+        "huechuraba",
+        "calle nueva"
+      ],
+      "url": "https://www.duoc.cl/sedes/plaza-norte/"
+    },
+    {
+      "id": "plaza-oeste",
+      "name": "Sede Plaza Oeste",
+      "address": "Av. Américo Vespucio 1501, Mall Plaza Oeste",
+      "comuna": "Cerrillos",
+      "lat": -33.515109,
+      "lng": -70.718388,
+      "coordsPrecision": "exacta",
+      "coordsNote": "OSM: 'Duoc UC Sede Plaza Oeste', número 1501",
+      "aliases": [
+        "plaza oeste",
+        "sede plaza oeste",
+        "cerrillos"
+      ],
+      "url": "https://www.duoc.cl/sedes/plaza-oeste/"
+    },
+    {
+      "id": "plaza-vespucio",
+      "name": "Sede Plaza Vespucio",
+      "address": "Froilán Roa 7107, Mall Plaza Vespucio",
+      "comuna": "La Florida",
+      "lat": -33.516275,
+      "lng": -70.598238,
+      "coordsPrecision": "exacta",
+      "coordsNote": "OSM: 'Duoc UC Plaza Vespucio', dentro del mall, junto a Froilán Roa.",
+      "aliases": [
+        "plaza vespucio",
+        "sede plaza vespucio",
+        "la florida",
+        "vespucio"
+      ],
+      "url": "https://www.duoc.cl/sedes/plaza-vespucio/"
+    },
+    {
+      "id": "puente-alto",
+      "name": "Sede Puente Alto",
+      "address": "Av. Concha y Toro 1340 c/San Carlos",
+      "comuna": "Puente Alto",
+      "lat": -33.598569,
+      "lng": -70.579228,
+      "coordsPrecision": "exacta",
+      "coordsNote": "OSM: 'Duoc UC Puente Alto', número 1340",
+      "aliases": [
+        "puente alto",
+        "sede puente alto",
+        "concha y toro"
+      ],
+      "url": "https://www.duoc.cl/sedes/puente-alto/"
+    },
+    {
+      "id": "san-bernardo",
+      "name": "Sede San Bernardo",
+      "address": "Freire 857",
+      "comuna": "San Bernardo",
+      "lat": -33.598861,
+      "lng": -70.705295,
+      "coordsPrecision": "exacta",
+      "coordsNote": "OSM: 'Duoc UC (Sede San Bernardo)', número 857",
+      "aliases": [
+        "san bernardo",
+        "sede san bernardo"
+      ],
+      "url": "https://www.duoc.cl/sedes/san-bernardo/"
+    },
+    {
+      "id": "san-carlos",
+      "name": "Sede San Carlos de Apoquindo",
+      "address": "Camino El Alba 12881",
+      "comuna": "Las Condes",
+      "lat": -33.400223,
+      "lng": -70.505603,
+      "coordsPrecision": "exacta",
+      "coordsNote": "OSM: 'Duoc UC Sede San Carlos de Apoquindo', número 12881",
+      "aliases": [
+        "san carlos de apoquindo",
+        "san carlos",
+        "apoquindo",
+        "las condes",
+        "sede san carlos"
+      ],
+      "url": "https://www.duoc.cl/sedes/san-carlos/"
+    },
+    {
+      "id": "san-joaquin",
+      "name": "Sede San Joaquín",
+      "address": "Av. Vicuña Mackenna 4917",
+      "comuna": "San Joaquín",
+      "lat": -33.499961,
+      "lng": -70.616629,
+      "coordsPrecision": "exacta",
+      "coordsNote": "OSM: 'DUOC UC San Joaquín', número 4917",
+      "aliases": [
+        "san joaquin",
+        "sede san joaquin"
+      ],
+      "url": "https://www.duoc.cl/sedes/san-joaquin/"
+    },
+    {
+      "id": "valparaiso",
+      "name": "Sede Valparaíso",
+      "address": "Av. Brasil 2021, esquina Rodríguez",
+      "comuna": "Valparaíso",
+      "lat": -33.045255,
+      "lng": -71.615544,
+      "coordsPrecision": "exacta",
+      "coordsNote": "OSM: 'DUOC UC Edificio Brasil' en calle Rodríguez, esquina de la dirección oficial; otro punto Duoc a 90 m.",
+      "aliases": [
+        "valparaiso",
+        "sede valparaiso"
+      ],
+      "url": "https://www.duoc.cl/sedes/valparaiso/"
+    },
+    {
+      "id": "vina-del-mar",
+      "name": "Sede Viña del Mar",
+      "address": "Álvarez 2366, Chorrillos",
+      "comuna": "Viña del Mar",
+      "lat": -33.034699,
+      "lng": -71.533708,
+      "coordsPrecision": "exacta",
+      "coordsNote": "OSM: 'Duoc UC - Sede Viña del Mar', Álvarez 2336 (la web oficial dice 2366; 30 m de diferencia).",
+      "aliases": [
+        "vina del mar",
+        "vina",
+        "sede vina del mar",
+        "chorrillos"
+      ],
+      "url": "https://www.duoc.cl/sedes/vina-mar/"
+    },
+    {
+      "id": "arauco",
+      "name": "Campus Arauco",
+      "address": "Camino a Carampangue N° 1060",
+      "comuna": "Arauco",
+      "lat": -37.247461,
+      "lng": -73.294615,
+      "coordsPrecision": "exacta",
+      "coordsNote": "OSM: 'Duoc UC', número 1060",
+      "aliases": [
+        "arauco",
+        "campus arauco"
+      ],
+      "url": "https://www.duoc.cl/sedes/campus-arauco/"
+    },
+    {
+      "id": "nacimiento",
+      "name": "Campus Nacimiento",
+      "address": "Julio Hemmelmann #200",
+      "comuna": "Nacimiento",
+      "lat": -37.511139,
+      "lng": -72.661902,
+      "coordsPrecision": "aproximada",
+      "coordsNote": "OSM: 'Duoc UC - CMPC', Av. Julio Hemmelmann (sin número en OSM)",
+      "aliases": [
+        "nacimiento",
+        "campus nacimiento"
+      ],
+      "url": "https://www.duoc.cl/sedes/campus-nacimiento/"
+    },
+    {
+      "id": "concepcion",
+      "name": "Sede San Andrés de Concepción",
+      "address": "Jorge Alessandri n° 50 y Paicaví 3280 (Sector Rotonda El Trébol)",
+      "comuna": "Concepción",
+      "lat": -36.79756,
+      "lng": -73.061415,
+      "coordsPrecision": "aproximada",
+      "coordsNote": "OSM: paradero 'Paicaví - Duoc UC (N)', junto a la sede (OSM no tiene la sede mapeada)",
+      "aliases": [
+        "concepcion",
+        "san andres de concepcion",
+        "san andres",
+        "sede concepcion",
+        "trebol",
+        "rotonda el trebol"
+      ],
+      "url": "https://www.duoc.cl/sedes/concepcion/"
+    },
+    {
+      "id": "villarrica",
+      "name": "Campus Villarrica",
+      "address": "Anfión Muñoz 51",
+      "comuna": "Villarrica",
+      "lat": -39.277433,
+      "lng": -72.224429,
+      "coordsPrecision": "exacta",
+      "coordsNote": "OSM: 'Duoc UC Campus Villarrica', número 51",
+      "aliases": [
+        "villarrica",
+        "campus villarrica"
+      ],
+      "url": "https://www.duoc.cl/sedes/campus-villarrica/"
+    },
+    {
+      "id": "puerto-montt",
+      "name": "Sede Puerto Montt",
+      "address": "Egaña 651",
+      "comuna": "Puerto Montt",
+      "lat": -41.470017,
+      "lng": -72.925933,
+      "coordsPrecision": "exacta",
+      "coordsNote": "OSM: 'DuocUC Sede Puerto Montt', número 651",
+      "aliases": [
+        "puerto montt",
+        "sede puerto montt"
+      ],
+      "url": "https://www.duoc.cl/sedes/puerto-montt/"
+    },
+    {
+      "id": "online",
+      "name": "Duoc UC Online",
+      "address": "Modalidad 100% online",
+      "comuna": "Online",
+      "lat": null,
+      "lng": null,
+      "coordsPrecision": "sin ubicación física",
+      "coordsNote": "No tiene dirección física",
+      "aliases": [
+        "duoc uc online",
+        "duoc online",
+        "sede online"
+      ],
+      "url": "https://www.duoc.cl/sedes/duoc-uc-online/"
+    }
+  ]
+}
