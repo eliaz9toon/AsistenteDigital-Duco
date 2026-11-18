@@ -237,22 +237,22 @@ En `js/duco-assistant.js`, reemplazar el SVG dentro de `.duco-avatar`
 ## 📊 Estado Actual
 
 ✅ **Completado:**
-- Interfaz visual del asistente
-- Sistema modular de navegación
-- Efectos visuales de destacado
-- Gestión de chat y mensajes
-- Detección de palabras clave
-- Respuestas contextuales
-- Responsive design
-- Validación HTML/CSS
+- Interfaz visual del asistente (abrir/cerrar, nueva conversación con confirmación, reintento ante errores)
+- Sistema modular de navegación, apertura de menús y efectos de resaltado
+- Gestión de chat, historial de sesión y memoria de la conversación
+- Respuestas con datos oficiales (catálogo de carreras, sedes, fechas y preguntas frecuentes) y Ollama (`qwen3.5:4b`) como respaldo
+- Búsqueda y filtros de carreras, con siglas, sinónimos y manejo de consultas ambiguas
+- Mapa de sedes y calendario restringidos a Duoc UC
+- Protección de datos sensibles en el chat
+- Backend Python con Oracle Database Free (32 tablas): persistencia de conversaciones, valoración de respuestas y conocimiento aprobado
+- Panel web Duco Admin y 13 suites de pruebas automatizadas del navegador
+- Responsive design y respuestas en inglés
 
-⏳ **Pendiente (Próxima Fase):**
-- Integración con API de IA real
-- Persistencia de conversaciones en BD
-- Análisis de interacciones
-- Multilengua
+⏳ **Pendiente:**
+- Despliegue con Docker
+- Medición sistemática de tiempos de respuesta y pruebas manuales en varios navegadores, con capturas
+- Soporte de idiomas distintos del español y el inglés
 - Avatar animado mejorado
-- Opciones de satisfacción del usuario
 
 ## 🐛 Troubleshooting
 
