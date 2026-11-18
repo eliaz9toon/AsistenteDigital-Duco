@@ -1,4 +1,4 @@
--- DUCO ASISTE: DDL Oracle adaptado del modelo de 30 tablas recibido.
+-- DUCO ASISTE: DDL Oracle del modelo implementado (32 tablas): las 30 del diseño original más PROPUESTAS_CONOCIMIENTO y EXPERIENCIAS_ACCION.
 -- Requiere Oracle Database 12c o posterior y un esquema vacío.
 -- Ejecutar conectado como DUCO_APP después de create_user.sql.
 -- SQL Developer es el cliente, no la base de datos.
