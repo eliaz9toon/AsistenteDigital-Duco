@@ -1237,6 +1237,8 @@ class OllamaClient {
       || this.getNotOfferedCareerResponse(userText, ctx)
       || this.getSitePageNavigationResponse(userText, ctx)
       || this.getPageStepsResponse(userText, ctx, options)
+      || this.getPageFaqResponse(userText, ctx)
+      || this.getCareerInSedeResponse(userText, ctx)
       || this.getListedCareersFollowUp(userText, options, ctx)
       || this.getConversationFollowUp(userText, options, ctx)
       || this.getAmbiguousRequestResponse(userText, options, ctx)
@@ -1288,10 +1290,12 @@ class OllamaClient {
       {re: 'admision(?: duoc uc)?', file: 'admision.html', label: 'Admisión', needsWord: false},
       {re: 'vida estudiantil', file: 'vida-estudiantil.html', label: 'Vida Estudiantil', needsWord: false},
       {re: 'nosotros', file: 'nosotros.html', label: 'Nosotros', needsWord: false},
-      {re: 'sedes(?: y campus)?|donde estamos', file: 'sedes.html', label: 'Sedes y Campus', needsWord: true},
+      {re: 'sedes y campus|donde estamos', file: 'sedes.html', label: 'Sedes y Campus', needsWord: false},
+      {re: 'sedes', file: 'sedes.html', label: 'Sedes y Campus', needsWord: true},
       {re: '(?:financiamiento|becas|gratuidad|becas y financiamiento|financiamiento gratuidad y becas)', file: 'financiamiento.html', label: 'Financiamiento, gratuidad y becas', needsWord: true}
     ];
-    const verb = '(?:por favor )?(?:llevame|lleva|llevarme|ir|ve|vamos|abre|abrime|abrir|muestrame|mostrar|quiero ir|quiero ver|entrar|entra|navega|navegar)';
+    const polite = '(?:(?:hola |oye |duco )*(?:me )?(?:puedes|podrias|podrias por favor|puedes por favor|quiero que me|necesito que me|quisiera que me|me gustaria que me) )?';
+    const verb = `${polite}(?:por favor )?(?:llevame|lleva|llevarme|llevar|ir|ve|vamos|abre|abrime|abrir|muestrame|mostrar|quiero ir|necesito ir|quiero ver|entrar|entra|navega|navegar|dirigirme)`;
     for (const page of pages) {
       const match = q.match(new RegExp(`^${verb}(?: a| al| hacia)?(?: la| el)?( pagina| seccion| sitio| apartado)?(?: de| del)?(?: la| el)? (?:${page.re})(?: por favor)?$`));
       if (!match) continue;
@@ -1322,7 +1326,7 @@ class OllamaClient {
         intent: {kind: 'follow_up', reference: 'resolved_action', action: 'highlight'},
         turnDecision: {mode: 'follow_up', topic: 'page', operation: 'highlightTerms', operations: ['highlightTerms'], destination: 'none', needsClarification: false, goal: 'Señalar los pasos de la matrícula'}};
     }
-    const asksSteps = /\b(?:paso a paso|pasos|etapas)\b/.test(q) || /\bcomo (?:me |puedo |hago para |se )?(?:matricul\w*|postul\w*|inscrib\w*)\b/.test(q);
+    const asksSteps = /\b(?:paso a paso|pasos|etapas)\b/.test(q) || /\bcomo (?:me |puedo |hago para |se )?matricul\w*\b/.test(q);
     if (!asksSteps || /\b(?:menu|carrera|carreras|ficha)\b/.test(q)) return null;
     const answer = (reply, actions = []) => ({reply, actions, intent: {kind: 'new_request', reference: 'resolved_action', action: actions.length ? actions[0].type : 'none'},
       turnDecision: {mode: 'new', topic: 'page', operation: actions.length ? actions[0].type : 'none', operations: actions.map(action => action.type), destination: 'none', needsClarification: false, goal: 'Explicar los pasos de la matrícula'}});
@@ -1341,6 +1345,102 @@ class OllamaClient {
         [{type: 'navigate', terms: ['Admisión'], target: 'admision.html'}]);
     }
     return null;
+  }
+
+  /**
+   * Preguntas frecuentes que la propia página trae (Admisión y Financiamiento: ~96 preguntas con su respuesta oficial).
+   * Si lo que se pregunta calza con una de ellas, se responde con ese texto tal cual y se señala la pregunta; no interviene el modelo.
+   */
+  getPageFaqResponse(userText, context = {}) {
+    if (typeof document === 'undefined') return null;
+    const items = [...document.querySelectorAll('.ad26-faq-item')].filter(item => !item.closest('#duco-assistant-container'));
+    if (items.length < 3) return null;
+    const normalize = value => this.normalizeCareerText(value);
+    const q = normalize(userText);
+    if (!q || q.split(' ').length > 24) return null;
+    const faqs = items.map(item => ({
+      item,
+      question: (item.querySelector('.ad26-faq-question span, .ad26-faq-question')?.textContent || '').replace(/\s+/g, ' ').trim(),
+      // Se quitan los textos de los botones de enlace («Revisa carreras y aranceles») que acompañan a la respuesta.
+      answer: (() => { const node = item.querySelector('.ad26-faq-answer')?.cloneNode(true); node?.querySelectorAll('a, button').forEach(link => link.remove()); return (node?.textContent || '').replace(/\s+/g, ' ').trim(); })(),
+      url: item.querySelector('a.ad26-faq-question')?.getAttribute('href') || ''
+    })).filter(faq => faq.question && faq.answer);
+    const answer = (reply, actions = []) => ({reply, actions, intent: {kind: 'answer', reference: 'resolved_action', action: actions.length ? 'highlight' : 'none'},
+      turnDecision: {mode: 'answer', operation: actions.length ? 'highlightTerms' : 'none', operations: actions.length ? ['highlightTerms'] : [], destination: 'none', needsClarification: false}});
+    const visible = faq => !!faq.item.querySelector('.ad26-faq-question')?.getClientRects().length;
+    // «Resalta ¿Cómo puedo pagar mi matrícula?»: el texto exacto de una pregunta visible se señala tal cual.
+    const wantsHighlight = /\b(?:resalt\w*|senal\w*|marc\w*|muestr\w*|mostr\w*|ubic\w*)\b/.test(q);
+    if (wantsHighlight) {
+      const exact = faqs.filter(faq => faq.question.length >= 20 && q.includes(normalize(faq.question)) && visible(faq)).sort((a, b) => b.question.length - a.question.length)[0];
+      if (exact) return answer(`Te señalo la pregunta «${exact.question}».`, [{type: 'highlightTerms', terms: [exact.question], duration: 8000}]);
+    }
+    if (/\b(?:llevame|lleva|abre|abrir|ir a|ve a|cierra|sube|baja)\b/.test(q)) return null;
+    const stop = new Set(['como', 'puedo', 'puede', 'para', 'donde', 'cuando', 'cual', 'cuales', 'esta', 'este', 'esto', 'tengo', 'tiene', 'tienen', 'hay', 'que', 'por', 'una', 'uno', 'unos', 'unas', 'los', 'las', 'del', 'con', 'sin', 'mas', 'duoc', 'sobre', 'quiero', 'saber', 'necesito', 'dime', 'decime', 'explicame', 'pagina', 'pregunta', 'preguntas', 'frecuentes', 'si', 'se', 'me', 'mi', 'es', 'en', 'de', 'la', 'el', 'y', 'o', 'u', 'a', 'al', 'un', 'lo']);
+    const stems = text => [...new Set(normalize(text).split(' ').filter(word => word.length >= 4 && !stop.has(word)).map(word => word.slice(0, 6)))];
+    const wanted = stems(userText);
+    if (wanted.length < 2) return null;
+    let best = null;
+    for (const faq of faqs) {
+      const have = new Set(stems(faq.question));
+      const overlap = wanted.filter(stem => have.has(stem)).length;
+      if (overlap < 2 && !(wanted.length === 1 && overlap === 1)) continue;
+      const score = overlap / wanted.length + overlap / Math.max(have.size, 1) * 0.5;
+      if (overlap / wanted.length >= 0.6 && (!best || score > best.score)) best = {faq, score, overlap};
+    }
+    if (!best) return null;
+    const {faq} = best;
+    const body = faq.answer.length > 650 ? faq.answer.slice(0, 650).replace(/\s+\S*$/, '') + '…' : faq.answer;
+    const source = faq.url && /^https?:/.test(faq.url) ? `\nFuente: ${faq.url}` : '';
+    return answer(`${body}${source}`, visible(faq) ? [{type: 'highlightTerms', terms: [faq.question], duration: 8000}] : []);
+  }
+
+  /**
+   * «Enfermería en Valparaíso», «hay informática en Puente Alto», «quiero saber de X en la sede Y»: se responde con el catálogo
+   * si esa carrera se imparte en esa sede y en qué jornadas (tolera una letra de más o de menos en el nombre de la sede).
+   */
+  getCareerInSedeResponse(userText, context = {}) {
+    const places = window.ducoPlaces;
+    if (!places?.sedes?.length) return null;
+    const q = this.normalizeCareerText(userText);
+    if (!q || q.split(' ').length > 14) return null;
+    if (/\b(?:cuanto|duracion|dura|costo|cuesta|arancel|requisitos?|explica\w*|llevame|lleva|abre|abrir|resalta\w*|ficha|mapa|ruta|como llego|donde queda|donde esta|telefono|contacto|beca\w*|horario\w*)\b/.test(q)) return null;
+    const catalog = (context.careerAlternatives || []).filter(item => item.title && item.sedes_modalidades?.length);
+    const mention = this.resolveCareerMentions(userText, catalog, {});
+    if (!['exact', 'alias', 'partial'].includes(mention.kind) || mention.matches.length !== 1) return null;
+    const career = mention.matches[0];
+    const tokens = q.split(' ');
+    const near = (a, b) => {
+      if (a === b) return true;
+      if (Math.abs(a.length - b.length) > 1 || a.length < 6) return false;
+      let i = 0, j = 0, edits = 0;
+      while (i < a.length && j < b.length) {
+        if (a[i] === b[j]) { i++; j++; continue; }
+        if (++edits > 1) return false;
+        if (a.length > b.length) i++; else if (a.length < b.length) j++; else { i++; j++; }
+      }
+      return edits + (a.length - i) + (b.length - j) <= 1;
+    };
+    // «Santiago» o la región entera abarcan varias sedes: no se elige una sola.
+    if (/\b(?:santiago|metropolitana|region|todas|sur|norte|centro)\b/.test(q)) return null;
+    const found = places.findSedes(userText);
+    if (found.length > 1) return null;
+    let sede = found[0] || null;
+    if (!sede) {
+      sede = places.sedes.find(item => (item.aliases || []).concat(item.comuna || [], item.name).some(alias => {
+        const words = this.normalizeCareerText(alias).split(' ').filter(word => word.length >= 6);
+        return words.some(word => tokens.some(token => near(token, word)));
+      })) || null;
+    }
+    if (!sede) return null;
+    // La carrera ya dice el lugar («Ingeniería en Recursos Naturales»)? Solo cuenta si el lugar aparece fuera del título.
+    if (!/\b(?:en|de la sede|sede|campus|por|para)\b/.test(q)) return null;
+    const normalize = value => this.normalizeCareerText(value);
+    const entry = career.sedes_modalidades.find(item => normalize(item.sede) === normalize(sede.name));
+    const answer = reply => ({reply, actions: [], intent: {kind: 'answer', reference: 'resolved_action', action: 'none'},
+      turnDecision: {mode: 'answer', operation: 'none', operations: [], destination: 'none', needsClarification: false}});
+    if (entry) return answer(`${career.title} se imparte en ${sede.name}: ${(entry.modalidades || []).join(', ') || 'modalidad no especificada'}.`);
+    const where = career.sedes_modalidades.map(item => item.sede.replace(/^(?:Sede|Campus) /, ''));
+    return answer(`${career.title} no se imparte en ${sede.name}. Sí se imparte en: ${where.slice(0, 8).join(', ')}${where.length > 8 ? ` y ${where.length - 8} más` : ''}.`);
   }
 
   /** Carreras conocidas que no están en el catálogo de Duoc UC: se dice con claridad y se ofrece lo más cercano en vez de inventar. */
@@ -3170,6 +3270,41 @@ class OllamaClient {
   }
 
   /** Sustituye referencias a lo recordado ("cerca de mí", "según lo que te dije") por los datos reales para que el resto del flujo las entienda. */
+  /**
+   * «¿Puedes llevarme a…?», «¿me podrías mostrar…?», «quiero que me lleves a…», «ayúdame a encontrar…»:
+   * se reducen a la orden directa equivalente («llévame a…», «muéstrame…», «busca…») para que las reglas la reconozcan igual.
+   * Solo cambia el texto si empieza con una fórmula de cortesía seguida de un verbo conocido; si no, lo devuelve intacto.
+   */
+  simplifyPoliteRequest(userText) {
+    const q = this.normalizeCareerText(userText);
+    if (!q || q.split(' ').length > 22) return userText;
+    const polite = q.match(/^(?:(?:hola|oye|duco|buenas|buenos dias|buenas tardes)\s+)*(?:me\s+)?(?:puedes|podrias|podria|puede|quiero que me|necesito que me|quisiera que me|me gustaria que me|quiero que|necesito que)\s+(?:por favor\s+)?(.+)$/);
+    if (!polite) return userText;
+    let rest = polite[1].replace(/\s+por favor$/, '');
+    const infinitives = {
+      llevarme: 'llevame', llevar: 'lleva', mostrarme: 'muestrame', mostrar: 'muestra', decirme: 'dime', explicarme: 'explicame', explicar: 'explica',
+      ayudarme: 'ayudame', ayudar: 'ayuda', abrir: 'abre', cerrar: 'cierra', buscar: 'busca', encontrar: 'encuentra', resaltar: 'resalta', resaltarme: 'resaltame',
+      senalar: 'senala', senalarme: 'senalame', volver: 'vuelve', subir: 'sube', bajar: 'baja', ir: 've', darme: 'dame', dar: 'da', recomendarme: 'recomiendame', indicarme: 'indicame', guiarme: 'guiame', cuentame: 'cuentame'
+    };
+    const subjunctive = {
+      lleves: 'llevame', lleve: 'llevame', muestres: 'muestrame', muestre: 'muestrame', digas: 'dime', expliques: 'explicame', ayudes: 'ayudame',
+      busques: 'busca', abras: 'abre', cierres: 'cierra', resaltes: 'resalta', senales: 'senala', indiques: 'indicame', recomiendes: 'recomiendame', des: 'dame', guies: 'guiame'
+    };
+    if (/^me /.test(rest)) rest = rest.slice(3);
+    const first = rest.split(' ')[0];
+    const fromSubjunctive = /^(?:quiero que|necesito que|quisiera que|me gustaria que me|quiero que me|necesito que me|quisiera que me)/.test(q.replace(/^(?:(?:hola|oye|duco|buenas|buenos dias|buenas tardes)\s+)*(?:me\s+)?/, ''));
+    let verb = fromSubjunctive ? subjunctive[first.replace(/^me/, '')] || subjunctive[first] : infinitives[first];
+    if (!verb) return userText;
+    // «lleves» ya trae el «me» de «que me»: «llevame» lo repone; en infinitivo el «me» va pegado al verbo.
+    rest = rest.split(' ').slice(1).join(' ');
+    rest = rest.replace(/\bcerrarlo\b/g, 'cierralo').replace(/\babrirlo\b/g, 'abrelo').replace(/\bresaltarlo\b/g, 'resaltalo')
+      .replace(/\bmostrarlo\b/g, 'muestralo').replace(/\bsenalarlo\b/g, 'senalalo');
+    let out = `${verb} ${rest}`.trim();
+    // «ayúdame a encontrar/buscar la carrera de X» es una búsqueda.
+    out = out.replace(/^ayudame a (?:encontrar|buscar|ubicar) /, 'busca ').replace(/^ayuda a (?:encontrar|buscar|ubicar) /, 'busca ');
+    return out;
+  }
+
   expandMemoryReferences(userText, options = {}) {
     const q = this.normalizeCareerText(userText);
     const profile = this.deriveProfile(options.messages, userText);
@@ -3199,6 +3334,7 @@ class OllamaClient {
       const rephrased = await this.getRephraseResponse(userText, options);
       if (rephrased) return rephrased;
     }
+    userText = this.simplifyPoliteRequest(userText);
     userText = this.expandMemoryReferences(userText, options);
     const stateAnswer = this.getConversationStateAnswer(userText, options.messages, options.context);
     if (stateAnswer) return stateAnswer;
