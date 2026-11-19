@@ -285,8 +285,8 @@ class Handler(BaseHTTPRequestHandler):
             return self.serve_index()
         if path in {"/duco", "/duoc.html"}:
             return self.serve_project_file("duoc.html")
-        if path == "/carreras.html":
-            return self.serve_project_file("carreras.html")
+        if path in {"/carreras.html", "/admision.html", "/financiamiento.html", "/sedes.html", "/vida-estudiantil.html", "/nosotros.html"}:
+            return self.serve_project_file(path.lstrip("/"))
         if self.is_project_asset(path):
             return self.serve_project_file(path.lstrip("/"))
         try:
