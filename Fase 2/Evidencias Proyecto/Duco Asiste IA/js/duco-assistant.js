@@ -174,7 +174,7 @@ class DucoAssistant {
           <!-- Avatar y botón de apertura -->
           <button type="button" class="duco-avatar-button" aria-label="Abrir chat con Duco" aria-expanded="false" aria-controls="${this.chatPanelId}">
             <div class="duco-avatar">
-              <img src="/dibujos/duco asiste.png" alt="Duco Avatar" class="duco-avatar-img">
+              <img src="/dibujos/Duco idle.png" alt="Duco Avatar" class="duco-avatar-img">
             </div>
           </button>
 
@@ -1099,8 +1099,16 @@ class DucoAssistant {
       .map(el=>({text:this.getElementContentText(el),score:score(this.getElementContentText(el))}))
       .filter(entry=>entry.score>0 && entry.text.length>=20 && entry.text.length<=700)
       .sort((a,b)=>b.score-a.score).slice(0,8);
-    entries.forEach(entry=>results.push({kind:'pagina_actual',title:document.title,detail:entry.text,source:location.href}));
+    entries.forEach(entry=>results.push({kind:'pagina_actual',title:document.title,detail:entry.text,source:this.getOriginalPageUrl()}));
     return results;
+  }
+
+  /** Dirección oficial de la página que se está viendo (la copia local no debe citarse como fuente). */
+  getOriginalPageUrl() {
+    const official={'/duoc.html':'https://www.duoc.cl/','/duco':'https://www.duoc.cl/','/carreras.html':'https://www.duoc.cl/oferta-academica/carreras/',
+      '/admision.html':'https://www.duoc.cl/admision/','/financiamiento.html':'https://www.duoc.cl/admision/preguntas-frecuentes/financiamiento-gratuidad-y-becas/',
+      '/sedes.html':'https://www.duoc.cl/nosotros/donde-estamos/sedes/','/vida-estudiantil.html':'https://www.duoc.cl/vida-estudiantil/','/nosotros.html':'https://www.duoc.cl/nosotros/'};
+    return official[location.pathname] || location.href;
   }
 
   isLocalKnowledgeApi() {
@@ -1855,6 +1863,7 @@ class DucoAssistant {
       const last=actions.at(-1);
       if (last.type==='dropdown') message=`Listo, el menú «${last.terms?.[0] || ''}» está abierto. ¿Quieres que te señale alguna opción?`;
       else if (last.type==='closeDropdown') message='Listo, cerré el menú. ¿Seguimos con otra cosa?';
+      else if ((last.type==='highlightTerms' || last.type==='highlight') && path==='/admision.html' && (last.terms || []).length>=3 && document.querySelector('.ad26-reserva-paso')) message='Listo, ya tienes los pasos señalados en pantalla. ¿Quieres que te lleve al catálogo para elegir tu carrera?';
       else if (last.type==='highlightTerms' || last.type==='highlight') message='Listo, ya lo tienes señalado en pantalla. ¿Quieres que te explique qué es o seguimos con otra cosa?';
       else if (['scroll','viewport','move','goto'].includes(last.type)) message='Listo, ya estás en esa parte de la página. ¿Necesitas algo más?';
       else if (last.type==='clearHighlights') message='Listo, quité los resaltados. ¿Seguimos?';

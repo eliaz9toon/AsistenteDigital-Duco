@@ -42,6 +42,7 @@
     ['Ir a Nosotros (copia local)', ['llevame a la pagina de nosotros'], (rs, as) => /navigate:Nosotros/.test(as[0])],
     ['Ir a Sedes y Campus (copia local)', ['llevame a la pagina de sedes'], (rs, as) => /navigate:Sedes y Campus/.test(as[0])],
     ['Ir a Financiamiento y becas (copia local)', ['llevame a la pagina de becas'], (rs, as) => /navigate:Financiamiento/.test(as[0])],
+    ['Pasos de matrícula desde el inicio llevan a Admisión', ['explicame el paso a paso de la matricula'], (rs, as) => /navigate:Admisión/.test(as[0])],
     ['Abrir el menú sigue abriendo el menú', ['abre el menu de vida estudiantil'], (rs, as) => /dropdown/.test(as[0]) && !/navigate/.test(as[0])],
     ['Ir a una ficha de carrera', ['llevame a la ficha de enfermeria'], (rs, as) => /navigate/.test(as[0])],
     // --- Robustez
