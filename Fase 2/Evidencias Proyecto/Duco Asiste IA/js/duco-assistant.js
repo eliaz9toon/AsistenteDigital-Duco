@@ -1883,7 +1883,7 @@ class DucoAssistant {
     const normalize = value=>String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
     const terms = (action.terms || []).map(normalize);
     let href;
-    if (action.target && /^(?:\/?carreras\.html|\/?carreras-detalle\/[a-z0-9-]+\.html)$/i.test(action.target)) {
+    if (action.target && /^(?:\/?(?:carreras|duoc|admision|financiamiento|sedes|vida-estudiantil|nosotros)\.html|\/?carreras-detalle\/[a-z0-9-]+\.html)$/i.test(action.target)) {
       href = new URL('/'+action.target.replace(/^\//,''),window.location.origin).href;
     } else if (terms.some(term=>['volver','atras','pagina anterior'].includes(term))) {
       href = sessionStorage.getItem('duco-navigation-previous');

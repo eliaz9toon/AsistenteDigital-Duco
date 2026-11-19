@@ -555,6 +555,7 @@ class OllamaClient {
       const page = context.currentPage || context.viewportContext?.page;
       if (['/duco', '/duoc.html', '/'].includes(page)) replies.push('Estás en la página de inicio.');
       else if (page === '/carreras.html') replies.push('Estás en el catálogo general de carreras.');
+      else if (page && /^\/(?:admision|financiamiento|sedes|vida-estudiantil|nosotros)\.html$/.test(page) && document.title) replies.push(`Estás en la página «${document.title.replace(/\s*[–-]\s*Duoc UC\s*$/i, '').trim()}» de Duoc UC.`);
       else if (page) replies.push(`La página actual es ${page}.`);
       else replies.push('No recibí la ubicación actual del navegador.');
     }
@@ -993,6 +994,17 @@ class OllamaClient {
           detail: {duracion: entry.duracion, tipo: entry.tipo, escuela: entry.escuela, sedes_modalidades: entry.sedes_modalidades}}];
       }
     }
+    // Nombre aproximado que calza con 2 a 4 carreras («construcción civil»): se muestran todas con su duración y se pide elegir.
+    if (!sources.length && wantsDuration) {
+      const catalog = (context.careerAlternatives || []).filter(entry => entry.title);
+      const named = this.resolveCareerMentions(userText, catalog, {});
+      if (named.kind === 'partial' && named.matches.length >= 2 && named.matches.length <= 4) {
+        const lines = named.matches.map(entry => `• ${entry.title}: ${entry.duracion || 'duración no informada'}${entry.tipo ? ` (${Array.isArray(entry.tipo) ? entry.tipo.join(', ') : entry.tipo})` : ''}`);
+        return {reply: `Hay ${named.matches.length} carreras con ese nombre en el catálogo:\n${lines.join('\n')}\n¿Cuál te interesa?`, actions: [],
+          intent: {kind: 'follow_up', reference: 'resolved_action', action: 'none'},
+          turnDecision: {mode: 'answer', operation: 'none', operations: [], destination: 'none', needsClarification: false}};
+      }
+    }
     // "¿Cuánto dura?" sin carrera identificable: se pregunta cuál en vez de dejar que el modelo adivine una cifra.
     if (!sources.length && wantsDuration && !wantsLocations && !(context.pageResearch || []).some(item => item.kind === 'catalogo') &&
         !/\b(?:universidad|duoc|clase|clases|semestre|ano academico|inscripcion|tramite|matricula)\b/.test(text)) {
@@ -1222,6 +1234,8 @@ class OllamaClient {
       || this.getRepeatResponse(userText, options)
       || this.getSimilarCareerResponse(userText, options, ctx)
       || this.getAddToCalendarResponse(userText, options)
+      || this.getNotOfferedCareerResponse(userText, ctx)
+      || this.getSitePageNavigationResponse(userText, ctx)
       || this.getListedCareersFollowUp(userText, options, ctx)
       || this.getConversationFollowUp(userText, options, ctx)
       || this.getAmbiguousRequestResponse(userText, options, ctx)
@@ -1263,6 +1277,59 @@ class OllamaClient {
       || this.getUnknownTargetResponse(userText, options, ctx)
       || this.getInterestRecommendationResponse(userText, ctx)
       || null;
+  }
+
+  /** «Llévame a la página de admisión / vida estudiantil / nosotros / sedes / becas»: copias locales de páginas reales de duoc.cl. */
+  getSitePageNavigationResponse(userText, context = {}) {
+    const q = this.normalizeCareerText(userText);
+    if (q.split(' ').length > 10 || /\b(?:menu|desplegable|submenu|carrera|carreras|ficha|requisitos?|fechas?|especial)\b/.test(q)) return null;
+    const pages = [
+      {re: 'admision(?: duoc uc)?', file: 'admision.html', label: 'Admisión', needsWord: false},
+      {re: 'vida estudiantil', file: 'vida-estudiantil.html', label: 'Vida Estudiantil', needsWord: false},
+      {re: 'nosotros', file: 'nosotros.html', label: 'Nosotros', needsWord: false},
+      {re: 'sedes(?: y campus)?|donde estamos', file: 'sedes.html', label: 'Sedes y Campus', needsWord: true},
+      {re: '(?:financiamiento|becas|gratuidad|becas y financiamiento|financiamiento gratuidad y becas)', file: 'financiamiento.html', label: 'Financiamiento, gratuidad y becas', needsWord: true}
+    ];
+    const verb = '(?:por favor )?(?:llevame|lleva|llevarme|ir|ve|vamos|abre|abrime|abrir|muestrame|mostrar|quiero ir|quiero ver|entrar|entra|navega|navegar)';
+    for (const page of pages) {
+      const match = q.match(new RegExp(`^${verb}(?: a| al| hacia)?(?: la| el)?( pagina| seccion| sitio| apartado)?(?: de| del)?(?: la| el)? (?:${page.re})(?: por favor)?$`));
+      if (!match) continue;
+      const word = !!match[1];
+      if ((page.needsWord || /^(?:abre|abrime|abrir)\b/.test(q)) && !word) return null;
+      const here = String(context.currentPage || '').replace(/^\//, '') === page.file;
+      const answer = (reply, actions = []) => ({reply, actions, intent: {kind: 'new_request', reference: 'resolved_action', action: actions.length ? 'navigate' : 'none'},
+        turnDecision: {mode: 'new', topic: 'page', operation: actions.length ? 'navigate' : 'none', operations: actions.length ? ['navigate'] : [], destination: 'none', needsClarification: false, goal: `Ir a ${page.label}`}});
+      if (here) return answer(`Ya estás en la página de ${page.label}.`);
+      return answer(`Te llevo a la página de ${page.label}.`, [{type: 'navigate', terms: [page.label], target: page.file}]);
+    }
+    return null;
+  }
+
+  /** Carreras conocidas que no están en el catálogo de Duoc UC: se dice con claridad y se ofrece lo más cercano en vez de inventar. */
+  getNotOfferedCareerResponse(userText, context = {}) {
+    const q = this.normalizeCareerText(userText);
+    if (q.split(' ').length > 14 || /\b(?:abre|abrir|abrime|llevame|lleva|ir a|ve a|muestrame la ficha|resalta\w*)\b/.test(q)) return null;
+    const missing = [
+      {re: /\b(?:medicina|medico cirujano|doctor|doctora)\b(?! veterinari)/, name: 'Medicina', school: 'Salud y Bienestar'},
+      {re: /\b(?:derecho|abogacia|abogado|abogada)\b/, name: 'Derecho', school: 'Administración y Negocios'},
+      {re: /\b(?:psicologia|psicologo|psicologa)\b/, name: 'Psicología', school: 'Salud y Bienestar'},
+      {re: /\b(?:arquitectura|arquitecto|arquitecta)\b/, name: 'Arquitectura', school: 'Construcción'},
+      {re: /\b(?:periodismo|periodista)\b/, name: 'Periodismo', school: 'Comunicación'},
+      {re: /\b(?:pedagogia|profesor de|profesora de)\b/, name: 'Pedagogía', school: 'Comunicación'},
+      {re: /\b(?:kinesiologia|kinesiologo|kinesiologa|nutricion|nutricionista)\b/, name: 'Kinesiología o Nutrición', school: 'Salud y Bienestar'}
+    ];
+    const hit = missing.find(item => item.re.test(q));
+    if (!hit || !/\b(?:estudiar|carrera|tienen|tiene|hay|existe|ofrecen|ofrece|imparten|quiero|me gustaria|busco)\b/.test(q)) return null;
+    const items = (context.careerAlternatives || []).filter(item => item.title && item.escuela?.length);
+    // Si el catálogo sí tiene algo con ese nombre, no es esta ruta.
+    const stem = hit.name.split(' ')[0].toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').slice(0, 6);
+    if (items.some(item => this.normalizeCareerText(item.title).includes(stem))) return null;
+    const near = items.filter(item => item.escuela.includes(hit.school)).map(item => item.title);
+    const sample = near.slice(0, 4);
+    const more = near.length ? ` Lo más cercano está en la Escuela de ${hit.school}: ${sample.join(', ')}${near.length > sample.length ? ' y otras' : ''}. Dime si quieres ver alguna.` : ' Dime qué área te interesa y te muestro las carreras relacionadas.';
+    return {reply: `${hit.name} no aparece en el catálogo de carreras de Duoc UC.${more}`, actions: [],
+      intent: {kind: 'answer', reference: 'resolved_action', action: 'none'},
+      turnDecision: {mode: 'answer', operation: 'none', operations: [], destination: 'none', needsClarification: false}};
   }
 
   /** Solo las preguntas informativas sobre la institución justifican consultar duoc.cl; la charla personal no. */
@@ -1514,6 +1581,21 @@ class OllamaClient {
     }
     // Un título que es subcadena de otro encontrado (p. ej. "Gastronomía" dentro de "Gastronomía Internacional") solo cuenta si se nombró aparte.
     const careers = [...found.values()];
+    // «Estoy entre informática y diseño web»: dos áreas con varias carreras cada una; se muestran los dos grupos y se pide el interés.
+    if ((careers.length < 2 || /\bentre\b/.test(q)) && /\b(?:entre|conviene|mejor)\b/.test(q)) {
+      const groups = [];
+      // Se separa el texto ya normalizado: «diseño» con ñ rompería el límite de palabra de «o».
+      for (const part of this.normalizeCareerText(userText).split(/\s+(?:vs|versus|contra|o|y|u)\s+/i)) {
+        const cleaned = this.normalizeCareerText(part).replace(noise, ' ').replace(/\b(?:estoy|toy|duda|dudando|indeciso|indecisa|cual|me)\b/g, ' ').replace(/\s+/g, ' ').trim();
+        if (cleaned.length < 4) continue;
+        const result = this.resolveCareerMentions(cleaned, catalog, {});
+        if (result.kind !== 'fuzzy' && result.matches.length >= 1 && !groups.some(group => group.label === cleaned)) groups.push({label: cleaned, matches: result.matches});
+      }
+      if (groups.length === 2 && groups[0].matches.length + groups[1].matches.length >= 3) {
+        const fmt = group => group.matches.slice(0, 4).map(item => `${item.title} (${item.duracion || 's/d'})`).join('; ');
+        return this.answerOnly(`No puedo decir cuál te conviene sin conocer tus gustos, pero según el catálogo:\n• «${groups[0].label}»: ${fmt(groups[0])}\n• «${groups[1].label}»: ${fmt(groups[1])}\nCuéntame qué te gusta hacer (por ejemplo programar, diseñar interfaces, trabajar con datos) y te oriento mejor.`);
+      }
+    }
     if (careers.length < 2 || careers.length > 3) return null;
     const lines = careers.map(item => `• ${item.title}: ${item.duracion || 'duración no indicada'}${item.tipo?.length ? ` (${item.tipo.join(', ')}${item.escuela?.length ? `; Escuela de ${item.escuela.join(', ')}` : ''})` : ''}`);
     const rows = careers.map(item => ({item, months: this.durationMonths(item.duracion)}));
@@ -1717,7 +1799,10 @@ class OllamaClient {
     }
     const lines = offered.map(sm => `• ${sm.sede}: ${(sm.modalidades || []).join(', ') || 'modalidad no especificada'}`);
     const title = jornada ? `${career.title} en jornada ${jornada === 'online' ? 'online' : jornada} se imparte en` : `${career.title} se imparte en`;
-    return this.answerOnly(`${title} ${offered.length} sede(s):\n${lines.join('\n')}${nearestLine}`);
+    // Pregunta compuesta («cuánto dura y dónde se dicta»): se antepone la duración del catálogo.
+    const durationLine = /\b(?:cuanto dura|duracion|cuantos (?:semestres|bimestres|anos))\b/.test(q) && career.duracion
+      ? `${career.title} dura ${career.duracion}${career.tipo ? ` (${[].concat(career.tipo).join(', ')})` : ''}.\n` : '';
+    return this.answerOnly(`${durationLine}${title} ${offered.length} sede(s):\n${lines.join('\n')}${nearestLine}`);
   }
 
   /** "Háblame de X", "cuéntame de X", "info sobre X": ficha resumida con los datos reales del catálogo. */
@@ -1835,6 +1920,21 @@ class OllamaClient {
   getListedCareersFollowUp(userText, options = {}, context = {}) {
     const q = this.normalizeCareerText(userText);
     if (q.split(' ').length > 9) return null;
+    // Referencia por orden a lo recién listado: «llévame a la primera», «explícame la tercera», «la última».
+    const ordinal = q.match(/^(?:(?:por favor )?(?:llevame|lleva|abre|abrime|muestrame|explicame|cuentame de|hablame de|ir) (?:a )?)?(?:la |el |esa |ese )?(primera|primero|segunda|segundo|tercera|tercero|cuarta|cuarto|quinta|quinto|sexta|sexto|ultima|ultimo|(?:numero |n )?([1-6]))(?: opcion| carrera)?$/);
+    if (ordinal && (/^(?:llevame|lleva|abre|abrime|muestrame|explicame|cuentame|hablame|ir|por favor)/.test(q) || /^(?:la|el) /.test(q))) {
+      const listedItems = this.getListedCareers(options, context);
+      if (listedItems.length >= 2) {
+        const words = ['primer', 'segund', 'tercer', 'cuart', 'quint', 'sext'];
+        const index = /ultim/.test(ordinal[1]) ? listedItems.length - 1 : ordinal[2] ? Number(ordinal[2]) - 1 : words.findIndex(word => ordinal[1].startsWith(word));
+        const item = listedItems[index];
+        if (item) {
+          const verb = /^explicame|^cuentame|^hablame/.test(q) ? 'explicame ' : 'llevame a la ficha de ';
+          const resolved = this.resolveLocalResponse(verb + item.title, options);
+          if (resolved) return resolved;
+        }
+      }
+    }
     const duration = /^(?:y )?(?:cuanto dura\w*|cuanto duran|que duracion(?: tiene\w*)?|duracion|cuantos semestres)\b/.test(q);
     const sedes = /^(?:y )?(?:en que sedes?|donde (?:se )?(?:imparte\w*|estudia\w*)|que sedes?)\b/.test(q);
     const shift = q.match(/^(?:y )?(?:en|con|hay)(?: jornada| modalidad)? (vespertin\w*|diurn\w*|online)\b/);
@@ -2313,10 +2413,11 @@ class OllamaClient {
     if (q.split(' ').length > 9 || /\b(?:menu|carrera|carreras|escuela|escuelas|sede|sedes|no|sin)\b/.test(q)) return null;
     const top = /\b(?:sube|subir|subeme|scroll (?:hacia )?arriba|desplazate (?:hacia )?arriba|arriba del todo|(?:al )?(?:inicio|principio|tope|comienzo) de la pagina|al tope)\b/.test(q);
     const bottom = /\b(?:ve|ir|llevame|baja|bajar|bajame|scroll (?:hacia )?abajo|desplazate (?:hacia )?abajo)\b.*\b(?:final|fondo|footer|pie de pagina|abajo del todo|parte de abajo|parte baja|hasta abajo)\b|\b(?:final|fondo|pie) de la pagina\b/.test(q);
-    const down = /\b(?:baja|bajar|bajame|scroll (?:hacia )?abajo|desplazate (?:hacia )?abajo|mas abajo)\b/.test(q);
-    if (!top && !bottom && !down) return null;
-    const action = top ? {type: 'scroll', top: 0} : bottom ? {type: 'scroll', top: 1e6} : {type: 'scroll', deltaY: Math.max(400, Math.round((typeof window !== 'undefined' ? window.innerHeight : 800) * 0.8))};
-    const message = top ? 'Subo al inicio de la página.' : bottom ? 'Bajo al final de la página.' : 'Bajo un poco en la página.';
+    const up = /\b(?:subelo|subela|mas arriba|un poco arriba)\b/.test(q);
+    const down = /\b(?:baja|bajalo|bajala|bajar|bajame|scroll (?:hacia )?abajo|desplazate (?:hacia )?abajo|mas abajo)\b/.test(q);
+    if (!top && !bottom && !down && !up) return null;
+    const action = up ? {type: 'scroll', deltaY: -Math.max(400, Math.round((typeof window !== 'undefined' ? window.innerHeight : 800) * 0.8))} : top ? {type: 'scroll', top: 0} : bottom ? {type: 'scroll', top: 1e6} : {type: 'scroll', deltaY: Math.max(400, Math.round((typeof window !== 'undefined' ? window.innerHeight : 800) * 0.8))};
+    const message = up ? 'Subo un poco en la página.' : top ? 'Subo al inicio de la página.' : bottom ? 'Bajo al final de la página.' : 'Bajo un poco en la página.';
     return {reply: message, actions: [action],
       intent: {kind: 'new_request', reference: 'resolved_action', action: 'none'},
       turnDecision: {mode: 'new', topic: 'page', operation: 'scroll', operations: ['scroll'], destination: 'none', needsClarification: false, goal: message}};
@@ -2434,7 +2535,7 @@ class OllamaClient {
    */
   getCompoundResponse(userText, options = {}) {
     // Se separa por "y luego / después / también" y también por "y" cuando lo sigue otra orden ("abre X y resalta Y").
-    const parts = String(userText || '').split(/\s*,?\s*(?:\b(?:y luego|y despu[eé]s|luego|despu[eé]s|y tambi[eé]n|y adem[aá]s)\b|\by\s+(?=(?:resalt|remarc|se[ñn]al|marc|abr|cierr|ll[eé]v|busc|muestr|mostr)\w*))\s*,?\s*/i).map(part => part.trim()).filter(Boolean);
+    const parts = String(userText || '').split(/\s*,?\s*(?:\b(?:y luego|y despu[eé]s|luego|despu[eé]s|y tambi[eé]n|y adem[aá]s)\b|\by\s+(?=(?:resalt|remarc|se[ñn]al|marc|abr|cierr|ll[eé]v|busc|muestr|mostr|d[oó]nde|cu[aá]l|cu[aá]ndo|cu[aá]nt|c[oó]mo)\w*))\s*,?\s*/i).map(part => part.trim()).filter(Boolean);
     if (parts.length < 2 || parts.length > 3) return null;
     const responses = parts.map(part => this.resolveLocalResponse(part, options));
     if (responses.some(response => !response)) return null;
@@ -2807,11 +2908,25 @@ class OllamaClient {
 
     // Sede de destino: la que nombró o la más cercana en línea recta.
     const named = places.findSedes(String(userText).replace(address, ' ')) || [];
-    const sede = named.length === 1 ? named[0] : places.nearestSede(origin)?.sede;
+    // Si además nombra una carrera, solo cuentan las sedes donde se dicta («gastronomía en la sede más cercana a…»).
+    let careerNote = '';
+    let candidates = places.sedes;
+    if (named.length !== 1) {
+      const catalog = (options.context?.careerAlternatives || []).filter(entry => entry.title);
+      const mention = this.resolveCareerMentions(String(userText).replace(address, ' '), catalog, {});
+      const matches = ['exact', 'alias', 'partial'].includes(mention.kind) ? mention.matches.slice(0, 3) : [];
+      const offered = new Set(matches.flatMap(entry => (entry.sedes_modalidades || []).map(item => item.sede)));
+      const filtered = places.sedes.filter(sede => offered.has(sede.name));
+      if (matches.length && filtered.length) {
+        candidates = filtered;
+        careerNote = ` (entre las sedes donde se dicta ${matches.map(entry => entry.title).join(' / ')})`;
+      }
+    }
+    const sede = named.length === 1 ? named[0] : places.nearestSede(origin, candidates)?.sede;
     if (!sede || sede.lat == null) return answer('No encontré una sede con coordenadas para calcular la ruta.');
     const straight = places.nearestSede(origin, [sede])?.km;
     const route = await api.route(origin, sede);
-    const intro = named.length === 1 ? `Desde ese punto a ${sede.name}` : `La sede más cercana es ${sede.name} (${sede.address}) y, desde ese punto,`;
+    const intro = named.length === 1 ? `Desde ese punto a ${sede.name}` : `La sede más cercana${careerNote} es ${sede.name} (${sede.address}) y, desde ese punto,`;
     if (route?.found) {
       const total = route.durationMin;
       const mins = total >= 120

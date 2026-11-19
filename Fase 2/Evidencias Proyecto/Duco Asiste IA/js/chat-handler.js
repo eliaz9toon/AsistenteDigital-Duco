@@ -296,6 +296,7 @@ class ChatHandler {
    * Limpiar historial de mensajes
    */
   clearHistory() {
+    if (window.ducoPlaces) window.ducoPlaces.lastZone = null; // la zona de la charla anterior no debe condicionar la nueva
     this.messages = [];
     this.dialogue = [];
     this.sessionId = this.createSessionId();

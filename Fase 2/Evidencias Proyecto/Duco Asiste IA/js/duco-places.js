@@ -114,7 +114,20 @@
       if (!found.length && !/\bduoc\b/.test(t) && /\b(?:capital|poblacion|clima|moneda|bandera|habitantes|huso horario|hora en)\s*(?:de|del|en)?\b/.test(t) &&
           /\b(?:capital|poblacion|clima|moneda|bandera|habitantes|hora)\s+(?:de|del|en)\b/.test(t)) return this.refusal();
 
-      if (found.length && (locationVerb || sedeWord)) {
+      // Superlativos geográficos («¿cuál está más al sur?»): se calculan con las coordenadas; si venían hablando de una zona, solo esa zona.
+      const superlative = t.match(/\b(?:mas|ma) (?:al|hacia el|en el) (sur|norte|este|oriente|oeste|poniente)\b/);
+      if (superlative && (sedeWord || this.lastZone || /\b(?:cual|que)\b/.test(t)) && !/\b(?:carrera|ficha|menu)\b/.test(t)) {
+        const fresh = this.lastZone && Date.now() - this.lastZone.at < 10 * 60 * 1000;
+        const pool = this.sedes.filter(sede => sede.lat != null && (!fresh || this.lastZone.ids.includes(sede.id)));
+        const dir = superlative[1];
+        const key = /sur|norte/.test(dir) ? 'lat' : 'lng';
+        const sign = /^(?:norte|este|oriente)$/.test(dir) ? -1 : 1;
+        const best = [...pool].sort((a, b) => sign * (a[key] - b[key]))[0];
+        if (best) return this.answer(`${fresh ? 'De esa zona, la' : 'La'} sede más al ${dir} es ${best.name} (${best.address}, ${best.comuna}). Te la muestro en el mapa.`,
+          [{type: 'showMap', terms: [best.name], sedeIds: [best.id]}]);
+      }
+
+      if (found.length && (locationVerb || sedeWord) && !/\bregion metropolitana\b/.test(t)) {
         const physical = found.filter(sede => sede.lat != null);
         if (!physical.length) return this.answer(`${found[0].name} es ${found[0].address.toLowerCase()}, así que no tiene una sede física que mostrar en el mapa.`);
         const shown = physical.slice(0, 4);
@@ -135,10 +148,11 @@
         {label: 'el sur del país', re: /\b(?:el sur|region del biobio|biobio|bio bio|araucania|los lagos)\b/, ids: ['concepcion', 'arauco', 'nacimiento', 'villarrica', 'puerto-montt']}
       ];
       const zoneAsk = /\b(?:cuales|cuantas|que sedes|hay sedes|sedes|campus)\b/.test(t) && /\b(?:en|de)\b/.test(t);
-      if (zoneAsk && !found.length) {
+      if (zoneAsk && (!found.length || /\bregion metropolitana\b/.test(t))) {
         const region = regions.find(zone => zone.re.test(t));
         if (region) {
           const list = region.ids.map(id => this.sedes.find(sede => sede.id === id)).filter(Boolean);
+          this.lastZone = {ids: region.ids, at: Date.now()};
           return this.answer(`En ${region.label} Duoc UC tiene ${list.length} sede(s) o campus: ${list.map(sede => sede.name.replace(/^(?:Sede|Campus) /, '')).join(', ')}. Te las muestro en el mapa.`,
             [{type: 'showMap', terms: list.map(sede => sede.name), sedeIds: list.map(sede => sede.id)}]);
         }
