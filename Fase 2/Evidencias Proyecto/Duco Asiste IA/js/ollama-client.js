@@ -1236,6 +1236,7 @@ class OllamaClient {
       || this.getAddToCalendarResponse(userText, options)
       || this.getNotOfferedCareerResponse(userText, ctx)
       || this.getSitePageNavigationResponse(userText, ctx)
+      || this.getSiteUsageGuideResponse(userText, ctx)
       || this.getPageStepsResponse(userText, ctx, options)
       || this.getPageFaqResponse(userText, ctx)
       || this.getCareerInSedeResponse(userText, ctx)
@@ -1295,7 +1296,7 @@ class OllamaClient {
       {re: '(?:financiamiento|becas|gratuidad|becas y financiamiento|financiamiento gratuidad y becas)', file: 'financiamiento.html', label: 'Financiamiento, gratuidad y becas', needsWord: true}
     ];
     const polite = '(?:(?:hola |oye |duco )*(?:me )?(?:puedes|podrias|podrias por favor|puedes por favor|quiero que me|necesito que me|quisiera que me|me gustaria que me) )?';
-    const verb = `${polite}(?:por favor )?(?:llevame|lleva|llevarme|llevar|ir|ve|vamos|abre|abrime|abrir|muestrame|mostrar|quiero ir|necesito ir|quiero ver|entrar|entra|navega|navegar|dirigirme)`;
+    const verb = `${polite}(?:por favor )?(?:llevame|lleva|llevarme|llevar|ir|ve|vamos|abre|abrime|abrir|muestrame|mostrar|quiero ir|necesito ir|quiero ver|entrar|entra|navega|navegar|dirigirme|como llego|como voy|como accedo|como entro|donde esta|donde veo|donde encuentro)`;
     for (const page of pages) {
       const match = q.match(new RegExp(`^${verb}(?: a| al| hacia)?(?: la| el)?( pagina| seccion| sitio| apartado)?(?: de| del)?(?: la| el)? (?:${page.re})(?: por favor)?$`));
       if (!match) continue;
@@ -1344,6 +1345,72 @@ class OllamaClient {
       return answer('Los pasos de la matrícula están en la página de Admisión. Te llevo allí; cuando llegues, pídeme «explícame el paso a paso» y te los voy señalando.',
         [{type: 'navigate', terms: ['Admisión'], target: 'admision.html'}]);
     }
+    return null;
+  }
+
+  /**
+   * Preguntas simples sobre cómo manejar el sitio y el chat («¿cómo bajo hasta el final?», «¿cómo cierro el chat?», «¿dónde inicio sesión?»).
+   * Se responde con instrucciones reales de uso y, cuando conviene, Duco hace la acción por la persona.
+   */
+  getSiteUsageGuideResponse(userText, context = {}) {
+    const q = this.normalizeCareerText(userText);
+    if (!q || q.split(' ').length > 14) return null;
+    const answer = (reply, actions = []) => ({reply, actions, intent: {kind: 'answer', reference: 'resolved_action', action: actions.length ? actions[0].type : 'none'},
+      turnDecision: {mode: 'answer', operation: actions.length ? actions[0].type : 'none', operations: actions.map(action => action.type), destination: 'none', needsClarification: false}});
+    const how = /^(?:y )?(?:como|donde|que|cual|cuales|cuantos|cuantas|puedes|sabes|se puede|hay forma de|existe)\b/.test(q);
+    if (!how) return /^no encuentro (?:lo que busco|nada|lo que necesito)$/.test(q)
+      ? answer('Cuéntame qué buscas (una carrera, una sede, fechas de admisión, becas, contacto…) y te llevo directo; o dime «ayuda» para ver lo que sé hacer.') : null;
+    // El chat.
+    if (/\bcomo (?:cierro|cerrar|oculto|ocultar|minimizo|minimizar)\b.*\b(?:chat|asistente|duco|ventana|conversacion)\b/.test(q))
+      return answer('Cierra el chat con la «×» de arriba a la derecha de la ventana de Duco. Tu conversación se guarda mientras dure la sesión; para borrarla usa «Nueva conversación».');
+    if (/\bcomo (?:reinicio|reiniciar|borro|borrar|limpio|limpiar|empiezo|empezar)\b.*\b(?:conversacion|chat|historial|de nuevo|de cero)\b/.test(q))
+      return answer('Pulsa «Nueva conversación» (arriba, en la cabecera del chat): borra el historial y lo que te recordaba, y empezamos de cero.');
+    if (/\b(?:puedes|sabes|puedo)\b.*\b(?:hacer scroll|desplazarte|desplazar la pagina|bajar la pagina|subir la pagina|moverte por la pagina|mover la pagina)\b/.test(q))
+      return answer('Sí. Dime «baja», «sube», «ve al final» o «ve al inicio» y me muevo por la página; también puedo abrir menús, llevarte a otras páginas y señalarte partes.');
+    // Moverse por la página.
+    const toBottom = /\bcomo (?:bajo|llego|voy|veo|accedo)\b.*\b(?:final|fondo|abajo|pie de pagina|footer)\b/.test(q) || /^como (?:bajo|bajar)$/.test(q);
+    const toTop = /\bcomo (?:subo|llego|voy|vuelvo)\b.*\b(?:arriba|inicio de la pagina|principio de la pagina|tope)\b/.test(q) || /^como (?:subo|subir)$/.test(q);
+    if (toBottom) return answer('Con la rueda del mouse, las flechas o la tecla Fin. Si quieres, te bajo yo: ya te llevé al final de la página.', [{type: 'scroll', top: 1e6}]);
+    if (toTop) return answer('Con la rueda del mouse, las flechas o la tecla Inicio. Si quieres, te subo yo: ya te llevé al comienzo de la página.', [{type: 'scroll', top: 0}]);
+    // Buscar, ver menús, botones.
+    if (/\bcomo (?:busco|buscar|encuentro|hago para buscar|puedo buscar)\b.*\b(?:algo|sitio|pagina|web|informacion|cosas)\b/.test(q))
+      return answer('Usa el buscador: es la lupa de la barra superior, a la derecha. En el inicio también hay un cuadro «¿Qué buscas estudiar?» para buscar carreras. O dime qué buscas y te lo señalo yo.');
+    if (/\b(?:que|cuales|cuantos|cuantas)\b.*\b(?:menus?|secciones principales|opciones del menu)\b.*\b(?:sitio|pagina|tiene|hay|principal)\b/.test(q) || /^(?:cuantos|que|cuales) menus (?:hay|tiene el sitio)$/.test(q)) {
+      const labels = (context.navigationMenus || []).map(menu => String(menu.label || '').trim()).filter(Boolean);
+      if (labels.length) return answer(`El sitio tiene ${labels.length} menús desplegables: ${labels.join(', ')}. Dime cuál quieres y lo abro.`);
+      return null;
+    }
+    if (/\b(?:boton|icono)\b.*\barriba a la derecha\b/.test(q) || /\barriba a la derecha\b.*\b(?:boton|icono)\b/.test(q))
+      return answer('Arriba a la derecha está la lupa (el buscador) y, en pantallas pequeñas, el botón de tres rayas que abre el menú de navegación.');
+    if (/\bcomo (?:imprimo|imprimir)\b/.test(q)) return answer('Imprime con Ctrl+P (Cmd+P en Mac) desde tu navegador; yo no controlo la impresión.');
+    if (/\bcomo (?:comparto|compartir)\b.*\b(?:pagina|sitio|esto|enlace|link)\b/.test(q)) return answer('Copia la dirección de la barra del navegador (Ctrl+L y luego Ctrl+C) y envíala por el medio que prefieras; yo no envío mensajes por ti.');
+    // Catálogo de carreras: las acciones que Duco ya sabe hacer se ejecutan; el resto se explica.
+    const onCatalog = (context.currentPage || '') === '/carreras.html';
+    const local = phrase => this.resolveLocalResponse(phrase, {context, messages: []});
+    if (/\bcomo (?:limpio|limpiar|quito|quitar|borro|borrar|saco|elimino|reseteo|restablezco)\b.*\bfiltros?\b/.test(q)) return local('quita los filtros');
+    const shown = q.match(/\bcomo (?:veo|muestro|puedo ver|hago para ver)\b.*\b(vespertin\w*|diurn\w*|online|tecnic\w*|profesional\w*)\b/);
+    if (shown && !/\b(?:escuela|sede|area)\b/.test(q)) {
+      const word = shown[1].startsWith('vesper') ? 'vespertinas' : shown[1].startsWith('diurn') ? 'diurnas' : shown[1].startsWith('tecnic') ? 'tecnicas' : shown[1].startsWith('profes') ? 'profesionales' : 'online';
+      const done = local(`carreras ${word}`);
+      if (done) return done;
+    }
+    if (/\bcomo (?:filtro|filtrar|ordeno|ordenar)\b.*\b(?:carreras|sede|sedes|escuela|jornada|modalidad|tipo)\b/.test(q))
+      return answer('En el catálogo de carreras hay filtros por modalidad, tipo (técnica o profesional), escuela, sede y jornada. Dime qué quieres (por ejemplo «filtra por sede de Maipú» o «carreras de salud vespertinas») y los aplico por ti.');
+    if (/\bcomo (?:busco|buscar|encuentro|encontrar)\b.*\bcarrera\b.*\b(?:nombre|palabra|titulo)\b|\bcomo (?:busco|buscar)\b.*\buna carrera\b/.test(q))
+      return answer('En el catálogo escribe el nombre en el cuadro «Busca aquí»; o dime el nombre (aunque sea aproximado) y te la señalo o te llevo a su ficha.');
+    if (/\bcomo (?:abro|abrir|entro a|accedo a|veo el detalle de|veo la ficha de)\b.*\bcarrera\b/.test(q))
+      return answer('Haz clic en su tarjeta del catálogo, o dime su nombre y te llevo a su ficha.');
+    if (/\bcomo (?:veo|puedo ver|hago para ver)\b.*\bmas carreras\b/.test(q))
+      return answer('Baja por la lista del catálogo; si buscas algo distinto, usa los filtros o dime un área (por ejemplo «carreras de diseño») y te las muestro.');
+    if (onCatalog && /^(?:que|qué) (?:puedo|se puede) hacer (?:en|aqui|aca)(?: esta pagina)?$|^que puedo hacer aqui$/.test(q))
+      return answer('Aquí puedes buscar una carrera por nombre («Busca aquí»), filtrar por modalidad, tipo, escuela, sede y jornada, y abrir la ficha de cada carrera. Dime, por ejemplo, «filtra por sede de Maipú» y lo aplico.');
+    if (/\bcomo (?:uso|usar|se usa|navego|manejo|funciona)\b.*\b(?:esta pagina|esta web|este sitio|la pagina|el sitio|la web|esto)\b/.test(q) && !/\bduoc\b/.test(q))
+      return answer('Puedo moverme por el sitio por ti: abrir menús, llevarte a páginas (admisión, becas, sedes…), señalar partes con resaltados y buscar carreras. Prueba con «llévame a admisión», «resalta el buscador» o «abre el menú de carreras».');
+    // Datos del sitio que ya están en las preguntas frecuentes, dichos de otra forma.
+    const viaFaq = phrase => this.getFaqResponse(phrase, context);
+    if (/\b(?:donde|como)\b.*\b(?:inicio sesion|iniciar sesion|ingreso a mi cuenta|entro a mi cuenta|acceder a mi cuenta|hacer login|logueo)\b/.test(q)) return viaFaq('iniciar sesion');
+    if (/\bcomo (?:cambio|cambiar|pongo|poner)\b.*\bidioma\b/.test(q)) return viaFaq('cambiar idioma');
+    if (/\bcomo (?:aumento|agrando|achico|cambio|ajusto|activo)\b.*\b(?:letra|texto|tamano|contraste|lector|accesibilidad)\b/.test(q)) return viaFaq('accesibilidad');
     return null;
   }
 
