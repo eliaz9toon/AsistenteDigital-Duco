@@ -4,6 +4,8 @@
  *   window.__navEdgeTests().then(x => window.__ne = x);   // tarda: muchos casos llegan al modelo
  */
 (function () {
+  // Las pruebas comparan textos exactos: sin el redactor del modo híbrido (que varía las frases).
+  window.ducoConfig = Object.assign(window.ducoConfig || {}, {humanizeReplies: false});
   const types = r => (r.actions || []).map(a => a.type).join('>');
   const term = r => (r.actions || []).filter(a => a.terms).map(a => a.terms[0]).pop();
   const notFound = r => /No encontré|No encuentro|no hay una carrera|no hay carrera/i.test(r.reply) && !/navigate|highlightTerms/.test(types(r));

@@ -4,6 +4,8 @@
  *   await window.__classicTests();
  */
 (function () {
+  // Las pruebas comparan textos exactos: sin el redactor del modo híbrido (que varía las frases).
+  window.ducoConfig = Object.assign(window.ducoConfig || {}, {humanizeReplies: false});
   const types = r => (r.actions || []).map(a => a.type).join('>');
   const CASES = [
     ['universidad', 'duoc es una universidad?', r => /Instituto Profesional/.test(r.reply) && /no es una universidad/i.test(r.reply)],

@@ -20,6 +20,9 @@ from pathlib import Path
 from urllib.parse import parse_qs, unquote, urlparse
 from urllib.request import ProxyHandler, build_opener
 
+import external_apis
+import web_lookup
+
 try:
     import oracledb
 except ImportError as exc:
@@ -257,6 +260,27 @@ class Handler(BaseHTTPRequestHandler):
         path = unquote(parsed.path)
         if path == "/api/duco/health":
             return self.send_json(200, {"service": "duco-admin"})
+        if path == "/api/duco/web":
+            # Consulta limitada a duoc.cl (sitemaps oficiales); no usa la base de datos y falla en silencio.
+            query = (parse_qs(parsed.query).get("q") or [""])[0][:300]
+            try:
+                return self.send_json(200, web_lookup.lookup(query))
+            except Exception as error:
+                return self.send_json(200, {"results": [], "reason": str(error)[:120]})
+        if path in {"/api/duco/geocode", "/api/duco/route", "/api/duco/holidays"}:
+            # APIs externas con servidores fijos (Nominatim, OSRM y Nager.Date): no usan la base de datos y fallan en silencio.
+            args = parse_qs(parsed.query)
+            first = lambda name: (args.get(name) or [""])[0]
+            try:
+                if path == "/api/duco/geocode":
+                    return self.send_json(200, external_apis.geocode(first("q")))
+                if path == "/api/duco/route":
+                    return self.send_json(200, external_apis.route(float(first("fromLat")), float(first("fromLng")), float(first("toLat")), float(first("toLng"))))
+                return self.send_json(200, external_apis.holidays(int(first("year") or datetime.now().year)))
+            except (ValueError, TypeError):
+                return self.send_json(400, {"found": False, "reason": "parametros invalidos"})
+            except Exception as error:
+                return self.send_json(200, {"found": False, "reason": "servicio no disponible"})
         if path == "/" or path == "/index.html":
             return self.serve_index()
         if path in {"/duco", "/duoc.html"}:
@@ -920,6 +944,7 @@ def main():
     server = ThreadingHTTPServer(("127.0.0.1", port), Handler)
     print(f"Duco Admin disponible en http://127.0.0.1:{port}")
     print("Solo escucha en localhost. Usa Ctrl+C para cerrar.")
+    web_lookup.warm_async()  # carga en segundo plano el indice de duoc.cl para la consulta web limitada
     try:
         status = ollama_service.ensure_running()
         print("Ollama disponible." if status["online"] else status["error"])

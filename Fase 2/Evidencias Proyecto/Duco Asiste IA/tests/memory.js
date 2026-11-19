@@ -5,6 +5,8 @@
  * La persistencia entre páginas/recargas se comprueba aparte: window.__memoryPersist() y luego, tras recargar, window.__memoryPersistCheck().
  */
 (function () {
+  // Las pruebas comparan textos exactos: sin el redactor del modo híbrido (que varía las frases).
+  window.ducoConfig = Object.assign(window.ducoConfig || {}, {humanizeReplies: false});
   const types = r => (r.actions || []).map(a => a.type).join('>');
   const SCENARIOS = [
     ['datos personales', [

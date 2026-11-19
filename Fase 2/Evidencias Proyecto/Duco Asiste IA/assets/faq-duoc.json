@@ -2,14 +2,42 @@
   "_nota": "Respuestas a preguntas frecuentes, tomadas de centroayuda.duoc.cl y duoc.cl (consultadas el 2026-11-12). Revisar antes de cada admisión. 'patterns' son expresiones regulares sobre el texto sin tildes y en minúsculas. 'menu' y 'item' señalan la sección real del sitio.",
   "entries": [
     {
+      "id": "significado-duoc",
+      "patterns": [
+        "\\b(?:que significa|que quiere decir|significado de|significan las siglas de) duoc(?: uc)?\\b",
+        "\\b(?:que significa|que quiere decir) (?:la )?(?:sigla )?uc\\b$"
+      ],
+      "answer": "DUOC nació en 1968 como el Departamento Universitario Obrero Campesino, creado por la Pontificia Universidad Católica de Chile (de ahí la «UC»). Hoy es Duoc UC, un Instituto Profesional que imparte carreras técnicas y profesionales.",
+      "source": "https://observatorio.duoc.cl/editorial/duoc-uc-una-historia-de-excelencia-y-compromiso-con-la-calidad-educativa-en-chile/",
+      "menu": {
+        "menu": "Nosotros",
+        "item": "Sobre Duoc UC"
+      }
+    },
+    {
+      "id": "que-es-duoc",
+      "patterns": [
+        "\\bque es duoc(?: uc)?$",
+        "\\bque es duoc(?: uc)? (?:exactamente|realmente)\\b",
+        "^(?:y )?(?:de que trata|quienes son|que hace|a que se dedica|que es lo que hace) duoc(?: uc)?$",
+        "^(?:cuentame|hablame|dime|explicame|quiero saber)(?: algo)? (?:sobre|de|acerca de) duoc(?: uc)?$",
+        "^(?:que|cual) (?:es|son) (?:la )?(?:institucion|instituto) duoc(?: uc)?$",
+        "^duoc(?: uc)?(?: que es)?$"
+      ],
+      "answer": "Duoc UC es un Instituto Profesional fundado en 1968 por la Pontificia Universidad Católica de Chile. Imparte carreras técnicas y profesionales, presenciales y online. Según su Observatorio, en 2024 obtuvo por tercera vez consecutiva la acreditación institucional por el máximo de 7 años de la Comisión Nacional de Acreditación (CNA).",
+      "source": "https://observatorio.duoc.cl/editorial/duoc-uc-una-historia-de-excelencia-y-compromiso-con-la-calidad-educativa-en-chile/",
+      "menu": {
+        "menu": "Nosotros",
+        "item": "Sobre Duoc UC"
+      }
+    },
+    {
       "id": "tipo-institucion",
       "patterns": [
         "\\bes (?:una )?universidad\\b",
         "\\bduoc\\b.*\\b(?:universidad|instituto|cft|centro de formacion)\\b",
         "\\b(?:que tipo de|que clase de) (?:institucion|instituto|plantel)\\b",
-        "\\bes (?:un )?instituto profesional\\b",
-        "\\bque es duoc(?: uc)?$",
-        "\\bque es duoc(?: uc)? (?:exactamente|realmente)\\b"
+        "\\bes (?:un )?instituto profesional\\b"
       ],
       "answer": "Duoc UC no es una universidad: es un Instituto Profesional, fundado en 1968 por la Pontificia Universidad Católica de Chile. Imparte carreras técnicas y profesionales. Según su Observatorio, en 2024 obtuvo por tercera vez consecutiva la acreditación institucional por el máximo de 7 años de la Comisión Nacional de Acreditación (CNA).",
       "source": "https://observatorio.duoc.cl/editorial/duoc-uc-una-historia-de-excelencia-y-compromiso-con-la-calidad-educativa-en-chile/",
@@ -49,6 +77,35 @@
         "menu": "Admisión",
         "item": "Tu Primer Paso"
       }
+    },
+    {
+      "id": "buscador-sitio",
+      "patterns": [
+        "\\b(?:donde (?:esta|queda|hay)|senala\\w*|muestra\\w*|resalta\\w*|busca\\w*)?.*\\b(?:buscador|barra de busqueda|boton de busqueda|caja de busqueda|lupa)\\b"
+      ],
+      "answer": "El buscador del sitio está en la barra superior, a la derecha (ícono de lupa). En el inicio también hay un cuadro «¿Qué buscas estudiar?» para buscar carreras."
+    },
+    {
+      "id": "accesibilidad-sitio",
+      "patterns": [
+        "\\b(?:accesibilidad|baja vision|contraste|tamano de letra)\\b"
+      ],
+      "answer": "El botón de accesibilidad está abajo a la derecha de la pantalla (ícono redondo con una persona). Al pulsarlo se abre el menú de accesibilidad del sitio."
+    },
+    {
+      "id": "acceso-cuenta",
+      "patterns": [
+        "\\b(?:login|log in|iniciar sesion|inicio de sesion|entrar a mi cuenta|mi cuenta|portal (?:de )?alumnos?|intranet|campus virtual)\\b"
+      ],
+      "answer": "Los accesos para alumnos, docentes y colaboradores están en la barra superior del sitio (ALUMNOS, DOCENTES, COLABORADORES). Yo no puedo iniciar sesión por ti ni ver cuentas."
+    },
+    {
+      "id": "idioma-sitio",
+      "patterns": [
+        "\\b(?:cambiar|cambio de|selector de|poner) (?:el )?idioma\\b",
+        "\\bidioma del sitio\\b"
+      ],
+      "answer": "No veo un selector de idioma en el sitio: está en español. Yo puedo responderte en español o en inglés."
     },
     {
       "id": "requisitos",
@@ -578,7 +635,8 @@
         "\\bejecutivo\\b",
         "\\bwhatsapp\\b",
         "\\btelefono de admision\\b",
-        "\\bayuda humana\\b"
+        "\\bayuda humana\\b",
+        "\\b(?:telefonos?|fonos?|celulares|numeros de contacto)\\b"
       ],
       "answer": "Estos son los datos de contacto que aparecen en el pie de página del sitio:\n• Central: (+56) 2 2999 3862.\n• Admisión: (+56) 227 120 640 y WhatsApp +56 9 5814 2089.\n• Mesa de Servicios (académicos, financiamiento, vida estudiantil, tecnológicos y otros): WhatsApp +56 9 3663 9565 y teléfonos (+56) 442 201 098 y (+56) 227 120 245.\nTambién puedes usar el botón Contáctanos del pie de página.",
       "source": "https://centroayuda.duoc.cl/",

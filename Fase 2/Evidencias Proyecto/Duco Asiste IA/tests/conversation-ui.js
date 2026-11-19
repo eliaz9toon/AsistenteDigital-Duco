@@ -5,6 +5,8 @@
  * Las fallas se simulan reemplazando temporalmente métodos del asistente; no se toca ningún servicio real.
  */
 (function () {
+  // Las pruebas comparan textos exactos: sin el redactor del modo híbrido (que varía las frases).
+  window.ducoConfig = Object.assign(window.ducoConfig || {}, {humanizeReplies: false});
   const sleep = ms => new Promise(r => setTimeout(r, ms));
   window.__conversationUiTests = async () => {
     const duco = window.duco;

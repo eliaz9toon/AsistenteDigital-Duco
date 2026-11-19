@@ -5,6 +5,8 @@
  *   await window.__languageTests();
  */
 (function () {
+  // Las pruebas comparan textos exactos: sin el redactor del modo híbrido (que varía las frases).
+  window.ducoConfig = Object.assign(window.ducoConfig || {}, {humanizeReplies: false});
   const T = actions => (actions || []).filter(a => a.type === 'navigate' && a.target).map(a => a.terms[0]).pop() || null;
   const types = r => (r.actions || []).map(a => a.type).join('>');
   const toCareers = r => (r.actions || []).some(a => /carreras\.html$/.test(a.target || ''));

@@ -140,6 +140,18 @@
   transform: translateX(var(--duco-chat-shift-x)) translateY(0) scale(1);
 }
 
+/* Mientras la guía resalta algo que queda detrás del chat, el panel se vuelve casi transparente (sin moverse) y vuelve solo. */
+.duco-chat-panel.open.duco-panel-ghost {
+  opacity: 0.12;
+  transition: opacity 0.35s ease;
+}
+
+/* Al pasar el mouse por el chat vuelve a verse completo; al sacarlo, vuelve a ser transparente. */
+.duco-chat-panel.open.duco-panel-ghost:hover {
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
 /* Header del Panel */
 .duco-header {
   background: white;

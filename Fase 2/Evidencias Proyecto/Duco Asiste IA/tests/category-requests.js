@@ -5,6 +5,8 @@
  *   window.__categoryTests().then(x => window.__cat = x);
  */
 (function () {
+  // Las pruebas comparan textos exactos: sin el redactor del modo híbrido (que varía las frases).
+  window.ducoConfig = Object.assign(window.ducoConfig || {}, {humanizeReplies: false});
   const norm = v => String(v || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9ñ]+/g, ' ').trim();
   const months = item => [...String(item.duracion || '').matchAll(/(\d+)\s*(semestres?|bimestres?)/gi)].map(m => Number(m[1]) * (/^semestre/i.test(m[2]) ? 6 : 3));
   const hasJ = (item, j) => (item.sedes_modalidades || []).some(sm => (sm.modalidades || []).some(m => norm(m).includes(j)));

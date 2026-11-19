@@ -4,6 +4,8 @@
  *   await window.__formatTests();
  */
 (function () {
+  // Las pruebas comparan textos exactos: sin el redactor del modo híbrido (que varía las frases).
+  window.ducoConfig = Object.assign(window.ducoConfig || {}, {humanizeReplies: false});
   const sentences = t => (t.trim().match(/[^.!?]+[.!?]+(?:\s|$)|[^.!?]+$/g) || []).filter(s => s.trim()).length;
   const bullets = t => t.split('\n').filter(l => /^\s*(?:[•\-*]|\d+[.)])\s/.test(l)).length;
   const words = t => t.trim().split(/\s+/).length;

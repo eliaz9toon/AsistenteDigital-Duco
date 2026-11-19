@@ -399,7 +399,7 @@
       return this._leaflet;
     },
 
-    async renderMap(container, sedeIds) {
+    async renderMap(container, sedeIds, options = {}) {
       const sedes = this.sedes.filter(sede => sedeIds.includes(sede.id) && sede.lat != null);
       container.classList.add('duco-card', 'duco-map-card');
       if (!sedes.length) { container.textContent = 'No tengo coordenadas para mostrar esa sede.'; return 0; }
@@ -444,7 +444,20 @@
           marker.bindPopup(popup);
           bounds.push([sede.lat, sede.lng]);
         }
-        if (bounds.length > 1) map.fitBounds(bounds, {padding: [24, 24]});
+        // Ruta por calle calculada con OSRM: trazado entre el origen del usuario y la sede, con su distancia y tiempo.
+        const route = options.route;
+        if (route?.points?.length > 1) {
+          const line = L.polyline(route.points, {color: '#0b5cad', weight: 5, opacity: 0.85}).addTo(map);
+          const start = L.circleMarker([route.from.lat, route.from.lng], {radius: 8, color: '#0b5cad', fillColor: '#ffffff', fillOpacity: 1, weight: 3}).addTo(map);
+          const startPopup = document.createElement('span');
+          startPopup.textContent = `${route.from.label || 'Origen'} · ${route.distanceKm} km · ${route.durationMin} min en auto`;
+          start.bindPopup(startPopup);
+          map.fitBounds(line.getBounds(), {padding: [28, 28]});
+          const summary = document.createElement('small');
+          summary.className = 'duco-map-credit';
+          summary.textContent = `Ruta en auto: ${route.distanceKm} km · ${route.durationMin} min (OSRM, sin tráfico)`;
+          container.appendChild(summary);
+        } else if (bounds.length > 1) map.fitBounds(bounds, {padding: [24, 24]});
         else if (sedes[0]) map.setView(bounds[0], 16);
         setTimeout(() => map.invalidateSize(), 150);
         container._ducoMap = map;

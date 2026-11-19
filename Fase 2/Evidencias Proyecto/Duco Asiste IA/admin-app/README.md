@@ -54,3 +54,28 @@ El intérprete decide primero si el usuario rechaza la respuesta anterior, luego
 Cuando una corrección explícita rechaza la última interacción que tuvo pasos registrados, el cliente envía una valoración negativa de esa interacción y guarda el mensaje de corrección y el objetivo interpretado dentro de su experiencia. Se utiliza el mismo identificador de interacción para no duplicar el voto. El objetivo corregido permanece en Session Storage para los seguimientos y las recargas. La corrección se mantiene en el contexto aunque la API no esté disponible; en ese caso no se afirma que Oracle la haya guardado. Este mecanismo adapta el contexto y la memoria, no modifica el código ni los pesos del modelo.
 
 La interpretación inicial del objetivo usa el diálogo actual, sin mezclar valoraciones antiguas con la postura del usuario. Las experiencias se consultan después, durante la preparación, explicación o revisión de las acciones. Pedir otro elemento no equivale a rechazar el anterior.
+
+## Consulta web limitada a duoc.cl
+
+Cuando una pregunta informativa no se resuelve con los datos locales (catálogo, sedes, fechas y preguntas frecuentes), Duco puede consultar el sitio oficial. `GET /api/duco/web?q=...` (archivo `web_lookup.py`, solo biblioteca estándar) funciona así:
+
+1. Lee los sitemaps oficiales de `www.duoc.cl` (páginas, carreras, escuelas, sedes y preguntas frecuentes) y guarda el índice 12 horas en memoria; se precarga al iniciar el servidor.
+2. Puntúa las URL por las palabras de la consulta y descarga hasta dos páginas, con un máximo de 6 s por página y 600 KB.
+3. Devuelve extractos con título y URL. Si es una pregunta frecuente oficial, el asistente muestra el texto tal cual; en otros casos el modelo responde solo con esas fuentes y, si no las respeta, se muestra el extracto. Siempre se cita la fuente.
+
+Límites de seguridad: el usuario nunca entrega una URL, solo se leen dominios `duoc.cl` por HTTPS (también en redirecciones) y, si el sitio no responde, el asistente sigue sin esta ayuda. Para activarla en una instalación existente hay que reiniciar el servidor (`Iniciar_Duco.cmd`).
+
+## APIs externas: Nominatim, OSRM y Nager.Date
+
+El backend (`external_apis.py`, solo biblioteca estándar) consulta tres APIs públicas sin clave. Solo habla con esos tres servidores por HTTPS (también en redirecciones) y falla en silencio si alguno no responde. Las direcciones no se guardan ni se escriben en el log; solo hay una caché en memoria con vencimiento.
+
+| Ruta propia | API externa | Para qué |
+|---|---|---|
+| `GET /api/duco/geocode?q=...` | Nominatim (OpenStreetMap), solo Chile y máximo 1 consulta por segundo | Convierte una dirección en coordenadas |
+| `GET /api/duco/route?fromLat=&fromLng=&toLat=&toLng=` | OSRM | Distancia, tiempo en auto y trazado por calle hasta la sede |
+| `GET /api/duco/holidays?year=2027` | Nager.Date | Feriados públicos de Chile |
+
+**Permiso Sí/No.** Lo que envía datos personales (una dirección o la ubicación del navegador) pregunta antes con dos botones, «Sí, doy permiso» y «No, gracias». La decisión se recuerda solo durante la sesión y se borra al reiniciar la conversación o al escribir «cambiar permisos». Con «No», Duco no envía nada y ofrece responder solo con la comuna. Los feriados no llevan datos del usuario y no piden permiso. La ubicación del navegador usa además el aviso propio del navegador.
+
+Ejemplos: «¿cuánto demoro a la sede de Maipú desde Av. Matta 123, Santiago?», «sede más cercana a mi ubicación», «feriados de marzo 2027», «¿el inicio de clases cae en feriado?».
+

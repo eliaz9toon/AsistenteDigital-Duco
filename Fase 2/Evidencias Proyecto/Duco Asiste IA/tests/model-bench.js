@@ -12,6 +12,8 @@
  * o la propiedad `model` de OllamaClient.
  */
 (function () {
+  // Las pruebas comparan textos exactos: sin el redactor del modo híbrido (que varía las frases).
+  window.ducoConfig = Object.assign(window.ducoConfig || {}, {humanizeReplies: false});
   window.__bres = window.__bres || {};
   window.__battery = [
     ['hola, que puedes hacer?', r => /Recomendarte carreras/.test(r)],

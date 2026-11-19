@@ -4,6 +4,8 @@
  *   window.__ambiguousTests().then(x => window.__amb = x);
  */
 (function () {
+  // Las pruebas comparan textos exactos: sin el redactor del modo híbrido (que varía las frases).
+  window.ducoConfig = Object.assign(window.ducoConfig || {}, {humanizeReplies: false});
   const types = r => (r.actions || []).map(a => a.type).join('>');
   const picksCareer = r => /^(?:Entre las que te mostré, )?(?:Otra opción: )?(?:Sin problema, elijo yo\. )?Te elijo «/.test(r.reply) && /navigate/.test(types(r)) && !!r.selectedCareer;
   const noRefusal = r => !/no puedo (?:seleccionar|elegir|sorprender)|no tengo claro/i.test(r.reply);

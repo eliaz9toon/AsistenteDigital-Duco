@@ -369,6 +369,8 @@ class UIHighlighter {
    * Limpia el estado visual temporal para dejar la página sin resaltados activos.
    */
   clearAllHighlights() {
+    if (this.panelRestoreTimer) { clearTimeout(this.panelRestoreTimer); this.panelRestoreTimer = null; }
+    document.getElementById('duco-chat-panel')?.classList.remove('duco-panel-ghost');
     this.clearTermHighlights();
     this.removeHighlight();
     this.closeTransientUi();
@@ -2242,37 +2244,9 @@ class UIHighlighter {
       right: Math.min(viewportWidth, rawTarget.right + 24),
       bottom: Math.min(window.innerHeight, rawTarget.bottom + 24)
     };
-    const panelRect = panel.getBoundingClientRect();
-    const currentOverlap = this.getIntersectionArea(panelRect, target);
-    if (!currentOverlap) return;
-
-    // Usa el margen CSS real: 20px en escritorio y 10px en móvil.
-    const configuredMargin = Number.parseFloat(getComputedStyle(panel).right);
-    const margin = Number.isFinite(configuredMargin) ? configuredMargin : 20;
-    const baseRightX = viewportWidth - margin - panelRect.width;
-    const candidateXs = [...new Set([
-      Math.max(margin, 0),
-      Math.max(margin, viewportWidth - margin - panelRect.width)
-    ])];
-    let bestX = panelRect.left;
-    let bestOverlap = currentOverlap;
-
-    for (const x of candidateXs) {
-      const candidate = {
-        left: x,
-        right: x + panelRect.width,
-        top: panelRect.top,
-        bottom: panelRect.bottom
-      };
-      const overlap = this.getIntersectionArea(candidate, target);
-      if (overlap < bestOverlap) {
-        bestOverlap = overlap;
-        bestX = x;
-      }
-    }
-
-    if (bestOverlap >= currentOverlap || Math.abs(bestX - panelRect.left) < 2) return;
-    panel.style.setProperty('--duco-chat-shift-x', `${bestX - baseRightX}px`);
+    // En vez de mover el chat de lado a lado, se vuelve casi transparente mientras tapa lo resaltado.
+    if (!this.getIntersectionArea(panel.getBoundingClientRect(), target)) return;
+    panel.classList.add('duco-panel-ghost');
     if (duration > 0) this.schedulePanelRestore(duration + this.fadeOutDuration + 150);
   }
 
@@ -2284,7 +2258,7 @@ class UIHighlighter {
     this.panelRestoreTimer = setTimeout(() => {
       const panel = document.getElementById('duco-chat-panel');
       if (!panel) return;
-      panel.style.setProperty('--duco-chat-shift-x', '0px');
+      panel.classList.remove('duco-panel-ghost');
       this.panelRestoreTimer = null;
     }, Math.max(0, delayMs));
   }

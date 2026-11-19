@@ -5,6 +5,8 @@
  * Los valores de prueba son inventados (la tarjeta es un número de prueba público de Visa).
  */
 (function () {
+  // Las pruebas comparan textos exactos: sin el redactor del modo híbrido (que varía las frases).
+  window.ducoConfig = Object.assign(window.ducoConfig || {}, {humanizeReplies: false});
   const SENSITIVE = [
     ['clave con "es"', 'mi contraseña es Duoc2026!', 'Duoc2026'],
     ['clave con ":"', 'clave: 8374abc', '8374abc'],

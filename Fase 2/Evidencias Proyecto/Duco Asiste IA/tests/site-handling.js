@@ -4,6 +4,8 @@
  *   await window.__siteTests();
  */
 (function () {
+  // Las pruebas comparan textos exactos: sin el redactor del modo híbrido (que varía las frases).
+  window.ducoConfig = Object.assign(window.ducoConfig || {}, {humanizeReplies: false});
   const types = r => (r.actions || []).map(a => a.type).join('>');
   const term = r => (r.actions || []).filter(a => a.terms).map(a => a.terms[0]).pop();
   const CASES = [

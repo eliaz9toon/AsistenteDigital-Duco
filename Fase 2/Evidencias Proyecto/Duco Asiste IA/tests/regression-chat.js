@@ -8,6 +8,8 @@
  * contra falsos positivos. Casi todo se resuelve sin modelo; unas pocas preguntas usan Ollama.
  */
 (function () {
+  // Las pruebas comparan textos exactos: sin el redactor del modo híbrido (que varía las frases).
+  window.ducoConfig = Object.assign(window.ducoConfig || {}, {humanizeReplies: false});
   const T = actions => (actions || []).filter(a => a.type === 'navigate' && a.target).map(a => a.terms[0]).pop() || null;
   const noNav = r => !T(r.actions);
   // [etiqueta, mensajes encadenados (el último se evalúa), comprobación]

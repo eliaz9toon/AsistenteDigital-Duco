@@ -17,6 +17,8 @@ Descarga e instala ambos componentes desde Oracle. SQL Developer por sí solo no
 4. Crea una conexión nueva como `DUCO_APP` y ejecuta `oracle/schema.sql`. El script crea las 32 tablas del modelo; no borra objetos existentes, por lo que debe ejecutarse en un esquema vacío.
 5. Verifica las tablas del esquema en el panel Tables. Para una instalación existente que ya tenía el modelo anterior, ejecuta en orden las migraciones `001_propuestas_conocimiento.sql`, `002_valoraciones_chat.sql`, `003_revision_valoraciones.sql`, `004_feedback_conocimiento_aprobado.sql` y `005_experiencias_accion.sql` como `DUCO_APP`. Una instalación completa debe mostrar 32 tablas en el panel Tables.
 
+Si al iniciar Duco aparece `ORA-12514` o `DPY-6001` (el servicio FREEPDB1 no está registrado), la base de datos está apagada: ejecuta `Iniciar_Base_de_Datos.cmd` (pide permisos de administrador) o simplemente `Iniciar_Duco.cmd`, que la inicia solo cuando hace falta.
+
 Oracle Database Free 26ai está instalado y activo en este equipo. El esquema `DUCO_APP` está en `localhost:1521/FREEPDB1`.
 
 ## Integración del asistente y conocimiento

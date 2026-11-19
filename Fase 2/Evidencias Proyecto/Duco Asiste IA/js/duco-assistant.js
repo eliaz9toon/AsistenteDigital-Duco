@@ -369,6 +369,7 @@ class DucoAssistant {
   performReset() {
     sessionStorage.removeItem('duco-navigation-pending');
     sessionStorage.removeItem('duco-navigation-previous');
+    this.resetPermissions();
     window.ducoHighlighter?.clearAllHighlights?.();
     window.ducoHighlighter?.cleanupAllTransientState?.();
     window.chatHandler?.clearHistory();
@@ -417,6 +418,65 @@ class DucoAssistant {
     messages.appendChild(row);
     messages.scrollTop = messages.scrollHeight;
     return row;
+  }
+
+  /**
+   * Permiso Sí/No antes de enviar datos personales (una dirección o la ubicación) a un servicio externo.
+   * La decisión se recuerda solo durante la sesión (sessionStorage) y se puede revocar escribiendo «cambiar permisos».
+   */
+  askPermission(kind, text) {
+    const key = 'ducoPermissions';
+    let store = {};
+    try { store = JSON.parse(sessionStorage.getItem(key) || '{}'); } catch (error) { store = {}; }
+    if (typeof store[kind] === 'boolean') return Promise.resolve(store[kind]);
+    return new Promise(resolve => {
+      let settled = false;
+      const decide = value => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(timer);
+        store[kind] = value;
+        try { sessionStorage.setItem(key, JSON.stringify(store)); } catch (error) { /* sin almacenamiento: se vuelve a preguntar */ }
+        resolve(value);
+      };
+      // Sin respuesta en 2 minutos se toma como «No» sin recordarlo.
+      const timer = setTimeout(() => { if (!settled) { settled = true; row?.remove(); resolve(false); } }, 120000);
+      const row = this.showTransientMessage(text, [
+        {label: '✅ Sí, doy permiso', onClick: () => decide(true)},
+        {label: '❌ No, gracias', onClick: () => decide(false)}
+      ]);
+      row?.classList.add('duco-permission');
+      row?.querySelector('button')?.focus();
+    });
+  }
+
+  resetPermissions() {
+    try { sessionStorage.removeItem('ducoPermissions'); } catch (error) { /* nada que borrar */ }
+  }
+
+  /** Llamada al backend local para las APIs externas; nunca lanza: devuelve {found:false} si algo falla. */
+  async callExternalApi(path) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 12000);
+    try {
+      const response = await fetch(this.knowledgeApiUrl(path), {signal: controller.signal});
+      return response.ok ? await response.json() : {found: false};
+    } catch (error) {
+      return {found: false};
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+
+  /** Ubicación del navegador (API de Geolocalización): se usa una sola vez y no se guarda. */
+  getBrowserLocation() {
+    return new Promise(resolve => {
+      if (!navigator.geolocation) return resolve(null);
+      navigator.geolocation.getCurrentPosition(
+        position => resolve({lat: position.coords.latitude, lng: position.coords.longitude}),
+        () => resolve(null),
+        {enableHighAccuracy: false, timeout: 12000, maximumAge: 0});
+    });
   }
 
   /** CU-07 A2: pide confirmar antes de borrar la conversación; «Cancelar» la conserva. */
@@ -812,6 +872,27 @@ class DucoAssistant {
         context: {
           navigationCapabilities: window.ducoHighlightSystem?.capabilities ? window.ducoHighlightSystem.capabilities() : {},
           databaseKnowledge,
+          // Modo híbrido: el modelo redacta el aviso corto de cada acción; si falla se usa la frase fija.
+          humanizeReplies: true,
+          // APIs externas (Nominatim, OSRM, Nager.Date) vía el backend local; lo personal exige permiso Sí/No.
+          externalApis: this.isLocalKnowledgeApi() ? {
+            enabled: true,
+            askPermission: (kind, text) => this.askPermission(kind, text),
+            resetPermissions: () => this.resetPermissions(),
+            geocode: query => this.callExternalApi('/api/duco/geocode?q=' + encodeURIComponent(query)),
+            route: (from, sede) => this.callExternalApi(`/api/duco/route?fromLat=${from.lat}&fromLng=${from.lng}&toLat=${sede.lat}&toLng=${sede.lng}`),
+            holidays: year => this.callExternalApi('/api/duco/holidays?year=' + encodeURIComponent(year)),
+            geolocate: () => this.getBrowserLocation()
+          } : null,
+          // Consulta limitada a duoc.cl (vía el backend local); si no hay backend o falla, el asistente sigue sin ella.
+          webLookup: this.isLocalKnowledgeApi() ? async query => {
+            const controller = new AbortController();
+            const timer = setTimeout(() => controller.abort(), 9000);
+            try {
+              const response = await fetch(this.knowledgeApiUrl('/api/duco/web?q=' + encodeURIComponent(query)), {signal: controller.signal});
+              return response.ok ? await response.json() : {results: []};
+            } catch (error) { return {results: []}; } finally { clearTimeout(timer); }
+          } : null,
           actionExperiences,
           lastCorrection:window.chatHandler?.conversationContext?.lastCorrection || null,
           pageResearch,
@@ -1554,7 +1635,7 @@ class DucoAssistant {
         } else if (action.type === 'navigate') {
           flow.push({action:{type:'navigate',terms:action.terms || [],target:action.target},pauseAfter:action.pauseAfter});
         } else if (action.type === 'showMap') {
-          flow.push({action:{type:'showMap',terms:action.terms || [],sedeIds:action.sedeIds || []}});
+          flow.push({action:{type:'showMap',terms:action.terms || [],sedeIds:action.sedeIds || [],route:action.route || null}});
         } else if (action.type === 'showCalendar') {
           flow.push({action:{type:'showCalendar',terms:action.terms || [],eventIds:action.eventIds || []}});
         } else if (action.type === 'explainCareer') {
@@ -1979,7 +2060,7 @@ class DucoAssistant {
       content.className = 'duco-message-content';
       message.appendChild(content);
       container.appendChild(message);
-      const count = action.type === 'showMap' ? await places.renderMap(content, action.sedeIds || []) : places.renderCalendar(content, action.eventIds || []);
+      const count = action.type === 'showMap' ? await places.renderMap(content, action.sedeIds || [], {route: action.route || null}) : places.renderCalendar(content, action.eventIds || []);
       container.scrollTop = container.scrollHeight;
       if (!count) { message.remove(); return {success:false,detail:'No hay datos para mostrar'}; }
       return {success:true,detail:action.type === 'showMap' ? `Se mostró el mapa con ${count} sede(s)` : `Se mostraron ${count} fecha(s) con botones para agregar al calendario`};
