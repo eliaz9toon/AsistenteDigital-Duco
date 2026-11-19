@@ -1562,6 +1562,8 @@ class OllamaClient {
       [/\b(?:online|a distancia|virtual)\b/, /online/],
       [/\b(?:oferta academica|todas las carreras|programas de estudio)\b/, /oferta/]
     ];
+    // «Inscribirme en un taller / deporte / voluntariado» es de Vida Estudiantil, no de Admisión.
+    if (/\b(?:inscrib\w*|inscripcion|participar|unirme|sumarme)\b/.test(q) && /\b(?:taller|talleres|deporte|deportes|actividad|actividades|voluntariado|club|clubes|seleccion|pastoral|cultura|cultural)\b/.test(q)) topics.unshift([/\b(?:inscrib\w*|inscripcion|participar|unirme|sumarme)\b/, /vida estudiantil/]);
     const topic = topics.find(([re]) => re.test(q));
     if (topic && /\b(?:informar\w*|informacion|donde|senal\w*|muestr\w*|encuentro|puedo|como)\b/.test(q)) {
       const menu = menus.find(item => topic[1].test(normalize(item.label)));
@@ -2259,11 +2261,18 @@ class OllamaClient {
     if (/\b(?:resumen|resume|resumeme|que hay|que contiene|de que trata|de que se trata|que secciones|cuantas secciones|que muestra|lee|leeme|leer)\b/.test(q) && /\b(?:pagina|sitio|esto|esta web|aqui)\b/.test(q) && typeof document !== 'undefined') {
       const seen = new Set();
       const titles = [...document.querySelectorAll('main h1, main h2, section h2, h1, h2')]
-        .filter(el => !el.closest('#duco-assistant-container, nav, header, footer') && el.getClientRects().length)
+        // Se descartan los «títulos» que en realidad son migas de pan o pestañas de navegación (dentro de enlaces, listas o pestañas).
+        .filter(el => !el.closest('#duco-assistant-container, nav, header, footer, a, li, [role="tab"], [class*="breadcrumb"]') && el.getClientRects().length)
         .map(el => el.textContent.replace(/\s+/g, ' ').trim())
         .filter(text => text.length >= 6 && text.length <= 90 && !/empty heading/i.test(text) && !seen.has(text) && seen.add(text)).slice(0, 8);
+      const intro = [...document.querySelectorAll('main p, section p')]
+        .filter(el => !el.closest('#duco-assistant-container, nav, header, footer, a, li') && el.getClientRects().length)
+        .map(el => el.textContent.replace(/\s+/g, ' ').trim()).find(text => text.length >= 70 && text.length <= 400);
+      // Un párrafo suelto de la página no es un buen resumen (puede ser de cualquier sección): solo se listan las secciones.
+      const introLine = '';
+      void intro;
       const page = ['/duco', '/duoc.html', '/'].includes(context.currentPage) ? 'la página de inicio de Duoc UC' : context.currentPage === '/carreras.html' ? 'el catálogo de carreras' : `«${document.title}»`;
-      if (titles.length) return answer(`Estás en ${page}. Estas son sus secciones principales:\n${titles.map(title => `• ${title}`).join('\n')}\nDime cuál quieres ver y te la señalo.`);
+      if (titles.length) return answer(`Estás en ${page}.${introLine}\nEstas son sus secciones principales:\n${titles.map(title => `• ${title}`).join('\n')}\nDime cuál quieres ver y te la señalo.`);
     }
     return null;
   }
@@ -3597,7 +3606,9 @@ class OllamaClient {
               // Un extracto muy corto suele ser solo un título o una lista: en ese caso se deja la respuesta del modelo.
               if (body.length >= 120) reply = `Según duoc.cl: ${body}`;
             }
-            if (first?.url && !reply.includes(first.url)) reply += `\nFuente: ${first.url} (consultada en duoc.cl; puede haber cambiado).`;
+            // Si la respuesta termina siendo «no tengo ese dato», no se cita una fuente que no lo respalda.
+            const admitsNoData = /\bno (?:tengo|cuento con|encontr\w+|dispongo)\b|\bno (?:hay|consta)\b/i.test(reply.slice(0, 120));
+            if (first?.url && !reply.includes(first.url) && !admitsNoData) reply += `\nFuente: ${first.url} (consultada en duoc.cl; puede haber cambiado).`;
           }
           return {reply,actions:[],intent:{kind:'answer',reference:'resolved_action',action:'none'}};
         }

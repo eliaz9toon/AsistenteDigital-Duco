@@ -760,6 +760,18 @@
       ],
       "answer": "No tengo información sobre estacionamientos de las sedes. Consúltalo directamente con tu sede o en la sección de sedes del sitio de Duoc UC.",
       "source": "https://www.duoc.cl/"
+    },
+    {
+      "id": "antiguedad-duoc",
+      "patterns": [
+        "\\b(?:cuantos anos tiene|que edad tiene|hace cuanto (?:que )?(?:existe|fue fundad[oa]|se fundo)|cuando (?:se fundo|fue fundad[oa]|nacio|se creo)|en que ano (?:se fundo|nacio|se creo|fue fundad[oa])|ano de fundacion|desde cuando existe) (?:el |la )?duoc(?: uc)?\\b"
+      ],
+      "answer": "Duoc UC nació en 1968, creada por la Pontificia Universidad Católica de Chile. En 2026 cumple 58 años.",
+      "source": "https://observatorio.duoc.cl/editorial/duoc-uc-una-historia-de-excelencia-y-compromiso-con-la-calidad-educativa-en-chile/",
+      "menu": {
+        "menu": "Nosotros",
+        "item": "Sobre Duoc UC"
+      }
     }
   ]
 }
