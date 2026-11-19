@@ -2717,11 +2717,18 @@ class OllamaClient {
     if (/\bferiados?\b/.test(q) && !/\b(?:no|nunca)\b/.test(q)) {
       const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
       const yearMatch = q.match(/\b(20[2-3]\d)\b/);
-      const monthIndex = months.findIndex(month => new RegExp('\\b' + month + '\\b').test(q));
+      let monthIndex = months.findIndex(month => new RegExp('\\b' + month + '\\b').test(q));
+      const nextOne = /\bproximo feriado\b|\bsiguiente feriado\b|\bcuando es el proximo\b/.test(q);
+      if (monthIndex < 0 && /\beste mes\b/.test(q)) monthIndex = new Date().getMonth();
+      let rollYear = false;
+      if (monthIndex < 0 && /\b(?:proximo mes|mes que viene|mes siguiente)\b/.test(q)) {
+        monthIndex = (new Date().getMonth() + 1) % 12;
+        rollYear = new Date().getMonth() === 11;
+      }
       const dayMatch = q.match(/\b(?:el |del )?(\d{1,2}) de (enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)\b/);
       const classes = /\b(?:clases|inicio|empiezan|comienzan|matricula|admision|cierre)\b/.test(q);
       const now = new Date();
-      let year = yearMatch ? Number(yearMatch[1]) : now.getFullYear();
+      let year = yearMatch ? Number(yearMatch[1]) : now.getFullYear() + (rollYear ? 1 : 0);
       // «Inicio de clases»: se cruzan las fechas oficiales cargadas con los feriados del año correspondiente.
       if (classes && !dayMatch) {
         const events = (places.upcomingEvents?.() || []).filter(event => /clases|cierre|matr/i.test(event.title));
@@ -2749,6 +2756,15 @@ class OllamaClient {
       }
       const holidays = await api.holidays(year);
       if (!holidays?.found) return answer('No pude consultar los feriados en este momento (servicio Nager.Date). Intenta de nuevo en un rato.');
+      if (nextOne) {
+        const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+        let upcoming = holidays.items.find(item => item.date >= today);
+        if (!upcoming) {
+          const following = await api.holidays(year + 1);
+          upcoming = following?.found ? following.items[0] : null;
+        }
+        return answer(upcoming ? `El próximo feriado es el ${upcoming.date.slice(8, 10)}/${upcoming.date.slice(5, 7)}/${upcoming.date.slice(0, 4)}: ${upcoming.name}. Fuente: Nager.Date.` : 'No encontré el próximo feriado.');
+      }
       const list = holidays.items.filter(item => monthIndex < 0 || Number(item.date.slice(5, 7)) === monthIndex + 1);
       if (!list.length) return answer(`No hay feriados en ${months[monthIndex]} de ${year}.`);
       const fmt = item => `• ${item.date.slice(8, 10)}/${item.date.slice(5, 7)}: ${item.name}`;
@@ -2756,15 +2772,16 @@ class OllamaClient {
     }
 
     // ---- Sede más cercana / cuánto demoro (Nominatim + OSRM + ubicación del navegador)
-    const wantsNearest = /\b(?:mas cercana|cercana|cerca de|cerquita)\b/.test(q);
-    const wantsRoute = /\b(?:cuanto (?:demoro|tardo|me demoro|se demora|demora|tiempo|queda)|como llego|ruta|distancia|cuantos km|cuantos kilometros|cuanto falta)\b/.test(q);
+    const wantsNearest = /\b(?:mas cercana|cercana|cerca de|cerquita|nearest|closest)\b/.test(q);
+    const wantsRoute = /\b(?:cuanto (?:demoro|tardo|me demoro|se demora|demora|tiempo|queda)|como llego|ruta|distancia|cuantos km|cuantos kilometros|cuanto falta)\b/.test(q)
+      || /\bdesde\b.*\d.*\b(?:a|hasta|hacia)\s+(?:la\s+|el\s+)?(?:sede|campus)\b/.test(q);
     if (!(wantsNearest || wantsRoute) || !/\b(?:sede|sedes|campus|llego|demoro|tardo|ruta|distancia)\b/.test(q)) return null;
     const geoCue = /\b(?:mi ubicacion|mi posicion|donde estoy|desde aqui|desde donde estoy|ubicacion actual|mi lugar|cerca de mi|desde mi casa)\b/.test(q);
     // Una dirección es un texto con calle y número que ninguna regla local resuelve (comunas y ciudades ya las resuelve el asistente sin APIs).
     // Se toma lo que viene después de la ÚLTIMA frase que introduce un lugar («cercana a», «desde», «vivo en»…).
-    const placeIntro = [...String(userText).matchAll(/(?:\b(?:cercana|cerca|cerquita)\s+(?:a|de)\s+|\bdesde\s+|\b(?:vivo|estoy|trabajo)\s+en\s+|\bmi\s+(?:direccion|dirección|domicilio)(?:\s+es)?\s+|\bmi\s+casa\s+(?:esta\s+)?en\s+)/gi)].pop();
+    const placeIntro = [...String(userText).matchAll(/(?:\b(?:cercana|cerca|cerquita)\s+(?:a|de)\s+|\b(?:nearest|closest)\s+(?:campus|sede|location)?\s*(?:to|from)\s+|\bfrom\s+|\bdesde\s+|\b(?:vivo|estoy|trabajo)\s+en\s+|\bmi\s+(?:direccion|dirección|domicilio)(?:\s+es)?\s+|\bmi\s+casa\s+(?:esta\s+)?en\s+)/gi)].pop();
     let candidate = placeIntro ? String(userText).slice(placeIntro.index + placeIntro[0].length) : '';
-    candidate = candidate.split(/[?!]|,\s*(?:cual|que|como|cuanto|cuál|qué|cómo|cuánto)\b/i)[0].replace(/[.\s]+$/, '').trim();
+    candidate = candidate.split(/[?!]|,?\s+(?:cual|que|como|cuanto|cuál|qué|cómo|cuánto|me\s+demoro|demoro|tardo)\b|,?\s+(?:a|hasta|hacia|para\s+(?:ir|llegar)\s+a)\s+(?:la\s+|el\s+)?(?:sede|campus)\b/i)[0].replace(/[.,\s]+$/, '').trim();
     const address = /\d{1,5}/.test(candidate) && candidate.length >= 5 && candidate.length <= 120 ? candidate : '';
     if (!geoCue && !address) return null;
     if (address && (places.findCity?.(this.normalizeCareerText(address)) || places.findSedes?.(address)?.length) && !/\d/.test(address)) return null;
@@ -2785,7 +2802,7 @@ class OllamaClient {
     } else {
       const found = await api.geocode(address);
       if (!found?.found) return answer('No pude ubicar esa dirección. Prueba con calle, número y comuna (por ejemplo «Av. Providencia 1234, Providencia»).');
-      origin = {lat: found.lat, lng: found.lng};
+      origin = {lat: found.lat, lng: found.lng, precision: found.precision};
     }
 
     // Sede de destino: la que nombró o la más cercana en línea recta.
@@ -2796,7 +2813,17 @@ class OllamaClient {
     const route = await api.route(origin, sede);
     const intro = named.length === 1 ? `Desde ese punto a ${sede.name}` : `La sede más cercana es ${sede.name} (${sede.address}) y, desde ese punto,`;
     if (route?.found) {
-      return answer(`${intro} hay ${route.distanceKm} km por calle: unos ${route.durationMin} minutos en auto, sin contar tráfico. Te muestro la ruta en el mapa. (Ruta calculada con OSRM.)`,
+      const total = route.durationMin;
+      const mins = total >= 120
+        ? `${Math.floor(total / 60)} h${total % 60 ? ' ' + (total % 60) + ' min' : ''}`
+        : total === 1 ? '1 minuto' : `${total} minutos`;
+      const far = route.distanceKm > 400 ? ' Queda muy lejos de cualquier sede: si estás en otra región, revisa también las carreras online y la sede más cercana en el mapa.' : '';
+      const approx = kind === 'address' && origin.precision && origin.precision !== 'exacta'
+        ? ` No encontré el número exacto, así que usé ${origin.precision === 'calle' ? 'la calle' : 'la comuna'} como punto de partida: el tiempo es aproximado.` : '';
+      const body = route.distanceKm < 0.2
+        ? `${intro} ya estás prácticamente en la sede (menos de 200 m). Te la muestro en el mapa.`
+        : `${intro} hay ${route.distanceKm} km por calle: unos ${mins} en auto, sin contar tráfico. Te muestro la ruta en el mapa.`;
+      return answer(`${body}${far}${approx} (Ruta calculada con OSRM.)`,
         [{type: 'showMap', terms: [sede.name], sedeIds: [sede.id], route: {from: {lat: origin.lat, lng: origin.lng, label: kind === 'geo' ? 'Tu ubicación' : 'Tu dirección'}, points: route.points, distanceKm: route.distanceKm, durationMin: route.durationMin}}]);
     }
     return answer(`${intro} hay unos ${straight ?? '?'} km en línea recta (no pude calcular la ruta por calle en este momento). Te muestro la sede en el mapa.`, [{type: 'showMap', terms: [sede.name], sedeIds: [sede.id]}]);

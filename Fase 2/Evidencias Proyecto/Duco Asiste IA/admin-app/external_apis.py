@@ -61,30 +61,48 @@ def _store(kind: str, key: str, value) -> None:
         _cache[f"{kind}:{key}"] = (time.time(), value)
 
 
-def geocode(query: str) -> dict:
-    """Dirección -> {lat, lng, name}. Solo busca en Chile."""
+def _nominatim(text: str):
+    """Una consulta a Nominatim respetando 1 por segundo; devuelve el primer resultado o None."""
     global _last_nominatim
+    with _lock:
+        wait = 1.1 - (time.time() - _last_nominatim)
+        if wait > 0:
+            time.sleep(wait)  # política de uso de Nominatim: 1 consulta por segundo
+        _last_nominatim = time.time()
+    data = _get_json("https://nominatim.openstreetmap.org/search?" + urlencode(
+        {"format": "jsonv2", "q": text, "countrycodes": "cl", "limit": 1, "addressdetails": 0}))
+    return data[0] if data else None
+
+
+def geocode(query: str) -> dict:
+    """Dirección -> {lat, lng, name, precision}. Solo busca en Chile.
+
+    Si la dirección exacta no está en OpenStreetMap se intenta con la calle sin número y, al final, con la comuna;
+    `precision` dice cuál funcionó: «exacta», «calle» o «comuna».
+    """
     text = re.sub(r"\s+", " ", str(query or "")).strip()[:160]
     if len(text) < 5:
         return {"found": False, "reason": "direccion muy corta"}
     hit = _cached("geocode", text.lower())
     if hit is not None:
         return hit  # type: ignore[return-value]
-    with _lock:
-        wait = 1.1 - (time.time() - _last_nominatim)
-        if wait > 0:
-            time.sleep(wait)  # política de uso de Nominatim: 1 consulta por segundo
-        _last_nominatim = time.time()
+    parts = [part.strip() for part in text.split(",") if part.strip()]
+    street = re.sub(r"\s*#?\s*\d{1,5}\s*$", "", parts[0]).strip() if parts else text
+    tail = ", ".join(parts[1:])
+    attempts = [(text, "exacta")]
+    if street and street != parts[0]:
+        attempts.append((", ".join(filter(None, [street, tail])), "calle"))
+    if tail:
+        attempts.append((tail, "comuna"))
+    result = {"found": False, "reason": "sin resultados"}
     try:
-        data = _get_json("https://nominatim.openstreetmap.org/search?" + urlencode(
-            {"format": "jsonv2", "q": text, "countrycodes": "cl", "limit": 1, "addressdetails": 0}))
-    except Exception as error:
+        for attempt, precision in attempts:
+            item = _nominatim(attempt)
+            if item:
+                result = {"found": True, "lat": float(item["lat"]), "lng": float(item["lon"]), "name": str(item.get("display_name", ""))[:200], "precision": precision}
+                break
+    except Exception:
         return {"found": False, "reason": "servicio no disponible"}
-    if not data:
-        result = {"found": False, "reason": "sin resultados"}
-    else:
-        item = data[0]
-        result = {"found": True, "lat": float(item["lat"]), "lng": float(item["lon"]), "name": str(item.get("display_name", ""))[:200]}
     _store("geocode", text.lower(), result)
     return result
 
