@@ -32,6 +32,12 @@ Esta carpeta es una copia de la Entrega 2 (FASE 2) con los documentos alineados 
 ## Fechas de las pruebas (reales)
 El Plan de pruebas (07) usa las fechas reales de la evidencia: sprints 1 a 3 el 04/11 y 05/11/2026, sprint 4 el 05/11, compatibilidad de navegadores (Chromium, Edge y WebKit) y prueba de Oracle el 04/11, suites de conversación del 12 al 14/11. Con esa evidencia CP-28 pasó a «Aprobado (auto.)» (Safari y dispositivos físicos sin probar). No se pusieron fechas de septiembre porque no hay pruebas de esa fecha.
 
+## Actualización del 19/11/2026: APIs externas
+
+- **Arquitectura** (docx y las dos figuras): agrega las 3 APIs nuevas (Nominatim, OSRM y Nager.Date) y la consulta a duoc.cl, el permiso Sí/No, el modo híbrido, `external_apis.py` y `web_lookup.py`, y una sección 1.4 que cuenta las 5 APIs del sistema.
+- **08 Manual técnico:** nuevas rutas, configuración del permiso, verificación de las APIs y diagnóstico; el paso para encender Oracle usa `Iniciar_Base_de_Datos.cmd`.
+- **07 Plan de pruebas:** sección «Pruebas de las APIs externas (19/11/2026)». Pendiente: probar la ubicación real del navegador y sacar capturas.
+
 ## Para decidir por el equipo (no se tocó)
 - Daily Standup: sigue con «Pendiente de registro: reunión no acreditada»; no se inventaron reuniones.
 - Burndown diario: sin fechas de aceptación verificadas; no se interpolaron datos.
