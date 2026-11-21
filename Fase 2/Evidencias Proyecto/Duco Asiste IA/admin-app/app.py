@@ -20,6 +20,7 @@ from pathlib import Path
 from urllib.parse import parse_qs, unquote, urlparse
 from urllib.request import ProxyHandler, build_opener
 
+import auth
 import external_apis
 import web_lookup
 
@@ -209,18 +210,99 @@ def normalize(value, data_type: str):
     return value
 
 
+def clean_user_name(value) -> str | None:
+    """Nombre (o apodo) de quien usa el chat: se pide solo eso, sin RUT, correo ni teléfono."""
+    name = re.sub(r"\s+", " ", str(value or "")).strip()
+    if not name:
+        return None
+    if not re.fullmatch(r"[^\W_][\w .'\-]{1,39}", name):
+        raise ValueError("El nombre debe tener entre 2 y 40 caracteres: letras, números, espacios, punto, guion o apóstrofo.")
+    if re.search(r"\d{5,}|@", name):
+        raise ValueError("Escribe solo tu nombre o un apodo, sin números largos ni correos.")
+    return name
+
+
+def compact(value, limit: int = 300):
+    """Recorta textos largos antes de guardarlos en la auditoría."""
+    if isinstance(value, dict):
+        return {key: compact(item, limit) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [compact(item, limit) for item in value[:20]]
+    text = value if isinstance(value, (int, float, bool)) or value is None else str(value)
+    return text[:limit] + "…" if isinstance(text, str) and len(text) > limit else text
+
+
+def record_audit(cur, table: str, action: str, record_id, before=None, after=None, actor: dict | None = None) -> None:
+    """Una fila de auditoría por cambio: qué tabla, qué registro, qué acción, valores antes y después, quién y desde dónde."""
+    actor = actor or {}
+    dump = lambda data: json.dumps(compact(data), ensure_ascii=False, default=str)[:4000] if data is not None else None
+    cur.execute("""
+        INSERT INTO AUDITORIA_CAMBIOS (ID_ADMIN, TABLA_AFECTADA, FECHA, ACCION, ID_REGISTRO, VALOR_ANTERIOR, VALOR_NUEVO, NOMBRE_ACTOR, ORIGEN)
+        VALUES (:admin_id, :tabla, CURRENT_TIMESTAMP, :accion, :registro, :antes, :despues, :actor, :origen)
+    """, {"admin_id": actor.get("id"), "tabla": table, "accion": action, "registro": None if record_id is None else str(record_id)[:120],
+          "antes": dump(before), "despues": dump(after), "actor": (actor.get("name") or None) and str(actor["name"])[:120],
+          "origen": actor.get("origin") or "sistema"})
+
+
+def log_event(cur, kind: str) -> None:
+    cur.execute("INSERT INTO EVENTOS_SISTEMA (TIPO, FECHA) VALUES (:tipo, CURRENT_TIMESTAMP)", tipo=str(kind)[:80])
+
+
+def first_out(cur_var):
+    value = cur_var.getvalue()
+    return value[0] if isinstance(value, list) else value
+
+
+READ_ONLY_TABLES = {"AUDITORIA_CAMBIOS", "SESIONES_ADMIN", "USUARIOS_ADMIN"}
+
+
 class Handler(BaseHTTPRequestHandler):
     server_version = "DucoAdmin/1.0"
 
     def log_message(self, format, *args):
         print("[Duco Admin]", format % args)
 
-    def send_json(self, status: int, payload) -> None:
+    # ---- Sesión del panel de administración -------------------------------------------------------------------
+    def current_admin(self) -> dict | None:
+        token = auth.parse_cookie(self.headers.get("Cookie"))
+        if not token:
+            return None
+        try:
+            with db_session() as conn, conn.cursor() as cur:
+                cur.execute("""
+                    SELECT s.ID_SESION_ADMIN, u.ID_ADMIN, u.NOMBRE, u.CORREO, r.NOMBRE
+                    FROM SESIONES_ADMIN s
+                    JOIN USUARIOS_ADMIN u ON u.ID_ADMIN = s.ID_ADMIN
+                    LEFT JOIN ROLES r ON r.ID_ROL = u.ID_ROL
+                    WHERE s.TOKEN_HASH = :token_hash AND s.FECHA_FIN IS NULL
+                      AND s.FECHA_EXPIRA > CURRENT_TIMESTAMP AND u.ACTIVO = 1
+                """, token_hash=auth.token_hash(token))
+                row = cur.fetchone()
+        except Exception:
+            return None
+        if not row:
+            return None
+        return {"sessionId": row[0], "id": row[1], "name": row[2], "email": row[3], "role": row[4] or auth.ROLE_REVIEWER, "origin": "panel"}
+
+    def require_admin(self, roles: set[str] | None = None) -> dict | None:
+        """Devuelve el usuario con sesión válida; si no, responde 401 (sin sesión) o 403 (rol insuficiente) y devuelve None."""
+        admin = self.current_admin()
+        if not admin:
+            self.send_json(401, {"error": "Inicia sesión para continuar."})
+            return None
+        if roles and admin["role"] not in roles:
+            self.send_json(403, {"error": "Tu rol no permite esta acción."})
+            return None
+        return admin
+
+    def send_json(self, status: int, payload, headers: dict | None = None) -> None:
         body = json.dumps(payload, ensure_ascii=False, default=str).encode("utf-8")
         self.send_response(status)
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Content-Length", str(len(body)))
         self.send_header("Cache-Control", "no-store")
+        for header, header_value in (headers or {}).items():
+            self.send_header(header, header_value)
         origin = self.allowed_cors_origin()
         if origin:
             self.send_header("Access-Control-Allow-Origin", origin)
@@ -289,8 +371,30 @@ class Handler(BaseHTTPRequestHandler):
             return self.serve_project_file(path.lstrip("/"))
         if self.is_project_asset(path):
             return self.serve_project_file(path.lstrip("/"))
+        if path == "/api/auth/me":
+            admin = self.current_admin()
+            if not admin:
+                return self.send_json(401, {"error": "Sin sesión."})
+            return self.send_json(200, {"admin": {key: admin[key] for key in ("id", "name", "email", "role")}})
+        # Todo lo que muestra o administra datos del panel exige sesión; las consultas del chat (experiencias, conocimiento) son públicas.
+        panel_admin = None
+        if path == "/api/tables" or path.startswith("/api/tables/") or path.startswith("/api/admin/") or path in {"/api/duco/proposals", "/api/duco/negative-feedback"}:
+            roles = {auth.ROLE_ADMIN} if path == "/api/admin/users" else None
+            panel_admin = self.require_admin(roles)
+            if panel_admin is None:
+                return
         try:
             with db_session() as conn:
+                if path == "/api/admin/users":
+                    with conn.cursor() as cur:
+                        cur.execute("""
+                            SELECT u.ID_ADMIN, u.NOMBRE, u.CORREO, r.NOMBRE, u.ACTIVO, u.FECHA_CREACION, u.ULTIMO_ACCESO
+                            FROM USUARIOS_ADMIN u LEFT JOIN ROLES r ON r.ID_ROL = u.ID_ROL ORDER BY u.ID_ADMIN
+                        """)
+                        users = [{"id": row[0], "name": row[1], "email": row[2], "role": row[3], "active": bool(row[4]), "createdAt": row[5], "lastAccess": row[6]} for row in cur]
+                    return self.send_json(200, {"users": users})
+                if path.startswith("/api/admin/reports/"):
+                    return self.send_json(200, self.admin_report(conn, path.rsplit("/", 1)[1]))
                 if path == "/api/tables":
                     return self.send_json(200, {"tables": table_names(conn)})
                 if path == "/api/duco/experiences":
@@ -337,17 +441,177 @@ class Handler(BaseHTTPRequestHandler):
                 if match:
                     meta = table_meta(conn, match.group(1))
                     qtable = safe_ident(meta["name"])
+                    order, order_label = self.row_order(meta)
                     with conn.cursor() as cur:
-                        cur.execute(f"SELECT * FROM {qtable} FETCH FIRST 200 ROWS ONLY")
+                        cur.execute(f"SELECT * FROM {qtable} ORDER BY {order} FETCH FIRST 200 ROWS ONLY")
                         names = [col[0] for col in cur.description]
                         rows = [dict(zip(names, row)) for row in cur]
-                    return self.send_json(200, {"meta": meta, "rows": rows, "limit": 200})
+                    return self.send_json(200, {"meta": meta, "rows": rows, "limit": 200, "orderedBy": order_label})
             self.send_json(404, {"error": "Ruta no encontrada"})
         except Exception as exc:
             self.send_json(400, {"error": str(exc)})
 
     def do_POST(self):
         path = unquote(urlparse(self.path).path)
+        if path == "/api/auth/login":
+            try:
+                payload = self.body_json()
+                email = str(payload.get("email", "")).strip().lower()[:180]
+                password = str(payload.get("password", ""))[:200]
+                key = f"{self.client_address[0]}|{email}"
+                wait = auth.throttle.wait_seconds(key)
+                if wait:
+                    return self.send_json(429, {"error": f"Demasiados intentos fallidos. Espera {wait} segundos."})
+                with db_session() as conn, conn.cursor() as cur:
+                    cur.execute("""
+                        SELECT u.ID_ADMIN, u.NOMBRE, u.CLAVE_HASH, u.ACTIVO, r.NOMBRE
+                        FROM USUARIOS_ADMIN u LEFT JOIN ROLES r ON r.ID_ROL = u.ID_ROL
+                        WHERE LOWER(u.CORREO) = :email
+                    """, email=email)
+                    row = cur.fetchone()
+                    valid = auth.verify_or_dummy(password, row[2] if row else None) and bool(row) and bool(row[3])
+                    if not valid:
+                        auth.throttle.failed(key)
+                        log_event(cur, f"ADMIN_LOGIN_FALLIDO:{email}")
+                        conn.commit()
+                        return self.send_json(401, {"error": "Correo o contraseña incorrectos."})
+                    token = auth.new_token()
+                    cur.execute("""
+                        INSERT INTO SESIONES_ADMIN (ID_ADMIN, FECHA_INICIO, TOKEN_HASH, FECHA_EXPIRA, DIRECCION_IP)
+                        VALUES (:admin_id, CURRENT_TIMESTAMP, :token_hash, CURRENT_TIMESTAMP + NUMTODSINTERVAL(:hours, 'HOUR'), :ip)
+                    """, {"admin_id": row[0], "token_hash": auth.token_hash(token), "hours": auth.SESSION_HOURS, "ip": self.client_address[0][:45]})
+                    cur.execute("UPDATE USUARIOS_ADMIN SET ULTIMO_ACCESO = CURRENT_TIMESTAMP WHERE ID_ADMIN = :admin_id", admin_id=row[0])
+                    log_event(cur, f"ADMIN_LOGIN:{email}")
+                    conn.commit()
+                auth.throttle.succeeded(key)
+                cookie = f"{auth.COOKIE_NAME}={token}; HttpOnly; SameSite=Strict; Path=/; Max-Age={auth.SESSION_HOURS * 3600}"
+                return self.send_json(200, {"admin": {"id": row[0], "name": row[1], "email": email, "role": row[4]}}, {"Set-Cookie": cookie})
+            except Exception as exc:
+                return self.send_json(400, {"error": str(exc)})
+
+        if path == "/api/auth/logout":
+            token = auth.parse_cookie(self.headers.get("Cookie"))
+            if token:
+                try:
+                    with db_session() as conn, conn.cursor() as cur:
+                        cur.execute("UPDATE SESIONES_ADMIN SET FECHA_FIN = CURRENT_TIMESTAMP WHERE TOKEN_HASH = :h AND FECHA_FIN IS NULL", h=auth.token_hash(token))
+                        conn.commit()
+                except Exception:
+                    pass
+            return self.send_json(200, {"ok": True}, {"Set-Cookie": f"{auth.COOKIE_NAME}=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0"})
+
+        if path == "/api/auth/password":
+            admin = self.require_admin()
+            if admin is None:
+                return
+            try:
+                payload = self.body_json()
+                current, new = str(payload.get("current", "")), str(payload.get("new", ""))
+                problem = auth.password_problem(new)
+                if problem:
+                    raise ValueError(problem)
+                with db_session() as conn, conn.cursor() as cur:
+                    cur.execute("SELECT CLAVE_HASH FROM USUARIOS_ADMIN WHERE ID_ADMIN = :id", id=admin["id"])
+                    if not auth.verify_password(current, cur.fetchone()[0]):
+                        raise ValueError("La contraseña actual no es correcta.")
+                    cur.execute("UPDATE USUARIOS_ADMIN SET CLAVE_HASH = :hash WHERE ID_ADMIN = :id", hash=auth.hash_password(new), id=admin["id"])
+                    record_audit(cur, "USUARIOS_ADMIN", "UPDATE", admin["id"], {"campo": "CLAVE_HASH"}, {"campo": "CLAVE_HASH", "cambio": "contraseña actualizada"}, admin)
+                    conn.commit()
+                return self.send_json(200, {"ok": True})
+            except Exception as exc:
+                return self.send_json(400, {"error": str(exc)})
+
+        if path == "/api/admin/users":
+            admin = self.require_admin({auth.ROLE_ADMIN})
+            if admin is None:
+                return
+            try:
+                payload = self.body_json()
+                name = re.sub(r"\s+", " ", str(payload.get("name", ""))).strip()
+                email = str(payload.get("email", "")).strip().lower()
+                role = str(payload.get("role", auth.ROLE_REVIEWER)).upper()
+                password = str(payload.get("password", ""))
+                if not 2 <= len(name) <= 120:
+                    raise ValueError("El nombre debe tener entre 2 y 120 caracteres.")
+                if not re.fullmatch(r"[^@\s]+@[^@\s]+\.[^@\s]+", email) or len(email) > 180:
+                    raise ValueError("El correo no es válido.")
+                if role not in {auth.ROLE_ADMIN, auth.ROLE_REVIEWER}:
+                    raise ValueError("El rol debe ser ADMINISTRADOR o REVISOR.")
+                problem = auth.password_problem(password)
+                if problem:
+                    raise ValueError(problem)
+                with db_session() as conn, conn.cursor() as cur:
+                    cur.execute("SELECT 1 FROM USUARIOS_ADMIN WHERE LOWER(CORREO) = :email", email=email)
+                    if cur.fetchone():
+                        raise ValueError("Ya existe un usuario con ese correo.")
+                    cur.execute("SELECT ID_ROL FROM ROLES WHERE NOMBRE = :role", role=role)
+                    role_id = cur.fetchone()[0]
+                    new_id = cur.var(int)
+                    cur.execute("""
+                        INSERT INTO USUARIOS_ADMIN (ID_ROL, NOMBRE, CORREO, CLAVE_HASH) VALUES (:role_id, :name, :email, :hash)
+                        RETURNING ID_ADMIN INTO :new_id
+                    """, {"role_id": role_id, "name": name, "email": email, "hash": auth.hash_password(password), "new_id": new_id})
+                    created = first_out(new_id)
+                    record_audit(cur, "USUARIOS_ADMIN", "INSERT", created, None, {"nombre": name, "correo": email, "rol": role}, admin)
+                    conn.commit()
+                return self.send_json(201, {"ok": True, "id": created})
+            except Exception as exc:
+                return self.send_json(400, {"error": str(exc)})
+
+        user_active = re.fullmatch(r"/api/admin/users/(\d+)/active", path)
+        if user_active:
+            admin = self.require_admin({auth.ROLE_ADMIN})
+            if admin is None:
+                return
+            try:
+                target, active = int(user_active.group(1)), 1 if self.body_json().get("active") else 0
+                if target == admin["id"] and not active:
+                    raise ValueError("No puedes desactivar tu propio usuario.")
+                with db_session() as conn, conn.cursor() as cur:
+                    cur.execute("SELECT ACTIVO FROM USUARIOS_ADMIN WHERE ID_ADMIN = :id FOR UPDATE", id=target)
+                    row = cur.fetchone()
+                    if not row:
+                        raise ValueError("El usuario no existe.")
+                    cur.execute("UPDATE USUARIOS_ADMIN SET ACTIVO = :a WHERE ID_ADMIN = :id", a=active, id=target)
+                    if not active:
+                        cur.execute("UPDATE SESIONES_ADMIN SET FECHA_FIN = CURRENT_TIMESTAMP WHERE ID_ADMIN = :id AND FECHA_FIN IS NULL", id=target)
+                    record_audit(cur, "USUARIOS_ADMIN", "UPDATE", target, {"activo": row[0]}, {"activo": active}, admin)
+                    conn.commit()
+                return self.send_json(200, {"ok": True})
+            except Exception as exc:
+                return self.send_json(400, {"error": str(exc)})
+
+        if path == "/api/duco/session":
+            # Registro de quien se conecta al chat: nombre (o apodo) y sesión; se actualiza la actividad en cada llamada.
+            try:
+                payload = self.body_json()
+                session_key = str(uuid.UUID(str(payload.get("sessionId", ""))))
+                user_name = clean_user_name(payload.get("userName"))
+                if not user_name:
+                    raise ValueError("Falta el nombre.")
+                with db_session() as conn, conn.cursor() as cur:
+                    cur.execute("SELECT ID_SESION, NOMBRE_USUARIO FROM SESIONES_CHAT WHERE CLIENT_SESSION_ID = :k", k=session_key)
+                    row = cur.fetchone()
+                    actor = {"name": user_name, "origin": "chat"}
+                    if row:
+                        cur.execute("UPDATE SESIONES_CHAT SET NOMBRE_USUARIO = :n, ULTIMA_ACTIVIDAD = CURRENT_TIMESTAMP WHERE ID_SESION = :id", n=user_name, id=row[0])
+                        if row[1] != user_name:
+                            record_audit(cur, "SESIONES_CHAT", "UPDATE", row[0], {"nombre_usuario": row[1]}, {"nombre_usuario": user_name}, actor)
+                        session_id = row[0]
+                    else:
+                        out = cur.var(int)
+                        cur.execute("""
+                            INSERT INTO SESIONES_CHAT (FECHA_INICIO, CLIENT_SESSION_ID, NOMBRE_USUARIO, ULTIMA_ACTIVIDAD)
+                            VALUES (CURRENT_TIMESTAMP, :k, :n, CURRENT_TIMESTAMP) RETURNING ID_SESION INTO :id
+                        """, {"k": session_key, "n": user_name, "id": out})
+                        session_id = first_out(out)
+                        record_audit(cur, "SESIONES_CHAT", "INSERT", session_id, None, {"nombre_usuario": user_name}, actor)
+                        log_event(cur, "SESION_CHAT_INICIADA")
+                    conn.commit()
+                return self.send_json(201, {"ok": True, "sessionId": session_id, "userName": user_name})
+            except Exception as exc:
+                return self.send_json(400, {"error": str(exc)})
+
         if path == "/api/duco/ollama/ensure":
             origin = self.headers.get("Origin")
             own_origins = {f"http://{host}:{self.server.server_port}" for host in ("localhost", "127.0.0.1")}
@@ -373,20 +637,31 @@ class Handler(BaseHTTPRequestHandler):
                 if type(rating) is not int or rating not in {-1, 1}:
                     raise ValueError("La valoración debe ser positiva o negativa")
 
+                try:
+                    user_name = clean_user_name(payload.get("userName"))
+                except ValueError:
+                    user_name = None
+
                 with db_session() as conn, conn.cursor() as cur:
-                    cur.execute("SELECT ID_SESION FROM SESIONES_CHAT WHERE CLIENT_SESSION_ID = :session_key", session_key=session_key)
+                    cur.execute("SELECT ID_SESION, NOMBRE_USUARIO FROM SESIONES_CHAT WHERE CLIENT_SESSION_ID = :session_key", session_key=session_key)
                     row = cur.fetchone()
                     if row:
                         session_id = row[0]
+                        user_name = user_name or row[1]
+                        if user_name and row[1] != user_name:
+                            cur.execute("UPDATE SESIONES_CHAT SET NOMBRE_USUARIO = :n WHERE ID_SESION = :id", n=user_name, id=session_id)
+                        cur.execute("UPDATE SESIONES_CHAT SET ULTIMA_ACTIVIDAD = CURRENT_TIMESTAMP WHERE ID_SESION = :id", id=session_id)
                     else:
                         session_out = cur.var(int)
                         cur.execute("""
-                            INSERT INTO SESIONES_CHAT (FECHA_INICIO, CLIENT_SESSION_ID)
-                            VALUES (CURRENT_TIMESTAMP, :session_key)
+                            INSERT INTO SESIONES_CHAT (FECHA_INICIO, CLIENT_SESSION_ID, NOMBRE_USUARIO, ULTIMA_ACTIVIDAD)
+                            VALUES (CURRENT_TIMESTAMP, :session_key, :user_name, CURRENT_TIMESTAMP)
                             RETURNING ID_SESION INTO :session_id
-                        """, {"session_key": session_key, "session_id": session_out})
+                        """, {"session_key": session_key, "user_name": user_name, "session_id": session_out})
                         session_value = session_out.getvalue()
                         session_id = session_value[0] if isinstance(session_value, list) else session_value
+                        record_audit(cur, "SESIONES_CHAT", "INSERT", session_id, None, {"nombre_usuario": user_name}, {"name": user_name, "origin": "chat"})
+                    chat_actor = {"name": user_name, "origin": "chat"}
 
                     assistant_client_id = interaction_key + ":assistant"
                     cur.execute("SELECT ID_MENSAJE, ID_SESION FROM MENSAJES WHERE CLIENT_MESSAGE_ID = :client_id", client_id=assistant_client_id)
@@ -421,11 +696,12 @@ class Handler(BaseHTTPRequestHandler):
                     proposal_created = False
                     proposal_status = "not_applicable"
 
+                    synonym_audit = lambda table, action, record_id, before, after: record_audit(cur, table, action, record_id, before, after, chat_actor)
                     if not reusable:
                         proposal_status = "contextual_only"
                     elif rating > 0:
                         if approved_faq:
-                            self.add_faq_synonym(cur, approved_faq[0], approved_faq[1], question)
+                            self.add_faq_synonym(cur, approved_faq[0], approved_faq[1], question, synonym_audit)
                             proposal_status = "approved_match"
                         elif pending_proposal:
                             proposal_status = "similar_exists"
@@ -442,6 +718,7 @@ class Handler(BaseHTTPRequestHandler):
                             proposal_id = proposal_value[0] if isinstance(proposal_value, list) else proposal_value
                             proposal_created = True
                             proposal_status = "created"
+                            record_audit(cur, "PROPUESTAS_CONOCIMIENTO", "INSERT", proposal_id, None, {"estado": "PENDIENTE", "pregunta": question}, chat_actor)
                     elif approved_faq:
                         proposal_status = "approved_match"
                     elif pending_proposal:
@@ -474,12 +751,13 @@ class Handler(BaseHTTPRequestHandler):
                         """, message_id=assistant_message_id,page_path=experience["page"],request_text=question,
                             data_json=json.dumps(experience,ensure_ascii=False))
 
-                    # Si cambia el voto, registrar el ajuste como evento de auditoría.
-                    if previous_rating_row and previous_rating_row[0] != rating:
-                        cur.execute("""
-                            INSERT INTO AUDITORIA_CAMBIOS (TABLA_AFECTADA, FECHA)
-                            VALUES ('VALORACIONES_RESPUESTA:ACTUALIZADA', CURRENT_TIMESTAMP)
-                        """)
+                    # Auditoría de la valoración: alta o cambio de voto, con el registro afectado y los valores antes y después.
+                    cur.execute("SELECT ID_VALORACION FROM VALORACIONES_RESPUESTA WHERE ID_MENSAJE = :message_id", message_id=assistant_message_id)
+                    rating_id = cur.fetchone()[0]
+                    if not previous_rating_row:
+                        record_audit(cur, "VALORACIONES_RESPUESTA", "INSERT", rating_id, None, {"puntuacion": rating, "id_mensaje": assistant_message_id}, chat_actor)
+                    elif previous_rating_row[0] != rating:
+                        record_audit(cur, "VALORACIONES_RESPUESTA", "UPDATE", rating_id, {"puntuacion": previous_rating_row[0]}, {"puntuacion": rating}, chat_actor)
                     conn.commit()
                 return self.send_json(201, {"ok": True, "proposalCreated": proposal_created, "proposalStatus": proposal_status})
             except Exception as exc:
@@ -487,6 +765,9 @@ class Handler(BaseHTTPRequestHandler):
 
         feedback_review = re.fullmatch(r"/api/duco/feedback/(\d+)/review", path)
         if feedback_review:
+            admin = self.require_admin()
+            if admin is None:
+                return
             try:
                 with db_session() as conn, conn.cursor() as cur:
                     cur.execute("""
@@ -495,10 +776,8 @@ class Handler(BaseHTTPRequestHandler):
                     """, feedback_id=int(feedback_review.group(1)))
                     if cur.rowcount != 1:
                         raise ValueError("La valoración no existe o ya fue revisada")
-                    cur.execute("""
-                        INSERT INTO AUDITORIA_CAMBIOS (TABLA_AFECTADA, FECHA)
-                        VALUES ('VALORACIONES_RESPUESTA', CURRENT_TIMESTAMP)
-                    """)
+                    record_audit(cur, "VALORACIONES_RESPUESTA", "UPDATE", int(feedback_review.group(1)),
+                                 {"estado_revision": "PENDIENTE"}, {"estado_revision": "REVISADA"}, admin)
                     conn.commit()
                 return self.send_json(200, {"ok": True})
             except Exception as exc:
@@ -513,11 +792,18 @@ class Handler(BaseHTTPRequestHandler):
                     raise ValueError("La pregunta debe tener entre 1 y 500 caracteres")
                 if not answer or len(answer) > 5000:
                     raise ValueError("La respuesta debe tener entre 1 y 5000 caracteres")
+                try:
+                    proposer = clean_user_name(payload.get("userName"))
+                except ValueError:
+                    proposer = None
                 with db_session() as conn, conn.cursor() as cur:
+                    new_proposal = cur.var(int)
                     cur.execute("""
                         INSERT INTO PROPUESTAS_CONOCIMIENTO (PREGUNTA, RESPUESTA)
-                        VALUES (:question, :answer)
-                    """, {"question": question, "answer": answer})
+                        VALUES (:question, :answer) RETURNING ID_PROPUESTA INTO :proposal_id
+                    """, {"question": question, "answer": answer, "proposal_id": new_proposal})
+                    record_audit(cur, "PROPUESTAS_CONOCIMIENTO", "INSERT", first_out(new_proposal), None,
+                                 {"estado": "PENDIENTE", "pregunta": question}, {"name": proposer, "origin": "chat"})
                     conn.commit()
                 return self.send_json(202, {"ok": True, "status": "PENDIENTE"})
             except Exception as exc:
@@ -525,6 +811,9 @@ class Handler(BaseHTTPRequestHandler):
 
         review = re.fullmatch(r"/api/duco/proposals/(\d+)/review", path)
         if review:
+            admin = self.require_admin()
+            if admin is None:
+                return
             try:
                 payload = self.body_json()
                 decision = str(payload.get("decision", "")).upper()
@@ -548,6 +837,8 @@ class Handler(BaseHTTPRequestHandler):
                         """, {"question": proposal[0], "answer": proposal[1], "faq_id": faq_out})
                         faq_value = faq_out.getvalue()
                         faq_id = faq_value[0] if isinstance(faq_value, list) else faq_value
+                        record_audit(cur, "PREGUNTAS_FRECUENTES", "INSERT", faq_id, None, {"pregunta": proposal[0], "origen": f"propuesta {int(review.group(1))}"}, admin)
+                        review_audit = lambda table, action, record_id, before, after: record_audit(cur, table, action, record_id, before, after, admin)
 
                         cur.execute("""
                             SELECT q.CONTENIDO
@@ -568,7 +859,7 @@ class Handler(BaseHTTPRequestHandler):
                                 variants.append(variant)
                         for variant in variants:
                             if variant and variant != proposal[0] and len(variant) <= 200:
-                                self.add_faq_synonym(cur, faq_id, proposal[0], variant)
+                                self.add_faq_synonym(cur, faq_id, proposal[0], variant, review_audit)
 
                         cur.execute("""
                             UPDATE VALORACIONES_RESPUESTA
@@ -580,10 +871,8 @@ class Handler(BaseHTTPRequestHandler):
                         SET ESTADO = :status, FECHA_REVISION = CURRENT_TIMESTAMP
                         WHERE ID_PROPUESTA = :proposal_id
                     """, {"status": decision, "proposal_id": int(review.group(1))})
-                    cur.execute("""
-                        INSERT INTO AUDITORIA_CAMBIOS (TABLA_AFECTADA, FECHA)
-                        VALUES (:event, CURRENT_TIMESTAMP)
-                    """, event=f"PROPUESTAS_CONOCIMIENTO:{decision}")
+                    record_audit(cur, "PROPUESTAS_CONOCIMIENTO", "UPDATE", int(review.group(1)),
+                                 {"estado": "PENDIENTE"}, {"estado": decision}, admin)
                     conn.commit()
                 return self.send_json(200, {"ok": True, "status": decision})
             except Exception as exc:
@@ -592,10 +881,14 @@ class Handler(BaseHTTPRequestHandler):
         match = re.fullmatch(r"/api/tables/([A-Za-z0-9_$#]+)", path)
         if not match:
             return self.send_json(404, {"error": "Ruta no encontrada"})
+        admin = self.require_admin({auth.ROLE_ADMIN})
+        if admin is None:
+            return
         try:
             payload = self.body_json()
             with db_session() as conn:
                 meta = table_meta(conn, match.group(1))
+                self.ensure_writable(meta)
                 values = self.clean_values(meta, payload.get("values", {}), allow_pk=True)
                 if not values:
                     raise ValueError("Ingresa al menos un valor")
@@ -604,7 +897,17 @@ class Handler(BaseHTTPRequestHandler):
                 names_sql = ", ".join(safe_ident(name) for name in columns)
                 binds_sql = ", ".join(f":v{i}" for i in range(len(columns)))
                 with conn.cursor() as cur:
-                    cur.execute(f"INSERT INTO {safe_ident(meta['name'])} ({names_sql}) VALUES ({binds_sql})", binds)
+                    returning, new_key = "", None
+                    if len(meta["primaryKey"]) == 1:
+                        key_name = meta["primaryKey"][0]
+                        new_key = cur.var(oracledb.DB_TYPE_NUMBER if self.col_type(meta, key_name) == "NUMBER" else oracledb.DB_TYPE_VARCHAR)
+                        binds["new_key"] = new_key
+                        returning = f" RETURNING {safe_ident(key_name)} INTO :new_key"
+                    cur.execute(f"INSERT INTO {safe_ident(meta['name'])} ({names_sql}) VALUES ({binds_sql}){returning}", binds)
+                    created_key = first_out(new_key) if new_key is not None else None
+                    if isinstance(created_key, float) and created_key.is_integer():
+                        created_key = int(created_key)
+                    record_audit(cur, meta["name"], "INSERT", created_key, None, values, admin)
                 conn.commit()
             self.send_json(201, {"ok": True})
         except Exception as exc:
@@ -615,10 +918,14 @@ class Handler(BaseHTTPRequestHandler):
         match = re.fullmatch(r"/api/tables/([A-Za-z0-9_$#]+)", path)
         if not match:
             return self.send_json(404, {"error": "Ruta no encontrada"})
+        admin = self.require_admin({auth.ROLE_ADMIN})
+        if admin is None:
+            return
         try:
             payload = self.body_json()
             with db_session() as conn:
                 meta = table_meta(conn, match.group(1))
+                self.ensure_writable(meta)
                 key = payload.get("key", {})
                 if not all(column in key for column in meta["primaryKey"]):
                     raise ValueError("Falta la clave primaria del registro")
@@ -627,14 +934,17 @@ class Handler(BaseHTTPRequestHandler):
                     raise ValueError("No hay cambios para guardar")
                 binds = {f"v{i}": normalize(values[name], self.col_type(meta, name)) for i, name in enumerate(values)}
                 sets = ", ".join(f"{safe_ident(name)} = :v{i}" for i, name in enumerate(values))
-                where_parts = []
+                where_parts, key_binds = [], {}
                 for i, name in enumerate(meta["primaryKey"]):
-                    binds[f"k{i}"] = normalize(key[name], self.col_type(meta, name))
+                    binds[f"k{i}"] = key_binds[f"k{i}"] = normalize(key[name], self.col_type(meta, name))
                     where_parts.append(f"{safe_ident(name)} = :k{i}")
                 with conn.cursor() as cur:
+                    before = self.snapshot_row(cur, meta, where_parts, key_binds)
                     cur.execute(f"UPDATE {safe_ident(meta['name'])} SET {sets} WHERE {' AND '.join(where_parts)}", binds)
                     if cur.rowcount != 1:
                         raise ValueError("No se encontró el registro")
+                    record_audit(cur, meta["name"], "UPDATE", "|".join(str(key[name]) for name in meta["primaryKey"]),
+                                 {name: (before or {}).get(name) for name in values}, values, admin)
                 conn.commit()
             self.send_json(200, {"ok": True})
         except Exception as exc:
@@ -645,10 +955,14 @@ class Handler(BaseHTTPRequestHandler):
         match = re.fullmatch(r"/api/tables/([A-Za-z0-9_$#]+)", path)
         if not match:
             return self.send_json(404, {"error": "Ruta no encontrada"})
+        admin = self.require_admin({auth.ROLE_ADMIN})
+        if admin is None:
+            return
         try:
             payload = self.body_json()
             with db_session() as conn:
                 meta = table_meta(conn, match.group(1))
+                self.ensure_writable(meta)
                 key = payload.get("key", {})
                 if not all(column in key for column in meta["primaryKey"]):
                     raise ValueError("Falta la clave primaria del registro")
@@ -657,13 +971,93 @@ class Handler(BaseHTTPRequestHandler):
                     binds[f"k{i}"] = normalize(key[name], self.col_type(meta, name))
                     parts.append(f"{safe_ident(name)} = :k{i}")
                 with conn.cursor() as cur:
+                    before = self.snapshot_row(cur, meta, parts, binds)
                     cur.execute(f"DELETE FROM {safe_ident(meta['name'])} WHERE {' AND '.join(parts)}", binds)
                     if cur.rowcount != 1:
                         raise ValueError("No se encontró el registro")
+                    record_audit(cur, meta["name"], "DELETE", "|".join(str(key[name]) for name in meta["primaryKey"]), before, None, admin)
                 conn.commit()
             self.send_json(200, {"ok": True})
         except Exception as exc:
             self.send_json(400, {"error": str(exc)})
+
+    @staticmethod
+    def ensure_writable(meta: dict) -> None:
+        """La auditoría, las sesiones y los usuarios no se editan a mano: la auditoría es solo de lectura y las claves se guardan con hash."""
+        if meta["name"] in READ_ONLY_TABLES:
+            raise ValueError(f"{meta['name']} es de solo lectura en el visor. " + (
+                "Los usuarios se gestionan desde «Usuarios»." if meta["name"] == "USUARIOS_ADMIN" else "Es un registro que no debe alterarse."))
+
+    @staticmethod
+    def snapshot_row(cur, meta: dict, where_parts: list[str], binds: dict) -> dict | None:
+        """Estado actual de una fila (para guardar en la auditoría lo que había antes de cambiarla o borrarla)."""
+        key_binds = {name: value for name, value in binds.items() if name.startswith("k")}
+        cur.execute(f"SELECT * FROM {safe_ident(meta['name'])} WHERE {' AND '.join(where_parts)}", key_binds)
+        row = cur.fetchone()
+        return dict(zip([col[0] for col in cur.description], row)) if row else None
+
+    @staticmethod
+    def row_order(meta: dict) -> tuple[str, str]:
+        """Orden del visor: lo más reciente primero (por fecha de creación si la tabla la tiene y, si no, por clave primaria)."""
+        names = [col["name"] for col in meta["columns"]]
+        parts, labels = [], []
+        for candidate in ("FECHA_CREACION", "FECHA", "FECHA_INICIO"):
+            if candidate in names:
+                parts.append(f"{safe_ident(candidate)} DESC NULLS LAST")
+                labels.append(candidate)
+                break
+        for key in meta["primaryKey"]:
+            parts.append(f"{safe_ident(key)} DESC")
+            labels.append(key)
+        return ", ".join(parts), " y ".join(labels) + " (más reciente primero)"
+
+    def admin_report(self, conn, kind: str) -> dict:
+        """Reportes de apoyo para revisar la base: resumen por tabla, últimos registros y auditoría reciente."""
+        if kind == "summary":
+            items = []
+            for name in table_names(conn):
+                meta = table_meta(conn, name)
+                date_col = next((c for c in ("FECHA_CREACION", "FECHA", "FECHA_INICIO") if c in [col["name"] for col in meta["columns"]]), None)
+                numeric_pk = meta["primaryKey"][0] if len(meta["primaryKey"]) == 1 and self.col_type(meta, meta["primaryKey"][0]) == "NUMBER" else None
+                with conn.cursor() as cur:
+                    cur.execute(f"SELECT COUNT(*), {('MAX(' + safe_ident(date_col) + ')') if date_col else 'NULL'}, "
+                                f"{('MAX(' + safe_ident(numeric_pk) + ')') if numeric_pk else 'NULL'} FROM {safe_ident(name)}")
+                    count, last_date, last_id = cur.fetchone()
+                items.append({"table": name, "rows": count, "dateColumn": date_col, "lastCreated": last_date, "lastId": last_id})
+            return {"tables": items}
+        if kind == "latest":
+            with conn.cursor() as cur:
+                cur.execute("""
+                    SELECT * FROM (
+                        SELECT s.ID_SESION, s.NOMBRE_USUARIO, s.FECHA_INICIO, s.ULTIMA_ACTIVIDAD,
+                               (SELECT COUNT(*) FROM MENSAJES m WHERE m.ID_SESION = s.ID_SESION)
+                        FROM SESIONES_CHAT s ORDER BY s.FECHA_INICIO DESC) WHERE ROWNUM <= 20
+                """)
+                sessions = [{"id": r[0], "userName": r[1], "startedAt": r[2], "lastActivity": r[3], "messages": r[4]} for r in cur]
+                cur.execute("""
+                    SELECT * FROM (
+                        SELECT m.ID_MENSAJE, m.ID_SESION, s.NOMBRE_USUARIO, m.ROL_EMISOR, SUBSTR(m.CONTENIDO, 1, 160), m.FECHA
+                        FROM MENSAJES m LEFT JOIN SESIONES_CHAT s ON s.ID_SESION = m.ID_SESION ORDER BY m.FECHA DESC, m.ID_MENSAJE DESC) WHERE ROWNUM <= 20
+                """)
+                messages = [{"id": r[0], "sessionId": r[1], "userName": r[2], "role": r[3], "text": r[4], "date": r[5]} for r in cur]
+                cur.execute("""
+                    SELECT * FROM (SELECT ID_VALORACION, ID_MENSAJE, PUNTUACION, ESTADO_REVISION, FECHA_CREACION
+                                   FROM VALORACIONES_RESPUESTA ORDER BY FECHA_CREACION DESC NULLS LAST, ID_VALORACION DESC) WHERE ROWNUM <= 20
+                """)
+                ratings = [{"id": r[0], "messageId": r[1], "score": r[2], "status": r[3], "createdAt": r[4]} for r in cur]
+            return {"sessions": sessions, "messages": messages, "ratings": ratings}
+        if kind == "audit":
+            with conn.cursor() as cur:
+                cur.execute("""
+                    SELECT * FROM (
+                        SELECT a.ID_CAMBIO, a.FECHA, a.TABLA_AFECTADA, a.ACCION, a.ID_REGISTRO,
+                               NVL(u.NOMBRE, a.NOMBRE_ACTOR), a.ORIGEN, SUBSTR(a.VALOR_ANTERIOR, 1, 400), SUBSTR(a.VALOR_NUEVO, 1, 400)
+                        FROM AUDITORIA_CAMBIOS a LEFT JOIN USUARIOS_ADMIN u ON u.ID_ADMIN = a.ID_ADMIN
+                        ORDER BY a.FECHA DESC, a.ID_CAMBIO DESC) WHERE ROWNUM <= 100
+                """)
+                entries = [{"id": r[0], "date": r[1], "table": r[2], "action": r[3], "recordId": r[4], "actor": r[5], "origin": r[6], "before": r[7], "after": r[8]} for r in cur]
+            return {"audit": entries}
+        raise ValueError("Reporte desconocido")
 
     @staticmethod
     def col_type(meta: dict, name: str) -> str:
@@ -913,7 +1307,7 @@ class Handler(BaseHTTPRequestHandler):
         return best
 
     @classmethod
-    def add_faq_synonym(cls, cursor, faq_id: int, canonical_question: str, variant: str) -> bool:
+    def add_faq_synonym(cls, cursor, faq_id: int, canonical_question: str, variant: str, auditor=None) -> bool:
         if len(variant) > 200:
             return False
 
@@ -927,8 +1321,11 @@ class Handler(BaseHTTPRequestHandler):
         cursor.execute("SELECT TEXTO FROM SINONIMOS_CONSULTA WHERE ID_PREGUNTA = :faq_id", faq_id=faq_id)
         if any(normalized(row[0]) == variant_key for row in cursor):
             return False
-        cursor.execute("INSERT INTO SINONIMOS_CONSULTA (ID_PREGUNTA, TEXTO) VALUES (:faq_id, :text)",
-                       {"faq_id": faq_id, "text": variant})
+        synonym_id = cursor.var(int)
+        cursor.execute("INSERT INTO SINONIMOS_CONSULTA (ID_PREGUNTA, TEXTO) VALUES (:faq_id, :text) RETURNING ID_SINONIMO INTO :synonym_id",
+                       {"faq_id": faq_id, "text": variant, "synonym_id": synonym_id})
+        if auditor:
+            auditor("SINONIMOS_CONSULTA", "INSERT", first_out(synonym_id), None, {"id_pregunta": faq_id, "texto": variant})
         return True
 
     @classmethod

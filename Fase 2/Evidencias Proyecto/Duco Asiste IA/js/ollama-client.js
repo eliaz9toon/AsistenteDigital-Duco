@@ -3301,6 +3301,8 @@ class OllamaClient {
     if (!q || q.split(' ').length > 16) return null;
     const answer = reply => ({reply, actions: [], intent: {kind: 'answer', reference: 'resolved_action', action: 'none'}, turnDecision: {mode: 'answer', operation: 'none', operations: [], destination: 'none', needsClarification: false}});
     const profile = this.deriveProfile(options.messages, userText);
+    // El nombre que la persona dio al abrir el chat vale como dato conocido.
+    if (!profile.name && options.context?.userName) profile.name = options.context.userName;
     const isQuestion = /[?¿]/.test(userText) || /^(?:como|cual|cuales|cuantos|cuantas|donde|que|quien|recuerdas|sabes)\b/.test(q);
     // Datos que la persona acaba de contar (sin pregunta): se confirma y se pide lo siguiente en vez de improvisar.
     if (!isQuestion && /^(?:hola )?(?:me llamo|mi nombre es|vivo en|soy de|tengo \d{2} anos|estoy en)\b/.test(q) && !/\b(?:carrera|estudiar|sede|duoc|gusta\w*|interesa\w*|quiero|necesito|busco|recomiend\w*|trabajo|presupuesto)\b/.test(q)) {

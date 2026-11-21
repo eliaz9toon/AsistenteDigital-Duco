@@ -716,3 +716,11 @@
   padding: 4px 9px; border-radius: 8px; cursor: pointer;
 }
 #duco-assistant-container .duco-card-all { margin-top: 8px; }
+
+/* Formulario de nombre al abrir el chat */
+#duco-assistant-container .duco-name-form { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+#duco-assistant-container .duco-name-form input {
+  flex: 1 1 140px; min-width: 0; border: 1px solid #b6d4fe; border-radius: 10px; padding: 9px 12px; font: inherit; color: #123454; background: #fff;
+}
+#duco-assistant-container .duco-name-form input:focus { outline: 2px solid #035bb3; outline-offset: 1px; }
+#duco-assistant-container .duco-name-error { color: #a12b2b; font-size: 12.5px; min-height: 18px; margin-top: 6px; }

@@ -45,14 +45,51 @@
     .proposal p { white-space:pre-wrap; margin:6px 0 12px; }
     .proposal-actions { display:flex; justify-content:flex-end; gap:8px; }
     .review-section-title { margin:18px 20px 6px; font-size:16px; }
+    .login-screen { position:fixed; inset:0; z-index:50; background:var(--bg); display:flex; align-items:center; justify-content:center; padding:16px; }
+    .login-screen[hidden] { display:none; }
+    .login-card { width:min(400px,100%); background:#fff; border:1px solid var(--line); border-radius:14px; padding:28px; box-shadow:0 20px 70px #17324d22; }
+    .login-card h2 { margin:0 0 4px; font-size:20px; } .login-card p { margin:0 0 18px; color:var(--muted); }
+    .login-card label { display:block; font-size:13px; font-weight:650; margin:12px 0 4px; }
+    .login-card input { width:100%; border:1px solid var(--line); border-radius:7px; padding:10px 12px; }
+    .login-card button { width:100%; margin-top:18px; }
+    .form-error { color:#a12b2b; min-height:20px; margin-top:10px; font-size:13px; }
+    .user-chip { display:flex; align-items:center; gap:10px; color:var(--muted); font-size:13px; }
+    .user-chip strong { color:var(--ink); }
+    .badge { display:inline-block; padding:2px 8px; border-radius:999px; background:#e8f2ff; color:#064a8c; font-size:11px; font-weight:700; }
+    .report-tabs { display:flex; gap:8px; padding:12px 20px 0; flex-wrap:wrap; }
+    .report-tabs button.active { background:var(--blue); color:#fff; }
+    .report-body { padding:8px 20px 20px; }
+    .report-body h3 { margin:18px 0 6px; font-size:15px; }
+    .mini-table { width:100%; border-collapse:collapse; font-size:12.5px; }
+    .mini-table th, .mini-table td { padding:6px 8px; border-bottom:1px solid #edf1f5; text-align:left; white-space:normal; max-width:none; }
+    .mini-table th { position:static; }
+    .note { color:var(--muted); font-size:12.5px; margin:4px 0 8px; }
     @media(max-width:600px) { header { align-items:flex-start; flex-direction:column; } .field { grid-template-columns:1fr; gap:4px; } .field label { padding-top:0; } }
   </style>
 </head>
 <body>
   <header>
     <div><h1>Duco Asiste · Administración de datos</h1><p>Edición local de las tablas del esquema Oracle conectado.</p></div>
-    <div class="toolbar"><button class="secondary" id="review-proposals">Propuestas para revisar</button><button class="secondary" id="refresh">Actualizar</button></div>
+    <div class="toolbar">
+      <span class="user-chip" id="user-chip" hidden><span>Sesión: <strong id="user-name"></strong> <span class="badge" id="user-role"></span></span></span>
+      <button class="secondary" id="review-proposals" hidden>Propuestas para revisar</button>
+      <button class="secondary" id="open-reports" hidden>Reportes</button>
+      <button class="secondary" id="open-users" hidden>Usuarios</button>
+      <button class="secondary" id="refresh" hidden>Actualizar</button>
+      <button class="secondary" id="open-password" hidden>Mi contraseña</button>
+      <button class="danger" id="logout" hidden>Salir</button>
+    </div>
   </header>
+  <div class="login-screen" id="login-screen" hidden>
+    <form class="login-card" id="login-form" autocomplete="on">
+      <h2>Duco Asiste · Administración</h2>
+      <p>Ingresa con tu usuario del panel para ver y editar los datos.</p>
+      <label for="login-email">Correo</label><input id="login-email" name="email" type="email" autocomplete="username" required>
+      <label for="login-password">Contraseña</label><input id="login-password" name="password" type="password" autocomplete="current-password" required>
+      <div class="form-error" id="login-error" role="alert"></div>
+      <button type="submit" id="login-submit">Ingresar</button>
+    </form>
+  </div>
   <main>
     <div class="toolbar">
       <label for="tables">Tabla</label><select id="tables"><option value="">Conectando…</option></select>
@@ -66,6 +103,39 @@
     <form id="editor"></form>
     <div class="dialog-foot"><button class="secondary" id="cancel" type="button">Cancelar</button><button id="save" type="button">Guardar</button></div>
   </dialog>
+  <dialog id="reports-modal">
+    <div class="dialog-head"><h2>Reportes de la base de datos</h2><button class="secondary" id="close-reports" type="button">Cerrar</button></div>
+    <div class="report-tabs">
+      <button class="secondary active" data-report="summary" type="button">Resumen por tabla</button>
+      <button class="secondary" data-report="latest" type="button">Últimos registros</button>
+      <button class="secondary" data-report="audit" type="button">Auditoría</button>
+    </div>
+    <div class="report-body table-wrap" id="report-body" style="max-height:68vh"></div>
+  </dialog>
+  <dialog id="users-modal">
+    <div class="dialog-head"><h2>Usuarios del panel</h2><button class="secondary" id="close-users" type="button">Cerrar</button></div>
+    <div class="report-body table-wrap" style="max-height:70vh">
+      <div id="users-list"></div>
+      <h3>Nuevo usuario</h3>
+      <form id="user-form">
+        <div class="field"><label for="nu-name">Nombre</label><input id="nu-name" required maxlength="120"></div>
+        <div class="field"><label for="nu-email">Correo</label><input id="nu-email" type="email" required maxlength="180"></div>
+        <div class="field"><label for="nu-role">Rol</label><select id="nu-role"><option value="REVISOR">REVISOR (consulta y revisa propuestas)</option><option value="ADMINISTRADOR">ADMINISTRADOR (edita y borra)</option></select></div>
+        <div class="field"><label for="nu-password">Contraseña<small>Mínimo 8, con letras y números</small></label><input id="nu-password" type="password" required minlength="8" autocomplete="new-password"></div>
+        <div class="form-error" id="user-error" role="alert"></div>
+        <div class="dialog-foot" style="padding:8px 0 0"><button type="submit">Crear usuario</button></div>
+      </form>
+    </div>
+  </dialog>
+  <dialog id="password-modal">
+    <div class="dialog-head"><h2>Cambiar mi contraseña</h2><button class="secondary" id="close-password" type="button">Cerrar</button></div>
+    <form id="password-form" class="report-body">
+      <div class="field"><label for="pw-current">Contraseña actual</label><input id="pw-current" type="password" required autocomplete="current-password"></div>
+      <div class="field"><label for="pw-new">Contraseña nueva<small>Mínimo 8, con letras y números</small></label><input id="pw-new" type="password" required minlength="8" autocomplete="new-password"></div>
+      <div class="form-error" id="password-error" role="alert"></div>
+      <div class="dialog-foot" style="padding:8px 0 0"><button type="submit">Guardar</button></div>
+    </form>
+  </dialog>
   <dialog id="proposals-modal">
     <div class="dialog-head"><h2>Revisión de Duco</h2><button class="secondary" id="close-proposals" type="button">Cerrar</button></div>
     <div class="table-wrap" style="max-height:70vh;padding:8px 0">
@@ -77,11 +147,33 @@
     const $ = (s) => document.querySelector(s);
     let tableMeta = null, rows = [], editingRow = null;
     const status = (message, error = false) => { $('#status').textContent = message; $('#status').className = error ? 'status error' : 'status'; };
+    let me = null;
+    const READ_ONLY = ['AUDITORIA_CAMBIOS', 'SESIONES_ADMIN', 'USUARIOS_ADMIN'];
+    const isAdmin = () => me && me.role === 'ADMINISTRADOR';
     async function api(path, options = {}) {
-      const response = await fetch(path, { ...options, headers: { 'Content-Type':'application/json', ...(options.headers || {}) } });
+      const response = await fetch(path, { ...options, credentials: 'same-origin', headers: { 'Content-Type':'application/json', ...(options.headers || {}) } });
       const result = await response.json();
+      if (response.status === 401 && !path.startsWith('/api/auth/')) { showLogin('Tu sesión terminó. Ingresa de nuevo.'); throw new Error(result.error || 'Sesión terminada'); }
       if (!response.ok) throw new Error(result.error || `Error HTTP ${response.status}`);
       return result;
+    }
+    function showLogin(message = '') {
+      me = null;
+      for (const id of ['#user-chip', '#review-proposals', '#open-reports', '#open-users', '#refresh', '#open-password', '#logout']) $(id).hidden = true;
+      $('#login-error').textContent = message;
+      $('#login-password').value = '';
+      $('#login-screen').hidden = false;
+      $('#login-email').focus();
+    }
+    function startPanel(admin) {
+      me = admin;
+      $('#login-screen').hidden = true;
+      $('#user-name').textContent = admin.name;
+      $('#user-role').textContent = admin.role;
+      for (const id of ['#user-chip', '#review-proposals', '#open-reports', '#refresh', '#open-password', '#logout']) $(id).hidden = false;
+      $('#open-users').hidden = !isAdmin();
+      $('#add').hidden = !isAdmin();
+      loadTables().catch((error) => { status(error.message, true); $('#grid').innerHTML = `<div class="empty error">${escapeHtml(error.message)}<br>Comprueba la conexión y las credenciales en admin-app/.env.</div>`; });
     }
     function keyOf(row) { return Object.fromEntries(tableMeta.primaryKey.map((key) => [key, row[key]])); }
     function showValue(value) { if (value == null) return ''; if (typeof value === 'object') return JSON.stringify(value); return String(value); }
@@ -89,6 +181,9 @@
       const data = await api('/api/tables');
       $('#tables').replaceChildren(...data.tables.map((name) => new Option(name, name)));
       if (!data.tables.length) throw new Error('No hay tablas en el esquema. Ejecuta database/oracle/schema.sql como DUCO_APP.');
+      // Se abre en una tabla con actividad real (los mensajes del chat), no en la primera de la lista alfabética.
+      const preferred = ['MENSAJES', 'SESIONES_CHAT'].find((name) => data.tables.includes(name));
+      if (preferred) $('#tables').value = preferred;
       await loadRows();
     }
     async function loadRows() {
@@ -98,15 +193,17 @@
       const data = await api(`/api/tables/${encodeURIComponent(name)}/rows`);
       tableMeta = data.meta; rows = data.rows;
       drawGrid();
-      status(`${rows.length} registro(s) · máximo ${data.limit} mostrados`);
+      status(`${rows.length} registro(s) · máximo ${data.limit} mostrados · orden: ${data.orderedBy}${READ_ONLY.includes(tableMeta.name) ? ' · solo lectura' : ''}`);
     }
     function drawGrid() {
       const wrap = $('#grid');
       if (!rows.length) { wrap.innerHTML = '<div class="empty">Esta tabla todavía no tiene registros.</div>'; return; }
       const columns = tableMeta.columns.map((c) => c.name);
       const head = columns.map((c) => `<th>${escapeHtml(c)}</th>`).join('');
-      const body = rows.map((row, index) => `<tr>${columns.map((c) => `<td title="${escapeHtml(showValue(row[c]))}">${escapeHtml(showValue(row[c]))}</td>`).join('')}<td class="actions"><button class="secondary edit" data-index="${index}">Editar</button><button class="danger delete" data-index="${index}">Eliminar</button></td></tr>`).join('');
-      wrap.innerHTML = `<table><thead><tr>${head}<th>Acciones</th></tr></thead><tbody>${body}</tbody></table>`;
+      const canEdit = isAdmin() && !READ_ONLY.includes(tableMeta.name);
+      $('#add').hidden = !canEdit;
+      const body = rows.map((row, index) => `<tr>${columns.map((c) => `<td title="${escapeHtml(showValue(row[c]))}">${escapeHtml(showValue(row[c]))}</td>`).join('')}${canEdit ? `<td class="actions"><button class="secondary edit" data-index="${index}">Editar</button><button class="danger delete" data-index="${index}">Eliminar</button></td>` : ''}</tr>`).join('');
+      wrap.innerHTML = `<table><thead><tr>${head}${canEdit ? '<th>Acciones</th>' : ''}</tr></thead><tbody>${body}</tbody></table>`;
       wrap.querySelectorAll('.edit').forEach((b) => b.addEventListener('click', () => openEditor(rows[Number(b.dataset.index)])));
       wrap.querySelectorAll('.delete').forEach((b) => b.addEventListener('click', () => removeRow(rows[Number(b.dataset.index)])));
     }
@@ -202,7 +299,71 @@
     $('#cancel').addEventListener('click', () => $('#modal').close());
     $('#review-proposals').addEventListener('click', () => { $('#proposals-modal').showModal(); loadProposals(); });
     $('#close-proposals').addEventListener('click', () => $('#proposals-modal').close());
-    loadTables().catch((error) => { status(error.message, true); $('#grid').innerHTML = `<div class="empty error">${escapeHtml(error.message)}<br>Comprueba la conexión y las credenciales en admin-app/.env.</div>`; });
+    // ---- Ingreso, salida y contraseña
+    $('#login-form').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      $('#login-submit').disabled = true; $('#login-error').textContent = '';
+      try {
+        const data = await api('/api/auth/login', { method:'POST', body: JSON.stringify({ email: $('#login-email').value, password: $('#login-password').value }) });
+        startPanel(data.admin);
+      } catch (error) { $('#login-error').textContent = error.message; }
+      finally { $('#login-submit').disabled = false; }
+    });
+    $('#logout').addEventListener('click', async () => { try { await api('/api/auth/logout', { method:'POST', body:'{}' }); } finally { showLogin('Cerraste la sesión.'); } });
+    $('#open-password').addEventListener('click', () => { $('#password-error').textContent = ''; $('#password-form').reset(); $('#password-modal').showModal(); });
+    $('#close-password').addEventListener('click', () => $('#password-modal').close());
+    $('#password-form').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      try {
+        await api('/api/auth/password', { method:'POST', body: JSON.stringify({ current: $('#pw-current').value, new: $('#pw-new').value }) });
+        $('#password-modal').close(); status('Contraseña actualizada.');
+      } catch (error) { $('#password-error').textContent = error.message; }
+    });
+    // ---- Reportes
+    const fmtDate = (value) => value ? String(value).replace('T', ' ').slice(0, 19) : '—';
+    const cell = (value) => escapeHtml(value == null || value === '' ? '—' : String(value));
+    async function loadReport(kind) {
+      const body = $('#report-body'); body.innerHTML = '<div class="empty">Cargando…</div>';
+      document.querySelectorAll('.report-tabs button').forEach((b) => b.classList.toggle('active', b.dataset.report === kind));
+      try {
+        const data = await api(`/api/admin/reports/${kind}`);
+        if (kind === 'summary') {
+          body.innerHTML = `<p class="note">Cuántos registros tiene cada tabla, cuándo se creó el último y cuál es su último ID. Las tablas en 0 aún no reciben datos de la aplicación.</p><table class="mini-table"><thead><tr><th>Tabla</th><th>Filas</th><th>Columna de fecha</th><th>Último creado</th><th>Último ID</th></tr></thead><tbody>${data.tables.map((t) => `<tr><td>${cell(t.table)}</td><td>${t.rows}</td><td>${cell(t.dateColumn)}</td><td>${fmtDate(t.lastCreated)}</td><td>${cell(t.lastId)}</td></tr>`).join('')}</tbody></table>`;
+        } else if (kind === 'latest') {
+          body.innerHTML = `<h3>Usuarios que se conectaron al chat (últimas 20 sesiones)</h3><table class="mini-table"><thead><tr><th>ID</th><th>Nombre</th><th>Inicio</th><th>Última actividad</th><th>Mensajes</th></tr></thead><tbody>${data.sessions.map((s) => `<tr><td>${s.id}</td><td>${cell(s.userName || '(anterior al registro de nombres)')}</td><td>${fmtDate(s.startedAt)}</td><td>${fmtDate(s.lastActivity)}</td><td>${s.messages}</td></tr>`).join('')}</tbody></table>
+            <h3>Últimos 20 mensajes</h3><table class="mini-table"><thead><tr><th>ID</th><th>Sesión</th><th>Usuario</th><th>Rol</th><th>Texto</th><th>Fecha</th></tr></thead><tbody>${data.messages.map((m) => `<tr><td>${m.id}</td><td>${m.sessionId}</td><td>${cell(m.userName)}</td><td>${cell(m.role)}</td><td>${cell(m.text)}</td><td>${fmtDate(m.date)}</td></tr>`).join('')}</tbody></table>
+            <h3>Últimas 20 valoraciones</h3><table class="mini-table"><thead><tr><th>ID</th><th>Mensaje</th><th>Puntuación</th><th>Estado</th><th>Creada</th></tr></thead><tbody>${data.ratings.map((r) => `<tr><td>${r.id}</td><td>${r.messageId}</td><td>${r.score > 0 ? '👍' : '👎'}</td><td>${cell(r.status)}</td><td>${fmtDate(r.createdAt)}</td></tr>`).join('')}</tbody></table>`;
+        } else {
+          body.innerHTML = `<p class="note">Cada cambio queda con su tabla, el ID del registro, la acción, quién lo hizo y desde dónde (panel, chat o sistema), más los valores anterior y nuevo. Esta tabla es de solo lectura.</p><table class="mini-table"><thead><tr><th>Fecha</th><th>Tabla</th><th>Acción</th><th>ID registro</th><th>Quién</th><th>Origen</th><th>Antes</th><th>Después</th></tr></thead><tbody>${data.audit.map((a) => `<tr><td>${fmtDate(a.date)}</td><td>${cell(a.table)}</td><td>${cell(a.action)}</td><td>${cell(a.recordId)}</td><td>${cell(a.actor)}</td><td>${cell(a.origin)}</td><td>${cell(a.before)}</td><td>${cell(a.after)}</td></tr>`).join('')}</tbody></table>`;
+        }
+      } catch (error) { body.innerHTML = `<div class="empty error">${escapeHtml(error.message)}</div>`; }
+    }
+    $('#open-reports').addEventListener('click', () => { $('#reports-modal').showModal(); loadReport('summary'); });
+    $('#close-reports').addEventListener('click', () => $('#reports-modal').close());
+    document.querySelectorAll('.report-tabs button').forEach((b) => b.addEventListener('click', () => loadReport(b.dataset.report)));
+    // ---- Usuarios del panel (solo administradores)
+    async function loadUsers() {
+      const wrap = $('#users-list'); wrap.innerHTML = '<div class="empty">Cargando…</div>';
+      try {
+        const data = await api('/api/admin/users');
+        wrap.innerHTML = `<table class="mini-table"><thead><tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Estado</th><th>Último acceso</th><th></th></tr></thead><tbody>${data.users.map((u) => `<tr><td>${cell(u.name)}</td><td>${cell(u.email)}</td><td>${cell(u.role)}</td><td>${u.active ? 'Activo' : 'Desactivado'}</td><td>${fmtDate(u.lastAccess)}</td><td>${u.id === me.id ? '' : `<button class="${u.active ? 'danger' : 'secondary'} toggle-user" data-id="${u.id}" data-active="${u.active ? 0 : 1}">${u.active ? 'Desactivar' : 'Activar'}</button>`}</td></tr>`).join('')}</tbody></table>`;
+        wrap.querySelectorAll('.toggle-user').forEach((b) => b.addEventListener('click', async () => {
+          try { await api(`/api/admin/users/${b.dataset.id}/active`, { method:'POST', body: JSON.stringify({ active: b.dataset.active === '1' }) }); await loadUsers(); }
+          catch (error) { $('#user-error').textContent = error.message; }
+        }));
+      } catch (error) { wrap.innerHTML = `<div class="empty error">${escapeHtml(error.message)}</div>`; }
+    }
+    $('#open-users').addEventListener('click', () => { $('#user-error').textContent = ''; $('#users-modal').showModal(); loadUsers(); });
+    $('#close-users').addEventListener('click', () => $('#users-modal').close());
+    $('#user-form').addEventListener('submit', async (event) => {
+      event.preventDefault(); $('#user-error').textContent = '';
+      try {
+        await api('/api/admin/users', { method:'POST', body: JSON.stringify({ name: $('#nu-name').value, email: $('#nu-email').value, role: $('#nu-role').value, password: $('#nu-password').value }) });
+        $('#user-form').reset(); await loadUsers();
+      } catch (error) { $('#user-error').textContent = error.message; }
+    });
+    // ---- Arranque: si hay sesión válida se abre el panel; si no, se pide ingresar.
+    fetch('/api/auth/me', { credentials: 'same-origin' }).then((r) => r.ok ? r.json() : Promise.reject()).then((data) => startPanel(data.admin)).catch(() => showLogin());
   </script>
 </body>
 </html>

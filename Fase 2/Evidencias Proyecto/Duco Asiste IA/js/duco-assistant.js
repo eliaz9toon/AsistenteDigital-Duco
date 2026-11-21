@@ -38,7 +38,11 @@ class DucoAssistant {
       this.createUI();
       this.attachEventListeners();
       this.ensureLauncherVisible();
+      this.userName = this.getUserName();
       this.showWelcomeMessage();
+      // Registro de quién usa el chat: se pide el nombre (o apodo) y se guarda la sesión en la base.
+      if (!this.userName && this.nameRequired()) this.showNameGate();
+      else this.registerSession();
       this.refreshSiteContext();
       this.listenForNavigationChanges();
       const previousPage = sessionStorage.getItem('duco-navigation-current');
@@ -376,8 +380,11 @@ class DucoAssistant {
     const messages = document.getElementById(this.messagesId);
     if (messages) messages.replaceChildren();
     this.hideTypingIndicator();
-    const welcome = '¡Hola! 👋 Soy Duco, tu asistente virtual de Duoc UC. ¿Cómo puedo ayudarte hoy?';
+    const welcome = this.userName
+      ? `¡Hola de nuevo, ${this.userName}! 👋 Soy Duco, tu asistente virtual de Duoc UC. ¿Cómo puedo ayudarte hoy?`
+      : '¡Hola! 👋 Soy Duco, tu asistente virtual de Duoc UC. ¿Cómo puedo ayudarte hoy?';
     window.chatHandler?.addAssistantMessage(welcome, false);
+    this.registerSession(); // la conversación nueva tiene otro identificador: se registra con el mismo nombre
     if (messages) {
       const row = document.createElement('div');
       row.className = 'duco-message duco-message-assistant';
@@ -389,6 +396,81 @@ class DucoAssistant {
     }
     const input = document.getElementById(this.inputId);
     if (input) { input.value = ''; input.focus(); }
+  }
+
+  // ---- Nombre de quien usa el chat -----------------------------------------------------------------------------
+  nameRequired() { return window.ducoConfig?.requireUserName !== false; }
+
+  getUserName() {
+    try { return localStorage.getItem('ducoUserName') || ''; } catch (error) { return ''; }
+  }
+
+  setUserName(name) {
+    this.userName = name;
+    try { localStorage.setItem('ducoUserName', name); } catch (error) { /* sin almacenamiento: se vuelve a pedir en la próxima visita */ }
+  }
+
+  clearUserName() {
+    this.userName = '';
+    try { localStorage.removeItem('ducoUserName'); } catch (error) { /* nada que borrar */ }
+  }
+
+  /** El nombre es lo único que se pide: sin RUT, correo ni teléfono. */
+  validateUserName(raw) {
+    const name = String(raw || '').replace(/\s+/g, ' ').trim();
+    if (!/^[\p{L}\p{N}][\p{L}\p{N} .'\-]{1,39}$/u.test(name)) return {error: 'Escribe entre 2 y 40 caracteres: letras, números, espacios, punto, guion o apóstrofo.'};
+    if (/\d{5,}|@/.test(name)) return {error: 'Escribe solo tu nombre o un apodo, sin números largos ni correos.'};
+    return {name};
+  }
+
+  /** Registra (o actualiza) la sesión del chat con el nombre en la base de datos; falla en silencio si no hay servicio local. */
+  async registerSession() {
+    if (!this.userName || !this.isLocalKnowledgeApi() || !window.chatHandler) return;
+    try {
+      await fetch(this.knowledgeApiUrl('/api/duco/session'), {
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({sessionId: window.chatHandler.getSessionId(), userName: this.userName})
+      });
+    } catch (error) { console.warn('[Duco] No se pudo registrar la sesión:', error); }
+  }
+
+  /** Formulario de nombre dentro del chat (no entra al historial). */
+  showNameGate(focus = false) {
+    const messages = document.getElementById(this.messagesId);
+    if (!messages || messages.querySelector('.duco-name-gate')) return;
+    const row = document.createElement('div');
+    row.className = 'duco-message duco-message-assistant duco-name-gate';
+    const content = document.createElement('div');
+    content.className = 'duco-message-content';
+    const text = document.createElement('p');
+    text.textContent = 'Antes de empezar, ¿cómo te llamas? Solo tu nombre o un apodo: lo guardo para llevar el registro de quién usa el asistente. No pido RUT, correo ni teléfono.';
+    const form = document.createElement('form');
+    form.className = 'duco-name-form';
+    const input = document.createElement('input');
+    input.type = 'text'; input.maxLength = 40; input.placeholder = 'Tu nombre'; input.autocomplete = 'given-name';
+    input.setAttribute('aria-label', 'Tu nombre o apodo');
+    const submit = document.createElement('button');
+    submit.type = 'submit'; submit.className = 'duco-action-btn'; submit.textContent = 'Continuar';
+    const error = document.createElement('div');
+    error.className = 'duco-name-error'; error.setAttribute('role', 'alert');
+    form.append(input, submit);
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      const result = this.validateUserName(input.value);
+      if (result.error) { error.textContent = result.error; input.focus(); return; }
+      this.setUserName(result.name);
+      row.remove();
+      const greeting = `Mucho gusto, ${result.name} 😊 ¿En qué puedo ayudarte?`;
+      window.chatHandler?.addAssistantMessage(greeting, false);
+      this.displayMessage(greeting, 'assistant');
+      this.registerSession();
+      document.getElementById(this.inputId)?.focus();
+    });
+    content.append(text, form, error);
+    row.appendChild(content);
+    messages.appendChild(row);
+    messages.scrollTop = messages.scrollHeight;
+    if (focus) input.focus();
   }
 
   /** Mensaje del asistente que vive solo en pantalla (no entra al historial), con botones opcionales. Devuelve la fila. */
@@ -535,6 +617,18 @@ class DucoAssistant {
       }
 
       const text = input.value.trim();
+      // «Cambiar mi nombre»: se borra el nombre guardado y se vuelve a pedir.
+      if (/^(?:cambiar|cambia|cambio|borrar|borra|olvida|olvidar)\s+(?:mi\s+)?nombre$/i.test(text)) {
+        input.value = '';
+        this.clearUserName();
+        this.showNameGate(true);
+        return;
+      }
+      if (!this.userName && this.nameRequired()) {
+        this.showNameGate(true);
+        this.displayMessage('Primero dime tu nombre (o un apodo) para empezar.', 'assistant');
+        return;
+      }
       if (!text) {
         this.displayMessage('Escribe una pregunta antes de enviar.', 'assistant');
         return;
@@ -733,6 +827,7 @@ class DucoAssistant {
           interactionId: window.crypto?.randomUUID?.() || window.chatHandler.createSessionId(),
           question: text,
           answer: aiResponse.reply,
+          userName: this.userName || undefined,
           experience: {page:location.pathname,steps:[]},
           interactionType: responseFlow.some(step => step.action && step.action.type !== 'proposeKnowledge') ? 'navigation' : 'knowledge'
         } : null
@@ -874,6 +969,7 @@ class DucoAssistant {
           databaseKnowledge,
           // Modo híbrido: el modelo redacta el aviso corto de cada acción; si falla se usa la frase fija.
           humanizeReplies: true,
+          userName: this.userName || '',
           // APIs externas (Nominatim, OSRM, Nager.Date) vía el backend local; lo personal exige permiso Sí/No.
           externalApis: this.isLocalKnowledgeApi() ? {
             enabled: true,
@@ -2210,7 +2306,7 @@ class DucoAssistant {
         const response = await fetch(this.knowledgeApiUrl('/api/duco/proposals'), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ question: action.question, answer: action.answer })
+          body: JSON.stringify({ question: action.question, answer: action.answer, userName: this.userName || undefined })
         });
         const result = await response.json();
         if (!response.ok) throw new Error(result.error || 'No se pudo registrar la propuesta');

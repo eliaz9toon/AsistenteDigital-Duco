@@ -15,7 +15,7 @@ Descarga e instala ambos componentes desde Oracle. SQL Developer por sí solo no
 2. En SQL Developer crea una conexión administrativa a la PDB (por ejemplo `localhost:1521/XEPDB1` para XE o `localhost:1521/FREEPDB1` para Free).
 3. Abre y ejecuta `oracle/create_user.sql` como `SYSTEM`. El script solicita la contraseña de `DUCO_APP` de forma oculta y concede los permisos para crear tablas con columnas identity.
 4. Crea una conexión nueva como `DUCO_APP` y ejecuta `oracle/schema.sql`. El script crea las 32 tablas del modelo; no borra objetos existentes, por lo que debe ejecutarse en un esquema vacío.
-5. Verifica las tablas del esquema en el panel Tables. Para una instalación existente que ya tenía el modelo anterior, ejecuta en orden las migraciones `001_propuestas_conocimiento.sql`, `002_valoraciones_chat.sql`, `003_revision_valoraciones.sql`, `004_feedback_conocimiento_aprobado.sql` y `005_experiencias_accion.sql` como `DUCO_APP`. Una instalación completa debe mostrar 32 tablas en el panel Tables.
+5. Verifica las tablas del esquema en el panel Tables. Para una instalación existente que ya tenía el modelo anterior, ejecuta en orden las migraciones `001_propuestas_conocimiento.sql`, `002_valoraciones_chat.sql`, `003_revision_valoraciones.sql`, `004_feedback_conocimiento_aprobado.sql`, `005_experiencias_accion.sql` y, con `admin-app/apply_migration.py`, `006_login_auditoria_fechas.sql` como `DUCO_APP`. Una instalación completa debe mostrar 32 tablas en el panel Tables.
 
 Si al iniciar Duco aparece `ORA-12514` o `DPY-6001` (el servicio FREEPDB1 no está registrado), la base de datos está apagada: ejecuta `Iniciar_Base_de_Datos.cmd` (pide permisos de administrador) o simplemente `Iniciar_Duco.cmd`, que la inicia solo cuando hace falta.
 
@@ -28,6 +28,21 @@ La administración local sirve el sitio Duco en `http://127.0.0.1:8765/duco`, co
 ## SQL Developer Data Modeler
 
 El DDL usa tipos y sintaxis Oracle, e importa como modelo relacional. Para generar el diagrama desde el script, abre Data Modeler y elige **File → Import → DDL File**, agrega `oracle/schema.sql` y termina el asistente. Para extraer un modelo desde el esquema ya creado, usa **File → Import → Data Dictionary**, selecciona la conexión `DUCO_APP` y luego las 32 tablas. Guarda el diseño resultante como `.dmd` desde Data Modeler. Oracle describe ambas opciones como flujos de modelado bottom-up: importar DDL o extraer el diccionario de una base. Consulta [la guía oficial de Data Modeler](https://docs.oracle.com/en/database/oracle/sql-developer-data-modeler/24.3/dmdug/data-modeler-concepts-usage.html).
+
+## Migración 006: login, auditoría y fechas (20/11/2026)
+
+`oracle/migrations/006_login_auditoria_fechas.sql` se aplica con `python apply_migration.py ../database/oracle/migrations/006_login_auditoria_fechas.sql` (desde `admin-app/`). Es idempotente. **Haz un respaldo antes**: los datos se pueden volcar a `database/backups/` (carpeta que no se sube a GitHub). En una instalación nueva, ejecuta `schema.sql` y después esta migración.
+
+| Tabla | Cambio | Para qué |
+|---|---|---|
+| `SESIONES_CHAT` | `NOMBRE_USUARIO`, `ULTIMA_ACTIVIDAD` | Registrar quién se conecta al chat (nombre o apodo). |
+| `USUARIOS_ADMIN` | `ACTIVO`, `FECHA_CREACION`, `ULTIMO_ACCESO`, correo único | Usuarios del panel con login. La contraseña se guarda solo como hash PBKDF2. |
+| `SESIONES_ADMIN` | `TOKEN_HASH`, `FECHA_EXPIRA`, `FECHA_FIN`, `DIRECCION_IP` | Sesiones del panel; del token solo se guarda su SHA-256. |
+| `AUDITORIA_CAMBIOS` | `ACCION`, `ID_REGISTRO`, `VALOR_ANTERIOR`, `VALOR_NUEVO`, `NOMBRE_ACTOR`, `ORIGEN` | Cada cambio queda con tabla, fila, acción, valores antes y después, quién y desde dónde (`panel`, `chat`, `sistema` o `historico`). Es de solo lectura en el visor. |
+| Las 32 tablas | `FECHA_CREACION` (con valor por defecto) en las que no tenían ninguna fecha | Fecha y hora de creación de cada dato nuevo. Las filas anteriores quedan en `NULL`, salvo valoraciones y preguntas frecuentes, cuya fecha se recuperó de sus mensajes y propuestas. |
+| `ROLES` | `ADMINISTRADOR` y `REVISOR` | Permisos del panel. |
+
+**Límite conocido:** la auditoría la escribe la aplicación (`app.py`), no disparadores de Oracle; un cambio hecho directamente con SQL Developer no queda registrado. Los disparadores requieren que `DUCO_APP` tenga `CREATE TRIGGER` y `CREATE PROCEDURE`, privilegios que hoy no tiene.
 
 ## Consola administrativa
 

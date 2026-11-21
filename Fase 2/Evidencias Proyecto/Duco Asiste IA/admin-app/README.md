@@ -79,3 +79,18 @@ El backend (`external_apis.py`, solo biblioteca estándar) consulta tres APIs p�
 
 Ejemplos: «¿cuánto demoro a la sede de Maipú desde Av. Matta 123, Santiago?», «sede más cercana a mi ubicación», «feriados de marzo 2027», «¿el inicio de clases cae en feriado?».
 
+## Login, roles y auditoría (20/11/2026)
+
+El panel (`http://127.0.0.1:8765/`) exige **iniciar sesión**. Hasta ahora cualquiera podía ver y borrar filas.
+
+- **Primer usuario:** `python create_admin.py --name "Tu Nombre" --email tu@correo.cl --generate` (muestra una contraseña generada una sola vez; cámbiala con «Mi contraseña»). Sin `--generate` la pide sin mostrarla. Con `--reset` restablece la de un usuario existente.
+- **Roles:** `ADMINISTRADOR` edita, crea y borra registros y gestiona usuarios; `REVISOR` solo consulta y revisa propuestas y valoraciones.
+- **Seguridad:** contraseñas con PBKDF2-SHA256 y sal; sesión de 8 horas en una cookie `HttpOnly` y `SameSite=Strict` (en la base solo el SHA-256 del token); bloqueo de 5 minutos tras 5 intentos fallidos; no se revela si falló el correo o la contraseña; `AUDITORIA_CAMBIOS`, `SESIONES_ADMIN` y `USUARIOS_ADMIN` son de solo lectura en el visor.
+- **Rutas del chat públicas:** salud, conocimiento, experiencias, valoraciones, propuestas y `POST /api/duco/session`. Todo lo demás pide sesión.
+- **Visor:** muestra lo más reciente primero (por fecha de creación y clave).
+- **Reportes** (botón del panel): resumen de las 32 tablas (filas y último registro), últimos usuarios, mensajes y valoraciones, y la auditoría reciente.
+- **Auditoría:** cada cambio guarda tabla, ID del registro, acción, valores antes y después, quién (usuario del panel o nombre del chat) y origen.
+- **Nombre en el chat:** Duco pide el nombre (o apodo) al abrirse y registra la sesión en `SESIONES_CHAT`. «Cambiar mi nombre» lo vuelve a pedir. Para automatizaciones: `window.ducoConfig.requireUserName = false`.
+- **Pruebas:** con el backend encendido, `python ..	estsdmin_auth_test.py http://127.0.0.1:8766` (56 comprobaciones; crea y borra sus propios datos de prueba).
+- **Migración:** `python apply_migration.py ../database/oracle/migrations/006_login_auditoria_fechas.sql` (ver `database/README.md`).
+
