@@ -135,6 +135,20 @@ def main() -> int:
         status, body = admin.call("GET", "/api/admin/reports/audit")
         check("reporte de auditoría con acción, registro y origen", status == 200 and all(e["action"] for e in body["audit"]))
 
+        print("Claridad del visor (módulos, IDs y relaciones)")
+        status, body = admin.call("GET", "/api/admin/schema")
+        tables = body.get("tables", [])
+        check("el esquema lista las 32 tablas con módulo y descripción", status == 200 and len(tables) == 32 and all(t["module"] != "Otras" and t["description"] for t in tables), str(tables[:1]))
+        check("las tablas vienen agrupadas por módulo en orden", [t["module"] for t in tables] == sorted([t["module"] for t in tables], key=lambda m: body["modules"].index(m)))
+        check("dentro del módulo, primero las tablas sin dependencias", tables[0]["depth"] == 0)
+        status, body = admin.call("GET", "/api/tables/MENSAJES/rows")
+        columns = {c["name"]: c for c in body["meta"]["columns"]}
+        check("ID_MENSAJE se marca como clave primaria automática", columns["ID_MENSAJE"]["isPk"] and columns["ID_MENSAJE"]["identity"] and "Oracle" in columns["ID_MENSAJE"]["comment"])
+        check("ID_SESION se marca como clave foránea hacia SESIONES_CHAT", (columns["ID_SESION"]["fk"] or {}).get("table") == "SESIONES_CHAT")
+        check("el visor ordena los identificadores primero y las fechas al final", body["displayOrder"][0] == "ID_MENSAJE" and body["displayOrder"][1] == "ID_SESION" and body["displayOrder"][-1] == "FECHA")
+        check("cada ID de sesión trae su etiqueta legible", len(body["labels"].get("ID_SESION", {})) > 0 and all(len(v) > 0 for v in body["labels"]["ID_SESION"].values()))
+        check("se informa de qué tablas usan a MENSAJES", any(t == "VALORACIONES_RESPUESTA" for t, _ in body["docs"]["referencedBy"]) and body["total"] >= len(body["rows"]))
+
         print("Roles")
         reviewer = Client()
         status, _ = reviewer.call("POST", "/api/auth/login", {"email": reviewer_email, "password": reviewer_pw})

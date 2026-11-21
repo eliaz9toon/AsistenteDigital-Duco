@@ -198,6 +198,104 @@ def table_meta(conn, table: str) -> dict:
     return {"name": table, "columns": columns, "primaryKey": primary_key}
 
 
+MODULE_ORDER = ["Acceso y administración", "Chat e inteligencia artificial", "Contenido y navegación", "Conocimiento administrable", "Calidad y operación"]
+LABEL_CANDIDATES = ["NOMBRE_USUARIO", "NOMBRE", "TITULO", "PREGUNTA", "TEXTO", "CLAVE", "TIPO", "CORREO", "CLIENT_SESSION_ID", "CONTENIDO", "ESTADO"]
+
+
+def schema_info(conn) -> dict:
+    """Metadatos del esquema para el visor: comentarios (módulo y descripción), claves foráneas y primarias."""
+    with conn.cursor() as cur:
+        cur.execute("SELECT table_name, comments FROM user_tab_comments WHERE table_type = 'TABLE'")
+        table_comments = {name: text or "" for name, text in cur}
+        cur.execute("SELECT table_name, column_name, comments FROM user_col_comments")
+        column_comments = {(t, c): text or "" for t, c, text in cur}
+        cur.execute("""
+            SELECT c.table_name, cc.column_name, p.table_name, pc.column_name
+            FROM user_constraints c
+            JOIN user_cons_columns cc ON cc.constraint_name = c.constraint_name
+            JOIN user_constraints p ON p.constraint_name = c.r_constraint_name
+            JOIN user_cons_columns pc ON pc.constraint_name = p.constraint_name AND pc.position = cc.position
+            WHERE c.constraint_type = 'R'
+        """)
+        foreign_keys = [{"table": t, "column": c, "parentTable": pt, "parentColumn": pcn} for t, c, pt, pcn in cur]
+    return {"tableComments": table_comments, "columnComments": column_comments, "foreignKeys": foreign_keys}
+
+
+def split_comment(text: str) -> tuple[str, str]:
+    module, _, description = (text or "").partition(" · ")
+    return (module, description) if description else ("Otras", text or "")
+
+
+def table_depths(info: dict, names: list[str]) -> dict[str, int]:
+    """Profundidad según las claves foráneas: 0 = no depende de nadie; sirve para listar primero las tablas «padre»."""
+    parents: dict[str, set[str]] = {name: set() for name in names}
+    for fk in info["foreignKeys"]:
+        if fk["table"] != fk["parentTable"]:
+            parents.setdefault(fk["table"], set()).add(fk["parentTable"])
+    depth: dict[str, int] = {}
+    def resolve(name: str, trail: tuple = ()) -> int:
+        if name in depth:
+            return depth[name]
+        if name in trail:
+            return 0
+        depth[name] = 1 + max((resolve(parent, trail + (name,)) for parent in parents.get(name, ())), default=-1)
+        return depth[name]
+    for name in names:
+        resolve(name)
+    return depth
+
+
+def describe_table(conn, meta: dict, info: dict) -> dict:
+    """Enriquece las columnas con comentario, rol (clave primaria o foránea) y relaciones de la tabla."""
+    name = meta["name"]
+    fks = {fk["column"]: fk for fk in info["foreignKeys"] if fk["table"] == name}
+    for column in meta["columns"]:
+        column["comment"] = info["columnComments"].get((name, column["name"]), "")
+        column["isPk"] = column["name"] in meta["primaryKey"]
+        column["fk"] = {"table": fks[column["name"]]["parentTable"], "column": fks[column["name"]]["parentColumn"]} if column["name"] in fks else None
+    module, description = split_comment(info["tableComments"].get(name, ""))
+    return {
+        "module": module, "description": description,
+        "references": [{"column": fk["column"], "table": fk["parentTable"], "refColumn": fk["parentColumn"]} for fk in fks.values()],
+        "referencedBy": sorted({(fk["table"], fk["column"]) for fk in info["foreignKeys"] if fk["parentTable"] == name}),
+    }
+
+
+def display_order(meta: dict) -> list[str]:
+    """Orden de lectura: primero los identificadores (clave primaria y foráneas), luego los datos y al final las fechas."""
+    def rank(column: dict) -> int:
+        if column.get("isPk"):
+            return 0
+        if column.get("fk"):
+            return 1
+        return 3 if column["type"] == "DATE" or column["type"].startswith("TIMESTAMP") else 2
+    return [col["name"] for col in sorted(meta["columns"], key=rank)]  # sorted es estable: conserva el orden original dentro de cada grupo
+
+
+def foreign_labels(conn, meta: dict, rows: list[dict]) -> dict:
+    """Para cada columna foránea, el texto de la fila a la que apunta («181» → «María»), para entender de qué es cada ID."""
+    labels: dict[str, dict[str, str]] = {}
+    for column in meta["columns"]:
+        fk = column.get("fk")
+        values = list({row[column["name"]] for row in rows if row.get(column["name"]) is not None})[:200]
+        if not fk or not values:
+            continue
+        with conn.cursor() as cur:
+            cur.execute("SELECT column_name FROM user_tab_columns WHERE table_name = :t", t=fk["table"])
+            present = {row[0] for row in cur}
+            chosen = [name for name in LABEL_CANDIDATES if name in present][:2]
+            if not chosen:
+                continue
+            # Un UUID de 36 caracteres no ayuda a leer: se abrevia a sus primeros 8 («sesión 76f517e7»).
+            part = lambda name: f"'sesión ' || SUBSTR({safe_ident(name)}, 1, 8)" if name == "CLIENT_SESSION_ID" else f"TO_CHAR(SUBSTR({safe_ident(name)}, 1, 60))"
+            expression = "COALESCE(" + ", ".join(part(name) for name in chosen) + ")"
+            binds = {f"v{i}": value for i, value in enumerate(values)}
+            placeholders = ", ".join(f":v{i}" for i in range(len(values)))
+            cur.execute(f"SELECT {safe_ident(fk['column'])}, {expression} FROM {safe_ident(fk['table'])} WHERE {safe_ident(fk['column'])} IN ({placeholders})", binds)
+            labels[column["name"]] = {str(key): str(text) for key, text in cur if text}
+    return labels
+
+
 def normalize(value, data_type: str):
     if value is None or value == "":
         return None
@@ -395,6 +493,20 @@ class Handler(BaseHTTPRequestHandler):
                     return self.send_json(200, {"users": users})
                 if path.startswith("/api/admin/reports/"):
                     return self.send_json(200, self.admin_report(conn, path.rsplit("/", 1)[1]))
+                if path == "/api/admin/schema":
+                    info = schema_info(conn)
+                    names = table_names(conn)
+                    depth = table_depths(info, names)
+                    items = []
+                    for name in names:
+                        module, description = split_comment(info["tableComments"].get(name, ""))
+                        with conn.cursor() as cur:
+                            cur.execute(f"SELECT COUNT(*) FROM {safe_ident(name)}")
+                            count = cur.fetchone()[0]
+                        items.append({"name": name, "module": module, "description": description, "rows": count, "depth": depth.get(name, 0)})
+                    rank = {module: index for index, module in enumerate(MODULE_ORDER)}
+                    items.sort(key=lambda item: (rank.get(item["module"], 99), item["depth"], item["name"]))
+                    return self.send_json(200, {"tables": items, "modules": MODULE_ORDER})
                 if path == "/api/tables":
                     return self.send_json(200, {"tables": table_names(conn)})
                 if path == "/api/duco/experiences":
@@ -442,11 +554,16 @@ class Handler(BaseHTTPRequestHandler):
                     meta = table_meta(conn, match.group(1))
                     qtable = safe_ident(meta["name"])
                     order, order_label = self.row_order(meta)
+                    info = schema_info(conn)
+                    docs = describe_table(conn, meta, info)
                     with conn.cursor() as cur:
+                        cur.execute(f"SELECT COUNT(*) FROM {qtable}")
+                        total = cur.fetchone()[0]
                         cur.execute(f"SELECT * FROM {qtable} ORDER BY {order} FETCH FIRST 200 ROWS ONLY")
                         names = [col[0] for col in cur.description]
                         rows = [dict(zip(names, row)) for row in cur]
-                    return self.send_json(200, {"meta": meta, "rows": rows, "limit": 200, "orderedBy": order_label})
+                    return self.send_json(200, {"meta": meta, "rows": rows, "limit": 200, "orderedBy": order_label, "total": total,
+                                                "docs": docs, "displayOrder": display_order(meta), "labels": foreign_labels(conn, meta, rows)})
             self.send_json(404, {"error": "Ruta no encontrada"})
         except Exception as exc:
             self.send_json(400, {"error": str(exc)})

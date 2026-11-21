@@ -42,6 +42,8 @@ El DDL usa tipos y sintaxis Oracle, e importa como modelo relacional. Para gener
 | Las 32 tablas | `FECHA_CREACION` (con valor por defecto) en las que no tenían ninguna fecha | Fecha y hora de creación de cada dato nuevo. Las filas anteriores quedan en `NULL`, salvo valoraciones y preguntas frecuentes, cuya fecha se recuperó de sus mensajes y propuestas. |
 | `ROLES` | `ADMINISTRADOR` y `REVISOR` | Permisos del panel. |
 
+`oracle/migrations/007_comentarios.sql` (generado desde los metadatos reales) agrega `COMMENT ON` a las 32 tablas y a sus columnas: módulo y descripción de cada tabla, qué es cada ID automático y a qué tabla apunta cada clave foránea. Es la documentación que usa el visor del panel y que se ve en SQL Developer.
+
 **Límite conocido:** la auditoría la escribe la aplicación (`app.py`), no disparadores de Oracle; un cambio hecho directamente con SQL Developer no queda registrado. Los disparadores requieren que `DUCO_APP` tenga `CREATE TRIGGER` y `CREATE PROCEDURE`, privilegios que hoy no tiene.
 
 ## Consola administrativa
