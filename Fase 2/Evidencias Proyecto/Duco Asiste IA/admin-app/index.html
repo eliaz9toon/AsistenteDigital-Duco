@@ -154,7 +154,7 @@
       <form id="user-form">
         <div class="field"><label for="nu-name">Nombre</label><input id="nu-name" required maxlength="120"></div>
         <div class="field"><label for="nu-email">Correo</label><input id="nu-email" type="email" required maxlength="180"></div>
-        <div class="field"><label for="nu-role">Rol</label><select id="nu-role"><option value="REVISOR">REVISOR (consulta y revisa propuestas)</option><option value="ADMINISTRADOR">ADMINISTRADOR (edita y borra)</option></select></div>
+        <div class="field"><label for="nu-role">Rol</label><select id="nu-role"><option value="CONSULTA">CONSULTA (solo ve dashboard, reportes y tablas)</option><option value="EVALUADOR">EVALUADOR (ve y evalúa propuestas y valoraciones)</option><option value="ADMINISTRADOR">ADMINISTRADOR (todo: edita, borra y gestiona usuarios)</option></select></div>
         <div class="field"><label for="nu-password">Contraseña<small>Mínimo 8, con letras y números</small></label><input id="nu-password" type="password" required minlength="8" autocomplete="new-password"></div>
         <div class="form-error" id="user-error" role="alert"></div>
         <div class="dialog-foot" style="padding:8px 0 0"><button type="submit">Crear usuario</button></div>
@@ -206,6 +206,10 @@
       $('#user-role').textContent = admin.role;
       for (const id of ['#user-chip', '#review-proposals', '#open-reports', '#refresh', '#open-password', '#logout']) $(id).hidden = false;
       $('#open-users').hidden = !isAdmin();
+      // Evaluar propuestas y ver la auditoría: solo ADMINISTRADOR y EVALUADOR (el servidor lo vuelve a comprobar).
+      const canEvaluate = ['ADMINISTRADOR', 'EVALUADOR'].includes(admin.role);
+      $('#review-proposals').hidden = !canEvaluate;
+      document.querySelector('[data-report="audit"]').hidden = !canEvaluate;
       $('#add').hidden = !isAdmin();
       loadTables().catch((error) => { status(error.message, true); $('#grid').innerHTML = `<div class="empty error">${escapeHtml(error.message)}<br>Comprueba la conexión y las credenciales en admin-app/.env.</div>`; });
     }

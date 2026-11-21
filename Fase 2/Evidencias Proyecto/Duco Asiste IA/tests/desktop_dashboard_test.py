@@ -69,10 +69,11 @@ def main() -> int:
             check(f"período de {days} días responde", anon.call("GET", f"/dashboard/metrics?days={days}")[0] == 200)
 
         print("Solo lectura")
-        check("no expone las rutas del panel (tablas) → 404", anon.call("GET", "/api/tables")[0] == 404)
+        check("las rutas de administración exigen sesión → 401", anon.call("GET", "/api/tables")[0] == 401 and anon.call("GET", "/api/admin/users")[0] == 401)
+        check("no sirve el sitio ni archivos → 404", anon.call("GET", "/duco")[0] == 404 and anon.call("GET", "/js/duco-assistant.js")[0] == 404)
         check("no permite escribir (POST) → 404", anon.call("POST", "/api/duco/session", {"sessionId": str(uuid.uuid4()), "userName": "Ana"})[0] == 404)
-        check("no permite PUT → 405", anon.call("PUT", "/api/tables/MENSAJES")[0] == 405)
-        check("no permite DELETE → 405", anon.call("DELETE", "/api/tables/MENSAJES")[0] == 405)
+        check("PUT/DELETE de tablas sin sesión → 401", anon.call("PUT", "/api/tables/MENSAJES")[0] == 401 and anon.call("DELETE", "/api/tables/MENSAJES")[0] == 401)
+        check("PUT/DELETE fuera de las tablas → 405", anon.call("PUT", "/api/duco/proposals")[0] == 405 and anon.call("DELETE", "/api/duco/knowledge")[0] == 405)
 
         print("Vista administrador")
         admin = Client(base)
@@ -91,8 +92,8 @@ def main() -> int:
         print("Roles")
         reviewer = Client(base)
         reviewer.call("POST", "/api/auth/login", {"email": reviewer_email, "password": password})
-        check("un revisor NO ve el reporte detallado → 403", reviewer.call("GET", "/dashboard/report?days=0")[0] == 403)
-        check("un revisor sí ve las métricas generales", reviewer.call("GET", "/dashboard/metrics?days=0")[0] == 200)
+        check("un evaluador también ve el reporte detallado (cualquier rol con sesión)", reviewer.call("GET", "/dashboard/report?days=0")[0] == 200)
+        check("un evaluador ve las métricas generales", reviewer.call("GET", "/dashboard/metrics?days=0")[0] == 200)
         check("contraseña incorrecta → 401", Client(base).call("POST", "/api/auth/login", {"email": admin_email, "password": "mala-clave-1"})[0] == 401)
     finally:
         server.shutdown()

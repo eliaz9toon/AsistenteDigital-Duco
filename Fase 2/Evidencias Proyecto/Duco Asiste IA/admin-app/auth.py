@@ -20,8 +20,13 @@ SESSION_HOURS = 8
 MAX_FAILURES = 5
 LOCK_SECONDS = 300
 MIN_PASSWORD_LENGTH = 8
-ROLE_ADMIN = "ADMINISTRADOR"
-ROLE_REVIEWER = "REVISOR"
+ROLE_ADMIN = "ADMINISTRADOR"   # ve todo, edita y borra datos, revisa y gestiona usuarios
+ROLE_EVALUATOR = "EVALUADOR"   # ve datos y reportes, evalúa propuestas y valoraciones, ve la auditoría (no edita ni borra)
+ROLE_VIEWER = "CONSULTA"       # solo ve el dashboard, los reportes y las tablas
+ROLE_REVIEWER = ROLE_EVALUATOR  # nombre anterior del rol (antes «REVISOR»)
+ALL_ROLES = (ROLE_ADMIN, ROLE_EVALUATOR, ROLE_VIEWER)
+CAN_EVALUATE = {ROLE_ADMIN, ROLE_EVALUATOR}
+CAN_EDIT = {ROLE_ADMIN}
 COOKIE_NAME = "duco_admin"
 
 _b64 = lambda raw: base64.b64encode(raw).decode("ascii")

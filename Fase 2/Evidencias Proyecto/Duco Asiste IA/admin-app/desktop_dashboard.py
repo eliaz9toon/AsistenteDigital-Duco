@@ -6,6 +6,7 @@ from http.cookiejar import CookieJar
 from http.server import ThreadingHTTPServer
 import json
 import os
+import re
 from pathlib import Path
 from threading import Thread
 import tkinter as tk
@@ -15,6 +16,7 @@ from urllib.parse import parse_qs, urlsplit
 from urllib.request import HTTPCookieProcessor, ProxyHandler, Request, build_opener
 
 import app
+import desktop_panel
 
 
 BG, CARD, INK, MUTED = "#f2f5f8", "#ffffff", "#132a3f", "#506478"
@@ -48,12 +50,30 @@ def oracle_metrics(start):
 
 
 class DashboardHandler(app.Handler):
+    """Servidor interno de la aplicación: métricas del dashboard y, para quien inició sesión, las rutas de administración
+    (tablas, evaluación, auditoría, usuarios). Los permisos por rol los decide app.Handler; aquí solo se limita qué rutas existen
+    (no se sirve el sitio ni las rutas públicas del chat)."""
+
+    def reject(self, status: int, message: str):
+        """Responde un rechazo después de leer (y descartar) el cuerpo de la petición: si no, Windows cierra la conexión a mitad de camino."""
+        try:
+            self.rfile.read(min(int(self.headers.get("Content-Length", "0") or 0), 1_000_000))
+        except (ValueError, OSError):
+            pass
+        return self.send_json(status, {"error": message})
+
+    @staticmethod
+    def panel_read(path: str) -> bool:
+        return path == "/api/tables" or path.startswith(("/api/tables/", "/api/admin/")) or path in {"/api/auth/me", "/api/duco/proposals", "/api/duco/negative-feedback"}
+
     def do_GET(self):
         url = urlsplit(self.path)
+        if self.panel_read(url.path):
+            return super().do_GET()
         if url.path not in {"/dashboard/metrics", "/dashboard/report"}:
             return self.send_json(404, {"error": "Ruta no disponible."})
         detailed = url.path == "/dashboard/report"
-        if detailed and not self.require_admin({app.auth.ROLE_ADMIN}):
+        if detailed and not self.require_admin():  # el reporte detallado lo ve cualquier rol con sesión
             return
         try:
             period = int(parse_qs(url.query).get("days", ["0"])[0])
@@ -71,14 +91,24 @@ class DashboardHandler(app.Handler):
         return self.send_json(200, data)
 
     def do_POST(self):
-        if urlsplit(self.path).path in {"/api/auth/login", "/api/auth/logout"}:
+        path = urlsplit(self.path).path
+        allowed = (path in {"/api/auth/login", "/api/auth/logout", "/api/auth/password", "/api/admin/users"}
+                   or re.fullmatch(r"/api/admin/users/\d+/active", path)
+                   or re.fullmatch(r"/api/duco/(?:proposals|feedback)/\d+/review", path)
+                   or re.fullmatch(r"/api/tables/[A-Za-z0-9_$#]+", path))
+        if allowed:
             return super().do_POST()
-        return self.send_json(404, {"error": "Ruta no disponible."})
+        return self.reject(404, "Ruta no disponible.")
 
     def do_PUT(self):
-        return self.send_json(405, {"error": "Operación no disponible."})
+        if urlsplit(self.path).path.startswith("/api/tables/"):
+            return super().do_PUT()
+        return self.reject(405, "Operación no disponible.")
 
-    do_DELETE = do_PUT
+    def do_DELETE(self):
+        if urlsplit(self.path).path.startswith("/api/tables/"):
+            return super().do_DELETE()
+        return self.reject(405, "Operación no disponible.")
 
 
 class Dashboard:
@@ -101,6 +131,7 @@ class Dashboard:
         style = ttk.Style(root)
         style.theme_use("clam")
         style.configure("TFrame", background=BG)
+        style.configure("TLabel", background=BG)
         style.configure("TButton", padding=(13, 7), font=("Segoe UI", 10))
         style.configure("Treeview", rowheight=28, font=("Segoe UI", 10))
         style.configure("Treeview.Heading", font=("Segoe UI Semibold", 10))
@@ -109,11 +140,12 @@ class Dashboard:
         self.build()
         root.after(30, self.refresh)
 
-    def request(self, path, payload=None):
+    def request(self, path, payload=None, method=None):
         request = Request(
             self.url + path,
             data=json.dumps(payload).encode() if payload is not None else None,
             headers={"Content-Type": "application/json"},
+            method=method,
         )
         try:
             with self.http.open(request, timeout=10) as response:
@@ -135,8 +167,10 @@ class Dashboard:
         tk.Label(header, text="Duco Asiste", bg=BG, fg=INK, font=("Segoe UI Semibold", 25)).pack(side="left")
         self.mode = tk.Label(header, text="Vista cliente", bg=BG, fg=MUTED, font=("Segoe UI", 11))
         self.mode.pack(side="left", padx=16, pady=(6, 0))
-        self.login_button = ttk.Button(header, text="Entrar como administrador", command=self.login)
+        self.login_button = ttk.Button(header, text="Iniciar sesión", command=self.login)
         self.login_button.pack(side="right")
+        self.password_button = ttk.Button(header, text="Mi contraseña", command=self.change_password)
+        self.role_tabs = []
         self.tabs = ttk.Notebook(shell)
         self.tabs.pack(fill="both", expand=True)
         overview = ttk.Frame(self.tabs, padding=(0, 15, 0, 0))
@@ -261,55 +295,89 @@ class Dashboard:
 
     def login(self):
         if self.admin:
-            try:
-                self.request("/api/auth/logout", {})
-            except RuntimeError:
-                pass
-            self.cookies.clear()
-            self.admin = None
-            self.report = []
-            self.table.delete(*self.table.get_children())
-            self.tabs.forget(self.report_tab)
-            self.mode.configure(text="Vista cliente")
-            self.login_button.configure(text="Entrar como administrador")
-            self.refresh()
+            self.logout()
             return
-
         dialog = tk.Toplevel(self.root)
-        dialog.title("Acceso de administrador")
+        dialog.title("Iniciar sesión")
         dialog.transient(self.root)
         dialog.resizable(False, False)
         body = ttk.Frame(dialog, padding=20)
         body.pack(fill="both", expand=True)
-        ttk.Label(body, text="Correo del panel").pack(anchor="w")
+        ttk.Label(body, text="Correo").pack(anchor="w")
         email = ttk.Entry(body, width=38)
         email.pack(fill="x", pady=(3, 12))
-        ttk.Label(body, text="Contraseña del panel").pack(anchor="w")
+        ttk.Label(body, text="Contraseña").pack(anchor="w")
         password = ttk.Entry(body, show="*", width=38)
         password.pack(fill="x", pady=(3, 12))
 
         def submit():
             try:
-                admin = self.request("/api/auth/login", {"email": email.get(), "password": password.get()})["admin"]
-                if admin["role"] != app.auth.ROLE_ADMIN:
-                    self.request("/api/auth/logout", {})
-                    self.cookies.clear()
-                    raise RuntimeError("Esta vista requiere una cuenta administradora.")
+                self.authenticate(email.get(), password.get())
             except RuntimeError as error:
                 password.delete(0, "end")
                 messagebox.showerror("Acceso", str(error), parent=dialog)
                 return
             dialog.destroy()
-            self.admin = admin
-            self.mode.configure(text="Vista administrador")
-            self.login_button.configure(text="Cerrar sesión")
-            self.tabs.add(self.report_tab, text="Reportería")
-            self.refresh()
 
         ttk.Button(body, text="Ingresar", command=submit).pack(anchor="e")
         dialog.bind("<Return>", lambda _: submit())
         dialog.grab_set()
         email.focus_set()
+
+    def authenticate(self, email, password):
+        """Inicia sesión con una cuenta del panel y abre las pestañas que corresponden a su rol. Lanza RuntimeError si no se puede."""
+        admin = self.request("/api/auth/login", {"email": email, "password": password})["admin"]
+        self.admin = admin
+        self.mode.configure(text=f"{admin['name']} · {admin['role']}")
+        self.login_button.configure(text="Cerrar sesión")
+        self.password_button.pack(side="right", padx=(0, 8))
+        self.tabs.add(self.report_tab, text="Reportería")
+        self.open_role_tabs()
+        self.refresh()
+
+    def open_role_tabs(self):
+        """ADMINISTRADOR: tablas (editar), evaluación, auditoría y usuarios. EVALUADOR: tablas (ver), evaluación y auditoría. CONSULTA: tablas (ver)."""
+        role = self.admin["role"]
+        panels = [("Tablas", desktop_panel.TablesTab(self.tabs, self.request, role))]
+        if role in app.auth.CAN_EVALUATE:
+            panels.append(("Evaluación", desktop_panel.EvaluationTab(self.tabs, self.request, role)))
+            panels.append(("Auditoría", desktop_panel.AuditTab(self.tabs, self.request, role)))
+        if role == app.auth.ROLE_ADMIN:
+            panels.append(("Usuarios", desktop_panel.UsersTab(self.tabs, self.request, role, self.admin["id"])))
+        self.role_tabs = [panel for _, panel in panels]
+        for title, panel in panels:
+            self.tabs.add(panel, text=title)
+            panel.load()
+        self.tabs.bind("<<NotebookTabChanged>>", self.reload_current_tab)
+
+    def reload_current_tab(self, _event=None):
+        """Al volver a una pestaña de evaluación, auditoría o usuarios se actualiza (otros pueden haber cambiado datos)."""
+        current = self.tabs.nametowidget(self.tabs.select()) if self.tabs.select() else None
+        if current in self.role_tabs and not isinstance(current, desktop_panel.TablesTab):
+            current.load()
+
+    def logout(self):
+        try:
+            self.request("/api/auth/logout", {})
+        except RuntimeError:
+            pass
+        self.cookies.clear()
+        self.admin = None
+        self.report = []
+        self.table.delete(*self.table.get_children())
+        self.tabs.unbind("<<NotebookTabChanged>>")
+        for panel in self.role_tabs:
+            self.tabs.forget(panel)
+            panel.destroy()
+        self.role_tabs = []
+        self.tabs.forget(self.report_tab)
+        self.password_button.pack_forget()
+        self.mode.configure(text="Vista cliente")
+        self.login_button.configure(text="Entrar")
+        self.refresh()
+
+    def change_password(self):
+        desktop_panel.PasswordDialog(self.root, lambda current, new: self.request("/api/auth/password", {"current": current, "new": new}))
 
     def export(self):
         if not self.admin or not self.report:

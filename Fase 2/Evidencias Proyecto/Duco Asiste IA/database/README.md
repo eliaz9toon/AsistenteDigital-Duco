@@ -40,7 +40,7 @@ El DDL usa tipos y sintaxis Oracle, e importa como modelo relacional. Para gener
 | `SESIONES_ADMIN` | `TOKEN_HASH`, `FECHA_EXPIRA`, `FECHA_FIN`, `DIRECCION_IP` | Sesiones del panel; del token solo se guarda su SHA-256. |
 | `AUDITORIA_CAMBIOS` | `ACCION`, `ID_REGISTRO`, `VALOR_ANTERIOR`, `VALOR_NUEVO`, `NOMBRE_ACTOR`, `ORIGEN` | Cada cambio queda con tabla, fila, acción, valores antes y después, quién y desde dónde (`panel`, `chat`, `sistema` o `historico`). Es de solo lectura en el visor. |
 | Las 32 tablas | `FECHA_CREACION` (con valor por defecto) en las que no tenían ninguna fecha | Fecha y hora de creación de cada dato nuevo. Las filas anteriores quedan en `NULL`, salvo valoraciones y preguntas frecuentes, cuya fecha se recuperó de sus mensajes y propuestas. |
-| `ROLES` | `ADMINISTRADOR` y `REVISOR` | Permisos del panel. |
+| `ROLES` | `ADMINISTRADOR`, `EVALUADOR` (antes `REVISOR`) y `CONSULTA` (migración 008) | Permisos del panel web y de la aplicación de escritorio. |
 
 `oracle/migrations/007_comentarios.sql` (generado desde los metadatos reales) agrega `COMMENT ON` a las 32 tablas y a sus columnas: módulo y descripción de cada tabla, qué es cada ID automático y a qué tabla apunta cada clave foránea. Es la documentación que usa el visor del panel y que se ve en SQL Developer.
 
