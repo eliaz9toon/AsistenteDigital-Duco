@@ -209,7 +209,7 @@ class Dashboard:
             self.table.delete(*self.table.get_children())
             for row in self.report:
                 self.table.insert("", "end", values=(row[0] or "Sin fecha", *row[1:]))
-        self.status.set("Oracle local · FREEPDB1 · " + self.period.get())
+        self.status.set("Oracle local · " + os.getenv("ORACLE_DSN", "").split("/")[-1] + " · " + self.period.get())
         self.draw()
 
     def draw(self):
@@ -331,8 +331,11 @@ class Dashboard:
 
 
 def main():
-    if os.getenv("ORACLE_DSN") != "127.0.0.1:1521/FREEPDB1" or os.getenv("ORACLE_USER") != "DUCO_APP":
-        raise SystemExit("Configura DUCO_APP y 127.0.0.1:1521/FREEPDB1 en admin-app/.env.")
+    # Solo una base Oracle local (localhost o 127.0.0.1), con cualquier nombre de servicio (FREEPDB1, XEPDB1…): nunca la de otra persona.
+    dsn = os.getenv("ORACLE_DSN", "")
+    host = dsn.split("/")[0].rsplit(":", 1)[0].strip("[]").lower()
+    if host not in {"localhost", "127.0.0.1", "::1"} or not os.getenv("ORACLE_USER"):
+        raise SystemExit("Configura ORACLE_USER y una base local (por ejemplo localhost:1521/FREEPDB1) en admin-app/.env.")
     with ThreadingHTTPServer(("127.0.0.1", 0), DashboardHandler) as server:
         thread = Thread(target=server.serve_forever, daemon=True)
         thread.start()

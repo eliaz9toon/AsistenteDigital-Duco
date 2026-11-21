@@ -46,6 +46,17 @@ El DDL usa tipos y sintaxis Oracle, e importa como modelo relacional. Para gener
 
 **Límite conocido:** la auditoría la escribe la aplicación (`app.py`), no disparadores de Oracle; un cambio hecho directamente con SQL Developer no queda registrado. Los disparadores requieren que `DUCO_APP` tenga `CREATE TRIGGER` y `CREATE PROCEDURE`, privilegios que hoy no tiene.
 
+## Base local propia para estudiar (copia de los datos)
+
+Cada integrante puede tener su propia base para practicar `SELECT`, `INSERT` o `DELETE` sin riesgo para los datos de otro. Funciona con Oracle Free 26ai o con Oracle XE 18c/21c (desde 12c; el nombre del servicio es `FREEPDB1` o `XEPDB1`).
+
+1. **Crear la base vacía:** `oracle/create_user.sql` como `SYSTEM`; luego `oracle/schema.sql` como `DUCO_APP` (ya incluye lo de las migraciones `001` a `005`: en una base nueva **no** se ejecutan); después solo `006` y `007` con `python apply_migration.py <archivo>` (desde `admin-app/`).
+2. **Pedir el archivo de datos** a quien tenga la base cargada, que lo genera con `python export_data.py` (queda en `database/export/`, sin usuarios, contraseñas ni auditoría, y con los nombres del chat anonimizados; `--keep-names` los conserva).
+3. **Cargarlo en TU base local:** `python import_data.py ../database/export/duco_datos_AAAAMMDD-HHMM.json` (con `admin-app/.env` apuntando a TU base). El script se niega a cargar en una base que no sea local, se niega si las tablas ya tienen datos, hace todo en una transacción y deja los contadores de ID al día. `--dry-run` prueba sin dejar nada.
+4. **Crear tu usuario del panel:** `python create_admin.py --name "Tu Nombre" --email tu@correo.cl --generate`.
+
+El archivo exportado contiene conversaciones reales: compártelo solo con el equipo y **no lo subas a GitHub** (`database/export/` y `database/backups/` están en `.gitignore`).
+
 ## Consola administrativa
 
 Consulta `../admin-app/README.md` para iniciar la aplicación local de altas, consultas, edición y eliminación de registros.

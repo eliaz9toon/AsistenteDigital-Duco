@@ -93,5 +93,7 @@ El panel (`http://127.0.0.1:8765/`) exige **iniciar sesión**. Hasta ahora cualq
 - **Auditoría:** cada cambio guarda tabla, ID del registro, acción, valores antes y después, quién (usuario del panel o nombre del chat) y origen.
 - **Nombre en el chat:** Duco pide el nombre (o apodo) al abrirse y registra la sesión en `SESIONES_CHAT`. «Cambiar mi nombre» lo vuelve a pedir. Para automatizaciones: `window.ducoConfig.requireUserName = false`.
 - **Pruebas:** con el backend encendido, `python ..	estsdmin_auth_test.py http://127.0.0.1:8766` (56 comprobaciones; crea y borra sus propios datos de prueba).
+- **Dashboard de escritorio** (autor: Matías Peredo): `Iniciar_Dashboard.cmd` abre una ventana de Windows (Tkinter) con sesiones, mensajes y valoraciones de Oracle por día. Sin iniciar sesión muestra las métricas generales de los últimos 14 días; con un usuario ADMINISTRADOR del panel agrega la pestaña «Reportería» (todo el historial, por período) y exporta CSV. Es de solo lectura (no escribe en la base), usa las mismas cuentas y roles del panel y solo se conecta a una base local (`localhost` o `127.0.0.1`). Pruebas: `python ..\tests\desktop_dashboard_test.py` (19 comprobaciones).
+- **Compartir datos entre integrantes:** `python export_data.py` genera un JSON sin datos sensibles y `python import_data.py <archivo>` lo carga en una base local vacía (ver «Base local propia para estudiar» en `database/README.md`).
 - **Migración:** `python apply_migration.py ../database/oracle/migrations/006_login_auditoria_fechas.sql` (ver `database/README.md`).
 
