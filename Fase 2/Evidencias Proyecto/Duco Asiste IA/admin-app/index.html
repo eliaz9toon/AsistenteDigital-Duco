@@ -74,6 +74,10 @@
     th small { display:block; font-size:10.5px; font-weight:600; color:#5c7a99; text-transform:none; }
     th.col-id, td.col-id { background:#f4f9ff; } th.col-fk, td.col-fk { background:#fbf8ff; } th.col-date { color:#4a5d70; }
     .fk-label { color:#6b7f95; } .nil { color:#b0bccb; }
+    .search-bar input#search { flex:1 1 320px; min-width:200px; border:1px solid var(--line); border-radius:7px; padding:9px 12px; background:#fff; }
+    #table-filter { width:170px; border:1px solid var(--line); border-radius:7px; padding:9px 12px; background:#fff; }
+    .sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+    mark { background:#fff1a8; color:inherit; padding:0 1px; border-radius:2px; }
     @media(max-width:600px) { header { align-items:flex-start; flex-direction:column; } .field { grid-template-columns:1fr; gap:4px; } .field label { padding-top:0; } }
   </style>
 </head>
@@ -91,7 +95,7 @@
     </div>
   </header>
   <div class="login-screen" id="login-screen" hidden>
-    <form class="login-card" id="login-form" autocomplete="on">
+    <form class="login-card" id="login-form" method="post" action="#" autocomplete="on">
       <h2>Duco Asiste · Administración</h2>
       <p>Ingresa con tu usuario del panel para ver y editar los datos.</p>
       <label for="login-email">Correo</label><input id="login-email" name="email" type="email" autocomplete="username" required>
@@ -102,9 +106,18 @@
   </div>
   <main>
     <div class="toolbar">
-      <label for="tables">Tabla</label><select id="tables"><option value="">Conectando…</option></select>
+      <label for="tables">Tabla</label>
+      <input id="table-filter" type="search" placeholder="Filtrar tablas…" aria-label="Filtrar la lista de tablas por nombre o descripción" autocomplete="off">
+      <select id="tables"><option value="">Conectando…</option></select>
       <button id="add">Nuevo registro</button>
       <span id="status" class="status" role="status"></span>
+    </div>
+    <div class="toolbar search-bar">
+      <label for="search">Buscar</label>
+      <input id="search" type="search" placeholder="Buscar en esta tabla (nombre, texto, ID, fecha…)" aria-label="Buscar registros en la tabla seleccionada" autocomplete="off" maxlength="100">
+      <label for="search-col" class="sr-only">en</label>
+      <select id="search-col" aria-label="Columna donde buscar"><option value="">en todas las columnas</option></select>
+      <button class="secondary" id="search-clear" type="button" hidden>Limpiar</button>
     </div>
     <details class="guide card">
       <summary>¿Cómo leer esta pantalla?</summary>
@@ -198,33 +211,54 @@
     }
     function keyOf(row) { return Object.fromEntries(tableMeta.primaryKey.map((key) => [key, row[key]])); }
     function showValue(value) { if (value == null) return ''; if (typeof value === 'object') return JSON.stringify(value); return String(value); }
-    let schema = [], rowData = null;
-    async function loadTables() {
-      const data = await api('/api/admin/schema');
-      schema = data.tables;
-      if (!schema.length) throw new Error('No hay tablas en el esquema. Ejecuta database/oracle/schema.sql como DUCO_APP.');
-      const select = $('#tables'); select.replaceChildren();
-      for (const module of [...data.modules, 'Otras']) {
-        const items = schema.filter((t) => t.module === module);
+    function renderTableOptions() {
+      const filter = $('#table-filter').value.trim().toLowerCase();
+      const select = $('#tables'), current = select.value;
+      select.replaceChildren();
+      for (const module of [...modules, 'Otras']) {
+        const items = schema.filter((t) => t.module === module && (!filter || `${t.name} ${t.description} ${t.module}`.toLowerCase().includes(filter)));
         if (!items.length) continue;
         const group = document.createElement('optgroup'); group.label = module;
         for (const t of items) group.append(new Option(`${t.name} · ${t.rows ? `${t.rows} fila${t.rows === 1 ? '' : 's'}` : 'vacía'}`, t.name));
         select.append(group);
       }
+      if (!select.options.length) select.append(new Option('Ninguna tabla coincide', ''));
+      else if ([...select.options].some((o) => o.value === current)) select.value = current;
+    }
+    let schema = [], modules = [], rowData = null, searchTimer = null;
+    async function loadTables() {
+      const data = await api('/api/admin/schema');
+      schema = data.tables; modules = data.modules;
+      if (!schema.length) throw new Error('No hay tablas en el esquema. Ejecuta database/oracle/schema.sql como DUCO_APP.');
+      renderTableOptions();
       // Se abre en una tabla con actividad real (los mensajes del chat), no en la primera de la lista.
       const preferred = ['MENSAJES', 'SESIONES_CHAT'].find((name) => schema.some((t) => t.name === name));
-      if (preferred) select.value = preferred;
+      if (preferred) $('#tables').value = preferred;
       await loadRows();
     }
-    async function loadRows() {
+    async function loadRows(resetColumn = false) {
       const name = $('#tables').value;
       if (!name) return;
+      if (resetColumn) $('#search-col').value = '';
+      const params = new URLSearchParams();
+      const term = $('#search').value.trim(), column = $('#search-col').value;
+      if (term) params.set('q', term);
+      if (term && column) params.set('col', column);
       status('Cargando…');
-      const data = await api(`/api/tables/${encodeURIComponent(name)}/rows`);
+      const data = await api(`/api/tables/${encodeURIComponent(name)}/rows${params.toString() ? `?${params}` : ''}`);
       tableMeta = data.meta; rows = data.rows; rowData = data;
+      fillSearchColumns();
+      $('#search-clear').hidden = !term;
       drawInfo(); drawGrid();
-      status(`Mostrando ${rows.length} de ${data.total} registro(s) · orden: ${data.orderedBy}${READ_ONLY.includes(tableMeta.name) ? ' · solo lectura' : ''}`);
+      const searching = data.query ? ` · búsqueda «${data.query}»${data.column ? ` en ${data.column}` : ''}: ${data.total} de ${data.tableTotal} coinciden` : '';
+      status(`Mostrando ${rows.length} de ${data.total} registro(s) · orden: ${data.orderedBy}${READ_ONLY.includes(tableMeta.name) ? ' · solo lectura' : ''}${searching}`);
     }
+    function fillSearchColumns() {
+      const select = $('#search-col'), current = select.value;
+      select.replaceChildren(new Option('en todas las columnas', ''), ...rowData.displayOrder.map((n) => new Option(`en ${n}`, n)));
+      if (rowData.displayOrder.includes(current)) select.value = current;
+    }
+    function runSearch(delay = 300) { clearTimeout(searchTimer); searchTimer = setTimeout(() => loadRows().catch((e) => status(e.message, true)), delay); }
     function chip(table, extra = '') { return `<button type="button" class="chip" data-table="${escapeHtml(table)}">${escapeHtml(table)}${extra ? ` <small>${escapeHtml(extra)}</small>` : ''}</button>`; }
     function drawInfo() {
       const docs = rowData.docs, pk = tableMeta.columns.filter((c) => c.isPk);
@@ -236,7 +270,7 @@
       const used = docs.referencedBy.length ? `<p><strong>La usan:</strong> ${docs.referencedBy.map(([table, column]) => chip(table, `con ${column}`)).join(' ')}</p>` : '<p><strong>La usan:</strong> ninguna tabla.</p>';
       $('#info').innerHTML = `<div class="info-head"><h2>${escapeHtml(tableMeta.name)}</h2><span class="badge">${escapeHtml(docs.module)}</span></div>
         <p>${escapeHtml(docs.description || 'Sin descripción.')}</p><p class="idnote">${idNote}</p>${dependsOn}${used}`;
-      $('#info').querySelectorAll('.chip').forEach((b) => b.addEventListener('click', () => { $('#tables').value = b.dataset.table; loadRows().catch((e) => status(e.message, true)); }));
+      $('#info').querySelectorAll('.chip').forEach((b) => b.addEventListener('click', () => { $('#table-filter').value = ''; renderTableOptions(); $('#tables').value = b.dataset.table; loadRows(true).catch((e) => status(e.message, true)); }));
     }
     const isDate = (c) => c.type === 'DATE' || c.type.startsWith('TIMESTAMP');
     function badge(c) {
@@ -247,7 +281,7 @@
     }
     function drawGrid() {
       const wrap = $('#grid');
-      if (!rows.length) { wrap.innerHTML = '<div class="empty">Esta tabla todavía no tiene registros: la aplicación aún no escribe en ella.</div>'; return; }
+      if (!rows.length) { wrap.innerHTML = rowData.query ? `<div class="empty">Ningún registro de ${escapeHtml(tableMeta.name)} coincide con «${escapeHtml(rowData.query)}».</div>` : '<div class="empty">Esta tabla todavía no tiene registros: la aplicación aún no escribe en ella.</div>'; return; }
       const byName = Object.fromEntries(tableMeta.columns.map((c) => [c.name, c]));
       const columns = rowData.displayOrder.map((n) => byName[n]);
       const head = columns.map((c) => `<th title="${escapeHtml(c.comment || c.name)}" class="${c.isPk ? 'col-id' : c.fk ? 'col-fk' : isDate(c) ? 'col-date' : ''}">${escapeHtml(c.name)}${badge(c) ? `<small>${escapeHtml(badge(c))}</small>` : ''}</th>`).join('');
@@ -256,14 +290,25 @@
       const show = (row, c) => {
         const value = row[c.name];
         if (value == null || value === '') return '<span class="nil">—</span>';
-        if (isDate(c)) return escapeHtml(String(value).replace('T', ' ').slice(0, 19));
+        if (isDate(c)) return highlight(String(value).replace('T', ' ').slice(0, 19));
         const label = c.fk && rowData.labels[c.name] ? rowData.labels[c.name][String(value)] : null;
-        return label ? `${escapeHtml(showValue(value))} <span class="fk-label">· ${escapeHtml(label)}</span>` : escapeHtml(showValue(value));
+        return label ? `${highlight(showValue(value))} <span class="fk-label">· ${highlight(label)}</span>` : highlight(showValue(value));
       };
       const body = rows.map((row, index) => `<tr>${columns.map((c) => `<td class="${c.isPk ? 'col-id' : c.fk ? 'col-fk' : ''}" title="${escapeHtml(showValue(row[c.name]))}">${show(row, c)}</td>`).join('')}${canEdit ? `<td class="actions"><button class="secondary edit" data-index="${index}">Editar</button><button class="danger delete" data-index="${index}">Eliminar</button></td>` : ''}</tr>`).join('');
       wrap.innerHTML = `<table><thead><tr>${head}${canEdit ? '<th>Acciones</th>' : ''}</tr></thead><tbody>${body}</tbody></table>`;
       wrap.querySelectorAll('.edit').forEach((b) => b.addEventListener('click', () => openEditor(rows[Number(b.dataset.index)])));
       wrap.querySelectorAll('.delete').forEach((b) => b.addEventListener('click', () => removeRow(rows[Number(b.dataset.index)])));
+    }
+    // Resalta (sin distinguir mayúsculas) el texto que se está buscando dentro de una celda.
+    function highlight(text) {
+      const term = rowData && rowData.query ? rowData.query : '';
+      const safe = escapeHtml(text);
+      if (!term) return safe;
+      const lower = String(text).toLowerCase(), needle = term.toLowerCase();
+      if (!lower.includes(needle)) return safe;
+      let out = '', from = 0, at;
+      while ((at = lower.indexOf(needle, from)) !== -1) { out += escapeHtml(String(text).slice(from, at)) + '<mark>' + escapeHtml(String(text).slice(at, at + needle.length)) + '</mark>'; from = at + needle.length; }
+      return out + escapeHtml(String(text).slice(from));
     }
     function escapeHtml(value) { return String(value).replace(/[&<>"']/g, (char) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char])); }
     function inputValue(row, column) {
@@ -349,7 +394,7 @@
         await loadProposals();
       } catch (error) { status(error.message, true); card.querySelectorAll('button').forEach((item) => item.disabled = false); }
     }
-    $('#tables').addEventListener('change', () => loadRows().catch((e) => status(e.message, true)));
+    $('#tables').addEventListener('change', () => loadRows(true).catch((e) => status(e.message, true)));
     $('#refresh').addEventListener('click', () => loadRows().catch((e) => status(e.message, true)));
     $('#add').addEventListener('click', () => tableMeta && openEditor());
     $('#save').addEventListener('click', saveRow);
@@ -357,6 +402,11 @@
     $('#cancel').addEventListener('click', () => $('#modal').close());
     $('#review-proposals').addEventListener('click', () => { $('#proposals-modal').showModal(); loadProposals(); });
     $('#close-proposals').addEventListener('click', () => $('#proposals-modal').close());
+    $('#search').addEventListener('input', () => runSearch());
+    $('#search').addEventListener('keydown', (event) => { if (event.key === 'Enter') { event.preventDefault(); runSearch(0); } if (event.key === 'Escape') { $('#search').value = ''; runSearch(0); } });
+    $('#search-col').addEventListener('change', () => { if ($('#search').value.trim()) runSearch(0); });
+    $('#search-clear').addEventListener('click', () => { $('#search').value = ''; $('#search-col').value = ''; runSearch(0); $('#search').focus(); });
+    $('#table-filter').addEventListener('input', () => { renderTableOptions(); if ($('#tables').value && $('#tables').value !== (tableMeta && tableMeta.name)) loadRows(true).catch((e) => status(e.message, true)); });
     // ---- Ingreso, salida y contraseña
     $('#login-form').addEventListener('submit', async (event) => {
       event.preventDefault();

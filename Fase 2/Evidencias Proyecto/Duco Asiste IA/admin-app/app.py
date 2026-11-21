@@ -296,6 +296,44 @@ def foreign_labels(conn, meta: dict, rows: list[dict]) -> dict:
     return labels
 
 
+def search_clause(conn, meta: dict, term: str, only_column: str | None = None) -> tuple[str, dict]:
+    """Condición WHERE para buscar un texto en una tabla: en todas las columnas (o en una) y, en las claves foráneas, en el texto de la fila a la que apuntan
+    (así «María» encuentra los mensajes de la conversación de María). Sin distinguir mayúsculas; los símbolos % y _ se buscan tal cual."""
+    term = str(term or "").strip()[:100]
+    if not term:
+        return "", {}
+    escaped = term.lower().replace("!", "!!").replace("%", "!%").replace("_", "!_")
+    binds = {"term": f"%{escaped}%"}
+    by_name = {col["name"]: col for col in meta["columns"]}
+    if only_column and only_column not in by_name:
+        raise ValueError("La columna no existe en la tabla")
+    parts = []
+    for column in ([by_name[only_column]] if only_column else meta["columns"]):
+        ident = safe_ident(column["name"])
+        kind = column["type"]
+        if kind in ("CLOB", "NCLOB"):
+            expression = f"DBMS_LOB.SUBSTR({ident}, 2000, 1)"
+        elif kind == "DATE" or kind.startswith("TIMESTAMP"):
+            expression = f"TO_CHAR({ident}, 'YYYY-MM-DD HH24:MI:SS')"
+        elif kind in ("BLOB", "RAW", "LONG"):
+            continue
+        else:
+            expression = f"TO_CHAR({ident})"
+        parts.append(f"LOWER({expression}) LIKE :term ESCAPE '!'")
+    # Claves foráneas: también se busca en el texto legible de la fila relacionada.
+    info = schema_info(conn)
+    for fk in [f for f in info["foreignKeys"] if f["table"] == meta["name"] and (not only_column or f["column"] == only_column)]:
+        with conn.cursor() as cur:
+            cur.execute("SELECT column_name FROM user_tab_columns WHERE table_name = :t", t=fk["parentTable"])
+            present = {row[0] for row in cur}
+        chosen = [name for name in LABEL_CANDIDATES if name in present][:2]
+        if not chosen:
+            continue
+        label = "COALESCE(" + ", ".join(f"TO_CHAR(SUBSTR({safe_ident(name)}, 1, 200))" for name in chosen) + ")"
+        parts.append(f"{safe_ident(fk['column'])} IN (SELECT {safe_ident(fk['parentColumn'])} FROM {safe_ident(fk['parentTable'])} WHERE LOWER({label}) LIKE :term ESCAPE '!')")
+    return (" WHERE " + " OR ".join(parts), binds) if parts else (" WHERE 1 = 0", {})
+
+
 def normalize(value, data_type: str):
     if value is None or value == "":
         return None
@@ -556,13 +594,20 @@ class Handler(BaseHTTPRequestHandler):
                     order, order_label = self.row_order(meta)
                     info = schema_info(conn)
                     docs = describe_table(conn, meta, info)
+                    query_args = parse_qs(parsed.query)
+                    term = (query_args.get("q") or [""])[0]
+                    only_column = ((query_args.get("col") or [""])[0] or "").upper() or None
+                    where, binds = search_clause(conn, meta, term, only_column)
                     with conn.cursor() as cur:
                         cur.execute(f"SELECT COUNT(*) FROM {qtable}")
+                        table_total = cur.fetchone()[0]
+                        cur.execute(f"SELECT COUNT(*) FROM {qtable}{where}", binds)
                         total = cur.fetchone()[0]
-                        cur.execute(f"SELECT * FROM {qtable} ORDER BY {order} FETCH FIRST 200 ROWS ONLY")
+                        cur.execute(f"SELECT * FROM {qtable}{where} ORDER BY {order} FETCH FIRST 200 ROWS ONLY", binds)
                         names = [col[0] for col in cur.description]
                         rows = [dict(zip(names, row)) for row in cur]
-                    return self.send_json(200, {"meta": meta, "rows": rows, "limit": 200, "orderedBy": order_label, "total": total,
+                    return self.send_json(200, {"meta": meta, "rows": rows, "limit": 200, "orderedBy": order_label, "total": total, "tableTotal": table_total,
+                                                "query": term.strip()[:100], "column": only_column,
                                                 "docs": docs, "displayOrder": display_order(meta), "labels": foreign_labels(conn, meta, rows)})
             self.send_json(404, {"error": "Ruta no encontrada"})
         except Exception as exc:

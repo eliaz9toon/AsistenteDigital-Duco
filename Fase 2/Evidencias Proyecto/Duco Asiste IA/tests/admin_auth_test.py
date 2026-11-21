@@ -149,6 +149,20 @@ def main() -> int:
         check("cada ID de sesión trae su etiqueta legible", len(body["labels"].get("ID_SESION", {})) > 0 and all(len(v) > 0 for v in body["labels"]["ID_SESION"].values()))
         check("se informa de qué tablas usan a MENSAJES", any(t == "VALORACIONES_RESPUESTA" for t, _ in body["docs"]["referencedBy"]) and body["total"] >= len(body["rows"]))
 
+        print("Buscador de registros")
+        status, body = admin.call("GET", "/api/tables/MENSAJES/rows?q=ASSISTANT&col=ROL_EMISOR")
+        check("buscar en una columna filtra (sin distinguir mayúsculas)", status == 200 and body["total"] > 0 and all(r["ROL_EMISOR"] == "assistant" for r in body["rows"]), str(body.get("total")))
+        status, body = admin.call("GET", "/api/tables/MENSAJES/rows?q=zzz-no-existe-esto")
+        check("una búsqueda sin coincidencias devuelve 0", status == 200 and body["total"] == 0 and body["rows"] == [] and body["tableTotal"] > 0)
+        status, body = admin.call("GET", "/api/tables/MENSAJES/rows?q=%25")
+        check("el símbolo % se busca literal (no es comodín)", status == 200 and body["total"] < body["tableTotal"], str(body.get("total")))
+        status, body = admin.call("GET", "/api/tables/MENSAJES/rows?q=a&col=NO_EXISTE")
+        check("columna inexistente → 400", status == 400)
+        status, body = admin.call("GET", "/api/tables/MENSAJES/rows?q=%27%3B+DROP+TABLE+MENSAJES%3B--")
+        check("un intento de inyección SQL se trata como texto", status == 200 and body["total"] == 0)
+        status, body = admin.call("GET", "/api/tables/PROPUESTAS_CONOCIMIENTO/rows?q=2026-11")
+        check("también busca en fechas", status == 200 and body["total"] > 0)
+
         print("Roles")
         reviewer = Client()
         status, _ = reviewer.call("POST", "/api/auth/login", {"email": reviewer_email, "password": reviewer_pw})
@@ -219,6 +233,13 @@ def main() -> int:
                                                                 "answer": "Sí, hay becas internas.", "rating": 1, "userName": "ZZ Test María",
                                                                 "experience": {"page": "/duoc.html", "steps": []}})
         check("la valoración del chat se guarda y audita", status == 201, str(body))
+        print("Buscar por el nombre del usuario del chat")
+        searcher = Client()
+        check("administrador vuelve a ingresar", searcher.call("POST", "/api/auth/login", {"email": admin_email, "password": "Otra-Clave-2026"})[0] == 200)
+        status, body = searcher.call("GET", "/api/tables/MENSAJES/rows?q=ZZ+Test+Mar%C3%ADa")
+        check("buscar un nombre encuentra los mensajes de esa conversación (por la clave foránea)", status == 200 and body["total"] >= 2 and all(r["ID_SESION"] for r in body["rows"]), str(body.get("total")))
+        status, body = searcher.call("GET", "/api/tables/SESIONES_CHAT/rows?q=zz+test&col=NOMBRE_USUARIO")
+        check("buscar por nombre en SESIONES_CHAT", status == 200 and body["total"] == 1)
     finally:
         cleanup([admin_email, reviewer_email, "zz.test.nuevo@duco.local"], [session_key], started)
 
