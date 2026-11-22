@@ -509,9 +509,7 @@ class Handler(BaseHTTPRequestHandler):
                 return self.send_json(400, {"found": False, "reason": "parametros invalidos"})
             except Exception as error:
                 return self.send_json(200, {"found": False, "reason": "servicio no disponible"})
-        if path == "/" or path == "/index.html":
-            return self.serve_index()
-        if path in {"/duco", "/duoc.html"}:
+        if path in {"/", "/duco", "/duoc.html"}:
             return self.serve_project_file("duoc.html")
         if path in {"/carreras.html", "/admision.html", "/financiamiento.html", "/sedes.html", "/vida-estudiantil.html", "/nosotros.html"}:
             return self.serve_project_file(path.lstrip("/"))
@@ -1257,14 +1255,6 @@ class Handler(BaseHTTPRequestHandler):
         if set(values) & identity or (not allow_pk and set(values) & pk):
             raise ValueError("No se puede modificar una clave generada o clave primaria")
         return values
-
-    def serve_index(self):
-        content = (ROOT / "index.html").read_bytes()
-        self.send_response(200)
-        self.send_header("Content-Type", "text/html; charset=utf-8")
-        self.send_header("Content-Length", str(len(content)))
-        self.end_headers()
-        self.wfile.write(content)
 
     @staticmethod
     def is_project_asset(path: str) -> bool:

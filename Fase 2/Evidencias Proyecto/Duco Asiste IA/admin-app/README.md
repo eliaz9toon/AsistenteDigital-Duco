@@ -1,6 +1,6 @@
 # Duco Admin local
 
-Aplicación CRUD local para revisar y modificar las tablas del esquema Oracle conectado. Se sirve en `127.0.0.1` y usa la conexión configurada en el backend; las credenciales no se guardan en el navegador.
+Servidor local (API) que conecta el asistente y la **aplicación de escritorio** con el esquema Oracle. Se sirve en `127.0.0.1` y usa la conexión configurada en el backend. Desde la versión de escritorio ya no existe el panel web en HTML: ver, buscar, editar y evaluar las tablas se hace en la aplicación de escritorio (`Iniciar_Dashboard.cmd`).
 
 ## Requisitos
 
@@ -33,7 +33,7 @@ python -m pip install -r requirements.txt
 python app.py
 ```
 
-En `.env`, configura `ORACLE_USER`, `ORACLE_PASSWORD` y `ORACLE_DSN`. XE suele usar `localhost:1521/XEPDB1`; Oracle Database Free suele usar `localhost:1521/FREEPDB1`. Abre `http://127.0.0.1:8765` en el navegador. Cierra la aplicación con `Ctrl+C` en la terminal.
+En `.env`, configura `ORACLE_USER`, `ORACLE_PASSWORD` y `ORACLE_DSN`. XE suele usar `localhost:1521/XEPDB1`; Oracle Database Free suele usar `localhost:1521/FREEPDB1`. Cierra la aplicación con `Ctrl+C` en la terminal.
 
 La administración muestra hasta 200 filas por tabla y permite insertar, editar y eliminar. **Revisar Duco** permite aprobar/rechazar respuestas positivas propuestas y marcar valoraciones negativas como revisadas; las propuestas muestran votos positivos y negativos de sesiones únicas. Las valoraciones de preguntas similares se acumulan en la propuesta correspondiente. Si una pregunta coincide con una respuesta aprobada, Duco guarda la nueva frase como sinónimo y reutiliza el conocimiento aprobado sin crear una propuesta duplicada. Al aprobar una propuesta, sus variantes valoradas se transfieren al conocimiento aprobado. Las conversaciones no se guardan automáticamente: solo se persiste la pregunta y respuesta cuando alguien pulsa 👍 o 👎. Oracle valida las claves foráneas y restricciones; si un registro está relacionado, la interfaz muestra el error y no oculta el fallo. La aplicación se liga únicamente a localhost: no la expongas a una red compartida sin añadir autenticación y controles de seguridad.
 
@@ -81,10 +81,10 @@ Ejemplos: «¿cuánto demoro a la sede de Maipú desde Av. Matta 123, Santiago?�
 
 ## Login, roles y auditoría (20/11/2026)
 
-El panel (`http://127.0.0.1:8765/`) exige **iniciar sesión**. Hasta ahora cualquiera podía ver y borrar filas.
+La aplicación de escritorio (y la API que usa) exige **iniciar sesión**. Hasta ahora cualquiera podía ver y borrar filas.
 
 - **Primer usuario:** `python create_admin.py --name "Tu Nombre" --email tu@correo.cl --generate` (muestra una contraseña generada una sola vez; cámbiala con «Mi contraseña»). Sin `--generate` la pide sin mostrarla. Con `--reset` restablece la de un usuario existente.
-- **Roles** (tres, aplicados igual en el panel web y en la aplicación de escritorio; el servidor los comprueba en cada petición):
+- **Roles** (tres, aplicados en la aplicación de escritorio; el servidor los comprueba en cada petición):
   | Rol | Puede |
   |---|---|
   | `ADMINISTRADOR` | Todo: ver, crear, editar y borrar registros, evaluar, ver la auditoría y gestionar usuarios. |
