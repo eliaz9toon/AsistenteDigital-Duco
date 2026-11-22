@@ -245,7 +245,7 @@ En `js/duco-assistant.js`, reemplazar el SVG dentro de `.duco-avatar`
 - Mapa de sedes y calendario restringidos a Duoc UC
 - Protección de datos sensibles en el chat
 - Backend Python con Oracle Database Free (32 tablas): persistencia de conversaciones, valoración de respuestas y conocimiento aprobado
-- Panel web Duco Admin y 13 suites de pruebas automatizadas del navegador
+- Aplicación de escritorio (Duco Admin) y 13 suites de pruebas automatizadas del navegador
 - Responsive design y respuestas en inglés
 
 ⏳ **Pendiente:**
