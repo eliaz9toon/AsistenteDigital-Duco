@@ -326,6 +326,8 @@ class Dashboard:
 
     def authenticate(self, email, password):
         """Inicia sesión con una cuenta del panel y abre las pestañas que corresponden a su rol. Lanza RuntimeError si no se puede."""
+        if self.admin is not None:
+            return
         admin = self.request("/api/auth/login", {"email": email, "password": password})["admin"]
         self.admin = admin
         self.mode.configure(text=f"{admin['name']} · {admin['role']}")
