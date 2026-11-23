@@ -35,7 +35,9 @@ def main() -> int:
     with app.connect() as conn:
         with conn.cursor() as cur:
             for index, block in enumerate(blocks(sql_text), 1):
-                statement = block.rstrip().rstrip(";") if not block.upper().lstrip().startswith(("BEGIN", "DECLARE")) else block
+                head = " ".join(block.upper().split()[:4])
+                is_plsql = head.startswith(("BEGIN", "DECLARE")) or any(k in head for k in ("PROCEDURE", "FUNCTION", "PACKAGE", "TRIGGER"))
+                statement = block if is_plsql else block.rstrip().rstrip(";")
                 cur.execute(statement)
                 print(f"bloque {index}: ok ({cur.rowcount if cur.rowcount and cur.rowcount > 0 else 0} filas)")
         conn.commit()

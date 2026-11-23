@@ -50,7 +50,7 @@ El DDL usa tipos y sintaxis Oracle, e importa como modelo relacional. Para gener
 
 Cada integrante puede tener su propia base para practicar `SELECT`, `INSERT` o `DELETE` sin riesgo para los datos de otro. Funciona con Oracle Free 26ai o con Oracle XE 18c/21c (desde 12c; el nombre del servicio es `FREEPDB1` o `XEPDB1`).
 
-1. **Crear la base vacía:** `oracle/create_user.sql` como `SYSTEM`; luego `oracle/schema.sql` como `DUCO_APP` (ya incluye lo de las migraciones `001` a `005`: en una base nueva **no** se ejecutan); después solo `006` y `007` con `python apply_migration.py <archivo>` (desde `admin-app/`).
+1. **Crear la base vacía:** `oracle/create_user.sql` como `SYSTEM`; luego `oracle/schema.sql` como `DUCO_APP` (ya incluye lo de las migraciones `001` a `005`: en una base nueva **no** se ejecutan); después `006`, `007` y `008` con `python apply_migration.py <archivo>` (desde `admin-app/`). Para los procedimientos almacenados: `009a_permiso_procedimientos.sql` como `SYSTEM` (una vez) y luego `009_procedimientos_almacenados.sql` como `DUCO_APP`.
 2. **Pedir el archivo de datos** a quien tenga la base cargada, que lo genera con `python export_data.py` (queda en `database/export/`, sin usuarios, contraseñas ni auditoría, y con los nombres del chat anonimizados; `--keep-names` los conserva).
 3. **Cargarlo en TU base local:** `python import_data.py ../database/export/duco_datos_AAAAMMDD-HHMM.json` (con `admin-app/.env` apuntando a TU base). El script se niega a cargar en una base que no sea local, se niega si las tablas ya tienen datos, hace todo en una transacción y deja los contadores de ID al día. `--dry-run` prueba sin dejar nada.
 4. **Crear tu usuario del panel:** `python create_admin.py --name "Tu Nombre" --email tu@correo.cl --generate`.
@@ -60,3 +60,12 @@ El archivo exportado contiene conversaciones reales: compártelo solo con el equ
 ## Consola administrativa
 
 Consulta `../admin-app/README.md` para iniciar la aplicación local de altas, consultas, edición y eliminación de registros.
+
+## Procedimientos almacenados (migración 009)
+
+| Procedimiento | Qué hace |
+|---|---|
+| `SP_REVISAR_PROPUESTA(id, decisión, id_admin, actor, OUT id_faq)` | Aprueba o rechaza una propuesta de conocimiento en una sola operación: valida la decisión (`ORA-20001`), bloquea la fila y comprueba que siga `PENDIENTE` (`ORA-20002`), cambia estado y fecha de revisión, crea la pregunta frecuente si se aprueba y registra todo en `AUDITORIA_CAMBIOS`. No hace `COMMIT`: lo decide quien la llama. |
+| `SP_RESUMEN_USO(días, OUT sesiones, OUT mensajes, OUT negativas)` | Cuenta sesiones, mensajes y valoraciones negativas de los últimos N días (7 por defecto). |
+
+Necesitan `GRANT CREATE PROCEDURE TO DUCO_APP` (`009a`, como `SYSTEM`). Demostración para SQL Developer: `oracle/demo_procedimientos.sql` (deshace todo al final).
