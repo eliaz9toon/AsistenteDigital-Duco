@@ -26,6 +26,13 @@ BEGIN
         DBMS_OUTPUT.PUT_LINE('Segundo intento rechazado: ' || SQLERRM);
     END;
 
+    -- 3b) El trigger TRG_PROPUESTAS_REVISION impide cambiar una propuesta ya revisada, aunque se haga a mano
+    BEGIN
+        UPDATE PROPUESTAS_CONOCIMIENTO SET ESTADO = 'PENDIENTE' WHERE ID_PROPUESTA = v_id_propuesta;
+    EXCEPTION WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Trigger: ' || SQLERRM);
+    END;
+
     -- 4) Resumen de uso de los últimos 7 días
     SP_RESUMEN_USO(7, v_sesiones, v_mensajes, v_negativas);
     DBMS_OUTPUT.PUT_LINE('Últimos 7 días -> sesiones: ' || v_sesiones || ', mensajes: ' || v_mensajes || ', valoraciones negativas: ' || v_negativas);

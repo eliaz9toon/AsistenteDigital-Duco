@@ -69,3 +69,11 @@ Consulta `../admin-app/README.md` para iniciar la aplicación local de altas, co
 | `SP_RESUMEN_USO(días, OUT sesiones, OUT mensajes, OUT negativas)` | Cuenta sesiones, mensajes y valoraciones negativas de los últimos N días (7 por defecto). |
 
 Necesitan `GRANT CREATE PROCEDURE TO DUCO_APP` (`009a`, como `SYSTEM`). Demostración para SQL Developer: `oracle/demo_procedimientos.sql` (deshace todo al final).
+
+## Trigger (migración 010)
+
+| Trigger | Qué hace |
+|---|---|
+| `TRG_PROPUESTAS_REVISION` (sobre `PROPUESTAS_CONOCIMIENTO`) | Se dispara solo al cambiar `ESTADO`: impide cambiar una propuesta ya revisada (`ORA-20003`) y completa `FECHA_REVISION` al pasar de `PENDIENTE` a revisada. Vale para cualquier origen del cambio (aplicación, SQL Developer o procedimiento). Necesita `GRANT CREATE TRIGGER TO DUCO_APP` (`009a`). |
+
+Diferencia: un procedimiento se llama con parámetros; un trigger se dispara solo ante un `INSERT`, `UPDATE` o `DELETE`.
