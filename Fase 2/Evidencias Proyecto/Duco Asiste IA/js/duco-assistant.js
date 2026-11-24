@@ -43,6 +43,7 @@ class DucoAssistant {
       // Registro de quién usa el chat: se pide el nombre (o apodo) y se guarda la sesión en la base.
       if (!this.userName && this.nameRequired()) this.showNameGate();
       else this.registerSession();
+      this.updateInputLock();
       this.refreshSiteContext();
       this.listenForNavigationChanges();
       const previousPage = sessionStorage.getItem('duco-navigation-current');
@@ -395,11 +396,32 @@ class DucoAssistant {
       messages.appendChild(row);
     }
     const input = document.getElementById(this.inputId);
-    if (input) { input.value = ''; input.focus(); }
+    if (input) input.value = '';
+    if (!this.userName && this.nameRequired()) this.showNameGate(true); // sin nombre se vuelve a pedir y el campo sigue bloqueado
+    else if (input) input.focus();
   }
 
   // ---- Nombre de quien usa el chat -----------------------------------------------------------------------------
   nameRequired() { return window.ducoConfig?.requireUserName !== false; }
+
+  /** Sin nombre guardado el campo de texto y el botón de enviar quedan bloqueados hasta completar el formulario del nombre. */
+  updateInputLock() {
+    const locked = !this.userName && this.nameRequired();
+    const input = document.getElementById(this.inputId);
+    const send = document.getElementById('duco-send-btn');
+    if (input) {
+      input.disabled = locked;
+      if (locked) {
+        if (!input.dataset.ducoPlaceholder) input.dataset.ducoPlaceholder = input.placeholder;
+        input.placeholder = 'Escribe tu nombre arriba para empezar';
+      } else if (input.dataset.ducoPlaceholder) {
+        input.placeholder = input.dataset.ducoPlaceholder;
+        delete input.dataset.ducoPlaceholder;
+      }
+    }
+    if (send) send.disabled = locked || Boolean(this.isProcessing);
+    return locked;
+  }
 
   getUserName() {
     try { return localStorage.getItem('ducoUserName') || ''; } catch (error) { return ''; }
@@ -408,11 +430,13 @@ class DucoAssistant {
   setUserName(name) {
     this.userName = name;
     try { localStorage.setItem('ducoUserName', name); } catch (error) { /* sin almacenamiento: se vuelve a pedir en la próxima visita */ }
+    this.updateInputLock();
   }
 
   clearUserName() {
     this.userName = '';
     try { localStorage.removeItem('ducoUserName'); } catch (error) { /* nada que borrar */ }
+    this.updateInputLock();
   }
 
   /** El nombre es lo único que se pide: sin RUT, correo ni teléfono. */
@@ -438,6 +462,7 @@ class DucoAssistant {
   showNameGate(focus = false) {
     const messages = document.getElementById(this.messagesId);
     if (!messages || messages.querySelector('.duco-name-gate')) return;
+    this.updateInputLock();
     const row = document.createElement('div');
     row.className = 'duco-message duco-message-assistant duco-name-gate';
     const content = document.createElement('div');
@@ -600,7 +625,7 @@ class DucoAssistant {
     this.isProcessing = Boolean(value);
     const send = document.getElementById('duco-send-btn');
     const reset = document.getElementById('duco-reset-btn');
-    if (send) send.disabled = this.isProcessing;
+    if (send) send.disabled = this.isProcessing || (!this.userName && this.nameRequired());
     if (reset) reset.disabled = this.isProcessing;
   }
 
