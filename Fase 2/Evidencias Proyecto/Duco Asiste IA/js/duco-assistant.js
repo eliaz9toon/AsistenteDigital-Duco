@@ -38,19 +38,24 @@ class DucoAssistant {
       this.createUI();
       this.attachEventListeners();
       this.ensureLauncherVisible();
-      this.userName = this.getUserName();
+      const pendingNavigation = this.getPendingNavigation();
+      this.userName = pendingNavigation ? this.getUserName() : '';
+      if (!pendingNavigation) {
+        this.clearUserName();
+        if (this.nameRequired()) window.chatHandler?.clearHistory();
+      }
+      this.setProcessing(false);
       this.showWelcomeMessage();
       // Registro de quién usa el chat: se pide el nombre (o apodo) y se guarda la sesión en la base.
       if (!this.userName && this.nameRequired()) this.showNameGate();
       else this.registerSession();
-      this.updateInputLock();
       this.refreshSiteContext();
       this.listenForNavigationChanges();
       const previousPage = sessionStorage.getItem('duco-navigation-current');
       if (previousPage && previousPage !== window.location.pathname) sessionStorage.setItem('duco-navigation-previous',previousPage);
       sessionStorage.setItem('duco-navigation-current',window.location.pathname);
       this.rememberCurrentCareer();
-      this.resumeNavigationFlow();
+      this.resumeNavigationFlow(pendingNavigation);
       this.checkAiStatus();
     } catch (error) {
       console.error('[Duco] Error en setup:', error);
@@ -211,10 +216,10 @@ class DucoAssistant {
 
             <div class="duco-input-area">
               <div class="duco-composer">
-              <input 
-                type="text" 
-                id="${this.inputId}" 
-                class="duco-input" 
+              <input
+                type="text"
+                id="${this.inputId}"
+                class="duco-input"
                 placeholder="Escribe tu pregunta..."
                 aria-label="Escribe tu mensaje para Duco"
               />
@@ -381,62 +386,31 @@ class DucoAssistant {
     const messages = document.getElementById(this.messagesId);
     if (messages) messages.replaceChildren();
     this.hideTypingIndicator();
-    const welcome = this.userName
-      ? `¡Hola de nuevo, ${this.userName}! 👋 Soy Duco, tu asistente virtual de Duoc UC. ¿Cómo puedo ayudarte hoy?`
-      : '¡Hola! 👋 Soy Duco, tu asistente virtual de Duoc UC. ¿Cómo puedo ayudarte hoy?';
-    window.chatHandler?.addAssistantMessage(welcome, false);
-    this.registerSession(); // la conversación nueva tiene otro identificador: se registra con el mismo nombre
-    if (messages) {
-      const row = document.createElement('div');
-      row.className = 'duco-message duco-message-assistant';
-      const content = document.createElement('div');
-      content.className = 'duco-message-content';
-      content.textContent = welcome;
-      row.appendChild(content);
-      messages.appendChild(row);
-    }
+    this.clearUserName();
+    this.showWelcomeMessage();
     const input = document.getElementById(this.inputId);
     if (input) input.value = '';
-    if (!this.userName && this.nameRequired()) this.showNameGate(true); // sin nombre se vuelve a pedir y el campo sigue bloqueado
-    else if (input) input.focus();
+    if (this.nameRequired()) this.showNameGate(true);
+    else input?.focus();
   }
 
   // ---- Nombre de quien usa el chat -----------------------------------------------------------------------------
   nameRequired() { return window.ducoConfig?.requireUserName !== false; }
 
-  /** Sin nombre guardado el campo de texto y el botón de enviar quedan bloqueados hasta completar el formulario del nombre. */
-  updateInputLock() {
-    const locked = !this.userName && this.nameRequired();
-    const input = document.getElementById(this.inputId);
-    const send = document.getElementById('duco-send-btn');
-    if (input) {
-      input.disabled = locked;
-      if (locked) {
-        if (!input.dataset.ducoPlaceholder) input.dataset.ducoPlaceholder = input.placeholder;
-        input.placeholder = 'Escribe tu nombre arriba para empezar';
-      } else if (input.dataset.ducoPlaceholder) {
-        input.placeholder = input.dataset.ducoPlaceholder;
-        delete input.dataset.ducoPlaceholder;
-      }
-    }
-    if (send) send.disabled = locked || Boolean(this.isProcessing);
-    return locked;
-  }
-
   getUserName() {
-    try { return localStorage.getItem('ducoUserName') || ''; } catch (error) { return ''; }
+    try { return sessionStorage.getItem('ducoUserName') || ''; } catch (error) { return ''; }
   }
 
   setUserName(name) {
     this.userName = name;
-    try { localStorage.setItem('ducoUserName', name); } catch (error) { /* sin almacenamiento: se vuelve a pedir en la próxima visita */ }
-    this.updateInputLock();
+    this.setProcessing(this.isProcessing);
+    try { sessionStorage.setItem('ducoUserName', name); } catch (error) { /* sin almacenamiento: se vuelve a pedir en la próxima visita */ }
   }
 
   clearUserName() {
     this.userName = '';
-    try { localStorage.removeItem('ducoUserName'); } catch (error) { /* nada que borrar */ }
-    this.updateInputLock();
+    this.setProcessing(this.isProcessing);
+    try { sessionStorage.removeItem('ducoUserName'); } catch (error) { /* nada que borrar */ }
   }
 
   /** El nombre es lo único que se pide: sin RUT, correo ni teléfono. */
@@ -462,7 +436,6 @@ class DucoAssistant {
   showNameGate(focus = false) {
     const messages = document.getElementById(this.messagesId);
     if (!messages || messages.querySelector('.duco-name-gate')) return;
-    this.updateInputLock();
     const row = document.createElement('div');
     row.className = 'duco-message duco-message-assistant duco-name-gate';
     const content = document.createElement('div');
@@ -472,7 +445,7 @@ class DucoAssistant {
     const form = document.createElement('form');
     form.className = 'duco-name-form';
     const input = document.createElement('input');
-    input.type = 'text'; input.maxLength = 40; input.placeholder = 'Tu nombre'; input.autocomplete = 'given-name';
+    input.type = 'text'; input.maxLength = 40; input.placeholder = 'Tu nombre'; input.autocomplete = 'off';
     input.setAttribute('aria-label', 'Tu nombre o apodo');
     const submit = document.createElement('button');
     submit.type = 'submit'; submit.className = 'duco-action-btn'; submit.textContent = 'Continuar';
@@ -625,7 +598,10 @@ class DucoAssistant {
     this.isProcessing = Boolean(value);
     const send = document.getElementById('duco-send-btn');
     const reset = document.getElementById('duco-reset-btn');
-    if (send) send.disabled = this.isProcessing || (!this.userName && this.nameRequired());
+    const needsName = this.nameRequired() && !this.userName;
+    const input = document.getElementById(this.inputId);
+    if (input) input.disabled = needsName;
+    if (send) send.disabled = this.isProcessing || needsName;
     if (reset) reset.disabled = this.isProcessing;
   }
 
@@ -2033,12 +2009,17 @@ class DucoAssistant {
     } catch { return null; }
   }
 
-  resumeNavigationFlow() {
-    let pending;
-    try { pending = JSON.parse(sessionStorage.getItem('duco-navigation-pending') || 'null'); } catch { pending = null; }
+  getPendingNavigation() {
+    try {
+      const pending = JSON.parse(sessionStorage.getItem('duco-navigation-pending') || 'null');
+      sessionStorage.removeItem('duco-navigation-pending');
+      if (pending?.destination === window.location.pathname && Date.now() - pending.created <= 120000) return pending;
+    } catch (error) { /* la navegación guiada requiere almacenamiento disponible */ }
+    return null;
+  }
+
+  resumeNavigationFlow(pending) {
     if (!pending) return;
-    sessionStorage.removeItem('duco-navigation-pending');
-    if (pending.destination !== window.location.pathname || Date.now() - pending.created > 120000) return;
     if (pending.open) this.openPanel();
     if (!Array.isArray(pending.remaining)) return;
     const navigationTrace=pending.feedbackInteraction?.experience?.steps?.at(-1);
