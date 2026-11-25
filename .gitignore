@@ -1,0 +1,8 @@
+# Credenciales y datos locales: nunca se suben
+**/admin-app/.env
+**/database/backups/
+**/database/export/
+**/*.log
+**/__pycache__/
+**/.venv/
+**/*-temp.sql

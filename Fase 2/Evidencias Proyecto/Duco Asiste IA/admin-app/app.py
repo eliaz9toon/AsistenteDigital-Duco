@@ -272,6 +272,11 @@ def display_order(meta: dict) -> list[str]:
     return [col["name"] for col in sorted(meta["columns"], key=rank)]  # sorted es estable: conserva el orden original dentro de cada grupo
 
 
+def first_nonempty(parts: list[str]) -> str:
+    """COALESCE de Oracle exige 2 o más argumentos (ORA-00938): con una sola columna se usa directamente."""
+    return parts[0] if len(parts) == 1 else "COALESCE(" + ", ".join(parts) + ")"
+
+
 def foreign_labels(conn, meta: dict, rows: list[dict]) -> dict:
     """Para cada columna foránea, el texto de la fila a la que apunta («181» → «María»), para entender de qué es cada ID."""
     labels: dict[str, dict[str, str]] = {}
@@ -288,7 +293,7 @@ def foreign_labels(conn, meta: dict, rows: list[dict]) -> dict:
                 continue
             # Un UUID de 36 caracteres no ayuda a leer: se abrevia a sus primeros 8 («sesión 76f517e7»).
             part = lambda name: f"'sesión ' || SUBSTR({safe_ident(name)}, 1, 8)" if name == "CLIENT_SESSION_ID" else f"TO_CHAR(SUBSTR({safe_ident(name)}, 1, 60))"
-            expression = "COALESCE(" + ", ".join(part(name) for name in chosen) + ")"
+            expression = first_nonempty([part(name) for name in chosen])
             binds = {f"v{i}": value for i, value in enumerate(values)}
             placeholders = ", ".join(f":v{i}" for i in range(len(values)))
             cur.execute(f"SELECT {safe_ident(fk['column'])}, {expression} FROM {safe_ident(fk['table'])} WHERE {safe_ident(fk['column'])} IN ({placeholders})", binds)
@@ -308,7 +313,11 @@ def search_clause(conn, meta: dict, term: str, only_column: str | None = None) -
     if only_column and only_column not in by_name:
         raise ValueError("La columna no existe en la tabla")
     parts = []
+    if only_column in HIDDEN_COLUMNS:
+        raise ValueError("Esa columna no se puede buscar")
     for column in ([by_name[only_column]] if only_column else meta["columns"]):
+        if column["name"] in HIDDEN_COLUMNS:
+            continue
         ident = safe_ident(column["name"])
         kind = column["type"]
         if kind in ("CLOB", "NCLOB"):
@@ -329,7 +338,7 @@ def search_clause(conn, meta: dict, term: str, only_column: str | None = None) -
         chosen = [name for name in LABEL_CANDIDATES if name in present][:2]
         if not chosen:
             continue
-        label = "COALESCE(" + ", ".join(f"TO_CHAR(SUBSTR({safe_ident(name)}, 1, 200))" for name in chosen) + ")"
+        label = first_nonempty([f"TO_CHAR(SUBSTR({safe_ident(name)}, 1, 200))" for name in chosen])
         parts.append(f"{safe_ident(fk['column'])} IN (SELECT {safe_ident(fk['parentColumn'])} FROM {safe_ident(fk['parentTable'])} WHERE LOWER({label}) LIKE :term ESCAPE '!')")
     return (" WHERE " + " OR ".join(parts), binds) if parts else (" WHERE 1 = 0", {})
 
@@ -390,6 +399,7 @@ def first_out(cur_var):
 
 
 READ_ONLY_TABLES = {"AUDITORIA_CAMBIOS", "SESIONES_ADMIN", "USUARIOS_ADMIN"}
+HIDDEN_COLUMNS = {"CLAVE_HASH", "TOKEN_HASH"}  # contraseñas y tokens (aunque sean hashes) nunca se muestran ni se buscan
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -418,7 +428,7 @@ class Handler(BaseHTTPRequestHandler):
             return None
         if not row:
             return None
-        return {"sessionId": row[0], "id": row[1], "name": row[2], "email": row[3], "role": row[4] or auth.ROLE_REVIEWER, "origin": "panel"}
+        return {"sessionId": row[0], "id": row[1], "name": row[2], "email": row[3], "role": row[4] or auth.ROLE_VIEWER, "origin": "panel"}
 
     def require_admin(self, roles: set[str] | None = None) -> dict | None:
         """Devuelve el usuario con sesión válida; si no, responde 401 (sin sesión) o 403 (rol insuficiente) y devuelve None."""
@@ -513,7 +523,12 @@ class Handler(BaseHTTPRequestHandler):
         # Todo lo que muestra o administra datos del panel exige sesión; las consultas del chat (experiencias, conocimiento) son públicas.
         panel_admin = None
         if path == "/api/tables" or path.startswith("/api/tables/") or path.startswith("/api/admin/") or path in {"/api/duco/proposals", "/api/duco/negative-feedback"}:
-            roles = {auth.ROLE_ADMIN} if path == "/api/admin/users" else None
+            if path == "/api/admin/users":
+                roles = {auth.ROLE_ADMIN}
+            elif path in {"/api/duco/proposals", "/api/duco/negative-feedback", "/api/admin/reports/audit"}:
+                roles = auth.CAN_EVALUATE  # evaluar propuestas y valoraciones y ver la auditoría
+            else:
+                roles = None  # ver tablas y reportes: cualquier rol con sesión
             panel_admin = self.require_admin(roles)
             if panel_admin is None:
                 return
@@ -604,6 +619,10 @@ class Handler(BaseHTTPRequestHandler):
                         cur.execute(f"SELECT * FROM {qtable}{where} ORDER BY {order} FETCH FIRST 200 ROWS ONLY", binds)
                         names = [col[0] for col in cur.description]
                         rows = [dict(zip(names, row)) for row in cur]
+                    for row in rows:
+                        for hidden in HIDDEN_COLUMNS & set(row):
+                            if row[hidden] is not None:
+                                row[hidden] = "•••• (oculto)"
                     return self.send_json(200, {"meta": meta, "rows": rows, "limit": 200, "orderedBy": order_label, "total": total, "tableTotal": table_total,
                                                 "query": term.strip()[:100], "column": only_column,
                                                 "docs": docs, "displayOrder": display_order(meta), "labels": foreign_labels(conn, meta, rows)})
@@ -689,14 +708,14 @@ class Handler(BaseHTTPRequestHandler):
                 payload = self.body_json()
                 name = re.sub(r"\s+", " ", str(payload.get("name", ""))).strip()
                 email = str(payload.get("email", "")).strip().lower()
-                role = str(payload.get("role", auth.ROLE_REVIEWER)).upper()
+                role = str(payload.get("role", auth.ROLE_VIEWER)).upper()
                 password = str(payload.get("password", ""))
                 if not 2 <= len(name) <= 120:
                     raise ValueError("El nombre debe tener entre 2 y 120 caracteres.")
                 if not re.fullmatch(r"[^@\s]+@[^@\s]+\.[^@\s]+", email) or len(email) > 180:
                     raise ValueError("El correo no es válido.")
-                if role not in {auth.ROLE_ADMIN, auth.ROLE_REVIEWER}:
-                    raise ValueError("El rol debe ser ADMINISTRADOR o REVISOR.")
+                if role not in auth.ALL_ROLES:
+                    raise ValueError("El rol debe ser ADMINISTRADOR, EVALUADOR o CONSULTA.")
                 problem = auth.password_problem(password)
                 if problem:
                     raise ValueError(problem)
@@ -925,7 +944,7 @@ class Handler(BaseHTTPRequestHandler):
 
         feedback_review = re.fullmatch(r"/api/duco/feedback/(\d+)/review", path)
         if feedback_review:
-            admin = self.require_admin()
+            admin = self.require_admin(auth.CAN_EVALUATE)
             if admin is None:
                 return
             try:
@@ -971,7 +990,7 @@ class Handler(BaseHTTPRequestHandler):
 
         review = re.fullmatch(r"/api/duco/proposals/(\d+)/review", path)
         if review:
-            admin = self.require_admin()
+            admin = self.require_admin(auth.CAN_EVALUATE)
             if admin is None:
                 return
             try:

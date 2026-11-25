@@ -40,12 +40,40 @@ El DDL usa tipos y sintaxis Oracle, e importa como modelo relacional. Para gener
 | `SESIONES_ADMIN` | `TOKEN_HASH`, `FECHA_EXPIRA`, `FECHA_FIN`, `DIRECCION_IP` | Sesiones del panel; del token solo se guarda su SHA-256. |
 | `AUDITORIA_CAMBIOS` | `ACCION`, `ID_REGISTRO`, `VALOR_ANTERIOR`, `VALOR_NUEVO`, `NOMBRE_ACTOR`, `ORIGEN` | Cada cambio queda con tabla, fila, acción, valores antes y después, quién y desde dónde (`panel`, `chat`, `sistema` o `historico`). Es de solo lectura en el visor. |
 | Las 32 tablas | `FECHA_CREACION` (con valor por defecto) en las que no tenían ninguna fecha | Fecha y hora de creación de cada dato nuevo. Las filas anteriores quedan en `NULL`, salvo valoraciones y preguntas frecuentes, cuya fecha se recuperó de sus mensajes y propuestas. |
-| `ROLES` | `ADMINISTRADOR` y `REVISOR` | Permisos del panel. |
+| `ROLES` | `ADMINISTRADOR`, `EVALUADOR` (antes `REVISOR`) y `CONSULTA` (migración 008) | Permisos de la aplicación de escritorio. |
 
 `oracle/migrations/007_comentarios.sql` (generado desde los metadatos reales) agrega `COMMENT ON` a las 32 tablas y a sus columnas: módulo y descripción de cada tabla, qué es cada ID automático y a qué tabla apunta cada clave foránea. Es la documentación que usa el visor del panel y que se ve en SQL Developer.
 
 **Límite conocido:** la auditoría la escribe la aplicación (`app.py`), no disparadores de Oracle; un cambio hecho directamente con SQL Developer no queda registrado. Los disparadores requieren que `DUCO_APP` tenga `CREATE TRIGGER` y `CREATE PROCEDURE`, privilegios que hoy no tiene.
 
+## Base local propia para estudiar (copia de los datos)
+
+Cada integrante puede tener su propia base para practicar `SELECT`, `INSERT` o `DELETE` sin riesgo para los datos de otro. Funciona con Oracle Free 26ai o con Oracle XE 18c/21c (desde 12c; el nombre del servicio es `FREEPDB1` o `XEPDB1`).
+
+1. **Crear la base vacía:** `oracle/create_user.sql` como `SYSTEM`; luego `oracle/schema.sql` como `DUCO_APP` (ya incluye lo de las migraciones `001` a `005`: en una base nueva **no** se ejecutan); después `006`, `007` y `008` con `python apply_migration.py <archivo>` (desde `admin-app/`). Para los procedimientos almacenados: `009a_permiso_procedimientos.sql` como `SYSTEM` (una vez) y luego `009_procedimientos_almacenados.sql` como `DUCO_APP`.
+2. **Pedir el archivo de datos** a quien tenga la base cargada, que lo genera con `python export_data.py` (queda en `database/export/`, sin usuarios, contraseñas ni auditoría, y con los nombres del chat anonimizados; `--keep-names` los conserva).
+3. **Cargarlo en TU base local:** `python import_data.py ../database/export/duco_datos_AAAAMMDD-HHMM.json` (con `admin-app/.env` apuntando a TU base). El script se niega a cargar en una base que no sea local, se niega si las tablas ya tienen datos, hace todo en una transacción y deja los contadores de ID al día. `--dry-run` prueba sin dejar nada.
+4. **Crear tu usuario del panel:** `python create_admin.py --name "Tu Nombre" --email tu@correo.cl --generate`.
+
+El archivo exportado contiene conversaciones reales: compártelo solo con el equipo y **no lo subas a GitHub** (`database/export/` y `database/backups/` están en `.gitignore`).
+
 ## Consola administrativa
 
 Consulta `../admin-app/README.md` para iniciar la aplicación local de altas, consultas, edición y eliminación de registros.
+
+## Procedimientos almacenados (migración 009)
+
+| Procedimiento | Qué hace |
+|---|---|
+| `SP_REVISAR_PROPUESTA(id, decisión, id_admin, actor, OUT id_faq)` | Aprueba o rechaza una propuesta de conocimiento en una sola operación: valida la decisión (`ORA-20001`), bloquea la fila y comprueba que siga `PENDIENTE` (`ORA-20002`), cambia estado y fecha de revisión, crea la pregunta frecuente si se aprueba y registra todo en `AUDITORIA_CAMBIOS`. No hace `COMMIT`: lo decide quien la llama. |
+| `SP_RESUMEN_USO(días, OUT sesiones, OUT mensajes, OUT negativas)` | Cuenta sesiones, mensajes y valoraciones negativas de los últimos N días (7 por defecto). |
+
+Necesitan `GRANT CREATE PROCEDURE TO DUCO_APP` (`009a`, como `SYSTEM`). Demostración para SQL Developer: `oracle/demo_procedimientos.sql` (deshace todo al final).
+
+## Trigger (migración 010)
+
+| Trigger | Qué hace |
+|---|---|
+| `TRG_PROPUESTAS_REVISION` (sobre `PROPUESTAS_CONOCIMIENTO`) | Se dispara solo al cambiar `ESTADO`: impide cambiar una propuesta ya revisada (`ORA-20003`) y completa `FECHA_REVISION` al pasar de `PENDIENTE` a revisada. Vale para cualquier origen del cambio (aplicación, SQL Developer o procedimiento). Necesita `GRANT CREATE TRIGGER TO DUCO_APP` (`009a`). |
+
+Diferencia: un procedimiento se llama con parámetros; un trigger se dispara solo ante un `INSERT`, `UPDATE` o `DELETE`.

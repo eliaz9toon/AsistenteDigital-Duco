@@ -4,7 +4,7 @@ Uso:
   python create_admin.py --name "Elías Cornejo" --email elias@ejemplo.cl            # pide la contraseña sin mostrarla
   python create_admin.py --name "Elías Cornejo" --email elias@ejemplo.cl --generate # genera una contraseña y la muestra una vez
   python create_admin.py --email elias@ejemplo.cl --reset --generate                 # restablece la contraseña de un usuario existente
-Roles: ADMINISTRADOR (puede editar y borrar) o REVISOR (solo consulta y revisa propuestas).
+Roles: ADMINISTRADOR (todo), EVALUADOR (ve datos y evalúa propuestas y valoraciones) o CONSULTA (solo ve dashboard, reportes y tablas).
 La contraseña nunca se guarda: solo su hash.
 """
 from __future__ import annotations
@@ -31,7 +31,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--name", help="Nombre completo")
     parser.add_argument("--email", required=True, help="Correo (es el usuario de ingreso)")
-    parser.add_argument("--role", default=auth.ROLE_ADMIN, choices=[auth.ROLE_ADMIN, auth.ROLE_REVIEWER])
+    parser.add_argument("--role", default=auth.ROLE_ADMIN, choices=list(auth.ALL_ROLES))
     parser.add_argument("--generate", action="store_true", help="Generar una contraseña aleatoria y mostrarla una sola vez")
     parser.add_argument("--reset", action="store_true", help="Restablecer la contraseña de un usuario que ya existe")
     args = parser.parse_args()

@@ -86,13 +86,15 @@ def cleanup(emails: list[str], session_keys: list[str], since=None) -> None:
 
 def main() -> int:
     run = uuid.uuid4().hex[:6]  # correos distintos en cada corrida: el bloqueo por intentos fallidos dura 5 minutos
-    admin_email, reviewer_email = f"zz.test.admin.{run}@duco.local", f"zz.test.revisor.{run}@duco.local"
-    admin_pw, reviewer_pw = "Prueba-Admin-2026", "Prueba-Revisor-2026"
+    admin_email, evaluator_email = f"zz.test.admin.{run}@duco.local", f"zz.test.evaluador.{run}@duco.local"
+    viewer_email, viewer_pw = f"zz.test.consulta.{run}@duco.local", "Prueba-Consulta-2026"
+    admin_pw, evaluator_pw = "Prueba-Admin-2026", "Prueba-Revisor-2026"
     session_key = str(uuid.uuid4())
     started = datetime.now()
-    cleanup([admin_email, reviewer_email, "zz.test.nuevo@duco.local"], [session_key])
+    cleanup([admin_email, evaluator_email, viewer_email, "zz.test.nuevo@duco.local"], [session_key])
     make_user(auth.ROLE_ADMIN, admin_email, admin_pw)
-    make_user(auth.ROLE_REVIEWER, reviewer_email, reviewer_pw)
+    make_user(auth.ROLE_EVALUATOR, evaluator_email, evaluator_pw)
+    make_user(auth.ROLE_VIEWER, viewer_email, viewer_pw)
     try:
         print("Sin sesión")
         anonymous = Client()
@@ -149,6 +151,26 @@ def main() -> int:
         check("cada ID de sesión trae su etiqueta legible", len(body["labels"].get("ID_SESION", {})) > 0 and all(len(v) > 0 for v in body["labels"]["ID_SESION"].values()))
         check("se informa de qué tablas usan a MENSAJES", any(t == "VALORACIONES_RESPUESTA" for t, _ in body["docs"]["referencedBy"]) and body["total"] >= len(body["rows"]))
 
+        print("Todas las tablas se pueden ver y buscar sin error")
+        names = [t["name"] for t in admin.call("GET", "/api/admin/schema")[1]["tables"]]
+        broken = []
+        for name in names:
+            for query in ("", "?q=a", "?q=1"):
+                status, body = admin.call("GET", f"/api/tables/{name}/rows{query}")
+                if status != 200:
+                    broken.append(f"{name}{query}: {body.get('error', status)}")
+        check(f"las {len(names)} tablas responden con y sin búsqueda", not broken, "; ".join(broken[:3]))
+        status, body = admin.call("GET", "/api/tables/USUARIOS_ADMIN/rows")
+        check("USUARIOS_ADMIN se abre y trae el rol por nombre", status == 200 and len(body["rows"]) >= 1 and any("ADMINISTRADOR" in v for v in body["labels"].get("ID_ROL", {}).values()), str(body)[:150])
+        status, body = admin.call("GET", "/api/tables/USUARIOS_ADMIN/rows?q=administrador")
+        check("buscar «administrador» en USUARIOS_ADMIN encuentra por el nombre del rol", status == 200 and body["total"] >= 1)
+
+        status, body = admin.call("GET", "/api/tables/USUARIOS_ADMIN/rows")
+        check("las contraseñas (hash) no se muestran en el visor", status == 200 and all(r["CLAVE_HASH"] == "•••• (oculto)" for r in body["rows"]) and not any("pbkdf2" in str(r) for r in body["rows"]))
+        status, body = admin.call("GET", "/api/tables/SESIONES_ADMIN/rows")
+        check("los tokens (hash) de sesión tampoco", status == 200 and not any(len(str(r.get("TOKEN_HASH") or "")) == 64 for r in body["rows"]))
+        check("no se puede buscar dentro de las contraseñas", admin.call("GET", "/api/tables/USUARIOS_ADMIN/rows?q=pbkdf2")[1]["total"] == 0 and admin.call("GET", "/api/tables/USUARIOS_ADMIN/rows?q=x&col=CLAVE_HASH")[0] == 400)
+
         print("Buscador de registros")
         status, body = admin.call("GET", "/api/tables/MENSAJES/rows?q=ASSISTANT&col=ROL_EMISOR")
         check("buscar en una columna filtra (sin distinguir mayúsculas)", status == 200 and body["total"] > 0 and all(r["ROL_EMISOR"] == "assistant" for r in body["rows"]), str(body.get("total")))
@@ -164,14 +186,34 @@ def main() -> int:
         check("también busca en fechas", status == 200 and body["total"] > 0)
 
         print("Roles")
-        reviewer = Client()
-        status, _ = reviewer.call("POST", "/api/auth/login", {"email": reviewer_email, "password": reviewer_pw})
-        check("revisor ingresa", status == 200)
-        check("revisor puede leer tablas", reviewer.call("GET", "/api/tables/MENSAJES/rows")[0] == 200)
-        check("revisor NO puede borrar → 403", reviewer.call("DELETE", "/api/tables/MENSAJES", {"key": {"ID_MENSAJE": 999999}})[0] == 403)
-        check("revisor NO puede editar → 403", reviewer.call("PUT", "/api/tables/MENSAJES", {"key": {"ID_MENSAJE": 999999}, "values": {"CONTENIDO": "x"}})[0] == 403)
-        check("revisor NO ve usuarios → 403", reviewer.call("GET", "/api/admin/users")[0] == 403)
-        check("revisor NO crea usuarios → 403", reviewer.call("POST", "/api/admin/users", {"name": "X Y", "email": "zz.test.x@duco.local", "role": "REVISOR", "password": "Clave12345"})[0] == 403)
+        evaluator = Client()
+        status, _ = evaluator.call("POST", "/api/auth/login", {"email": evaluator_email, "password": evaluator_pw})
+        check("evaluador ingresa", status == 200)
+        check("evaluador puede leer tablas", evaluator.call("GET", "/api/tables/MENSAJES/rows")[0] == 200)
+        check("evaluador NO puede borrar → 403", evaluator.call("DELETE", "/api/tables/MENSAJES", {"key": {"ID_MENSAJE": 999999}})[0] == 403)
+        check("evaluador NO puede editar → 403", evaluator.call("PUT", "/api/tables/MENSAJES", {"key": {"ID_MENSAJE": 999999}, "values": {"CONTENIDO": "x"}})[0] == 403)
+        check("evaluador NO ve usuarios → 403", evaluator.call("GET", "/api/admin/users")[0] == 403)
+        check("evaluador NO crea usuarios → 403", evaluator.call("POST", "/api/admin/users", {"name": "X Y", "email": "zz.test.x@duco.local", "role": "EVALUADOR", "password": "Clave12345"})[0] == 403)
+
+        print("Rol CONSULTA y permisos de evaluación")
+        viewer = Client()
+        check("el usuario de consulta ingresa", viewer.call("POST", "/api/auth/login", {"email": viewer_email, "password": viewer_pw})[0] == 200)
+        check("consulta puede ver tablas", viewer.call("GET", "/api/tables/MENSAJES/rows")[0] == 200)
+        check("consulta puede ver reportes de resumen", viewer.call("GET", "/api/admin/reports/summary")[0] == 200)
+        check("consulta NO ve la auditoría → 403", viewer.call("GET", "/api/admin/reports/audit")[0] == 403)
+        check("consulta NO ve las propuestas por evaluar → 403", viewer.call("GET", "/api/duco/proposals")[0] == 403)
+        check("consulta NO ve las valoraciones negativas → 403", viewer.call("GET", "/api/duco/negative-feedback")[0] == 403)
+        check("consulta NO puede evaluar una propuesta → 403", viewer.call("POST", "/api/duco/proposals/999999/review", {"decision": "APROBADA"})[0] == 403)
+        check("consulta NO puede revisar una valoración → 403", viewer.call("POST", "/api/duco/feedback/999999/review", {})[0] == 403)
+        check("consulta NO puede editar → 403", viewer.call("PUT", "/api/tables/MENSAJES", {"key": {"ID_MENSAJE": 999999}, "values": {"CONTENIDO": "x"}})[0] == 403)
+        check("consulta NO ve usuarios → 403", viewer.call("GET", "/api/admin/users")[0] == 403)
+        check("evaluador sí ve la auditoría", evaluator.call("GET", "/api/admin/reports/audit")[0] == 200)
+        check("evaluador sí ve las propuestas por evaluar", evaluator.call("GET", "/api/duco/proposals")[0] == 200)
+        check("evaluador sí ve las valoraciones negativas", evaluator.call("GET", "/api/duco/negative-feedback")[0] == 200)
+        status, _ = evaluator.call("POST", "/api/duco/proposals/999999/review", {"decision": "APROBADA"})
+        check("evaluador PUEDE evaluar (la propuesta de prueba no existe → 400, no 403)", status == 400)
+        check("el administrador puede crear usuarios de rol CONSULTA", admin.call("POST", "/api/admin/users", {"name": "Solo Consulta", "email": "zz.test.nuevo2@duco.local", "role": "CONSULTA", "password": "Clave-Segura-2026"})[0] == 201)
+        check("un rol inexistente se rechaza", admin.call("POST", "/api/admin/users", {"name": "Raro Rol", "email": "zz.test.nuevo3@duco.local", "role": "SUPERUSUARIO", "password": "Clave-Segura-2026"})[0] == 400)
 
         print("Tablas protegidas y auditoría de cambios")
         for table in ("AUDITORIA_CAMBIOS", "USUARIOS_ADMIN", "SESIONES_ADMIN"):
@@ -197,19 +239,19 @@ def main() -> int:
             conn.commit()
 
         print("Usuarios del panel")
-        status, body = admin.call("POST", "/api/admin/users", {"name": "Nuevo Revisor", "email": "zz.test.nuevo@duco.local", "role": "REVISOR", "password": "corta"})
+        status, body = admin.call("POST", "/api/admin/users", {"name": "Nuevo Evaluador", "email": "zz.test.nuevo@duco.local", "role": "EVALUADOR", "password": "corta"})
         check("contraseña débil rechazada", status == 400 and "caracteres" in body.get("error", ""))
-        status, body = admin.call("POST", "/api/admin/users", {"name": "Nuevo Revisor", "email": "zz.test.nuevo@duco.local", "role": "REVISOR", "password": "Clave-Segura-2026"})
+        status, body = admin.call("POST", "/api/admin/users", {"name": "Nuevo Evaluador", "email": "zz.test.nuevo@duco.local", "role": "EVALUADOR", "password": "Clave-Segura-2026"})
         check("administrador crea un usuario", status == 201, str(body))
-        check("no se repite el correo", admin.call("POST", "/api/admin/users", {"name": "Nuevo Revisor", "email": "ZZ.test.nuevo@duco.local", "role": "REVISOR", "password": "Clave-Segura-2026"})[0] == 400)
+        check("no se repite el correo", admin.call("POST", "/api/admin/users", {"name": "Nuevo Evaluador", "email": "ZZ.test.nuevo@duco.local", "role": "EVALUADOR", "password": "Clave-Segura-2026"})[0] == 400)
         check("no puede desactivarse a sí mismo", admin.call("POST", f"/api/admin/users/{[u['id'] for u in admin.call('GET', '/api/admin/users')[1]['users'] if u['email'] == admin_email][0]}/active", {"active": False})[0] == 400)
 
         print("Contraseña, bloqueo y salida")
         check("cambiar contraseña con la actual equivocada falla", admin.call("POST", "/api/auth/password", {"current": "mala", "new": "Otra-Clave-2026"})[0] == 400)
         check("cambiar contraseña", admin.call("POST", "/api/auth/password", {"current": admin_pw, "new": "Otra-Clave-2026"})[0] == 200)
         locked = Client()
-        statuses = [locked.call("POST", "/api/auth/login", {"email": reviewer_email, "password": "mala-clave-1"})[0] for _ in range(auth.MAX_FAILURES)]
-        check("tras 5 fallos el ingreso se bloquea (429)", statuses[-1] == 401 and locked.call("POST", "/api/auth/login", {"email": reviewer_email, "password": reviewer_pw})[0] == 429)
+        statuses = [locked.call("POST", "/api/auth/login", {"email": evaluator_email, "password": "mala-clave-1"})[0] for _ in range(auth.MAX_FAILURES)]
+        check("tras 5 fallos el ingreso se bloquea (429)", statuses[-1] == 401 and locked.call("POST", "/api/auth/login", {"email": evaluator_email, "password": evaluator_pw})[0] == 429)
         check("salir cierra la sesión", admin.call("POST", "/api/auth/logout", {})[0] == 200 and admin.call("GET", "/api/tables")[0] == 401)
 
         print("Usuarios del chat (nombre y sesión)")
@@ -241,7 +283,7 @@ def main() -> int:
         status, body = searcher.call("GET", "/api/tables/SESIONES_CHAT/rows?q=zz+test&col=NOMBRE_USUARIO")
         check("buscar por nombre en SESIONES_CHAT", status == 200 and body["total"] == 1)
     finally:
-        cleanup([admin_email, reviewer_email, "zz.test.nuevo@duco.local"], [session_key], started)
+        cleanup([admin_email, evaluator_email, viewer_email, "zz.test.nuevo@duco.local"], [session_key], started)
 
     failed = [name for ok, name in RESULTS if not ok]
     print(f"\n{len(RESULTS) - len(failed)}/{len(RESULTS)} pasan")
