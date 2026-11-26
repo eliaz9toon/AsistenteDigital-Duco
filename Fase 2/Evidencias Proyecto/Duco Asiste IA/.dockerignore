@@ -23,3 +23,10 @@ admin-app/**
 **/.env.*
 **/.git
 **/__pycache__/
+!admin-app/desktop_dashboard.py
+!admin-app/desktop_panel.py
+!admin-app/create_admin.py
+!docker/
+docker/**
+!docker/Dashboard.Dockerfile
+!docker/start-dashboard.sh

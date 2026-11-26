@@ -291,27 +291,42 @@ Para preguntas sobre la arquitectura o integración de IA, contacta al equipo de
 **Última Actualización**: 25 de Abril de 2026  
 **Estado**: Funcional y listo para pruebas
 
-## Ejecutar Duco web con Docker Desktop
+## Ejecutar Duco con Docker Desktop
 
-Con Docker Desktop abierto en modo de contenedores Linux, inicia Oracle Free en
-Windows y conserva las credenciales de tu base en `admin-app/.env`. La imagen se
-construye con el sitio y su API Python. Compose conecta la API a Oracle mediante
-`host.docker.internal:1521/FREEPDB1`. Si usas otro servicio, define
-`DUCO_DOCKER_ORACLE_DSN` en PowerShell con el DSN correspondiente antes de iniciar.
-
-Desde la raiz del proyecto ejecuta:
+En Windows, abre Docker Desktop en modo de contenedores Linux. Desde esta carpeta,
+copia `.env.example` a `.env` y configura dos contraseñas nuevas y distintas para
+el Oracle de Docker. Para la cuenta de aplicación usa letras, números y guiones
+bajos. Compose leerá este archivo en la raíz. El archivo `admin-app/.env` sigue
+sirviendo para ejecutar Duco directamente en Windows.
 
 ```powershell
+Copy-Item .env.example .env
+notepad .env
 docker compose up --build -d
-docker compose ps
-Invoke-RestMethod http://127.0.0.1:8765/api/duco/health
+docker compose ps -a
 ```
 
-Abre http://127.0.0.1:8765/duco. Si ya tienes Duco u otro servidor usando el
-puerto 8765, libera ese puerto antes de iniciar Compose. El chequeo de salud
-confirma que la API responde. Para comprobar Oracle, inicia una conversacion
-con un nombre de prueba y busca su registro en `SESIONES_CHAT`.
+- **Duco web** en http://127.0.0.1:8765/duco.
+- **Dashboard de escritorio** en http://127.0.0.1:6080/vnc.html?autoconnect=true.
+- **Oracle Free** disponible en SQL Developer como `DUCO_APP`, host `127.0.0.1`,
+  puerto `11521`, servicio `FREEPDB1` y la contraseña de aplicación del `.env`.
+  En el primer arranque crea un esquema vacío y aplica las migraciones.
+- **Ollama** descarga `qwen3.5:4b` en el primer arranque. Comprueba que
+  `ollama-model` termine con código 0 usando `docker compose ps -a`. Mientras
+  se descarga, Duco puede servir la página y el dashboard.
 
-Para probar las respuestas de IA, inicia Ollama en Windows con el modelo del
-proyecto. El dashboard Tkinter se abre en Windows con `Iniciar_Dashboard.cmd`.
-Para detener el contenedor usa `docker compose down`.
+Si ya tienes el servidor web u Ollama de Windows usando los puertos 8765 o
+11434, detén esos procesos antes de iniciar Compose. Oracle de Windows puede
+seguir encendido porque el contenedor se publica en el puerto 11521. La primera
+ejecución requiere Internet para descargar las imágenes y el modelo.
+
+Para crear una cuenta de administrador de esta base, ejecuta:
+
+```powershell
+docker compose exec dashboard /opt/venv/bin/python /app/admin-app/create_admin.py --name "Tu Nombre" --email "tu@correo.cl"
+```
+
+Usa `docker compose down` para detener los servicios. Los datos y el modelo
+persisten en volúmenes de Docker. Para verificar la conexión a la base, inicia
+una conversación con un nombre de prueba y consulta `SESIONES_CHAT` en el
+dashboard o en SQL Developer.

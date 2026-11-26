@@ -76,7 +76,7 @@ class OllamaService:
     """Start a local Ollama server; only stop the process owned by Duco."""
 
     def __init__(self):
-        self.base_url = "http://127.0.0.1:11434"
+        self.base_url = os.getenv("DUCO_OLLAMA_URL", "http://127.0.0.1:11434")
         self.process = None
         self.lock = threading.Lock()
         self.http = build_opener(ProxyHandler({}))
