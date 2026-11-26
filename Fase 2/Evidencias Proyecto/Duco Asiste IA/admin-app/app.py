@@ -1509,9 +1509,10 @@ class Handler(BaseHTTPRequestHandler):
 
 def main():
     port = int(os.getenv("ADMIN_PORT", "8765"))
-    server = ThreadingHTTPServer(("127.0.0.1", port), Handler)
-    print(f"Duco Admin disponible en http://127.0.0.1:{port}")
-    print("Solo escucha en localhost. Usa Ctrl+C para cerrar.")
+    host = os.getenv("ADMIN_HOST", "127.0.0.1")
+    server = ThreadingHTTPServer((host, port), Handler)
+    print(f"Duco Admin disponible en http://{host}:{port}")
+    print("Usa Ctrl+C para cerrar.")
     web_lookup.warm_async()  # carga en segundo plano el indice de duoc.cl para la consulta web limitada
     try:
         status = ollama_service.ensure_running()

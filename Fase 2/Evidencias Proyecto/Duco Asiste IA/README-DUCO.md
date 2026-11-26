@@ -290,3 +290,28 @@ Para preguntas sobre la arquitectura o integración de IA, contacta al equipo de
 **Versión**: 1.0 Beta  
 **Última Actualización**: 25 de Abril de 2026  
 **Estado**: Funcional y listo para pruebas
+
+## Ejecutar Duco web con Docker Desktop
+
+Con Docker Desktop abierto en modo de contenedores Linux, inicia Oracle Free en
+Windows y conserva las credenciales de tu base en `admin-app/.env`. La imagen se
+construye con el sitio y su API Python. Compose conecta la API a Oracle mediante
+`host.docker.internal:1521/FREEPDB1`. Si usas otro servicio, define
+`DUCO_DOCKER_ORACLE_DSN` en PowerShell con el DSN correspondiente antes de iniciar.
+
+Desde la raiz del proyecto ejecuta:
+
+```powershell
+docker compose up --build -d
+docker compose ps
+Invoke-RestMethod http://127.0.0.1:8765/api/duco/health
+```
+
+Abre http://127.0.0.1:8765/duco. Si ya tienes Duco u otro servidor usando el
+puerto 8765, libera ese puerto antes de iniciar Compose. El chequeo de salud
+confirma que la API responde. Para comprobar Oracle, inicia una conversacion
+con un nombre de prueba y busca su registro en `SESIONES_CHAT`.
+
+Para probar las respuestas de IA, inicia Ollama en Windows con el modelo del
+proyecto. El dashboard Tkinter se abre en Windows con `Iniciar_Dashboard.cmd`.
+Para detener el contenedor usa `docker compose down`.
